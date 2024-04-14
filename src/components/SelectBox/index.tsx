@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
+const BREAKPOINT_MOBILE = 768;
+
+const onMobile = `@media only screen and (max-width: ${BREAKPOINT_MOBILE}px)`;
+
 const S = {
   SelectBox: styled.div<{ isFocused: boolean }>`
     display: flex;
@@ -15,6 +19,11 @@ const S = {
       ${(props) => (props.isFocused ? theme.color.main : theme.color.grayLight)};
     background: ${theme.color.white};
     outline: none;
+
+    ${onMobile} {
+      width: 20.4375rem;
+    }
+
     &:focus-within {
       border-color: ${theme.color.main};
     }
@@ -54,6 +63,10 @@ const S = {
     background: ${theme.color.white};
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
     margin-top: 0.0625rem;
+
+    ${onMobile} {
+      width: 20.4375rem;
+    }
   `,
   OptionValue: styled.li`
     cursor: pointer;
