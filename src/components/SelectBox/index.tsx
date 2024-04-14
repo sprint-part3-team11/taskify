@@ -38,6 +38,8 @@ const S = {
   ArrowIcon: styled.svg`
     flex: 1;
     margin-left: 0.5rem;
+    width: 1.625rem;
+    height: 1.625rem;
   `,
   OptionArea: styled.ul`
     width: 13.5625rem;
@@ -48,17 +50,29 @@ const S = {
     margin-top: 0.0625rem;
   `,
   OptionValue: styled.li`
+    cursor: pointer;
+    padding: 0.5rem;
     display: flex;
     align-items: center;
-    padding: 0.3125rem;
+    &:hover {
+      background-color: ${theme.color.grayLight};
+    }
   `,
-  OptionValueText: styled.p`
-    color: var(--black-black_333236, #333236);
+  OptionValueText: styled.p<{ isCheckIcon: boolean }>`
+    color: ${theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin-left: ${(props) => (props.isCheckIcon ? '0.6rem' : '2rem')};
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  `,
+  CheckIcon: styled.svg`
+    width: 1.375rem;
+    height: 1.375rem;
   `,
 };
 
@@ -68,11 +82,12 @@ interface Option {
 }
 
 interface SelectBoxProps {
+  title: string;
   options: Option[];
   whether: boolean;
 }
 
-const index: React.FC<SelectBoxProps> = ({ options, whether }) => {
+const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -88,7 +103,7 @@ const index: React.FC<SelectBoxProps> = ({ options, whether }) => {
 
   return (
     <>
-      <S.Title>담당자</S.Title>
+      <S.Title>{title}</S.Title>
       <S.SelectBox onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
         <S.Text gray={whether && !selectedOption}>
           {selectedOption || whether
@@ -97,8 +112,6 @@ const index: React.FC<SelectBoxProps> = ({ options, whether }) => {
         </S.Text>
         <S.ArrowIcon
           xmlns="http://www.w3.org/2000/svg"
-          width="1.625rem"
-          height="1.625rem"
           viewBox="0 0 26 26"
           fill="none"
         >
@@ -115,7 +128,23 @@ const index: React.FC<SelectBoxProps> = ({ options, whether }) => {
               key={option.value}
               onClick={() => handleSelectOption(option)}
             >
-              <S.OptionValueText>{option.label}</S.OptionValueText>
+              {option.value === selectedOption?.value && (
+                <S.CheckIcon
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                >
+                  <path
+                    d="M8.75418 14.2223L16.6728 6.30372C16.8091 6.1674 16.971 6.09776 17.1584 6.09482C17.3459 6.09188 17.5107 6.16152 17.6529 6.30372C17.7951 6.44591 17.8662 6.60926 17.8662 6.79377C17.8662 6.97827 17.7951 7.14162 17.6529 7.28382L9.33414 15.6026C9.16843 15.7683 8.97511 15.8511 8.75418 15.8511C8.53325 15.8511 8.33993 15.7683 8.17423 15.6026L4.34715 11.7755C4.21082 11.6392 4.14354 11.4773 4.1453 11.2898C4.14707 11.1024 4.21905 10.9376 4.36124 10.7954C4.50345 10.6532 4.6668 10.5821 4.85129 10.5821C5.0358 10.5821 5.19915 10.6532 5.34134 10.7954L8.75418 14.2223Z"
+                    fill="#787486"
+                  />
+                </S.CheckIcon>
+              )}
+              <S.OptionValueText
+                isCheckIcon={option.value === selectedOption?.value}
+              >
+                {option.label}
+              </S.OptionValueText>
             </S.OptionValue>
           ))}
         </S.OptionArea>
