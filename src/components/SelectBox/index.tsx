@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 
 const S = {
-  SelectBox: styled.div`
+  SelectBox: styled.div<{ isFocused: boolean }>`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -11,8 +11,13 @@ const S = {
     height: 3rem;
     padding: 0.5rem;
     border-radius: 0.375rem;
-    border: 1px solid ${theme.color.grayLight};
+    border: 1px solid
+      ${(props) => (props.isFocused ? theme.color.main : theme.color.grayLight)};
     background: ${theme.color.white};
+    outline: none;
+    &:focus-within {
+      border-color: ${theme.color.main};
+    }
   `,
   Text: styled.div<{ gray?: boolean }>`
     flex: 3;
@@ -91,6 +96,7 @@ interface SelectBoxProps {
 const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleSelectOption = (option: Option) => {
     setSelectedOption(option);
@@ -105,7 +111,13 @@ const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
   return (
     <>
       <S.Title>{title}</S.Title>
-      <S.SelectBox onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+      <S.SelectBox
+        tabIndex={0}
+        onBlur={() => setIsFocused(false)}
+        onFocus={() => setIsFocused(true)}
+        isFocused={isFocused}
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      >
         <S.Text gray={whether && !selectedOption}>
           {selectedOption || whether
             ? selectedOption?.label || '이름을 입력해 주세요'
