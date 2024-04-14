@@ -39,6 +39,7 @@ const S = {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    margin-bottom: 0.63rem;
   `,
   ArrowIcon: styled.svg`
     flex: 1;
