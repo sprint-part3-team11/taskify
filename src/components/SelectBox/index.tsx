@@ -56,6 +56,7 @@ const S = {
     align-items: center;
     &:hover {
       background-color: ${theme.color.grayLight};
+      transition: background-color 0.2s ease-in-out;
     }
   `,
   OptionValueText: styled.p<{ isCheckIcon: boolean }>`
