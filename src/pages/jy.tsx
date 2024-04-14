@@ -8,19 +8,7 @@ const selectBoxOptions = [
 ];
 
 function jy() {
-  const [selectName, setSelectName] = useState<string>('');
-
-  const handleSelectBoxNameChange = (value: string) => {
-    setSelectName(value);
-  };
-  return (
-    <SelectBox
-      title="담당자"
-      whether={true}
-      options={selectBoxOptions}
-      onChange={handleSelectBoxNameChange}
-    />
-  );
+  return <SelectBox options={selectBoxOptions} whether={true} />;
 }
 
 export default jy;
