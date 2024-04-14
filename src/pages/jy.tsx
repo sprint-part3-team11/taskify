@@ -2,8 +2,9 @@ import { useState } from 'react';
 import SelectBox from '@/components/SelectBox';
 
 const selectBoxOptions = [
-  { value: 'hihihi', label: 'helllo' },
-  { value: 'hahahah', label: 'grgrrg' },
+  { value: '배유철', label: '배유철' },
+  { value: '배동석', label: '배동석' },
+  { value: 'ToDo', label: '🔹To Do' },
 ];
 
 function jy() {
@@ -15,6 +16,7 @@ function jy() {
   return (
     <SelectBox
       title="담당자"
+      whether={true}
       options={selectBoxOptions}
       onChange={handleSelectBoxNameChange}
     />
