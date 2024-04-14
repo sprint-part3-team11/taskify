@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
@@ -98,11 +98,32 @@ const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const optionAreaRef = useRef<HTMLUListElement>(null);
+  const selectBoxRef = useRef<HTMLDivElement>(null);
 
   const handleSelectOption = (option: Option) => {
     setSelectedOption(option);
     setIsDropdownOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        optionAreaRef.current &&
+        !optionAreaRef.current.contains(event.target as Node) &&
+        selectBoxRef.current &&
+        !selectBoxRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // whether가 false이고 선택된 옵션이 없으면 첫 번째 옵션을 선택한다.
   if (!whether && !selectedOption && options.length > 0) {
@@ -113,6 +134,7 @@ const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
     <>
       <S.Title>{title}</S.Title>
       <S.SelectBox
+        ref={selectBoxRef}
         tabIndex={0}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
@@ -136,7 +158,7 @@ const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
         </S.ArrowIcon>
       </S.SelectBox>
       {isDropdownOpen && (
-        <S.OptionArea>
+        <S.OptionArea ref={optionAreaRef}>
           {options.map((option) => (
             <S.OptionValue
               key={option.value}
