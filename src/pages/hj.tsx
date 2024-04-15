@@ -1,4 +1,4 @@
-import StateTag from '@/components/common/Tag/StateTag';
+import StateTag from '@/components/common/tag/StateTag';
 import '@/styles/GlobalStyle';
 
 function hj() {
@@ -6,7 +6,7 @@ function hj() {
   return (
     <div>
       {hashTags.map((tag) => (
-        <StateTag size="S">{tag}</StateTag>
+        <StateTag size="L">{tag}</StateTag>
       ))}
     </div>
   );

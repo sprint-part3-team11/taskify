@@ -1,36 +1,36 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
+import EllipseIcon from '@/public/icon/ellipse.svg';
 
 interface StateTagProps {
   children: ReactNode;
   size: 'S' | 'L';
 }
-
-const StateTagWrapper = styled.span<StateTagProps>`
-  display: flex;
-  align-items: center;
-  padding: 4px 8px;
-  border-radius: 1.1rem;
-  background-color: rgba(241, 239, 253, 1);
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: ${({ theme }) => theme.color.purple};
-  width: fit-content;
-  height: ${(props) => (props.size === 'L' ? '2.2rem' : '2rem')};
-`;
-const DotIcon = styled.svg`
-  width: 0.6rem;
-  height: 0.6rem;
-  margin-right: 0.5rem;
-`;
+const S = {
+  StateTagWrapper: styled.span<StateTagProps>`
+    padding: 0.4rem 0.8rem 0.6rem;
+    border-radius: 1.1rem;
+    width: fit-content;
+    background-color: rgba(241, 239, 253, 1);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: ${({ theme }) => theme.color.purple};
+    height: ${(props) => (props.size === 'L' ? '2.2rem' : '2rem')};
+  `,
+  SVGContainer: styled.span`
+    margin-right: 0.3rem;
+    position: relative;
+    top: -0.1rem;
+  `,
+};
 function StateTag({ children, size }: StateTagProps) {
   return (
-    <StateTagWrapper size={size}>
-      <DotIcon viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="3" cy="3" r="3" fill="#5534DA" />
-      </DotIcon>
+    <S.StateTagWrapper size={size}>
+      <S.SVGContainer>
+        <EllipseIcon />
+      </S.SVGContainer>
       {children}
-    </StateTagWrapper>
+    </S.StateTagWrapper>
   );
 }
 
