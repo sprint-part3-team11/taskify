@@ -1,4 +1,4 @@
-import ImgFileUpload from '@/components/ImgFileUpload';
+import ImgFileUpload from '@/components/common/ImgFileUpload';
 
 function jy() {
   return (
