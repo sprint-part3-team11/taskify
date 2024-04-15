@@ -108,7 +108,7 @@ interface SelectBoxProps {
   whether: boolean;
 }
 
-const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
+const SelectBox: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -205,4 +205,4 @@ const index: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
   );
 };
 
-export default index;
+export default SelectBox;
