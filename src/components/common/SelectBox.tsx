@@ -13,6 +13,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     width: 13.5625rem;
     height: 3rem;
     padding: 0.5rem;
@@ -36,9 +37,11 @@ const S = {
   Text: styled.div<{ $gray?: boolean }>`
     flex: 3;
     overflow: hidden;
+
+    margin: 0 0.625rem 0 0.625rem;
+
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin: 0 0.625rem 0 0.625rem;
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
@@ -48,13 +51,14 @@ const S = {
       props.$gray ? props.theme.color.gray : props.theme.color.body};
   `,
   Title: styled.p`
+    margin-bottom: 0.63rem;
+
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     color: ${({ theme }) => theme.color.body};
-    margin-bottom: 0.63rem;
   `,
   OptionArea: styled.ul`
     width: 13.5625rem;
@@ -69,10 +73,11 @@ const S = {
     }
   `,
   OptionValue: styled.li`
-    cursor: pointer;
-    padding: 0.5rem;
     display: flex;
     align-items: center;
+    padding: 0.5rem;
+
+    cursor: pointer;
 
     &:hover {
       background-color: ${({ theme }) => theme.color.mainLight};
@@ -85,6 +90,7 @@ const S = {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
     color: ${({ theme }) => theme.color.body};
     margin-left: ${(props) => (props.$isCheckIcon ? '0.6rem' : '2rem')};
     overflow: hidden;
