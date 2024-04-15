@@ -1,3 +1,4 @@
+import AddIconButton from '@/components/common/button/AddIconButton';
 import Button from '@/components/common/button/Button';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 
@@ -23,6 +24,9 @@ function sh() {
         버튼
       </Button>
       <Button styleType={BUTTON_TYPE.SECONDARY}>취소</Button>
+
+      <AddIconButton />
+      <AddIconButton>새로운 대시보드</AddIconButton>
     </>
   );
 }
