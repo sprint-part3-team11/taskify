@@ -42,22 +42,16 @@ const S = {
 
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-family: Pretendard;
     font-size: 1rem;
-    font-style: normal;
     font-weight: 300;
-    line-height: normal;
     color: ${(props) =>
       props.$gray ? props.theme.color.gray : props.theme.color.body};
   `,
   Title: styled.p`
     margin-bottom: 0.63rem;
 
-    font-family: Pretendard;
     font-size: 1rem;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
     color: ${({ theme }) => theme.color.body};
   `,
   OptionArea: styled.ul`
@@ -85,11 +79,8 @@ const S = {
     }
   `,
   OptionValueText: styled.p<{ $isCheckIcon: boolean }>`
-    font-family: Pretendard;
     font-size: 1rem;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
 
     color: ${({ theme }) => theme.color.body};
     margin-left: ${(props) => (props.$isCheckIcon ? '0.6rem' : '2rem')};
