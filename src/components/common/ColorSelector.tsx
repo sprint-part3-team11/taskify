@@ -69,6 +69,7 @@ function ColorSelector(): JSX.Element {
     });
     setChangeColor(true);
   };
+  let resultColor = selectedColors[selectedColors.length - 1];
 
   return (
     <>
@@ -82,9 +83,7 @@ function ColorSelector(): JSX.Element {
         ))}
       </S.ColorArea>
       <S.Button onClick={handleButtonClick}>버튼</S.Button>
-      {selectedColors.length > 0 && (
-        <S.SelectedColor bg={selectedColors[selectedColors.length - 1]} />
-      )}
+      {selectedColors.length > 0 && <S.SelectedColor bg={resultColor} />}
     </>
   );
 }
