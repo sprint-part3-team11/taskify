@@ -70,10 +70,6 @@ function ColorSelector(): JSX.Element {
     setChangeColor(true);
   };
 
-  useEffect(() => {
-    console.log(selectedColors);
-  }, [selectedColors]);
-
   return (
     <>
       <S.ColorArea>
