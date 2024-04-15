@@ -49,7 +49,7 @@ const colorPalette: ColorPalette = {
 
 function ColorSelector(): JSX.Element {
   const [selectedColors, setSelectedColors] = useState<Color[]>([
-    theme.color.gray, // 처음 저장된 색상값을 넣으면 될것 같습니다.
+    'rgba(0, 0, 0, 0)', // 처음 저장된 색상값을 넣으면 될것 같습니다.
   ]);
   const [changeColor, setChangeColor] = useState<boolean>(false);
 
