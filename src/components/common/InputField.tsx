@@ -1,15 +1,16 @@
 interface InputFieldProps {
-  name: string;
+  label: string;
+  id: string;
   type: string;
-  sentence: string;
+  placeholder: string;
 }
 
-function InputField({ name, type, sentence }: InputFieldProps) {
+function InputField({ label, id, ...rest }: InputFieldProps) {
   return (
-    <>
-      <label htmlFor="input">{name}</label>
-      <input type={type} id="input" placeholder={sentence} />
-    </>
+    <S.Layout>
+      <S.Label htmlFor={id}>{label}</S.Label>
+      <S.Input id={id} {...rest} />
+    </S.Layout>
   );
 }
 
