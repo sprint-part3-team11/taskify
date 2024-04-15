@@ -4,6 +4,10 @@ import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
 import theme from '@/styles/theme';
 
+const BREAKPOINT_MOBILE = 768;
+
+const onMobile = `@media only screen and (max-width: ${BREAKPOINT_MOBILE}px)`;
+
 const S = {
   Title: styled.p`
     color: ${theme.color.body};
@@ -19,6 +23,11 @@ const S = {
     display: inline-block;
     width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
     height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
+
+    ${onMobile} {
+      width: ${(props) => (props.$small ? '3.625rem' : '6.25rem')};
+      height: ${(props) => (props.$small ? '3.525rem' : '6.25rem')};
+    }
   `,
   Image: styled.img<{ $small: boolean }>`
     display: flex;
@@ -29,6 +38,11 @@ const S = {
     flex-shrink: 0;
     border-radius: 0.375rem;
     cursor: pointer;
+
+    ${onMobile} {
+      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+    }
   `,
   Button: styled.button<{ $small: boolean }>`
     position: absolute;
@@ -40,6 +54,11 @@ const S = {
     opacity: 0;
     width: 4.75rem;
     height: 4.75rem;
+
+    ${onMobile} {
+      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+    }
   `,
   AddIcon: styled(AddIcon)`
     flex-shrink: 0;
@@ -53,6 +72,11 @@ const S = {
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+
+    ${onMobile} {
+      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+    }
   `,
   Overlay: styled.div<{ $small: boolean }>`
     background: rgba(0, 0, 0, 0.6);
@@ -65,6 +89,11 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    ${onMobile} {
+      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+    }
   `,
   Input: styled.input<{ $small: boolean }>`
     display: none;
