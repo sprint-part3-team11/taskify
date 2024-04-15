@@ -29,6 +29,56 @@ interface BackDropModalProps {
   onClose: () => void;
 }
 
+/**
+ * 백드롭 모달(기본형) - 모달이 열려있는지 확인하고, 내부 내용을 표시하고, onClose 함수를 사용하여 모달을 닫습니다.
+ * @component
+ * @param isOpen - 모달이 열려있는지 확인
+ * @param children - 모달 내부 내용
+ * @param onClose - 모달을 닫을 때 사용할 함수
+ * @example
+ * 새 컬럼 생성 예시
+ * import React, { useState } from 'react';
+ * import BackDropModal from '@/components/common/Modal/BackDropModal';
+ *
+ * const CreateCategoryModal = () => {
+ *   const [isModalOpen, setModalOpen] = useState(false);
+ *   const openModal = () => setModalOpen(true);
+ *   const closeModal = () => setModalOpen(false);
+ *
+ *   const [projectName, setProjectName] = useState("");
+ *
+ *   const handleInputChange = (e) => {
+ *     setProjectName(e.target.value);
+ *   };
+ *
+ *   const handleFormSubmit = (e) => {
+ *    e.preventDefault(); // 페이지 리로드 방지
+ *    // 카테고리 생성 로직 여기 적기
+ *    closeModal(); // 모달 닫기
+ *   };
+ *
+ *   return (
+ *     <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
+ *       <h1>새 카테고리 생성</h1>
+ *       <div>이름</div>
+ *       <form onSubmit={handleFormSubmit}>
+ *         <input
+ *           type="text"
+ *           placeholder="새로운 프로젝트"
+ *           value={projectName}
+ *           onChange={handleInputChange}
+ *         />
+ *       </form>
+ *       <button onClick={closeModal}>취소</button>
+ *       <button type="button" onClick={handleFormSubmit}>생성</button>
+ *     </BackDropModal>
+ *   );
+ * };
+ *
+ * export default CreateCategoryModal;
+ * );
+ */
+
 const BackDropModal: React.FC<BackDropModalProps> = ({
   isOpen,
   children,
