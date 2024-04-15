@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import useOutSideClick from '@/hooks/useClickOutside';
-import MEDIA_QUERIES from '@/constants/breakPoint';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ArrowIcon from '@/public/icon/arrowButton.svg';
 import CheckIcon from '@/public/icon/checkIcon.svg';
 
