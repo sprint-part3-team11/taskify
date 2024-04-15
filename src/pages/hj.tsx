@@ -1,3 +1,4 @@
+import DashBoardHeader from '@/components/common/DashBoardHeader';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
 import '@/styles/GlobalStyle';
@@ -8,6 +9,7 @@ function hj() {
   const hashTag = ['프로젝트', '프론트엔드', '어려워'];
   return (
     <>
+      <DashBoardHeader />
       <div>
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>
