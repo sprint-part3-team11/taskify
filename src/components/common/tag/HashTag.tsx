@@ -5,7 +5,7 @@ import theme from '@/styles/theme';
 interface HashTagProps {
   children: ReactNode;
   index: number;
-  isMobile?: boolean;
+  isMobile: boolean;
 }
 const color = [
   theme.color.green,
@@ -35,7 +35,7 @@ const S = {
   `,
 };
 
-function HashTag({ children, index, isMobile }: HashTagProps) {
+function HashTag({ children, index, isMobile = false }: HashTagProps) {
   return (
     <S.HashTagItem index={index} isMobile={isMobile}>
       {children}

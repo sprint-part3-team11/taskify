@@ -4,7 +4,7 @@ import '@/styles/GlobalStyle';
 
 function hj() {
   const stateTags = ['To Do', 'On Progress', 'Done'];
-  const isMobile = true;
+  const isMobile = false;
   const hashTag = ['프로젝트', '프론트엔드', '어려워'];
   return (
     <>
