@@ -79,11 +79,7 @@ interface BackDropModalProps {
  * );
  */
 
-const BackDropModal: React.FC<BackDropModalProps> = ({
-  isOpen,
-  children,
-  onClose,
-}) => {
+function BackDropModal({ isOpen, children, onClose }: BackDropModalProps) {
   const [modalRoot, setModalRoot] = useState<Element | null>(null);
 
   useEffect(() => {
@@ -108,6 +104,6 @@ const BackDropModal: React.FC<BackDropModalProps> = ({
         modalRoot,
       )
     : null;
-};
+}
 
 export default BackDropModal;
