@@ -34,5 +34,20 @@ export const BackDropModal: React.FC<BackDropModalProps> = ({
   children,
   onClose,
 }) => {
-  return <div>modal</div>;
+  const [modalRoot, setModalRoot] = useState<Element | null>(null);
+
+  useEffect(() => {
+    setModalRoot(document.getElementById('modal-root'));
+  }, []);
+
+  return isOpen && modalRoot
+    ? ReactDOM.createPortal(
+        <S.ModalBackground onClick={onClose}>
+          <S.ModalContent onClick={(e) => e.stopPropagation()}>
+            {children}
+          </S.ModalContent>
+        </S.ModalBackground>,
+        modalRoot,
+      )
+    : null;
 };
