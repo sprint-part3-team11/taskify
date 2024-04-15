@@ -16,9 +16,9 @@ const S = {
     z-index: 999;
   `,
   ModalContent: styled.div`
-    padding: 20px;
+    padding: 2rem;
     background: ${({ theme }) => theme.color.white};
-    border-radius: 8px;
+    border-radius: 0.8rem;
     z-index: 1000;
   `,
 };
