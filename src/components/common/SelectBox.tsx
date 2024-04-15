@@ -105,20 +105,20 @@ interface SelectBoxProps {
   whether: boolean;
 }
 
-const SelectBox: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
+function SelectBox({ title, options, whether }: SelectBoxProps): JSX.Element {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const optionAreaRef = useRef<HTMLUListElement>(null);
   const selectBoxRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectOption = (option: Option) => {
+  function handleSelectOption(option: Option): void {
     setSelectedOption(option);
     setIsDropdownOpen(false);
-  };
+  }
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    function handleClickOutside(event: MouseEvent): void {
       if (
         optionAreaRef.current &&
         !optionAreaRef.current.contains(event.target as Node) &&
@@ -127,7 +127,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
       ) {
         setIsDropdownOpen(false);
       }
-    };
+    }
 
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -178,6 +178,6 @@ const SelectBox: React.FC<SelectBoxProps> = ({ title, options, whether }) => {
       )}
     </>
   );
-};
+}
 
 export default SelectBox;
