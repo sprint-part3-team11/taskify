@@ -22,3 +22,17 @@ const S = {
     z-index: 1000;
   `,
 };
+
+interface BackDropModalProps {
+  isOpen: boolean;
+  children: React.ReactNode;
+  onClose: () => void;
+}
+
+export const BackDropModal: React.FC<BackDropModalProps> = ({
+  isOpen,
+  children,
+  onClose,
+}) => {
+  return <div>modal</div>;
+};
