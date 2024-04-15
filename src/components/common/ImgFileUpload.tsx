@@ -14,29 +14,28 @@ const S = {
     line-height: normal;
     margin-bottom: 0.63rem;
   `,
-  Label: styled.label`
+  Label: styled.label<{ $small: boolean }>`
     position: relative;
     display: inline-block;
-    width: 4.75rem;
-    height: 4.75rem;
+    width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
+    height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
   `,
-  Image: styled.img`
+  Image: styled.img<{ $small: boolean }>`
     display: flex;
-    width: 4.75rem;
-    height: 4.75rem;
+    width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
+    height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
     border-radius: 0.375rem;
-    background: #f5f5f5;
     cursor: pointer;
   `,
-  Button: styled.button`
+  Button: styled.button<{ $small: boolean }>`
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
-    height: 100px;
+    width: ${(props) => (props.$small ? '100%' : '8.125rem')};
+    height: ${(props) => (props.$small ? '100%;' : '8.125rem')};
     cursor: pointer;
     opacity: 0;
     width: 4.75rem;
@@ -48,38 +47,42 @@ const S = {
     border-radius: 0.375rem;
     background: #f5f5f5;
     display: flex;
-    width: 4.75rem;
-    height: 4.75rem;
+    width: ${(props) => (props.$small ? 'auto' : '11.375rem')};
+    height: ${(props) => (props.$small ? 'auto' : '11.375rem')};
     padding: 1.5rem;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
   `,
-  Overlay: styled.div`
+  Overlay: styled.div<{ $small: boolean }>`
     background: rgba(0, 0, 0, 0.6);
     border-radius: 0.375rem;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: ${(props) => (props.$small ? '100%' : '11.375rem')};
+    height: ${(props) => (props.$small ? '100%' : '11.375rem')};
     display: flex;
     justify-content: center;
     align-items: center;
+  `,
+  Input: styled.input<{ $small: boolean }>`
+    display: none;
   `,
 };
 
 interface ImgFileUploadProps {
   title: string;
   edit: boolean;
+  small: boolean;
 }
 
-const ImgFileUpload = ({ title, edit }: ImgFileUploadProps) => {
+const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
+  const isImage = title === '이미지';
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleClick = () => {
     if (fileInputRef.current) {
@@ -101,12 +104,16 @@ const ImgFileUpload = ({ title, edit }: ImgFileUploadProps) => {
   return (
     <>
       <S.Title>{title}</S.Title>
-      <S.Label htmlFor="fileInput">
+      <S.Label htmlFor="fileInput" $small={small}>
         {uploadedImage ? (
           <>
-            <S.Image src={uploadedImage?.toString()} alt="업로드된 이미지" />
+            <S.Image
+              src={uploadedImage?.toString()}
+              alt="업로드된 이미지"
+              $small={small}
+            />
             {edit ? (
-              <S.Overlay>
+              <S.Overlay $small={small}>
                 <EditIcon />
               </S.Overlay>
             ) : (
@@ -114,17 +121,19 @@ const ImgFileUpload = ({ title, edit }: ImgFileUploadProps) => {
             )}
           </>
         ) : (
-          <S.AddIcon onClick={handleClick} />
+          <S.AddIcon onClick={handleClick} $small={small} />
         )}
-        <input
+        <S.Input
           id="fileInput"
           type="file"
           accept="image/*"
           onChange={onChangeImage}
           ref={fileInputRef}
-          style={{ display: 'none' }}
+          $small={small}
         />
-        <S.Button onClick={handleClick}>파일 선택</S.Button>
+        <S.Button onClick={handleClick} $small={small}>
+          파일 선택
+        </S.Button>
       </S.Label>
     </>
   );
