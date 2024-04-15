@@ -22,8 +22,8 @@ const S = {
         props.$isFocused
           ? props.theme.color.main
           : props.theme.color.grayLight};
-    background: ${({ theme }) => theme.color.white};
     outline: none;
+    background: ${({ theme }) => theme.color.white};
 
     ${onMobile} {
       width: 20.4375rem;
@@ -39,21 +39,21 @@ const S = {
     white-space: nowrap;
     text-overflow: ellipsis;
     margin: 0 0.625rem 0 0.625rem;
-    color: ${(props) =>
-      props.$gray ? props.theme.color.gray : props.theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+    color: ${(props) =>
+      props.$gray ? props.theme.color.gray : props.theme.color.body};
   `,
   Title: styled.p`
-    color: ${({ theme }) => theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    color: ${({ theme }) => theme.color.body};
     margin-bottom: 0.63rem;
   `,
   OptionArea: styled.ul`
@@ -73,18 +73,19 @@ const S = {
     padding: 0.5rem;
     display: flex;
     align-items: center;
+
     &:hover {
       background-color: ${({ theme }) => theme.color.mainLight};
       transition: background-color 0.1s ease-in-out;
     }
   `,
   OptionValueText: styled.p<{ $isCheckIcon: boolean }>`
-    color: ${({ theme }) => theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    color: ${({ theme }) => theme.color.body};
     margin-left: ${(props) => (props.$isCheckIcon ? '0.6rem' : '2rem')};
     overflow: hidden;
     white-space: nowrap;
