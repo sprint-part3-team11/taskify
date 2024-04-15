@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import useOutSideClick from '@/hooks/useClickOutside';
 import ArrowIcon from '@/public/icon/arrowButton.svg';
 import CheckIcon from '@/public/icon/checkIcon.svg';
 
@@ -117,24 +117,9 @@ function SelectBox({ title, options, whether }: SelectBoxProps): JSX.Element {
     setIsDropdownOpen(false);
   }
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent): void {
-      if (
-        optionAreaRef.current &&
-        !optionAreaRef.current.contains(event.target as Node) &&
-        selectBoxRef.current &&
-        !selectBoxRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  useOutSideClick([optionAreaRef, selectBoxRef], () => {
+    setIsDropdownOpen(false);
+  });
 
   // whether가 false이고 선택된 옵션이 없으면 첫 번째 옵션을 선택한다.
   if (!whether && !selectedOption && options.length > 0) {
