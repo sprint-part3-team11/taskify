@@ -9,14 +9,20 @@ const BREAKPOINT_MOBILE = 768;
 const onMobile = `@media only screen and (max-width: ${BREAKPOINT_MOBILE}px)`;
 
 const S = {
-  Title: styled.p`
+  Title: styled.p<{ $small: boolean }>`
     color: ${theme.color.body};
     font-family: Pretendard;
-    font-size: 1.125rem;
+    font-size: ${(props) => (props.$small ? '1.125rem' : '1.5rem')};
     font-style: normal;
-    font-weight: 500;
+    font-weight: ${(props) => (props.$small ? '500' : '700')};
     line-height: normal;
-    margin-bottom: 0.63rem;
+    font-weight: 0.63rem;
+    margin-bottom: ${(props) => (props.$small ? '0.62rem' : '2rem')};
+
+    ${onMobile} {
+      font-size: ${(props) => (props.$small ? '1rem' : '1.25rem')};
+      margin-bottom: ${(props) => (props.$small ? '0.62rem' : '1.5rem')};
+    }
   `,
   Label: styled.label<{ $small: boolean }>`
     position: relative;
@@ -107,7 +113,6 @@ interface ImgFileUploadProps {
 }
 
 const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
-  const isImage = title === '이미지';
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -132,7 +137,7 @@ const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
 
   return (
     <>
-      <S.Title>{title}</S.Title>
+      <S.Title $small={small}>{title}</S.Title>
       <S.Label htmlFor="fileInput" $small={small}>
         {uploadedImage ? (
           <>
