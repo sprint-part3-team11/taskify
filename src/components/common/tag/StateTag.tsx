@@ -4,18 +4,18 @@ import EllipseIcon from '@/public/icon/ellipse.svg';
 
 interface StateTagProps {
   children: ReactNode;
-  size: 'S' | 'L';
+  isMobile?: boolean;
 }
 const S = {
-  StateTagWrapper: styled.span<StateTagProps>`
+  StateTagWrapper: styled.div<StateTagProps>`
     padding: 0.4rem 0.8rem 0.6rem;
     border-radius: 1.1rem;
     width: fit-content;
     background-color: rgba(241, 239, 253, 1);
-    font-size: 1.2rem;
+    font-size: ${(props) => (props.isMobile ? '1rem' : '1.2rem')};
     font-weight: 400;
     color: ${({ theme }) => theme.color.purple};
-    height: ${(props) => (props.size === 'L' ? '2.2rem' : '2rem')};
+    height: ${(props) => (props.isMobile ? '2rem' : '2.2rem')};
   `,
   SVGContainer: styled.span`
     margin-right: 0.3rem;
@@ -23,9 +23,9 @@ const S = {
     top: -0.1rem;
   `,
 };
-function StateTag({ children, size }: StateTagProps) {
+function StateTag({ children, isMobile }: StateTagProps) {
   return (
-    <S.StateTagWrapper size={size}>
+    <S.StateTagWrapper isMobile={isMobile}>
       <S.SVGContainer>
         <EllipseIcon />
       </S.SVGContainer>

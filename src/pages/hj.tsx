@@ -3,10 +3,11 @@ import '@/styles/GlobalStyle';
 
 function hj() {
   const hashTags = ['To Do', 'On Progress', 'Done'];
+  const isMobile = true;
   return (
     <div>
       {hashTags.map((tag) => (
-        <StateTag size="L">{tag}</StateTag>
+        <StateTag isMobile={isMobile}>{tag}</StateTag>
       ))}
     </div>
   );
