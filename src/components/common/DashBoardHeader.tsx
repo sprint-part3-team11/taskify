@@ -25,7 +25,10 @@ const S = {
     margin-left: 30rem;
     font-weight: 700;
   `,
-
+  ButtonBox: styled.div``,
+  Button: styled.button`
+    margin-left: 2rem;
+  `,
   ProfileBox: styled.div`
     display: flex;
     justify-content: center;
@@ -48,6 +51,10 @@ function DashBoardHeader({
     <S.Header>
       <S.MenuNameAndButtonBox>
         <S.MenuName>{menuName}</S.MenuName>
+        <div>
+          <S.Button>관리</S.Button>
+          <S.Button>초대하기</S.Button>
+        </div>
       </S.MenuNameAndButtonBox>
       <S.ProfileBox>
         {/* <Image src={profileImgURL} width={38} height={38} alt="profileImg" /> */}
