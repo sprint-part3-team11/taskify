@@ -48,7 +48,9 @@ const colorPalette: ColorPalette = {
 };
 
 function ColorSelector(): JSX.Element {
-  const [selectedColors, setSelectedColors] = useState<Color[]>([]);
+  const [selectedColors, setSelectedColors] = useState<Color[]>([
+    theme.color.gray, // 처음 저장된 색상값을 넣으면 될것 같습니다.
+  ]);
   const [changeColor, setChangeColor] = useState<boolean>(false);
 
   const handleColorClick = (color: Color) => {
@@ -75,9 +77,7 @@ function ColorSelector(): JSX.Element {
         ))}
       </S.ColorArea>
       <S.Button onClick={handleButtonClick}>버튼</S.Button>
-      {changeColor && selectedColors.length > 0 && (
-        <S.SelectedColor bg={selectedColors[0]} />
-      )}
+      {selectedColors.length > 0 && <S.SelectedColor bg={selectedColors[0]} />}
     </>
   );
 }
