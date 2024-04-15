@@ -1,8 +1,11 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
 interface HashTagProps {
+  children: ReactNode;
   index: number;
+  isMobile?: boolean;
 }
 const color = [
   theme.color.green,
@@ -18,20 +21,26 @@ const backgroundColor = [
 ];
 const S = {
   HashTagItem: styled.div<HashTagProps>`
-    background-color: ${(props) => backgroundColor[props.index % 4]};
-    color: ${(props) => color[props.index % 4]};
     border-radius: 4px;
     width: fit-content;
+    height: ${(props) => (props.isMobile ? '2rem' : '2.2rem')};
     padding: 0.4rem 0.8rem;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    background-color: ${(props) =>
+      backgroundColor[props.index % backgroundColor.length]};
+    font-size: ${(props) => (props.isMobile ? '1rem' : '1.2rem')};
     font-weight: 400;
+    color: ${(props) => color[props.index % color.length]};
   `,
 };
 
-function HashTag({ index }: HashTagProps) {
-  return <S.HashTagItem index={index}>안녕</S.HashTagItem>;
+function HashTag({ children, index, isMobile }: HashTagProps) {
+  return (
+    <S.HashTagItem index={index} isMobile={isMobile}>
+      {children}
+    </S.HashTagItem>
+  );
 }
 
 export default HashTag;
