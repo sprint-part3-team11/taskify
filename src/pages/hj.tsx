@@ -1,4 +1,4 @@
-import StateTag from '@/components/Tag/StateTag';
+import StateTag from '@/components/common/Tag/StateTag';
 import '@/styles/GlobalStyle';
 
 function hj() {
