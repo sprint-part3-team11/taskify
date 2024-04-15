@@ -29,7 +29,7 @@ interface BackDropModalProps {
   onClose: () => void;
 }
 
-export const BackDropModal: React.FC<BackDropModalProps> = ({
+const BackDropModal: React.FC<BackDropModalProps> = ({
   isOpen,
   children,
   onClose,
@@ -39,6 +39,14 @@ export const BackDropModal: React.FC<BackDropModalProps> = ({
   useEffect(() => {
     setModalRoot(document.getElementById('modal-root'));
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isOpen]);
 
   return isOpen && modalRoot
     ? ReactDOM.createPortal(
@@ -51,3 +59,5 @@ export const BackDropModal: React.FC<BackDropModalProps> = ({
       )
     : null;
 };
+
+export default BackDropModal;
