@@ -113,22 +113,26 @@ interface ImgFileUploadProps {
   small: boolean;
 }
 
-const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
+function ImgFileUpload({
+  title,
+  edit,
+  small,
+}: ImgFileUploadProps): JSX.Element {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleClick = () => {
+  function handleClick(): void {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-  };
+  }
 
-  const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function onChangeImage(e: React.ChangeEvent<HTMLInputElement>): void {
     const file = e.target.files?.[0];
     if (file) {
       setUploadedImage(file);
     }
-  };
+  }
 
   return (
     <>
@@ -166,6 +170,6 @@ const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
       </S.Label>
     </>
   );
-};
+}
 
 export default ImgFileUpload;
