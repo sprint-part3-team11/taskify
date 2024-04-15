@@ -1,5 +1,11 @@
+import ImgFileUpload from '@/components/ImgFileUpload';
+
 function jy() {
-  return <div>지윤 테스트페이지</div>;
+  return (
+    <div>
+      <ImgFileUpload />
+    </div>
+  );
 }
 
 export default jy;
