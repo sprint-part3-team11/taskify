@@ -9,7 +9,7 @@ function hj() {
   const hashTag = ['프로젝트', '프론트엔드', '어려워'];
   return (
     <>
-      <DashBoardHeader />
+      <DashBoardHeader menuName={'내 대시보드'} />
       <div>
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>
