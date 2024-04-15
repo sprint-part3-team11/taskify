@@ -19,6 +19,11 @@ const theme = Object.freeze({
     orange: '#FFA500',
     skyBlue: '#76A5EA',
     pink: '#E876EA',
+    lightPurple: '#F1EFFD',
+    lightOrange: '#F9EEE3',
+    lightGreen: '#E7F7DB',
+    lightPink: '#F7DBF0',
+    lightSkyBlue: '#DBE6F7',
   },
 });
 
