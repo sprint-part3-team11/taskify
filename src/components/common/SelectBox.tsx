@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import useOutSideClick from '@/hooks/useClickOutside';
+import MEDIA_QUERIES from '@/constants/breakPoint';
 import ArrowIcon from '@/public/icon/arrowButton.svg';
 import CheckIcon from '@/public/icon/checkIcon.svg';
-
-const BREAKPOINT_MOBILE = 768;
-
-const onMobile = `@media only screen and (max-width: ${BREAKPOINT_MOBILE}px)`;
 
 const S = {
   SelectBox: styled.div<{ $isFocused: boolean }>`
@@ -26,7 +23,7 @@ const S = {
     outline: none;
     background: ${({ theme }) => theme.color.white};
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: 20.4375rem;
     }
 
@@ -62,7 +59,7 @@ const S = {
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
     margin-top: 0.0625rem;
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: 20.4375rem;
     }
   `,
