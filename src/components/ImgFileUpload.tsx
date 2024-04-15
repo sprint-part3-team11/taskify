@@ -1,21 +1,22 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import theme from '@/styles/theme';
 
 const S = {
+  Title: styled.p`
+    color: ${theme.color.body};
+    font-family: Pretendard;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 0.63rem;
+  `,
   Label: styled.label`
     position: relative;
     display: inline-block;
-  `,
-  ImageWrapper: styled.div`
-    position: relative;
-    display: inline-block;
-    border-radius: 0.375rem;
-    &:hover .overlay {
-      opacity: 0.5;
-    }
-    &:hover .editIcon {
-      opacity: 1;
-    }
+    width: 4.75rem;
+    height: 4.75rem;
   `,
   Image: styled.img`
     display: flex;
@@ -28,29 +29,6 @@ const S = {
     background: #f5f5f5;
     cursor: pointer;
   `,
-  Overlay: styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    border-radius: 0.375rem;
-    z-index: 1;
-  `,
-  EditIcon: styled.svg`
-    position: absolute;
-    top: calc(50% - 0.875rem);
-    left: calc(50% - 0.875rem);
-    width: 1.75rem;
-    height: 1.75rem;
-    flex-shrink: 0;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  `,
   Button: styled.button`
     position: absolute;
     top: 0;
@@ -59,6 +37,8 @@ const S = {
     height: 100px;
     cursor: pointer;
     opacity: 0;
+    width: 4.75rem;
+    height: 4.75rem;
   `,
   AddIcon: styled.img`
     width: 1.75rem;
@@ -75,18 +55,36 @@ const S = {
     align-items: center;
     flex-shrink: 0;
   `,
+  Overlay: styled.div`
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 0.375rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  EditIcon: styled.svg``,
 };
 
-const ImgFileUpload = () => {
+interface ImgFileUploadProps {
+  title: string;
+  edit: boolean;
+}
+
+const ImgFileUpload = ({ title, edit }: ImgFileUploadProps) => {
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
-  const [hover, setHover] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // 파일 선택(input) 창 열기
+      fileInputRef.current.click();
     }
   };
 
@@ -102,32 +100,31 @@ const ImgFileUpload = () => {
   };
 
   return (
-    <S.Label htmlFor="fileInput">
-      <S.ImageWrapper
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        {uploadedImage && (
+    <>
+      <S.Title>{title}</S.Title>
+      <S.Label htmlFor="fileInput">
+        {uploadedImage ? (
           <>
-            <S.Overlay />
-            {hover && (
-              <S.EditIcon
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-              >
-                <path
-                  d="M5.50481 25.6249C5.18471 25.6249 4.91639 25.5167 4.69984 25.3001C4.48328 25.0836 4.375 24.8152 4.375 24.4951V22.3293C4.375 22.0245 4.4335 21.7339 4.5505 21.4577C4.66748 21.1814 4.82853 20.9407 5.03366 20.7356L20.863 4.91347C21.052 4.74178 21.2607 4.60911 21.4891 4.51547C21.7175 4.42182 21.957 4.375 22.2077 4.375C22.4583 4.375 22.701 4.41948 22.936 4.50844C23.1709 4.59738 23.3789 4.73879 23.56 4.93269L25.0865 6.47834C25.2804 6.65943 25.4186 6.8678 25.5011 7.10347C25.5837 7.33912 25.6249 7.57476 25.6249 7.81041C25.6249 8.06176 25.582 8.30164 25.4962 8.53003C25.4103 8.75845 25.2738 8.96717 25.0865 9.15619L9.26434 24.9663C9.05922 25.1714 8.81853 25.3325 8.54228 25.4494C8.26601 25.5664 7.97546 25.6249 7.67062 25.6249H5.50481ZM21.9399 9.61775L23.75 7.81966L22.1803 6.24997L20.3822 8.06006L21.9399 9.61775Z"
-                  fill="white"
-                />
-              </S.EditIcon>
+            <S.Image src={uploadedImage?.toString()} alt="업로드된 이미지" />
+            {edit ? (
+              <S.Overlay>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.875rem"
+                  height="1.875rem"
+                  viewBox="0 0 30 30"
+                  fill="none"
+                >
+                  <path
+                    d="M5.50481 25.6249C5.18471 25.6249 4.91639 25.5167 4.69984 25.3001C4.48328 25.0836 4.375 24.8152 4.375 24.4951V22.3293C4.375 22.0245 4.4335 21.7339 4.5505 21.4577C4.66748 21.1814 4.82853 20.9407 5.03366 20.7356L20.863 4.91347C21.052 4.74178 21.2607 4.60911 21.4891 4.51547C21.7175 4.42182 21.957 4.375 22.2077 4.375C22.4583 4.375 22.701 4.41948 22.936 4.50844C23.1709 4.59738 23.3789 4.73879 23.56 4.93269L25.0865 6.47834C25.2804 6.65943 25.4186 6.8678 25.5011 7.10347C25.5837 7.33912 25.6249 7.57476 25.6249 7.81041C25.6249 8.06176 25.582 8.30164 25.4962 8.53003C25.4103 8.75845 25.2738 8.96717 25.0865 9.15619L9.26434 24.9663C9.05922 25.1714 8.81853 25.3325 8.54228 25.4494C8.26601 25.5664 7.97546 25.6249 7.67062 25.6249H5.50481ZM21.9399 9.61775L23.75 7.81966L22.1803 6.24997L20.3822 8.06006L21.9399 9.61775Z"
+                    fill="white"
+                  />
+                </svg>
+              </S.Overlay>
+            ) : (
+              ''
             )}
           </>
-        )}
-        {uploadedImage ? (
-          <S.Image src={uploadedImage?.toString()} alt="업로드된 이미지" />
         ) : (
           <S.AddIcon
             as="svg"
@@ -144,17 +141,17 @@ const ImgFileUpload = () => {
             />
           </S.AddIcon>
         )}
-      </S.ImageWrapper>
-      <input
-        id="fileInput"
-        type="file"
-        accept="image/*"
-        onChange={onChangeImage}
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-      />
-      <S.Button onClick={handleClick}>파일 선택</S.Button>
-    </S.Label>
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={onChangeImage}
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+        />
+        <S.Button onClick={handleClick}>파일 선택</S.Button>
+      </S.Label>
+    </>
   );
 };
 
