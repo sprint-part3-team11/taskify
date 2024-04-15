@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ColorCheckIcon from '@/public/icon/colorCheckIcon.svg';
 import theme from '@/styles/theme';
 
