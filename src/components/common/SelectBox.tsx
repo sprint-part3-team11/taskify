@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ArrowIcon from '@/public/icon/arrowButton.svg';
 import CheckIcon from '@/public/icon/checkIcon.svg';
-import theme from '@/styles/theme';
 
 const BREAKPOINT_MOBILE = 768;
 
@@ -20,8 +19,10 @@ const S = {
     border-radius: 0.375rem;
     border: 1px solid
       ${(props) =>
-        props.$isFocused ? theme.color.main : theme.color.grayLight};
-    background: ${theme.color.white};
+        props.$isFocused
+          ? props.theme.color.main
+          : props.theme.color.grayLight};
+    background: ${({ theme }) => theme.color.white};
     outline: none;
 
     ${onMobile} {
@@ -29,7 +30,7 @@ const S = {
     }
 
     &:focus-within {
-      border-color: ${theme.color.main};
+      border-color: ${({ theme }) => theme.color.main};
     }
   `,
   Text: styled.div<{ $gray?: boolean }>`
@@ -38,7 +39,8 @@ const S = {
     white-space: nowrap;
     text-overflow: ellipsis;
     margin: 0 0.625rem 0 0.625rem;
-    color: ${(props) => (props.$gray ? theme.color.gray : theme.color.body)};
+    color: ${(props) =>
+      props.$gray ? props.theme.color.gray : props.theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
@@ -46,7 +48,7 @@ const S = {
     line-height: normal;
   `,
   Title: styled.p`
-    color: ${theme.color.body};
+    color: ${({ theme }) => theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
@@ -57,8 +59,8 @@ const S = {
   OptionArea: styled.ul`
     width: 13.5625rem;
     border-radius: 0.375rem;
-    border: 1px solid ${theme.color.grayLight};
-    background: ${theme.color.white};
+    border: 1px solid ${({ theme }) => theme.color.grayLight};
+    background: ${({ theme }) => theme.color.white};
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
     margin-top: 0.0625rem;
 
@@ -72,12 +74,12 @@ const S = {
     display: flex;
     align-items: center;
     &:hover {
-      background-color: ${theme.color.mainLight};
+      background-color: ${({ theme }) => theme.color.mainLight};
       transition: background-color 0.1s ease-in-out;
     }
   `,
   OptionValueText: styled.p<{ $isCheckIcon: boolean }>`
-    color: ${theme.color.body};
+    color: ${({ theme }) => theme.color.body};
     font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
