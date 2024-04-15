@@ -1,5 +1,15 @@
+import InputField from '@/components/common/InputField';
+
 function js() {
-  return <div>지수 테스트페이지</div>;
+  return (
+    <div>
+      <InputField
+        name={'이메일'}
+        type={'email'}
+        sentence={'이메일을 입력해주세요'}
+      />
+    </div>
+  );
 }
 
 export default js;
