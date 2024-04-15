@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ColorCheckIcon from '@/public/icon/colorCheckIcon.svg';
 import theme from '@/styles/theme';
@@ -49,21 +49,30 @@ const colorPalette: ColorPalette = {
 
 function ColorSelector(): JSX.Element {
   const [selectedColors, setSelectedColors] = useState<Color[]>([
-    'rgba(0, 0, 0, 0)', // 처음 저장된 색상값을 넣으면 될것 같습니다.
+    'rgba(0, 0, 0, 0)',
   ]);
   const [changeColor, setChangeColor] = useState<boolean>(false);
+  const lastClickedColor = useRef<Color>('');
 
   const handleColorClick = (color: Color) => {
-    if (selectedColors.length < 2) {
-      setSelectedColors((prevColors) => [...prevColors, color]);
-    }
+    lastClickedColor.current = color;
     setChangeColor(true);
   };
 
   const handleButtonClick = () => {
-    setSelectedColors((prevColors) => prevColors.slice(1));
+    setSelectedColors((prevColors) => {
+      const newColors = [...prevColors];
+      if (newColors.length < 3) {
+        newColors.shift();
+      }
+      return [...newColors, lastClickedColor.current];
+    });
     setChangeColor(true);
   };
+
+  useEffect(() => {
+    console.log(selectedColors);
+  }, [selectedColors]);
 
   return (
     <>
@@ -77,7 +86,9 @@ function ColorSelector(): JSX.Element {
         ))}
       </S.ColorArea>
       <S.Button onClick={handleButtonClick}>버튼</S.Button>
-      {selectedColors.length > 0 && <S.SelectedColor bg={selectedColors[0]} />}
+      {selectedColors.length > 0 && (
+        <S.SelectedColor bg={selectedColors[selectedColors.length - 1]} />
+      )}
     </>
   );
 }
