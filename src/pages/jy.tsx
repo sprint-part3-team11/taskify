@@ -11,7 +11,7 @@ const selectBoxOptions = [
 
 function jy() {
   return (
-    <SelectBox title={'담당자'} options={selectBoxOptions} whether={false} />
+    <SelectBox title={'담당자'} options={selectBoxOptions} placeholder={true} />
   );
 }
 

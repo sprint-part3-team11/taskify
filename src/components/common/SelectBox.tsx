@@ -102,10 +102,14 @@ interface Option {
 interface SelectBoxProps {
   title: string;
   options: Option[];
-  whether: boolean;
+  placeholder: boolean;
 }
 
-function SelectBox({ title, options, whether }: SelectBoxProps): JSX.Element {
+function SelectBox({
+  title,
+  options,
+  placeholder,
+}: SelectBoxProps): JSX.Element {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -122,7 +126,7 @@ function SelectBox({ title, options, whether }: SelectBoxProps): JSX.Element {
   });
 
   // whether가 false이고 선택된 옵션이 없으면 첫 번째 옵션을 선택한다.
-  if (!whether && !selectedOption && options.length > 0) {
+  if (!placeholder && !selectedOption && options.length > 0) {
     setSelectedOption(options[0]);
   }
 
@@ -137,8 +141,8 @@ function SelectBox({ title, options, whether }: SelectBoxProps): JSX.Element {
         $isFocused={isFocused}
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <S.Text $gray={whether && !selectedOption}>
-          {selectedOption || whether
+        <S.Text $gray={placeholder && !selectedOption}>
+          {selectedOption || placeholder
             ? selectedOption?.label || '이름을 입력해 주세요'
             : ''}
         </S.Text>
