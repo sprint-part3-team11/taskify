@@ -3,7 +3,7 @@ import ImgFileUpload from '@/components/ImgFileUpload';
 function jy() {
   return (
     <div>
-      <ImgFileUpload />
+      <ImgFileUpload title="이미지" edit={true} />
     </div>
   );
 }
