@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
-import theme from '@/styles/theme';
 
 const BREAKPOINT_MOBILE = 768;
 
@@ -11,8 +10,7 @@ const onMobile = `@media only screen and (max-width: ${BREAKPOINT_MOBILE}px)`;
 
 const S = {
   Title: styled.p<{ $small: boolean }>`
-    color: ${theme.color.body};
-    font-family: Pretendard;
+    color: ${({ theme }) => theme.color.body};
     font-size: ${(props) => (props.$small ? '1.125rem' : '1.5rem')};
     font-weight: ${(props) => (props.$small ? '500' : '700')};
     margin-bottom: ${(props) => (props.$small ? '0.62rem' : '2rem')};
