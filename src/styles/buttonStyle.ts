@@ -34,14 +34,14 @@ export const buttonStyleByType = {
   `,
 
   SECONDARY: `
+    border: 1px solid${theme.color.grayLight};
     background-color: ${theme.color.white};
     color: ${theme.color.main};
-    border: 1px solid${theme.color.grayLight};
   `,
 
   DESTRUCTIVE: `
+    border: 1px solid ${theme.color.grayLight};
     background-color: ${theme.color.background};
     color: ${theme.color.body};
-    border: 1px solid ${theme.color.grayLight};
   `,
 };
