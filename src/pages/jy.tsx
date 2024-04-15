@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SelectBox from '@/components/SelectBox';
+import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
   { value: '배유철', label: '배유철' },
