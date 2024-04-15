@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import AddIcon from '@/public/icon/addImgIcon.svg';
@@ -113,9 +114,7 @@ interface ImgFileUploadProps {
 }
 
 const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
-  const [uploadedImage, setUploadedImage] = useState<
-    string | ArrayBuffer | null
-  >(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -127,11 +126,7 @@ const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
   const onChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setUploadedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setUploadedImage(file);
     }
   };
 
@@ -142,7 +137,7 @@ const ImgFileUpload = ({ title, edit, small }: ImgFileUploadProps) => {
         {uploadedImage ? (
           <>
             <S.Image
-              src={uploadedImage?.toString()}
+              src={URL.createObjectURL(uploadedImage)}
               alt="업로드된 이미지"
               $small={small}
             />
