@@ -3,16 +3,19 @@ import StateTag from '@/components/common/tag/StateTag';
 import '@/styles/GlobalStyle';
 
 function hj() {
-  const hashTags = ['To Do', 'On Progress', 'Done'];
+  const stateTags = ['To Do', 'On Progress', 'Done'];
   const isMobile = true;
+  const hashTag = ['프로젝트', '프론트엔드', '어려워'];
   return (
     <>
       <div>
-        {hashTags.map((tag, index) => (
-          <>
-            <StateTag isMobile={isMobile}>{tag}</StateTag>
-            <HashTag index={index} />
-          </>
+        {stateTags.map((tag, index) => (
+          <StateTag isMobile={isMobile}>{tag}</StateTag>
+        ))}
+        {hashTag.map((tag, index) => (
+          <HashTag index={index} isMobile={isMobile}>
+            {tag}
+          </HashTag>
         ))}
       </div>
     </>
