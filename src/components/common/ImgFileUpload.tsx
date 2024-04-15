@@ -1,12 +1,8 @@
-import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
-
-const BREAKPOINT_MOBILE = 768;
-
-const onMobile = `@media only screen and (max-width: ${BREAKPOINT_MOBILE}px)`;
 
 const S = {
   Title: styled.p<{ $small: boolean }>`
@@ -15,7 +11,7 @@ const S = {
     font-weight: ${(props) => (props.$small ? '500' : '700')};
     margin-bottom: ${(props) => (props.$small ? '0.62rem' : '2rem')};
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       font-size: ${(props) => (props.$small ? '1rem' : '1.25rem')};
       margin-bottom: ${(props) => (props.$small ? '0.62rem' : '1.5rem')};
     }
@@ -27,7 +23,7 @@ const S = {
     width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
     height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: ${(props) => (props.$small ? '3.625rem' : '6.25rem')};
       height: ${(props) => (props.$small ? '3.525rem' : '6.25rem')};
     }
@@ -44,7 +40,7 @@ const S = {
 
     cursor: pointer;
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
       height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
     }
@@ -60,7 +56,7 @@ const S = {
     cursor: pointer;
     opacity: 0;
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
       height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
     }
@@ -81,7 +77,7 @@ const S = {
 
     cursor: pointer;
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
       height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
     }
@@ -100,7 +96,7 @@ const S = {
 
     background: rgba(0, 0, 0, 0.6);
 
-    ${onMobile} {
+    ${MEDIA_QUERIES.onMobile} {
       width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
       height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
     }
