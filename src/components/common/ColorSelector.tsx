@@ -10,16 +10,25 @@ const S = {
     align-items: center;
     gap: 0.625rem;
   `,
-  ColorPalette: styled.div<{ bg: Color }>`
+  ColorPalette: styled.div<{ bg: Color; showIcon: boolean }>`
+    position: relative;
     width: 1.875rem;
     height: 1.875rem;
     flex-shrink: 0;
     cursor: pointer;
     background-color: ${(props) => props.bg};
-    border-radius: 50%;
+
+    &:after {
+      content: ${(props) =>
+        props.showIcon ? "url('/icon/colorCheckIcon.svg')" : ''};
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   `,
   Button: styled.button`
-    // 이건 일단 임시로 만들어 둔 겁니다.
     background-color: hotpink;
     width: 3.25rem;
     height: 3.25rem;
@@ -27,7 +36,6 @@ const S = {
   SelectedColor: styled.div<{ bg: string }>`
     width: 0.5rem;
     height: 0.5rem;
-    flex-shrink: 0;
     border-radius: 50%;
     background-color: ${(props) => props.bg};
   `,
@@ -53,10 +61,14 @@ function ColorSelector(): JSX.Element {
   ]);
   const [changeColor, setChangeColor] = useState<boolean>(false);
   const lastClickedColor = useRef<Color>('');
+  const [showIcon, setShowIcon] = useState<boolean>(false);
+  const [currentColor, setCurrentColor] = useState<string>('');
 
   const handleColorClick = (color: Color) => {
     lastClickedColor.current = color;
     setChangeColor(true);
+    setShowIcon(true);
+    setCurrentColor(color);
   };
 
   const handleButtonClick = () => {
@@ -70,6 +82,7 @@ function ColorSelector(): JSX.Element {
     setChangeColor(true);
   };
   let resultColor = selectedColors[selectedColors.length - 1];
+  let color = selectedColors;
 
   return (
     <>
@@ -79,6 +92,7 @@ function ColorSelector(): JSX.Element {
             key={colorName}
             bg={colorValue}
             onClick={() => handleColorClick(colorValue)}
+            showIcon={colorValue === currentColor && showIcon}
           />
         ))}
       </S.ColorArea>
