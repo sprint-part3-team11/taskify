@@ -1,23 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ColorCheckIcon from '@/public/icon/colorCheckIcon.svg';
 import theme from '@/styles/theme';
 
 const S = {
   ColorArea: styled.div`
     display: inline-flex;
+
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
   `,
   ColorPalette: styled.div<{ bg: Color; showIcon: boolean }>`
     position: relative;
+
     width: 1.875rem;
     height: 1.875rem;
     flex-shrink: 0;
-    cursor: pointer;
     background-color: ${(props) => props.bg};
     border-radius: 50%;
+
+    cursor: pointer;
 
     &:after {
       content: '';
@@ -29,20 +33,24 @@ const S = {
   `,
   Button: styled.button`
     // 임시 버튼 컴포넌트
-    background-color: hotpink;
     width: 3.25rem;
     height: 3.25rem;
+
+    background-color: hotpink;
   `,
   SelectedColor: styled.div<{ bg: string }>`
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
+
     background-color: ${(props) => props.bg};
   `,
   IconContainer: styled.div<{ showIcon: boolean }>`
     position: absolute;
+
     top: 58%;
     left: 50%;
+
     transform: translate(-50%, -50%);
     opacity: ${(props) =>
       props.showIcon ? '1' : '0'}; // 아이콘을 보이거나 숨기기 위해 투명도 조절
