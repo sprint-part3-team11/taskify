@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AddNewColumnsModal from '@/components/common/modal/AddNewColumnsModal';
 import BackDropModal from '@/components/common/modal/BackDropModal';
-import PasswordWarnModal from '@/components/common/modal/PasswordWarnModal';
+import WarningModal from '@/components/common/modal/WarningModal';
 
 const S = {
   Button: styled.button`
@@ -70,7 +70,12 @@ function mj() {
         <button type="submit">1234입력(틀리면 모달나옴)</button>
       </form>
 
-      <PasswordWarnModal isOpen={isModalOpen2} onClose={closeModal2} />
+      {/* type에 PASSWORD, SUCCESS, ALREADY_USED 중 하나 선택 */}
+      <WarningModal
+        isOpen={isModalOpen2}
+        onClose={closeModal2}
+        type="ALREADY_USED"
+      />
 
       <AddNewColumnsModal
         isOpen={isModalOpen3}
