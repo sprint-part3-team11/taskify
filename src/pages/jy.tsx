@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import SelectBox from '@/components/common/SelectBox';
 import ColorSelector from '@/components/common/ColorSelector';
+import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
   { value: '배유철', label: '배유철' },
@@ -12,8 +12,14 @@ const selectBoxOptions = [
 
 function jy() {
   return (
-    <SelectBox title={'담당자'} options={selectBoxOptions} placeholder={true} />
-    <ColorSelector />
+    <>
+      <SelectBox
+        title={'담당자'}
+        options={selectBoxOptions}
+        placeholder={true}
+      />
+      <ColorSelector />
+    </>
   );
 }
 
