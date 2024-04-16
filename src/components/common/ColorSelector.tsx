@@ -1,7 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import ColorCheckIcon from '@/public/icon/colorCheckIcon.svg';
 import theme from '@/styles/theme';
+
+const resultColorState = atom({
+  key: 'resultColorState',
+  default: '',
+});
 
 const S = {
   ColorArea: styled.div`
@@ -29,20 +35,6 @@ const S = {
       left: 50%;
       transform: translate(-50%, -50%);
     }
-  `,
-  Button: styled.button`
-    // 임시 버튼 컴포넌트
-    width: 3.25rem;
-    height: 3.25rem;
-
-    background-color: hotpink;
-  `,
-  SelectedColor: styled.div<{ $bg: string }>`
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-
-    background-color: ${(props) => props.$bg};
   `,
   IconContainer: styled.div<{ $showIcon: boolean }>`
     position: absolute;
@@ -72,33 +64,17 @@ const colorPalette: ColorPalette = {
 };
 
 function ColorSelector(): JSX.Element {
-  const [selectedColors, setSelectedColors] = useState<Color[]>([
-    'rgba(0, 0, 0, 0)',
-  ]);
-  const [changeColor, setChangeColor] = useState<boolean>(false);
   const lastClickedColor = useRef<Color>('');
   const [showIcon, setShowIcon] = useState<boolean>(false);
   const [currentColor, setCurrentColor] = useState<string>('');
+  const [resultColor, setResultColor] = useRecoilState(resultColorState);
 
   const handleColorClick = (color: Color) => {
     lastClickedColor.current = color;
-    setChangeColor(true);
     setShowIcon(true);
     setCurrentColor(color);
-    console.log(color);
+    setResultColor(color);
   };
-
-  const handleButtonClick = () => {
-    setSelectedColors((prevColors) => {
-      const newColors = [...prevColors];
-      if (newColors.length < 3) {
-        newColors.shift();
-      }
-      return [...newColors, lastClickedColor.current];
-    });
-    setChangeColor(true);
-  };
-  let resultColor = selectedColors[selectedColors.length - 1];
 
   return (
     <>
@@ -118,10 +94,8 @@ function ColorSelector(): JSX.Element {
           </S.ColorPalette>
         ))}
       </S.ColorArea>
-      <S.Button onClick={handleButtonClick} />
-      {selectedColors.length > 0 && <S.SelectedColor $bg={resultColor} />}
     </>
   );
 }
 
-export default ColorSelector;
+export { ColorSelector, resultColorState };

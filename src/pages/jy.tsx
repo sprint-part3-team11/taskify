@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import ColorSelector from '@/components/common/ColorSelector';
+import { useRecoilValue } from 'recoil';
+import {
+  ColorSelector,
+  resultColorState,
+} from '@/components/common/ColorSelector';
 import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
@@ -11,6 +14,7 @@ const selectBoxOptions = [
 ];
 
 function jy() {
+  const resultColor = useRecoilValue(resultColorState);
   return (
     <>
       <SelectBox
@@ -19,6 +23,7 @@ function jy() {
         placeholder={true}
       />
       <ColorSelector />
+      {resultColor}
     </>
   );
 }
