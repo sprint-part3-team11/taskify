@@ -1,23 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const unfoldIn = keyframes`
+  0% { transform: scaleY(.005) scaleX(0); }
+  50% { transform: scaleY(.005) scaleX(1); }
+  100% { transform: scaleY(1) scaleX(1); }
+`;
+
+const zoomIn = keyframes`
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+`;
+
+const appearModal = keyframes`
+  0%{opacity:0}
+  75%{opacity:0}
+  100%{opacity:1}
+`;
 const S = {
   ModalBackground: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    animation: ${unfoldIn} 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   `,
   ModalContainer: styled.div`
     padding: 3.2rem 2rem 2rem;
     background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
+
+    animation: ${appearModal} 1s;
   `,
 };
 
