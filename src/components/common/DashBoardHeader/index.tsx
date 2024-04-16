@@ -61,6 +61,10 @@ const S = {
   ProfileName: styled.div`
     font-size: 1.6rem;
     font-weight: 500;
+
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
   `,
 };
 
