@@ -71,10 +71,12 @@ const S = {
     align-items: center;
     padding: 10px;
     margin-top: 0.85rem;
+    cursor: pointer;
 
     &:hover {
       background: var(--violet-violet-8, #f1effd);
       border-radius: 0.55rem;
+      transition: all 0.1s ease-in-out;
     }
   `,
   DashboardItem: styled.li<{ active: boolean }>`
@@ -130,12 +132,12 @@ const Sidebar: React.FC<SidebarProps> = ({ dashboards }) => {
       </S.AddDashBoard>
       <ul>
         {updatedDashboards.map((dashboard) => (
-          <S.DashboardItemWrapper key={dashboard.id}>
+          <S.DashboardItemWrapper
+            key={dashboard.id}
+            onClick={() => handleDashboardClick(dashboard.id)}
+          >
             <CircleColor color={dashboard.color} />
-            <S.DashboardItem
-              active={dashboard.id === router.query.dashboardId}
-              onClick={() => handleDashboardClick(dashboard.id)}
-            >
+            <S.DashboardItem active={dashboard.id === router.query.dashboardId}>
               {dashboard.name} {dashboard.createdByMe && <CreateByMe />}
             </S.DashboardItem>
           </S.DashboardItemWrapper>
