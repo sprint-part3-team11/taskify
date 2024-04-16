@@ -15,7 +15,7 @@ const S = {
     align-items: center;
   `,
   ModalContainer: styled.div`
-    padding: 2rem;
+    padding: 3.2rem 2rem 2rem;
     background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
   `,
