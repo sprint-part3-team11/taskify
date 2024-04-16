@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import AvatarImage from '@/components/common/AvatarImage';
 
 function js() {

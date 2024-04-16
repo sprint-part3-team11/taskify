@@ -23,6 +23,13 @@ interface AvatarImageProps {
   height: string;
 }
 
+/**
+ * @component
+ * @param src - 이미지 url 프롭으로 받음
+ * @param width - 이미지 감싼 div의 width값 프롭으로 받음
+ * @param height - 이미지 감싼 div의 height값 프롭으로 받음
+ */
+
 function AvatarImage({ src, width, height }: AvatarImageProps) {
   return (
     <S.Layout $width={width} $height={height}>
