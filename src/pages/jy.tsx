@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import SelectBox from '@/components/common/SelectBox';
 import ImgFileUpload from '@/components/common/ImgFileUpload';
+import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
   { value: '배유철', label: '배유철' },
@@ -12,8 +12,14 @@ const selectBoxOptions = [
 
 function jy() {
   return (
-    <SelectBox title={'담당자'} options={selectBoxOptions} placeholder={true} />
-    <ImgFileUpload title="이미지" edit={false} small={true} />
+    <>
+      <SelectBox
+        title={'담당자'}
+        options={selectBoxOptions}
+        placeholder={true}
+      />
+      <ImgFileUpload edit={false} small={true} />
+    </>
   );
 }
 

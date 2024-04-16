@@ -5,17 +5,6 @@ import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
 
 const S = {
-  Title: styled.p<{ $small: boolean }>`
-    color: ${({ theme }) => theme.color.body};
-    font-size: ${(props) => (props.$small ? '1.125rem' : '1.5rem')};
-    font-weight: ${(props) => (props.$small ? '500' : '700')};
-    margin-bottom: ${(props) => (props.$small ? '0.62rem' : '2rem')};
-
-    ${MEDIA_QUERIES.onMobile} {
-      font-size: ${(props) => (props.$small ? '1rem' : '1.25rem')};
-      margin-bottom: ${(props) => (props.$small ? '0.62rem' : '1.5rem')};
-    }
-  `,
   Label: styled.label<{ $small: boolean }>`
     position: relative;
     display: inline-block;
@@ -107,16 +96,11 @@ const S = {
 };
 
 interface ImgFileUploadProps {
-  title: string;
   edit: boolean;
   small: boolean;
 }
 
-function ImgFileUpload({
-  title,
-  edit,
-  small,
-}: ImgFileUploadProps): JSX.Element {
+function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -137,7 +121,6 @@ function ImgFileUpload({
 
   return (
     <>
-      <S.Title $small={small}>{title}</S.Title>
       <S.Label htmlFor="fileInput" $small={small}>
         {uploadedImage ? (
           <>
