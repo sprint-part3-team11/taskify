@@ -13,13 +13,11 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
   `,
   ModalContainer: styled.div`
     padding: 2rem;
     background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
-    z-index: 1000;
   `,
 };
 
