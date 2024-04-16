@@ -1,3 +1,4 @@
+import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const BREAKPOINT = {
@@ -19,31 +20,15 @@ const S = {
     font-size: 1.6rem;
     font-weight: 400;
   `,
-  Input: styled.input<{
-    usage: 'form' | 'modal';
-  }>`
+  Input: styled.input`
     display: flex;
     align-items: center;
     gap: 1rem;
-    width: 35.1rem;
-    height: 5rem;
+    width: 100%;
     padding: 1.5rem 1.6rem;
     border-radius: 0.8rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     background: ${({ theme }) => theme.color.white};
-
-    ${onPC} {
-      ${({ usage }) =>
-        usage === 'form'
-          ? `
-              width: 52rem;
-              height: 5rem;
-            `
-          : `
-              width: 48.4rem;
-              height: 4.8rem;
-            `}
-    }
 
     &::placeholder {
       color: ${({ theme }) => theme.color.gray};
@@ -71,8 +56,6 @@ export default InputField;
 /**
  * @component
  * @param label - label 이름 (이메일, 제목 ...)
- * @param usage - 해당 Input 컴포넌트가 form에서 사용되는지, modal에서 사용되는지
- * - 사용되는 곳에 따라서 사이즈가 다름
  * @param id - label, input 연결용 id (input, title ...)
  * @param type - input 타입 (email, text ...)
  * @param placeholder - placeholder
