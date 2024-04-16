@@ -15,7 +15,7 @@ const S = {
     align-items: center;
     z-index: 999;
   `,
-  ModalContent: styled.div`
+  ModalContainer: styled.div`
     padding: 2rem;
     background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
@@ -97,9 +97,9 @@ function BackDropModal({ isOpen, children, onClose }: BackDropModalProps) {
   return isOpen && modalRoot
     ? ReactDOM.createPortal(
         <S.ModalBackground onClick={onClose}>
-          <S.ModalContent onClick={(e) => e.stopPropagation()}>
+          <S.ModalContainer onClick={(e) => e.stopPropagation()}>
             {children}
-          </S.ModalContent>
+          </S.ModalContainer>
         </S.ModalBackground>,
         modalRoot,
       )
