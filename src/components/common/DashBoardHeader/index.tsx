@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import theme from '@/styles/theme';
 
 interface HeaderProps {
@@ -15,6 +16,15 @@ const S = {
     align-items: center;
     height: 7rem;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
+    ${MEDIA_QUERIES.onPc} {
+      padding-left: 30rem;
+    }
+    ${MEDIA_QUERIES.onTablet} {
+      padding-left: 16rem;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      padding-left: 6.7rem;
+    }
   `,
   MenuNameAndButtonBox: styled.div`
     display: flex;
@@ -22,8 +32,13 @@ const S = {
     justify-content: space-between;
   `,
   MenuName: styled.div`
-    margin-left: 30rem;
     font-weight: 700;
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
   `,
 
   Button: styled.button`
