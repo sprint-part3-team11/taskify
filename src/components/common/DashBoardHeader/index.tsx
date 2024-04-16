@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import ProfileImg from '@/public/icon/profileImg.svg';
 import theme from '@/styles/theme';
 
 interface HeaderProps {
   menuName: string;
   profileName: string;
   profileImgURL: string;
+  invitedUsers: string[];
 }
 const S = {
   Header: styled.nav`
@@ -25,9 +25,15 @@ const S = {
     margin-left: 30rem;
     font-weight: 700;
   `,
-  ButtonBox: styled.div``,
+
   Button: styled.button`
     margin-left: 2rem;
+  `,
+
+  InvitedUsersBox: styled.div`
+    display: flex;
+    align-items: center;
+    margin: 0 2rem;
   `,
   ProfileBox: styled.div`
     display: flex;
@@ -38,6 +44,7 @@ const S = {
     gap: 1rem;
   `,
   ProfileName: styled.div`
+    font-size: 1.6rem;
     font-weight: 500;
   `,
 };
@@ -46,6 +53,7 @@ function DashBoardHeader({
   menuName,
   profileName,
   profileImgURL,
+  invitedUsers,
 }: HeaderProps) {
   return (
     <S.Header>
@@ -56,8 +64,23 @@ function DashBoardHeader({
           <S.Button>초대하기</S.Button>
         </div>
       </S.MenuNameAndButtonBox>
+      <S.InvitedUsersBox>
+        {invitedUsers &&
+          invitedUsers.map((userImgUrl, index) => (
+            <Image
+              width={38}
+              height={38}
+              src={userImgUrl}
+              alt={'invitedUsers'}
+              style={{
+                marginLeft: `${0 - 8}px`,
+                zIndex: invitedUsers.length - index,
+              }}
+            />
+          ))}
+      </S.InvitedUsersBox>
       <S.ProfileBox>
-        {/* <Image src={profileImgURL} width={38} height={38} alt="profileImg" /> */}
+        <Image src={profileImgURL} width={38} height={38} alt="profileImg" />
         <S.ProfileName>{profileName}</S.ProfileName>
       </S.ProfileBox>
     </S.Header>
