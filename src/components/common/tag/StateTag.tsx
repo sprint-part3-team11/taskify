@@ -2,10 +2,6 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import EllipseIcon from '@/public/icon/ellipse.svg';
 
-interface StateTagProps {
-  children: ReactNode;
-  isMobile: boolean;
-}
 const S = {
   StateTagWrapper: styled.div<StateTagProps>`
     padding: 0.4rem 0.8rem 0.6rem;
@@ -23,6 +19,12 @@ const S = {
     top: -0.1rem;
   `,
 };
+
+interface StateTagProps {
+  children: ReactNode;
+  isMobile: boolean;
+}
+
 function StateTag({ children, isMobile = false }: StateTagProps) {
   return (
     <S.StateTagWrapper isMobile={isMobile}>

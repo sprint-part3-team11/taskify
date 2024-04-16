@@ -3,12 +3,6 @@ import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import theme from '@/styles/theme';
 
-interface HeaderProps {
-  menuName: string;
-  profileName: string;
-  profileImgURL: string;
-  invitedUsers: string[];
-}
 const S = {
   Header: styled.nav`
     display: flex;
@@ -91,6 +85,13 @@ const S = {
     }
   `,
 };
+
+interface HeaderProps {
+  menuName: string;
+  profileName: string;
+  profileImgURL: string;
+  invitedUsers: string[];
+}
 
 function DashBoardHeader({
   menuName,

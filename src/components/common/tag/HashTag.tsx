@@ -2,11 +2,6 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
-interface HashTagProps {
-  children: ReactNode;
-  index: number;
-  isMobile: boolean;
-}
 const color = [
   theme.color.green,
   theme.color.skyBlue,
@@ -34,6 +29,12 @@ const S = {
     color: ${(props) => color[props.index % color.length]};
   `,
 };
+
+interface HashTagProps {
+  children: ReactNode;
+  index: number;
+  isMobile: boolean;
+}
 
 function HashTag({ children, index, isMobile = false }: HashTagProps) {
   return (
