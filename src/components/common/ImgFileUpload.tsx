@@ -129,12 +129,10 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
               alt="업로드된 이미지"
               $small={small}
             />
-            {edit ? (
+            {edit && (
               <S.Overlay $small={small}>
                 <EditIcon />
               </S.Overlay>
-            ) : (
-              ''
             )}
           </>
         ) : (
