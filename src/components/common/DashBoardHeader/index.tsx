@@ -102,7 +102,7 @@ interface HeaderProps {
   menuName: string;
   profileName: string;
   profileImgURL: string;
-  invitedUsers: string[];
+  invitedUsers?: string[];
 }
 
 function DashBoardHeader({
