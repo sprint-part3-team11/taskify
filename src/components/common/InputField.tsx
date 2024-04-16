@@ -53,19 +53,16 @@ const S = {
   `,
 };
 
-interface InputFieldProps {
+interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  usage: 'form' | 'modal';
   id: string;
-  type: string;
-  placeholder: string;
 }
 
-function InputField({ label, id, ...rest }: InputFieldProps) {
+function InputField({ label, id, ...htmlInputProps }: InputFieldProps) {
   return (
     <S.Layout>
       <S.Label htmlFor={id}>{label}</S.Label>
-      <S.Input id={id} {...rest} />
+      <S.Input id={id} {...htmlInputProps} />
     </S.Layout>
   );
 }
