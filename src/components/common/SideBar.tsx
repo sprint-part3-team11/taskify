@@ -15,6 +15,7 @@ const S = {
     padding: 1.25rem 1.5rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     background-color: ${({ theme }) => theme.color.white};
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     ${MEDIA_QUERIES.onTablet} {
       width: 15rem;
@@ -83,6 +84,9 @@ const S = {
     font-weight: 500;
     ${({ active }) => active && `font-weight: bold;`}
     margin-left: 1.325rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     ${MEDIA_QUERIES.onMobile} {
       display: none;
