@@ -1,13 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-const BREAKPOINT = {
-  medium: '376px',
-  large: '744px',
-};
-
-const onPC = `@media only screen and (min-width: ${BREAKPOINT.medium})`;
-
 const S = {
   Layout: styled.div`
     display: flex;
@@ -24,6 +17,7 @@ const S = {
     display: flex;
     align-items: center;
     gap: 1rem;
+
     width: 100%;
     padding: 1.5rem 1.6rem;
     border-radius: 0.8rem;
@@ -34,6 +28,10 @@ const S = {
       color: ${({ theme }) => theme.color.gray};
       font-size: 1.6rem;
       font-weight: 400;
+    }
+
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.color.purple};
     }
   `,
 };
