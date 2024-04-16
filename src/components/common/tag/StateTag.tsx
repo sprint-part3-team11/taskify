@@ -13,6 +13,7 @@ const S = {
     font-weight: 400;
     color: ${({ theme }) => theme.color.purple};
   `,
+
   SVGContainer: styled.span`
     margin-right: 0.3rem;
     position: relative;

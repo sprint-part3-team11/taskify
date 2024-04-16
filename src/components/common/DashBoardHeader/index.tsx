@@ -28,6 +28,7 @@ const S = {
     display: flex;
     flex: 1;
     justify-content: space-between;
+
     ${MEDIA_QUERIES.onTablet} {
       display: block;
       text-align: right;
@@ -41,6 +42,7 @@ const S = {
   MenuName: styled.div`
     font-weight: 700;
     padding-left: 2rem;
+
     ${MEDIA_QUERIES.onTablet} {
       display: none;
     }
