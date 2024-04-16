@@ -11,13 +11,13 @@ const S = {
     align-items: center;
     gap: 0.625rem;
   `,
-  ColorPalette: styled.div<{ bg: Color; showIcon: boolean }>`
+  ColorPalette: styled.div<{ $bg: Color; $showIcon: boolean }>`
     position: relative;
 
     width: 1.875rem;
     height: 1.875rem;
     flex-shrink: 0;
-    background-color: ${(props) => props.bg};
+    background-color: ${(props) => props.$bg};
     border-radius: 50%;
 
     cursor: pointer;
@@ -37,14 +37,14 @@ const S = {
 
     background-color: hotpink;
   `,
-  SelectedColor: styled.div<{ bg: string }>`
+  SelectedColor: styled.div<{ $bg: string }>`
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
 
-    background-color: ${(props) => props.bg};
+    background-color: ${(props) => props.$bg};
   `,
-  IconContainer: styled.div<{ showIcon: boolean }>`
+  IconContainer: styled.div<{ $showIcon: boolean }>`
     position: absolute;
 
     top: 58%;
@@ -52,7 +52,7 @@ const S = {
 
     transform: translate(-50%, -50%);
     opacity: ${(props) =>
-      props.showIcon ? '1' : '0'}; // 아이콘을 보이거나 숨기기 위해 투명도 조절
+      props.$showIcon ? '1' : '0'}; // 아이콘을 보이거나 숨기기 위해 투명도 조절
     transition: opacity 0.1s ease-in-out;
   `,
 };
@@ -85,6 +85,7 @@ function ColorSelector(): JSX.Element {
     setChangeColor(true);
     setShowIcon(true);
     setCurrentColor(color);
+    console.log(color);
   };
 
   const handleButtonClick = () => {
@@ -98,7 +99,6 @@ function ColorSelector(): JSX.Element {
     setChangeColor(true);
   };
   let resultColor = selectedColors[selectedColors.length - 1];
-  let color = selectedColors;
 
   return (
     <>
@@ -106,18 +106,20 @@ function ColorSelector(): JSX.Element {
         {Object.entries(colorPalette).map(([colorName, colorValue]) => (
           <S.ColorPalette
             key={colorName}
-            bg={colorValue}
+            $bg={colorValue}
             onClick={() => handleColorClick(colorValue)}
-            showIcon={colorValue === currentColor && showIcon}
+            $showIcon={colorValue === currentColor && showIcon}
           >
-            <S.IconContainer showIcon={colorValue === currentColor && showIcon}>
+            <S.IconContainer
+              $showIcon={colorValue === currentColor && showIcon}
+            >
               <ColorCheckIcon />
             </S.IconContainer>
           </S.ColorPalette>
         ))}
       </S.ColorArea>
-      <S.Button onClick={handleButtonClick}>버튼</S.Button>
-      {selectedColors.length > 0 && <S.SelectedColor bg={resultColor} />}
+      <S.Button onClick={handleButtonClick} />
+      {selectedColors.length > 0 && <S.SelectedColor $bg={resultColor} />}
     </>
   );
 }
