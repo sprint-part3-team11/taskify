@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+import SideBar from '@/components/common/DashBoardHeader/SideBar';
 import DashBoardHeader from '@/components/common/DashBoardHeader/index';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
@@ -13,15 +15,20 @@ function hj() {
     'https://i.ibb.co/tPyNYb1/Ellipse-38.png',
     'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
   ];
+  const S = {
+    Container: styled.div`
+      position: relative;
+    `,
+  };
   return (
-    <>
+    <S.Container>
       <DashBoardHeader
         menuName={'내 대시보드'}
         profileName={'남현준'}
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
       />
-      <div>
+      {/* <div>
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>
         ))}
@@ -30,8 +37,9 @@ function hj() {
             {tag}
           </HashTag>
         ))}
-      </div>
-    </>
+      </div> */}
+      <SideBar />
+    </S.Container>
   );
 }
 
