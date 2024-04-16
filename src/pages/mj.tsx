@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BackDropModal from '@/components/common/Modal/BackDropModal';
-import PasswordWarnModal from '@/components/common/Modal/PassWordWarnModal';
+import BackDropModal from '@/components/common/modal/BackDropModal';
+import PasswordWarnModal from '@/components/common/modal/PasswordWarnModal';
 
 const S = {
   Button: styled.button`
@@ -22,10 +22,10 @@ function mj() {
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     if (inputValue !== '1234') {
       setModalOpen2(true);

@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import BackDropModal from '@/components/common/Modal/BackDropModal';
+import BackDropModal from '@/components/common/modal/BackDropModal';
 
 const S = {
   Text: styled.p`
