@@ -50,6 +50,13 @@ const S = {
     align-items: center;
     margin: 0 2rem;
   `,
+  InvitedUserImage: styled(Image)`
+    ${MEDIA_QUERIES.onMobile} {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
+  `,
+
   ProfileBox: styled.div`
     display: flex;
     justify-content: center;
@@ -57,6 +64,16 @@ const S = {
     padding: 0 40px;
     border-left: 1px solid ${theme.color.grayLight};
     gap: 1rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding: 0 1rem;
+    }
+  `,
+  ProfileImg: styled(Image)`
+    ${MEDIA_QUERIES.onMobile} {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
   `,
   ProfileName: styled.div`
     font-size: 1.6rem;
@@ -86,7 +103,8 @@ function DashBoardHeader({
       <S.InvitedUsersBox>
         {invitedUsers &&
           invitedUsers.map((userImgUrl, index) => (
-            <Image
+            <S.InvitedUserImage
+              key={index}
               width={38}
               height={38}
               src={userImgUrl}
@@ -99,7 +117,12 @@ function DashBoardHeader({
           ))}
       </S.InvitedUsersBox>
       <S.ProfileBox>
-        <Image src={profileImgURL} width={38} height={38} alt="profileImg" />
+        <S.ProfileImg
+          src={profileImgURL}
+          width={38}
+          height={38}
+          alt="profileImg"
+        />
         <S.ProfileName>{profileName}</S.ProfileName>
       </S.ProfileBox>
     </S.Header>
