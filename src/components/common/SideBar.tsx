@@ -44,7 +44,7 @@ const S = {
   `,
   AddText: styled.span`
     padding-top: 3%;
-    color: ${({ theme }) => theme.color.main};
+    color: ${({ theme }) => theme.color.grayLight};
     font-size: 1rem;
     font-weight: 700;
     margin-right: 9.5rem;
@@ -61,10 +61,11 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      margin-left: 0.7rem;
+      margin-left: 0.85rem;
     }
   `,
   DashboardItemWrapper: styled.div`
+    height: 3.85rem;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -74,14 +75,7 @@ const S = {
       background: var(--violet-violet-8, #f1effd);
       border-radius: 0.55rem;
     }
-
-    ${MEDIA_QUERIES.onMobile} {
-      padding: 1.25rem;
-      margin-top: 0.85rem;
-      margin-left: 0.2rem;
-    }
   `,
-  CircleColor: styled(CircleColor)``,
   DashboardItem: styled.li<{ active: boolean }>`
     cursor: pointer;
     color: ${({ theme }) => theme.color.grayDark};
@@ -133,7 +127,7 @@ const Sidebar: React.FC<SidebarProps> = ({ dashboards }) => {
       <ul>
         {updatedDashboards.map((dashboard) => (
           <S.DashboardItemWrapper key={dashboard.id}>
-            <S.CircleColor color={dashboard.color} />
+            <CircleColor color={dashboard.color} />
             <S.DashboardItem
               active={dashboard.id === router.query.dashboardId}
               onClick={() => handleDashboardClick(dashboard.id)}
