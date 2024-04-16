@@ -41,6 +41,14 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
 }
 
+/**
+ * @component
+ * @param label - label 이름 (이메일, 제목 ...)
+ * @param id - label, input 연결용 id (input, title ...)
+ * @param type - input 타입 (email, text ...)
+ * @param placeholder - placeholder
+ */
+
 function InputField({ label, id, ...htmlInputProps }: InputFieldProps) {
   return (
     <S.Layout>
@@ -51,10 +59,3 @@ function InputField({ label, id, ...htmlInputProps }: InputFieldProps) {
 }
 
 export default InputField;
-/**
- * @component
- * @param label - label 이름 (이메일, 제목 ...)
- * @param id - label, input 연결용 id (input, title ...)
- * @param type - input 타입 (email, text ...)
- * @param placeholder - placeholder
- */
