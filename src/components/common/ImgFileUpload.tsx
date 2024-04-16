@@ -120,18 +120,20 @@ function ImgFileUpload({
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function handleClick(): void {
+  const handleClick: () => void = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-  }
+  };
 
-  function onChangeImage(e: React.ChangeEvent<HTMLInputElement>): void {
+  const onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void = (
+    e,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       setUploadedImage(file);
     }
-  }
+  };
 
   return (
     <>
