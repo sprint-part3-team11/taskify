@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import AddNewColumnsModal from '@/components/common/modal/AddNewColumnsModal';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import PasswordWarnModal from '@/components/common/modal/PasswordWarnModal';
 
@@ -50,7 +51,8 @@ function mj() {
         <button type="submit">1234입력(틀리면 모달나옴)</button>
       </form>
 
-      <PasswordWarnModal isOpen={isModalOpen2} onClose={closeModal2} />
+      <AddNewColumnsModal isOpen={isModalOpen2} onClose={closeModal2} />
+      {/* <PasswordWarnModal isOpen={isModalOpen2} onClose={closeModal2} /> */}
     </div>
   );
 }
