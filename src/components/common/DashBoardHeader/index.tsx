@@ -28,6 +28,14 @@ const S = {
     display: flex;
     flex: 1;
     justify-content: space-between;
+    ${MEDIA_QUERIES.onTablet} {
+      display: block;
+      text-align: right;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: block;
+      text-align: right;
+    }
   `,
 
   MenuName: styled.div`
