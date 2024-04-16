@@ -3,10 +3,9 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   SideBarBox: styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     border: 1px solid black;
-
     width: 30rem;
     min-height: 100vh;
     ${MEDIA_QUERIES.onTablet} {

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import SideBar from '@/components/common/DashBoardHeader/SideBar';
 import DashBoardHeader from '@/components/common/DashBoardHeader/index';
+import TodoConfirmModal from '@/components/common/Modal/TodoConfirmModal';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
 import '@/styles/GlobalStyle';
@@ -38,7 +39,9 @@ function hj() {
           </HashTag>
         ))}
       </div> */}
-      <SideBar />
+      {/* <SideBar /> */}
+
+      {/* <TodoConfirmModal /> */}
     </S.Container>
   );
 }

@@ -5,6 +5,8 @@ import theme from '@/styles/theme';
 
 const S = {
   Header: styled.nav`
+    position: fixed;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
