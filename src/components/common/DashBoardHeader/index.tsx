@@ -16,6 +16,7 @@ const S = {
     align-items: center;
     height: 7rem;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
+
     ${MEDIA_QUERIES.onPc} {
       padding-left: 30rem;
     }
@@ -26,13 +27,16 @@ const S = {
       padding-left: 6.7rem;
     }
   `,
+
   MenuNameAndButtonBox: styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
   `,
+
   MenuName: styled.div`
     font-weight: 700;
+    padding-left: 2rem;
     ${MEDIA_QUERIES.onTablet} {
       display: none;
     }
@@ -50,6 +54,7 @@ const S = {
     align-items: center;
     margin: 0 2rem;
   `,
+
   InvitedUserImage: styled(Image)`
     ${MEDIA_QUERIES.onMobile} {
       width: 3.4rem;
@@ -69,12 +74,14 @@ const S = {
       padding: 0 1rem;
     }
   `,
+
   ProfileImg: styled(Image)`
     ${MEDIA_QUERIES.onMobile} {
       width: 3.4rem;
       height: 3.4rem;
     }
   `,
+
   ProfileName: styled.div`
     font-size: 1.6rem;
     font-weight: 500;
