@@ -19,7 +19,6 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
   `,
-  /* input 컴포넌트에서 스타일 변경하려면 어떻게 해야할까요..? 예를 들어 gap이나 font-size 조정하려구요. */
   Input: styled(InputField)`
     min-width: 48.4rem;
     padding: 1.5rem 1.6rem 1.4rem;
@@ -54,26 +53,35 @@ const S = {
   `,
 };
 
-interface AddNewColumnsModal {
+interface AddNewColumnsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (columnName: string) => void;
 }
 
-function AddNewColumnsModal({ isOpen, onClose, onCreate }: AddNewColumnsModal) {
+function AddNewColumnsModal({
+  isOpen,
+  onClose,
+  onCreate,
+}: AddNewColumnsModalProps) {
   const [columnName, setColumnName] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
   };
 
-  const handleCreate = () => {
-    onCreate(columnName);
+  const handleClose = () => {
+    setColumnName('');
     onClose();
   };
 
+  const handleCreate = () => {
+    onCreate(columnName);
+    handleClose();
+  };
+
   return (
-    <BackDropModal isOpen={isOpen} onClose={onClose}>
+    <BackDropModal isOpen={isOpen} onClose={handleClose}>
       <S.Title>새 컬럼 생성</S.Title>
       <S.Input
         label="이름"
