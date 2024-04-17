@@ -38,7 +38,7 @@ const S = {
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.6rem;
     color: ${({ theme }) => theme.color.main};
-    font-size: 14px;
+    font-size: 1.4rem;
   `,
 };
 
@@ -59,6 +59,7 @@ function CommentForm(props: CommentFormProps) {
     props.create(inputValue);
     setInputValue('');
   };
+
   return (
     <S.CommentFormBox>
       <S.Form onSubmit={submitHandler}>
