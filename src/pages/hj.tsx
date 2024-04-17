@@ -1,8 +1,7 @@
-
 import styled from 'styled-components';
 import SideBar from '@/components/common/DashBoardHeader/SideBar';
 import DashBoardHeader from '@/components/common/DashBoardHeader/index';
-import TodoConfirmModal from '@/components/common/Modal/TodoConfirmModal';
+import CardConfirmModal from '@/components/common/Modal/CardConfirmModal';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
 import '@/styles/GlobalStyle';
@@ -11,7 +10,6 @@ function hj() {
   const stateTags = ['To Do', 'On Progress', 'Done'];
   const isMobile = false;
   const hashTag = ['프로젝트', '프론트엔드', '어려워'];
-
   const MY_IMAGE_URL = 'https://i.ibb.co/ysRQMyj/me.jpg';
   const invitedUsers = [
     'https://i.ibb.co/kgykYbx/Ellipse-40.png',
@@ -25,18 +23,13 @@ function hj() {
   };
   return (
     <S.Container>
-      <DashBoardHeader
+      {/* <DashBoardHeader
         menuName={'내 대시보드'}
         profileName={'남현준'}
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
-      />
+      /> */}
       {/* <div>
-
-  return (
-    <>
-      <div>
-
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>
         ))}
@@ -45,16 +38,10 @@ function hj() {
             {tag}
           </HashTag>
         ))}
-
       </div> */}
       {/* <SideBar /> */}
-
-      {/* <TodoConfirmModal /> */}
+      <CardConfirmModal />
     </S.Container>
-
-      </div>
-    </>
-
   );
 }
 
