@@ -1,3 +1,4 @@
+import { CardConfirmModalProps } from './CardConfirmModal';
 import ContentAndImageBox from './ContentAndImageBox';
 import TagBox from './TagBox';
 import styled from 'styled-components';
@@ -10,10 +11,10 @@ const S = {
     display: flex;
   `,
 };
-function MainBox() {
+function MainBox({ cardInfoData }: CardConfirmModalProps) {
   return (
     <S.MainBox>
-      <TagBox />
+      <TagBox cardInfoData={cardInfoData} />
       <ContentAndImageBox />
     </S.MainBox>
   );

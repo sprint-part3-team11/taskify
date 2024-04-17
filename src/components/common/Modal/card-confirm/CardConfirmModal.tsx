@@ -35,7 +35,7 @@ function CardConfirmModal({ cardInfoData }: CardConfirmModalProps) {
   return (
     <ModalBox>
       <ModalHeader cardInfoData={cardInfoData} />
-      <MainBox />
+      <MainBox cardInfoData={cardInfoData} />
     </ModalBox>
   );
 }

@@ -1,5 +1,6 @@
 import HashTag from '../../tag/HashTag';
 import StateTag from '../../tag/StateTag';
+import { CardConfirmModalProps } from './CardConfirmModal';
 import styled from 'styled-components';
 
 const HeightLine = styled.div`
@@ -7,10 +8,10 @@ const HeightLine = styled.div`
   margin: 0 2rem 0.2rem 2rem;
 `;
 
-function TagBox() {
+function TagBox({ cardInfoData }: CardConfirmModalProps) {
   return (
     <>
-      <StateTag isMobile={false}>To Do</StateTag>
+      <StateTag isMobile={false}>{cardInfoData.tags}</StateTag>
       <HeightLine />
       <HashTag isMobile={false} index={0}>
         프로젝트
