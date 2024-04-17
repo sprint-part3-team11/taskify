@@ -1,13 +1,19 @@
 import MainBox from './MainBox';
 import ModalHeader from './ModalHeader';
+import SideBox from './SideBox';
 import styled from 'styled-components';
 
-const ModalBox = styled.div`
-  padding: 3rem 2rem;
-  width: 73rem;
-  height: 76rem;
-  border: 1px solid gray;
-`;
+const S = {
+  ModalContainer: styled.div`
+    padding: 3rem 2rem;
+    width: 73rem;
+    height: 76rem;
+    border: 1px solid gray;
+  `,
+  Wrapper: styled.div`
+    display: flex;
+  `,
+};
 
 interface Assignee {
   profileImageUrl: string;
@@ -33,10 +39,13 @@ export interface CardConfirmModalProps {
 }
 function CardConfirmModal({ cardInfoData }: CardConfirmModalProps) {
   return (
-    <ModalBox>
+    <S.ModalContainer>
       <ModalHeader cardInfoData={cardInfoData} />
-      <MainBox cardInfoData={cardInfoData} />
-    </ModalBox>
+      <S.Wrapper>
+        <MainBox cardInfoData={cardInfoData} />
+        <SideBox cardInfoData={cardInfoData} />
+      </S.Wrapper>
+    </S.ModalContainer>
   );
 }
 
