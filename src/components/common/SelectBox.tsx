@@ -97,16 +97,11 @@ interface Option {
 }
 
 interface SelectBoxProps {
-  title: string;
   options: Option[];
   placeholder: boolean;
 }
 
-function SelectBox({
-  title,
-  options,
-  placeholder,
-}: SelectBoxProps): JSX.Element {
+function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -129,7 +124,6 @@ function SelectBox({
 
   return (
     <>
-      <S.Title>{title}</S.Title>
       <S.SelectBox
         ref={selectBoxRef}
         tabIndex={0}
