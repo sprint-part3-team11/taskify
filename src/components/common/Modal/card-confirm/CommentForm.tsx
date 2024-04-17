@@ -13,20 +13,30 @@ const S = {
 
   Form: styled.form``,
 
+  InputWrapper: styled.div`
+    position: relative;
+    display: flex;
+    width: 100%;
+  `,
   Input: styled.input`
     padding: 0 0 7rem 1rem;
     margin-top: 1rem;
     height: 12rem;
     width: 100%;
+    border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border-radius: 0.6rem;
   `,
 
   Button: styled.button`
-    width: 18%;
-    padding: 18px 0 16px;
+    position: absolute;
+    margin: 8rem 0 0 35rem;
+    width: 8rem;
+    height: 3.2rem;
     text-align: center;
     box-sizing: border-box;
     text-decoration: none;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border-radius: 0.6rem;
     color: ${({ theme }) => theme.color.main};
     font-size: 14px;
   `,
@@ -56,13 +66,15 @@ function CommentForm(props: CommentFormProps) {
           댓글 <span>({props.length})</span>
         </S.Title>
 
-        <S.Input
-          onChange={changeHandler}
-          value={inputValue}
-          placeholder="댓글 작성하기"
-        />
+        <S.InputWrapper>
+          <S.Input
+            onChange={changeHandler}
+            value={inputValue}
+            placeholder="댓글 작성하기"
+          />
 
-        <S.Button type="submit" value="입력" />
+          <S.Button type="submit">입력</S.Button>
+        </S.InputWrapper>
       </S.Form>
     </S.CommentFormBox>
   );
