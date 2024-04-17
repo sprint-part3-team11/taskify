@@ -4,9 +4,9 @@ import KebabIcon from '@/public/icon/kebabIcon.svg';
 
 const S = {
   ModalHeader: styled.div`
+    margin-bottom: 2rem;
     display: flex;
     justify-content: space-between;
-    padding: 2.5rem 2rem;
   `,
   ModalTitle: styled.div`
     font-size: 2.4rem;
