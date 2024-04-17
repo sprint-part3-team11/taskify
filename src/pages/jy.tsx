@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
@@ -11,7 +12,14 @@ const selectBoxOptions = [
 
 function jy() {
   return (
-    <SelectBox title={'담당자'} options={selectBoxOptions} placeholder={true} />
+    <>
+      <SelectBox
+        title={'담당자'}
+        options={selectBoxOptions}
+        placeholder={true}
+      />
+      <ImgFileUpload edit={false} small={true} />
+    </>
   );
 }
 
