@@ -13,8 +13,8 @@ const S = {
     height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '6.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '6.25rem')};
+      width: ${(props) => (props.$small ? '3.8rem' : '6.25rem')};
+      height: ${(props) => (props.$small ? '3.8rem' : '6.25rem')};
     }
   `,
   Image: styled.img<{ $small: boolean }>`
@@ -30,8 +30,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
     }
   `,
   Button: styled.button<{ $small: boolean }>`
@@ -46,8 +46,8 @@ const S = {
     opacity: 0;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
     }
   `,
   AddIcon: styled(AddIcon)`
@@ -67,8 +67,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
     }
   `,
   Overlay: styled.div<{ $small: boolean }>`
@@ -86,8 +86,8 @@ const S = {
     background: rgba(0, 0, 0, 0.6);
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
     }
   `,
   Input: styled.input<{ $small: boolean }>`
