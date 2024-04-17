@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
+import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import WarningModal from '@/components/common/modal/WarningModal';
 
@@ -23,6 +24,7 @@ function Mj() {
   const [isModalOpen3, setModalOpen3] = useState(false);
   const [isModalOpen4, setModalOpen4] = useState(false);
   const [isModalOpen5, setModalOpen5] = useState(false);
+  const [isModalOpen6, setModalOpen6] = useState(false);
 
   const [tempColumnName, setTempColumnName] = useState('');
 
@@ -31,11 +33,13 @@ function Mj() {
   const openModal3 = () => setModalOpen3(true);
   const openModal4 = () => setModalOpen4(true);
   const openModal5 = () => setModalOpen5(true);
+  const openModal6 = () => setModalOpen6(true);
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
   const closeModal3 = () => setModalOpen3(false);
   const closeModal4 = () => setModalOpen4(false);
   const closeModal5 = () => setModalOpen5(false);
+  const closeModal6 = () => setModalOpen6(false);
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
@@ -87,6 +91,7 @@ function Mj() {
       <S.Button onClick={openModal3}>3번 모달(add column)</S.Button>
       <S.Button onClick={openModal4}>4번 모달(manage column)</S.Button>
       <S.Button onClick={openModal5}>5번 모달(invite member)</S.Button>
+      <S.Button onClick={openModal6}>5번 모달(add dashboard+color)</S.Button>
 
       {/* 기본 백드롭 모달 */}
       <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
@@ -133,6 +138,9 @@ function Mj() {
         onClose={closeModal5}
         onCreate={handleEmail}
       />
+
+      {/*  */}
+      <NewDashBoardModal />
     </div>
   );
 }
