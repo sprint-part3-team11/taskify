@@ -79,12 +79,12 @@ const S = {
       transition: all 0.1s ease-in-out;
     }
   `,
-  DashboardItem: styled.li<{ active: boolean }>`
+  DashboardItem: styled.li<{ $active: boolean }>`
     cursor: pointer;
     color: ${({ theme }) => theme.color.grayDark};
     font-size: 1.425rem;
     font-weight: 500;
-    ${({ active }) => active && `font-weight: bold;`}
+    ${({ $active }) => $active && `font-weight: bold;`}
     margin-left: 1.325rem;
     overflow: hidden;
     white-space: nowrap;
@@ -137,7 +137,9 @@ const Sidebar: React.FC<SidebarProps> = ({ dashboards }) => {
             onClick={() => handleDashboardClick(dashboard.id)}
           >
             <CircleColor color={dashboard.color} />
-            <S.DashboardItem active={dashboard.id === router.query.dashboardId}>
+            <S.DashboardItem
+              $active={dashboard.id === router.query.dashboardId}
+            >
               {dashboard.name} {dashboard.createdByMe && <CreateByMe />}
             </S.DashboardItem>
           </S.DashboardItemWrapper>
