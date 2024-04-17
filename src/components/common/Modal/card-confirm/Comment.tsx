@@ -2,6 +2,14 @@ import { useState } from 'react';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import MOCK_DATA from './MockData';
+import styled from 'styled-components';
+
+const S = {
+  CommentContainer: styled.ul`
+    list-style: none;
+    padding: 0;
+  `,
+};
 
 function Comment() {
   const [list, setList] = useState(MOCK_DATA);
@@ -14,12 +22,12 @@ function Comment() {
       updatedAt: new Date().toISOString(),
       cardId: Math.floor(Math.random() * 1000),
       author: {
-        profileImageUrl: 'https://example.com/profile.jpg',
+        profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
         nickname: 'user' + Math.floor(Math.random() * 100),
         id: Math.floor(Math.random() * 1000),
       },
     };
-    setList([...list, newComment]);
+    setList([newComment, ...list]);
   };
 
   const modify = (content: string, id: number) => {
@@ -37,10 +45,10 @@ function Comment() {
   };
 
   return (
-    <ul className="comment">
+    <S.CommentContainer className="comment">
       <CommentForm create={create} length={list.length} />
       <CommentList modify={modify} destroy={destroy} list={list} />
-    </ul>
+    </S.CommentContainer>
   );
 }
 
