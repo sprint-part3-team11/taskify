@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import MOCK_DATA from './MockData';
 import styled from 'styled-components';
 
 const S = {
@@ -29,16 +28,18 @@ const S = {
 
   Button: styled.button`
     position: absolute;
+
     margin: 8rem 0 0 35rem;
     width: 8rem;
     height: 3.2rem;
-    text-align: center;
     box-sizing: border-box;
-    text-decoration: none;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.6rem;
+
     color: ${({ theme }) => theme.color.main};
     font-size: 1.4rem;
+    text-decoration: none;
+    text-align: center;
   `,
 };
 
