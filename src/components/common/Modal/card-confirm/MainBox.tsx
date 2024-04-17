@@ -9,13 +9,14 @@ const S = {
   `,
   MainBox: styled.div`
     display: flex;
+    flex-direction: column;
   `,
 };
 function MainBox({ cardInfoData }: CardConfirmModalProps) {
   return (
     <S.MainBox>
       <TagBox cardInfoData={cardInfoData} />
-      <ContentAndImageBox />
+      <ContentAndImageBox cardInfoData={cardInfoData} />
     </S.MainBox>
   );
 }

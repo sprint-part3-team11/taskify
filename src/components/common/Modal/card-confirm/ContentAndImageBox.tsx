@@ -1,3 +1,4 @@
+import { CardConfirmModalProps } from './CardConfirmModal';
 import styled from 'styled-components';
 
 const S = {
@@ -8,10 +9,10 @@ const S = {
   ContentBox: styled.div``,
   ImageBox: styled.div``,
 };
-function ContentAndImageBox() {
+function ContentAndImageBox({ cardInfoData }: CardConfirmModalProps) {
   return (
     <S.Container>
-      <S.ContentBox></S.ContentBox>
+      <S.ContentBox>{cardInfoData.description}</S.ContentBox>
       <S.ImageBox></S.ImageBox>
     </S.Container>
   );
