@@ -120,37 +120,35 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   };
 
   return (
-    <>
-      <S.Label htmlFor="fileInput" $small={small}>
-        {uploadedImage ? (
-          <>
-            <S.Image
-              src={URL.createObjectURL(uploadedImage)}
-              alt="업로드된 이미지"
-              $small={small}
-            />
-            {edit && (
-              <S.Overlay $small={small}>
-                <EditIcon />
-              </S.Overlay>
-            )}
-          </>
-        ) : (
-          <S.AddIcon onClick={handleClick} $small={small} />
-        )}
-        <S.Input
-          id="fileInput"
-          type="file"
-          accept="image/*"
-          onChange={onChangeImage}
-          ref={fileInputRef}
-          $small={small}
-        />
-        <S.Button onClick={handleClick} $small={small}>
-          파일 선택
-        </S.Button>
-      </S.Label>
-    </>
+    <S.Label htmlFor="fileInput" $small={small}>
+      {uploadedImage ? (
+        <>
+          <S.Image
+            src={URL.createObjectURL(uploadedImage)}
+            alt="업로드된 이미지"
+            $small={small}
+          />
+          {edit && (
+            <S.Overlay $small={small}>
+              <EditIcon />
+            </S.Overlay>
+          )}
+        </>
+      ) : (
+        <S.AddIcon onClick={handleClick} $small={small} />
+      )}
+      <S.Input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        onChange={onChangeImage}
+        ref={fileInputRef}
+        $small={small}
+      />
+      <S.Button onClick={handleClick} $small={small}>
+        파일 선택
+      </S.Button>
+    </S.Label>
   );
 }
 
