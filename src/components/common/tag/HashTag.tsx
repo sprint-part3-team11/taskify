@@ -21,7 +21,7 @@ const backgroundColor = [
 ];
 const S = {
   HashTagItem: styled.div<HashTagProps>`
-    border-radius: 4px;
+    border-radius: 0.4rem;
     width: fit-content;
     height: ${(props) => (props.isMobile ? '2rem' : '2.2rem')};
     padding: 0.4rem 0.8rem;
