@@ -1,4 +1,6 @@
 import { CardConfirmModalProps } from './CardConfirmModal';
+import Comment from './Comment';
+// import CommentFormBox from './CommentFormBox';
 import ContentAndImageBox from './ContentAndImageBox';
 import TagBox from './TagBox';
 import styled from 'styled-components';
@@ -18,6 +20,7 @@ function MainBox({ cardInfoData }: CardConfirmModalProps) {
     <S.MainBox>
       <TagBox cardInfoData={cardInfoData} />
       <ContentAndImageBox cardInfoData={cardInfoData} />
+      <Comment />
     </S.MainBox>
   );
 }
