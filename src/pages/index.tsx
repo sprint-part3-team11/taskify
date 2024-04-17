@@ -4,7 +4,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Landing from '@/public/image/landing.png';
 
-const S = {};
+const S = {
+  Container: styled.div`
+    background-color: ${({ theme }) => theme.color.black};
+    width: 100%;
+  `,
+};
 
 export default function Home() {
   const router = useRouter();
@@ -15,7 +20,9 @@ export default function Home() {
   return (
     <>
       <title>Taskify</title>
-      <Image src={Landing} width={400} height={100} alt="랜딩 메인 이미지" />
+      <S.Container>
+        <Image src={Landing} width={722} height={423} alt="랜딩 메인 이미지" />
+      </S.Container>
     </>
   );
 }
