@@ -21,6 +21,8 @@ const S = {
     background-color: rgba(0, 0, 0, 0.5);
   `,
   ModalContainer: styled.div`
+    position: relative;
+
     padding: 3.2rem 2rem 2rem;
     background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
