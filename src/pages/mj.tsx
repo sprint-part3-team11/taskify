@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AddNewColumnsModal from '@/components/common/modal/AddNewColumnsModal';
 import BackDropModal from '@/components/common/modal/BackDropModal';
+import InviteTeamMemberModal from '@/components/common/modal/InviteTeamMemberModal';
 import ManageColumnsModal from '@/components/common/modal/ManageColumnsModal';
 import WarningModal from '@/components/common/modal/WarningModal';
 
@@ -21,6 +22,7 @@ function Mj() {
   const [isModalOpen2, setModalOpen2] = useState(false);
   const [isModalOpen3, setModalOpen3] = useState(false);
   const [isModalOpen4, setModalOpen4] = useState(false);
+  const [isModalOpen5, setModalOpen5] = useState(false);
 
   const [tempColumnName, setTempColumnName] = useState('');
 
@@ -28,10 +30,12 @@ function Mj() {
   const openModal2 = () => setModalOpen2(true);
   const openModal3 = () => setModalOpen3(true);
   const openModal4 = () => setModalOpen4(true);
+  const openModal5 = () => setModalOpen5(true);
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
   const closeModal3 = () => setModalOpen3(false);
   const closeModal4 = () => setModalOpen4(false);
+  const closeModal5 = () => setModalOpen5(false);
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
@@ -64,6 +68,11 @@ function Mj() {
     // delete
   };
 
+  // 이메일 보내기 로직
+  const handleEmail = (email: string) => {
+    // post
+  };
+
   // 새 column 생성시 작동하는지 확인
   useEffect(() => {
     if (tempColumnName) {
@@ -77,6 +86,7 @@ function Mj() {
       <S.Button onClick={openModal2}>2번 모달(비밀번호 틀림)</S.Button>
       <S.Button onClick={openModal3}>3번 모달(add column)</S.Button>
       <S.Button onClick={openModal4}>4번 모달(manage column)</S.Button>
+      <S.Button onClick={openModal5}>5번 모달(invite member)</S.Button>
 
       {/* 기본 백드롭 모달 */}
       <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
@@ -115,6 +125,13 @@ function Mj() {
         currentColumnName={tempColumnName}
         onChange={handleChange}
         onDelete={handleDelete}
+      />
+
+      {/* 팀원 초대 모달 */}
+      <InviteTeamMemberModal
+        isOpen={isModalOpen5}
+        onClose={closeModal5}
+        onCreate={handleEmail}
       />
     </div>
   );
