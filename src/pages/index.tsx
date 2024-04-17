@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Footer from '@/components/landing/Footer';
 import LandingHeader from '@/components/landing/LandingHeader';
 import LandingMiddle from '@/components/landing/LandingMiddle';
 import LandingSetting from '@/components/landing/LandingSetting';
@@ -25,13 +26,21 @@ const S = {
 };
 
 export default function Home() {
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
-    <S.MainLayout>
-      <LandingHeader />
-      <S.IntroduceBox>
-        <LandingMiddle />
-        <LandingSetting />
-      </S.IntroduceBox>
-    </S.MainLayout>
+    mounted && (
+      <S.MainLayout>
+        <LandingHeader />
+        <S.IntroduceBox>
+          <LandingMiddle />
+          <LandingSetting />
+        </S.IntroduceBox>
+        <Footer />
+      </S.MainLayout>
+    )
   );
 }
