@@ -14,40 +14,46 @@ const formatDate = (dateString: string) => {
 };
 
 const S = {
-  CommentRow: styled.ul`
+  CommentItemContainer: styled.ul`
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 1rem;
   `,
 
   ProfileImage: styled(Image)`
     border-radius: 50%;
   `,
-
-  CommentId: styled.li`
-    margin-left: 10px;
+  NameAndDateBox: styled.div`
+    display: flex;
+  `,
+  CommentNickName: styled.li`
+    margin: 0 1rem;
+    font-weight: 600;
   `,
 
   CommentContent: styled.li`
     flex: 1;
-    margin: 0 10px;
+    margin: 0 1rem;
     cursor: pointer;
   `,
 
   CommentDate: styled.li`
-    margin-right: 10px;
+    margin-top: 0.3rem;
+    font-size: 1.2rem;
   `,
-
+  ModifyComment: styled.li`
+    cursor: pointer;
+  `,
   DeleteComment: styled.li`
     cursor: pointer;
   `,
 
   CommentInput: styled.input`
     flex: 1;
-    padding: 5px;
+    padding: 0.5rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 0 10px;
+    border-radius: 0.5rem;
+    margin: 0 1rem;
   `,
 };
 
@@ -83,15 +89,17 @@ function CommentItem(props: any) {
   };
 
   return (
-    <S.CommentRow className="comment-row">
+    <S.CommentItemContainer>
       <S.ProfileImage
         width={34}
         height={34}
         src={props.author.profileImageUrl}
         alt={'프로필 이미지'}
       />
-      <S.CommentId className="comment-id">{props.author.nickname}</S.CommentId>
-      <S.CommentDate>{formatDate(props.createdDate)}</S.CommentDate>
+      <S.NameAndDateBox>
+        <S.CommentNickName>{props.author.nickname}</S.CommentNickName>
+        <S.CommentDate>{formatDate(props.createdDate)}</S.CommentDate>
+      </S.NameAndDateBox>
       {liMode ? (
         <S.CommentInput
           type="text"
@@ -101,15 +109,14 @@ function CommentItem(props: any) {
           onKeyDown={keyPressHandler}
         />
       ) : (
-        <S.CommentContent className="comment-content" onClick={modifyHandler}>
+        <S.CommentContent onClick={modifyHandler}>
           {props.content}
         </S.CommentContent>
       )}
-      <S.CommentDate className="comment-date">{props.date}</S.CommentDate>
-      <S.DeleteComment className="delete-comment" onClick={deleteHandler}>
-        삭제
-      </S.DeleteComment>
-    </S.CommentRow>
+      <S.CommentDate>{props.date}</S.CommentDate>
+      <S.ModifyComment>수정</S.ModifyComment>
+      <S.DeleteComment onClick={deleteHandler}>삭제</S.DeleteComment>
+    </S.CommentItemContainer>
   );
 }
 
