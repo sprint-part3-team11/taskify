@@ -1,15 +1,8 @@
-import Link from 'next/link';
 import styled from 'styled-components';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';
 
 const S = {
-  ModalBox: styled.div`
-    width: 73rem;
-    height: 76rem;
-    border: 1px solid gray;
-  `,
-
   ModalHeader: styled.div`
     display: flex;
     justify-content: space-between;
@@ -35,19 +28,16 @@ const S = {
     cursor: pointer;
   `,
 };
-
-function CardConfirmModal() {
+function ModalHeader() {
   return (
-    <S.ModalBox>
-      <S.ModalHeader>
-        <S.ModalTitle>새로운 일정 관리 Taskify</S.ModalTitle>
-        <S.HeaderButton>
-          <S.KebabIcon />
-          <S.CloseIcon />
-        </S.HeaderButton>
-      </S.ModalHeader>
-    </S.ModalBox>
+    <S.ModalHeader>
+      <S.ModalTitle>새로운 일정 관리 Taskify</S.ModalTitle>
+      <S.HeaderButton>
+        <S.KebabIcon />
+        <S.CloseIcon />
+      </S.HeaderButton>
+    </S.ModalHeader>
   );
 }
 
-export default CardConfirmModal;
+export default ModalHeader;
