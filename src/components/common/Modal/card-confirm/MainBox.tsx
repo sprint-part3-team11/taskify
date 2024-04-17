@@ -10,6 +10,7 @@ const S = {
   MainBox: styled.div`
     display: flex;
     flex-direction: column;
+    width: 450px;
   `,
 };
 function MainBox({ cardInfoData }: CardConfirmModalProps) {

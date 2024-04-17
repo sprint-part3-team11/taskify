@@ -28,7 +28,7 @@ function hj() {
       nickname: 'jun',
       id: 0,
     },
-    imageUrl: 'https://placehold.co/450x260',
+    imageUrl: 'https://i.ibb.co/5WsrwJY/Group-751.png',
     teamId: '3',
     columnId: 0,
     createdAt: '2024-04-17T07:10:28.745Z',

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 const S = {
   TagBox: styled.div`
     display: flex;
+    margin-bottom: 2.5rem;
   `,
 
   HeightLine: styled.div`
