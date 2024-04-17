@@ -3,6 +3,8 @@ import {
   ColorSelector,
   resultColorState,
 } from '@/components/common/ColorSelector';
+import { useState } from 'react';
+import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
@@ -24,6 +26,7 @@ function jy() {
       />
       <ColorSelector />
       {resultColor}
+      <ImgFileUpload edit={false} small={true} />
     </>
   );
 }
