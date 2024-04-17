@@ -2,10 +2,15 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import EllipseIcon from '@/public/icon/ellipse.svg';
 
+
 const S = {
   StateTagWrapper: styled.div<StateTagProps>`
     padding: 0.4rem 0.8rem 0.6rem;
-    border-radius: 11px;
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.1rem;
     width: fit-content;
     height: ${(props) => (props.isMobile ? '2rem' : '2.2rem')};
     background-color: rgba(241, 239, 253, 1);
@@ -21,17 +26,17 @@ const S = {
   `,
 };
 
+
 interface StateTagProps {
   children: ReactNode;
   isMobile: boolean;
 }
 
+
 function StateTag({ children, isMobile = false }: StateTagProps) {
   return (
     <S.StateTagWrapper isMobile={isMobile}>
-      <S.SVGContainer>
-        <EllipseIcon />
-      </S.SVGContainer>
+      <EllipseIcon />
       {children}
     </S.StateTagWrapper>
   );

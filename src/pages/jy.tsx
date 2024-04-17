@@ -1,4 +1,10 @@
+import { useRecoilValue } from 'recoil';
+import {
+  ColorSelector,
+  resultColorState,
+} from '@/components/common/ColorSelector';
 import { useState } from 'react';
+import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 
 const selectBoxOptions = [
@@ -10,8 +16,18 @@ const selectBoxOptions = [
 ];
 
 function jy() {
+  const resultColor = useRecoilValue(resultColorState);
   return (
-    <SelectBox title={'담당자'} options={selectBoxOptions} placeholder={true} />
+    <>
+      <SelectBox
+        title={'담당자'}
+        options={selectBoxOptions}
+        placeholder={true}
+      />
+      <ColorSelector />
+      {resultColor}
+      <ImgFileUpload edit={false} small={true} />
+    </>
   );
 }
 
