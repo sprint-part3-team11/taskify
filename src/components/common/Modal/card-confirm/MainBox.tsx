@@ -1,3 +1,4 @@
+import ContentAndImageBox from './ContentAndImageBox';
 import TagBox from './TagBox';
 import styled from 'styled-components';
 
@@ -13,6 +14,7 @@ function MainBox() {
   return (
     <S.MainBox>
       <TagBox />
+      <ContentAndImageBox />
     </S.MainBox>
   );
 }
