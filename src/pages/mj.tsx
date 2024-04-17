@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import AddNewColumnsModal from '@/components/common/modal/AddNewColumnsModal';
 import BackDropModal from '@/components/common/modal/BackDropModal';
-import InviteTeamMemberModal from '@/components/common/modal/InviteTeamMemberModal';
-import ManageColumnsModal from '@/components/common/modal/ManageColumnsModal';
+import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
+import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
+import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import WarningModal from '@/components/common/modal/WarningModal';
 
 const S = {
@@ -112,14 +112,14 @@ function Mj() {
       />
 
       {/* 새 컬럼 추가에 사용되는 모달 형식 */}
-      <AddNewColumnsModal
+      <NewColumnsModal
         isOpen={isModalOpen3}
         onClose={closeModal3}
         onCreate={handleCreate}
       />
 
       {/* 기존의 컬럼을 수정 또는 삭제에 사용되는 모달 형식 */}
-      <ManageColumnsModal
+      <ColumnsManageModal
         isOpen={isModalOpen4}
         onClose={closeModal4}
         currentColumnName={tempColumnName}
@@ -128,7 +128,7 @@ function Mj() {
       />
 
       {/* 팀원 초대 모달 */}
-      <InviteTeamMemberModal
+      <TeamMemberInviteModal
         isOpen={isModalOpen5}
         onClose={closeModal5}
         onCreate={handleEmail}

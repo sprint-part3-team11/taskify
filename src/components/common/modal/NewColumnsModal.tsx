@@ -53,17 +53,13 @@ const S = {
   `,
 };
 
-interface AddNewColumnsModalProps {
+interface NewColumnsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (columnName: string) => void;
 }
 
-function AddNewColumnsModal({
-  isOpen,
-  onClose,
-  onCreate,
-}: AddNewColumnsModalProps) {
+function NewColumnsModal({ isOpen, onClose, onCreate }: NewColumnsModalProps) {
   const [columnName, setColumnName] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,4 +98,4 @@ function AddNewColumnsModal({
   );
 }
 
-export default AddNewColumnsModal;
+export default NewColumnsModal;
