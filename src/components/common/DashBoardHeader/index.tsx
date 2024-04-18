@@ -4,12 +4,13 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import theme from '@/styles/theme';
 
 const S = {
-  Header: styled.nav`
-    position: fixed;
-    width: 100%;
+  HeaderContainer: styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    position: fixed;
+    width: 100%;
     height: 7rem;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
 
@@ -51,6 +52,10 @@ const S = {
     }
   `,
 
+  ButtonContainer: styled.div`
+    //추후 구현
+  `,
+
   Button: styled.button`
     margin-left: 2rem;
   `,
@@ -72,6 +77,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 0 40px;
     border-left: 1px solid ${theme.color.grayLight};
     gap: 1rem;
@@ -112,13 +118,13 @@ function DashBoardHeader({
   invitedUsers,
 }: HeaderProps) {
   return (
-    <S.Header>
+    <S.HeaderContainer>
       <S.MenuNameAndButtonBox>
         <S.MenuName>{menuName}</S.MenuName>
-        <div>
+        <S.ButtonContainer>
           <S.Button>관리</S.Button>
           <S.Button>초대하기</S.Button>
-        </div>
+        </S.ButtonContainer>
       </S.MenuNameAndButtonBox>
       <S.InvitedUsersBox>
         {invitedUsers &&
@@ -128,7 +134,7 @@ function DashBoardHeader({
               width={38}
               height={38}
               src={userImgUrl}
-              alt={'invitedUsers'}
+              alt="초대된 유저"
               style={{
                 marginLeft: `${0 - 8}px`,
                 zIndex: invitedUsers.length - index,
@@ -145,7 +151,7 @@ function DashBoardHeader({
         />
         <S.ProfileName>{profileName}</S.ProfileName>
       </S.ProfileBox>
-    </S.Header>
+    </S.HeaderContainer>
   );
 }
 
