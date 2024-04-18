@@ -8,14 +8,16 @@ const S = {
     padding: 3rem 2rem;
     width: 73rem;
     height: 76rem;
+
     border: 1px solid gray;
   `,
+
   Wrapper: styled.div`
     display: flex;
   `,
 };
 
-interface Assignee {
+export interface Assignee {
   profileImageUrl: string;
   nickname: string;
   id: number;
