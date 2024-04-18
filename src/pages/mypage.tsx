@@ -4,6 +4,7 @@ import BackButton from '@/components/my-page/BackButton';
 import MypageHeader from '@/components/my-page/MypageHeader';
 import PasswordChange from '@/components/my-page/PasswordChange';
 import ProfileChange from '@/components/my-page/ProfileChange';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 // 테스트용 배열
 const dashboards = [
@@ -23,8 +24,13 @@ const S = {
     flex: 1;
   `,
   ContentBox: styled.div`
+    height: 101rem;
+    padding: 2rem 0 0 2rem;
     background-color: ${({ theme }) => theme.color.background};
-    height: 90%;
+
+    ${MEDIA_QUERIES.onTablet} {
+      height: 111rem;
+    }
   `,
 };
 
@@ -36,7 +42,7 @@ function mypage() {
         <MypageHeader name="공주들" />
         <S.ContentBox>
           <BackButton />
-          <ProfileChange />
+          <ProfileChange name="공주들" />
           <PasswordChange />
         </S.ContentBox>
       </S.ContentContainer>
