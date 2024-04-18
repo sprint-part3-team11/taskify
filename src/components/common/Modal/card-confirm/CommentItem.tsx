@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CommentItemProps } from './types';
 import styled from 'styled-components';
 import formatDate from '@/utils/date';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -10,6 +11,11 @@ const S = {
     align-items: center;
     padding: 1rem;
     height: 10rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      margin-top: 1rem;
+      height: 7rem;
+    }
   `,
 
   ProfileImage: styled(Image)`
@@ -123,6 +129,7 @@ function CommentItem({
           <S.CommentNickName>{author.nickname}</S.CommentNickName>
           <S.CommentDate>{formatDate(createdDate)}</S.CommentDate>
         </S.NameAndDateBox>
+
         <S.ContentBox>
           {isEditing ? (
             <S.CommentInput
@@ -136,6 +143,7 @@ function CommentItem({
             <S.CommentContent>{content}</S.CommentContent>
           )}
         </S.ContentBox>
+
         <S.ButtonBox>
           <S.ModifyComment onClick={handleEditComment}>수정</S.ModifyComment>
           <S.DeleteComment onClick={handleDeleteComment}>삭제</S.DeleteComment>
