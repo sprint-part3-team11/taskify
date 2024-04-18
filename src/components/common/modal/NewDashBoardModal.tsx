@@ -46,6 +46,7 @@ const S = {
     padding: 1.4rem 4.6rem;
     ${MEDIA_QUERIES.onMobile} {
       padding: 1.2rem 5.6rem;
+      margin-top: 2.4rem;
     }
   `,
   ButtonContainer: styled.div`

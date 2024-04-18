@@ -39,9 +39,9 @@ const S = {
   IconContainer: styled.div<{ $showIcon: boolean }>`
     position: absolute;
 
-    top: 58%;
-    left: 50%;
-
+    top: 76%;
+    left: 70%;
+    scale: 2;
     transform: translate(-50%, -50%);
     opacity: ${(props) =>
       props.$showIcon ? '1' : '0'}; // 아이콘을 보이거나 숨기기 위해 투명도 조절
