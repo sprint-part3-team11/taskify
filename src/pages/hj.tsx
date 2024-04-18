@@ -1,16 +1,23 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import SideBar from '@/components/common/DashBoardHeader/SideBar';
 import DashBoardHeader from '@/components/common/DashBoardHeader/index';
 import CardConfirmModal from '@/components/common/Modal/card-confirm/CardConfirmModal';
+import BackDropModal from '@/components/common/modal/BackDropModal';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
 import '@/styles/GlobalStyle';
 
-function hj() {
+function Hj() {
+  const [isModalOpen1, setModalOpen1] = useState(false);
+  const openModal1 = () => setModalOpen1(true);
+  const closeModal1 = () => setModalOpen1(false);
+
   const stateTags = ['To Do', 'On Progress', 'Done'];
   const isMobile = false;
   const hashTag = ['프로젝트', '프론트엔드', '어려워'];
   const MY_IMAGE_URL = 'https://i.ibb.co/ysRQMyj/me.jpg';
+
   const invitedUsers = [
     {
       id: 1,
@@ -48,16 +55,24 @@ function hj() {
     Container: styled.div`
       position: relative;
     `,
+    Button: styled.button`
+      border: 1px solid black;
+      background-color: yellow;
+      padding: 30px;
+    `,
   };
   return (
-    <S.Container>
-      <DashBoardHeader
-        menuName="내 대시보드"
-        profileName="남현준"
-        profileImgURL={MY_IMAGE_URL}
-        invitedUsers={invitedUsers}
-      />
-      {/* <div>
+    <>
+      <S.Button onClick={openModal1}>1번 모달(기본)</S.Button>
+      <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
+        <S.Container>
+          {/* <DashBoardHeader
+            menuName="내 대시보드"
+            profileName="남현준"
+            profileImgURL={MY_IMAGE_URL}
+            invitedUsers={invitedUsers}
+          /> */}
+          {/* <div>
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>
         ))}
@@ -67,10 +82,12 @@ function hj() {
           </HashTag>
         ))}
       </div> */}
-      {/* <SideBar /> */}
-      <CardConfirmModal cardInfoData={cardInfoData} />
-    </S.Container>
+          {/* <SideBar /> */}
+          <CardConfirmModal cardInfoData={cardInfoData} />
+        </S.Container>
+      </BackDropModal>
+    </>
   );
 }
 
-export default hj;
+export default Hj;
