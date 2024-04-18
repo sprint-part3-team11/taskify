@@ -151,7 +151,7 @@ function Mj() {
         onCreate={handleEmail}
       />
 
-      {/*  */}
+      {/* 대시보드 생성 모달 */}
       <NewDashBoardModal
         isOpen={isModalOpen6}
         onClose={closeModal6}
