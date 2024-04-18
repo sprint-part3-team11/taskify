@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SelectBox from '@/components/common/SelectBox';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import Button from '@/components/common/button/Button';
+import Layout from '@/components/dashboard/Layout';
 import ToDoCreateModal from '@/components/dashboard/modal/ToDoCreateModal';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 
@@ -16,7 +17,7 @@ const selectBoxOptions = [
 function sh() {
   const [isModalOpen, setisModalOpen] = useState(false);
   return (
-    <>
+    <Layout>
       <Button size="S" styleType={BUTTON_TYPE.DESTRUCTIVE}>
         삭제
       </Button>
@@ -51,7 +52,14 @@ function sh() {
       <AddIconButton>새로운 대시보드</AddIconButton>
 
       <SelectBox options={selectBoxOptions} placeholder />
-    </>
+
+      <div>sdljfwijdf</div>
+      <div>sdljfwijdf</div>
+      <Button>버튼할게</Button>
+      <Button>버튼할게</Button>
+      <Button>버튼할게</Button>
+      <Button>버튼할게</Button>
+    </Layout>
   );
 }
 
