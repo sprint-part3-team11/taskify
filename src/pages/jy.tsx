@@ -1,5 +1,11 @@
+import { useRecoilValue } from 'recoil';
+import {
+  ColorSelector,
+  resultColorState,
+} from '@/components/common/ColorSelector';
 import { useState } from 'react';
 import React from 'react';
+import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Sidebar from '@/components/common/SideBar';
 
@@ -17,6 +23,7 @@ const dashboards = [
   { id: '3', color: '#7AC555', name: '대시보드 3', createdByMe: false },
 ];
 function jy() {
+  const resultColor = useRecoilValue(resultColorState);
   return (
     <>
       <SelectBox
@@ -25,6 +32,9 @@ function jy() {
         placeholder={true}
       />
       <Sidebar dashboards={dashboards} />
+      <ColorSelector />
+      {resultColor}
+      <ImgFileUpload edit={false} small={true} />
     </>
   );
 }
