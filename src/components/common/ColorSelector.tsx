@@ -15,13 +15,13 @@ const S = {
 
     justify-content: center;
     align-items: center;
-    gap: 0.625rem;
+    gap: 1rem;
   `,
   ColorPalette: styled.div<{ $bg: Color; $showIcon: boolean }>`
     position: relative;
 
-    width: 1.875rem;
-    height: 1.875rem;
+    width: 3rem;
+    height: 3rem;
     flex-shrink: 0;
     background-color: ${(props) => props.$bg};
     border-radius: 50%;
@@ -77,24 +77,20 @@ function ColorSelector(): JSX.Element {
   };
 
   return (
-    <>
-      <S.ColorArea>
-        {Object.entries(colorPalette).map(([colorName, colorValue]) => (
-          <S.ColorPalette
-            key={colorName}
-            $bg={colorValue}
-            onClick={() => handleColorClick(colorValue)}
-            $showIcon={colorValue === currentColor && showIcon}
-          >
-            <S.IconContainer
-              $showIcon={colorValue === currentColor && showIcon}
-            >
-              <ColorCheckIcon />
-            </S.IconContainer>
-          </S.ColorPalette>
-        ))}
-      </S.ColorArea>
-    </>
+    <S.ColorArea>
+      {Object.entries(colorPalette).map(([colorName, colorValue]) => (
+        <S.ColorPalette
+          key={colorName}
+          $bg={colorValue}
+          onClick={() => handleColorClick(colorValue)}
+          $showIcon={colorValue === currentColor && showIcon}
+        >
+          <S.IconContainer $showIcon={colorValue === currentColor && showIcon}>
+            <ColorCheckIcon />
+          </S.IconContainer>
+        </S.ColorPalette>
+      ))}
+    </S.ColorArea>
   );
 }
 
