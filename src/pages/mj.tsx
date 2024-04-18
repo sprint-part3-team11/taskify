@@ -27,6 +27,7 @@ function Mj() {
   const [isModalOpen6, setModalOpen6] = useState(false);
 
   const [tempColumnName, setTempColumnName] = useState('');
+  const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
 
   const openModal1 = () => setModalOpen1(true);
   const openModal2 = () => setModalOpen2(true);
@@ -84,6 +85,17 @@ function Mj() {
     }
   }, [tempColumnName]);
 
+  // 대시보드 생성(이름, 색깔)
+  const createdDashBoard = (name: string, color: string) => {
+    setTempDashBoardName([name, color]);
+    setModalOpen6(false);
+  };
+
+  // 대시보드 생성 확인용
+  useEffect(() => {
+    console.log(tempDashBoardName);
+  }, [tempDashBoardName]);
+
   return (
     <div style={{ backgroundColor: 'gray', height: '10000px' }}>
       <S.Button onClick={openModal1}>1번 모달(기본)</S.Button>
@@ -113,7 +125,7 @@ function Mj() {
       <WarningModal
         isOpen={isModalOpen2}
         onClose={closeModal2}
-        type="ALREADY_USED"
+        type="PASSWORD"
       />
 
       {/* 새 컬럼 추가에 사용되는 모달 형식 */}
@@ -139,8 +151,12 @@ function Mj() {
         onCreate={handleEmail}
       />
 
-      {/*  */}
-      <NewDashBoardModal />
+      {/* 대시보드 생성 모달 */}
+      <NewDashBoardModal
+        isOpen={isModalOpen6}
+        onClose={closeModal6}
+        onCreate={createdDashBoard}
+      />
     </div>
   );
 }

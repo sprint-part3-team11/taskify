@@ -90,7 +90,12 @@ function NewColumnsModal({ isOpen, onClose, onCreate }: NewColumnsModalProps) {
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
         </S.ImportButton>
-        <S.ImportButton onClick={handleCreate} styleType="PRIMARY" size="M">
+        <S.ImportButton
+          onClick={handleCreate}
+          styleType="PRIMARY"
+          size="M"
+          disabled={!columnName.trim()}
+        >
           생성
         </S.ImportButton>
       </S.ButtonContainer>
