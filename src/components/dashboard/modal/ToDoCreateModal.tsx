@@ -127,6 +127,8 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
 
   const isEditText = isEdit ? '수정' : '생성';
 
+  //@todo 수정모드 다시보기, 셀렉트박스 스타일링, 분리할거 분리, 해시태그구현, datePicker 캘린더 스타일링
+
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.Title>📌 할 일 {isEditText}</S.Title>
