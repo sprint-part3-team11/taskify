@@ -39,8 +39,8 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${(props) => (props.$small ? '100%' : '8.125rem')};
-    height: ${(props) => (props.$small ? '100%' : '8.125rem')};
+    width: ${(props) => (props.$small ? '100%' : '11.375rem')};
+    height: ${(props) => (props.$small ? '100%' : '11.375rem')};
 
     cursor: pointer;
     opacity: 0;
