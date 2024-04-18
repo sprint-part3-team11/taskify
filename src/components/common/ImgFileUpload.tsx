@@ -1,16 +1,22 @@
 import React, { useRef, useState } from 'react';
+import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
+
+const imgUrlState = atom<File | null>({
+  key: 'imgUrlState',
+  default: null,
+});
 
 const S = {
   Label: styled.label<{ $small: boolean }>`
     position: relative;
     display: inline-block;
 
-    width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
-    height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
+    width: ${(props) => (props.$small ? '4.75rem' : '15.37rem')};
+    height: ${(props) => (props.$small ? '4.75rem' : '15.37rem')};
 
     ${MEDIA_QUERIES.onMobile} {
       width: ${(props) => (props.$small ? '3.8rem' : '6.25rem')};
@@ -20,8 +26,8 @@ const S = {
   Image: styled.img<{ $small: boolean }>`
     display: flex;
 
-    width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
-    height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
+    width: ${(props) => (props.$small ? '4.75rem' : '15.37rem')};
+    height: ${(props) => (props.$small ? '4.75rem' : '15.375rem')};
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -39,8 +45,8 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${(props) => (props.$small ? '100%' : '11.375rem')};
-    height: ${(props) => (props.$small ? '100%' : '11.375rem')};
+    width: ${(props) => (props.$small ? '100%' : '15.37rem')};
+    height: ${(props) => (props.$small ? '100%' : '15.37rem')};
 
     cursor: pointer;
     opacity: 0;
@@ -51,11 +57,15 @@ const S = {
     }
   `,
   AddIcon: styled(AddIcon)`
+    path {
+      width: 1px;
+      height: 1px;
+    }
     display: flex;
     flex-shrink: 0;
 
-    width: ${(props) => (props.$small ? 'auto' : '11.375rem')};
-    height: ${(props) => (props.$small ? 'auto' : '11.375rem')};
+    width: ${(props) => (props.$small ? 'auto' : '15.37rem')};
+    height: ${(props) => (props.$small ? 'auto' : '15.37rem')};
     padding: 1.5rem;
     justify-content: center;
     align-items: center;
@@ -77,8 +87,8 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${(props) => (props.$small ? '100%' : '11.375rem')};
-    height: ${(props) => (props.$small ? '100%' : '11.375rem')};
+    width: ${(props) => (props.$small ? '100%' : '15.37rem')};
+    height: ${(props) => (props.$small ? '100%' : '15.37')};
     justify-content: center;
     align-items: center;
     border-radius: 0.375rem;
@@ -101,7 +111,9 @@ interface ImgFileUploadProps {
 }
 
 function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [uploadedImage, setUploadedImage] = useRecoilState<File | null>(
+    imgUrlState,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick: () => void = () => {
@@ -113,6 +125,7 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   const onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void = (
     e,
   ) => {
+    e.preventDefault();
     const file = e.target.files?.[0];
     if (file) {
       setUploadedImage(file);
@@ -152,4 +165,4 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   );
 }
 
-export default ImgFileUpload;
+export { ImgFileUpload, imgUrlState };
