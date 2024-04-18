@@ -31,15 +31,18 @@ const S = {
     border-radius: 0.6rem;
 
     ${MEDIA_QUERIES.onMobile} {
-      padding: 2rem 0 7rem 1rem;
+      box-sizing: border-box;
+      padding: 2rem 0 5rem 1rem;
       height: 7rem;
     }
   `,
 
   Button: styled.button`
     position: absolute;
+    bottom: 1rem;
+    right: 1rem;
 
-    margin: 8rem 0 0 35rem;
+    margin: 0;
     width: 8rem;
     height: 3.2rem;
     box-sizing: border-box;
@@ -50,6 +53,12 @@ const S = {
     font-size: 1.4rem;
     text-decoration: none;
     text-align: center;
+
+    ${MEDIA_QUERIES.onMobile} {
+      bottom: 1rem;
+      right: 1rem;
+      margin: 0;
+    }
   `,
 };
 
