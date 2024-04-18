@@ -17,7 +17,7 @@ export interface CommentListProps {
   destroy: (id: number) => void;
 }
 
-const CommentList: React.FC<CommentListProps> = ({ list, modify, destroy }) => {
+function CommentList({ list, modify, destroy }: CommentListProps) {
   return (
     <>
       {list.map((comment) => (
@@ -33,5 +33,5 @@ const CommentList: React.FC<CommentListProps> = ({ list, modify, destroy }) => {
       ))}
     </>
   );
-};
+}
 export default CommentList;
