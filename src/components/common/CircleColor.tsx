@@ -2,15 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
-interface CircleColorProps {
-  color: string;
-}
-
 const S = {
   CircleColor: styled.div<{ color: string }>`
-    background-color: ${(props) => props.color};
     width: 0.65rem;
     height: 0.65rem;
+    background-color: ${(props) => props.color};
     border-radius: 50%;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -18,6 +14,10 @@ const S = {
     }
   `,
 };
+
+interface CircleColorProps {
+  color: string;
+}
 
 function CircleColor({ color }: CircleColorProps) {
   return <S.CircleColor color={color} />;

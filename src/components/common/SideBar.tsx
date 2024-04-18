@@ -46,9 +46,9 @@ const S = {
   AddText: styled.span`
     padding-top: 3%;
     color: ${({ theme }) => theme.color.grayLight};
+    margin-right: 9.5rem;
     font-size: 1rem;
     font-weight: 700;
-    margin-right: 9.5rem;
 
     ${MEDIA_QUERIES.onTablet} {
       margin-right: 3.5rem;
@@ -69,26 +69,26 @@ const S = {
     height: 3.85rem;
     display: flex;
     align-items: center;
-    padding: 10px;
     margin-top: 0.85rem;
+    padding: 10px;
     cursor: pointer;
 
     &:hover {
-      background: var(--violet-violet-8, #f1effd);
       border-radius: 0.55rem;
+      background: var(--violet-violet-8, #f1effd);
       transition: all 0.1s ease-in-out;
     }
   `,
   DashboardItem: styled.li<{ $active: boolean }>`
-    cursor: pointer;
+    overflow: hidden;
+    margin-left: 1.325rem;
     color: ${({ theme }) => theme.color.grayDark};
     font-size: 1.425rem;
     font-weight: 500;
     ${({ $active }) => $active && `font-weight: bold;`}
-    margin-left: 1.325rem;
-    overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
       display: none;
