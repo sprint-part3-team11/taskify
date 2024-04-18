@@ -19,7 +19,6 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
   `,
-  /* input 컴포넌트에서 스타일 변경하려면 어떻게 해야할까요..? 예를 들어 gap이나 font-size 조정하려구요. */
   Input: styled(InputField)`
     min-width: 48.4rem;
     padding: 1.5rem 1.6rem 1.4rem;
@@ -54,44 +53,53 @@ const S = {
   `,
 };
 
-interface AddNewColumnsModal {
+interface TeamMemberInviteModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (columnName: string) => void;
+  onCreate: (email: string) => void;
 }
 
-function AddNewColumnsModal({ isOpen, onClose, onCreate }: AddNewColumnsModal) {
-  const [columnName, setColumnName] = useState('');
+function TeamMemberInviteModal({
+  isOpen,
+  onClose,
+  onCreate,
+}: TeamMemberInviteModalProps) {
+  const [email, setColumnName] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
   };
 
-  const handleCreate = () => {
-    onCreate(columnName);
+  const handleClose = () => {
+    setColumnName('');
     onClose();
   };
 
+  const handleEmail = () => {
+    onCreate(email);
+    handleClose();
+  };
+
   return (
-    <BackDropModal isOpen={isOpen} onClose={onClose}>
-      <S.Title>새 컬럼 생성</S.Title>
+    <BackDropModal isOpen={isOpen} onClose={handleClose}>
+      <S.Title>초대하기</S.Title>
       <S.Input
         label="이름"
-        id="addNewColumn"
-        placeholder="새로운 프로젝트"
-        value={columnName}
+        id="inviteTeamMember"
+        placeholder="codeit@codeit.com"
+        value={email}
         onChange={handleInputChange}
       />
       <S.ButtonContainer>
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
         </S.ImportButton>
-        <S.ImportButton onClick={handleCreate} styleType="PRIMARY" size="M">
-          생성
+        <S.ImportButton onClick={handleEmail} styleType="PRIMARY" size="M">
+          초대
         </S.ImportButton>
       </S.ButtonContainer>
     </BackDropModal>
   );
 }
 
-export default AddNewColumnsModal;
+export default TeamMemberInviteModal;
