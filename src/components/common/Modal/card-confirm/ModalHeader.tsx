@@ -56,6 +56,11 @@ const S = {
     background-color: ${({ theme }) => theme.color.white};
 
     font-size: 1.4rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      top: 3rem;
+      right: 5rem;
+    }
   `,
   MenuItem: styled.div`
     display: flex;
