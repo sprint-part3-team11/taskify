@@ -2,11 +2,17 @@ import HashTag from '../../tag/HashTag';
 import StateTag from '../../tag/StateTag';
 import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import useWindowSize, { Size } from '@/hooks/useWindowSize';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   TagBox: styled.div`
     display: flex;
     margin-bottom: 2.5rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      margin: 1rem 0 2.3rem 0;
+    }
   `,
 
   HeightLine: styled.div`
@@ -15,14 +21,16 @@ const S = {
   `,
 };
 function TagBox({ cardInfoData }: CardConfirmModalProps) {
+  const { width }: Size = useWindowSize();
+  const isMobile: boolean = width !== undefined && width <= 768;
   return (
     <S.TagBox>
-      <StateTag isMobile={false}>{cardInfoData.tags}</StateTag>
+      <StateTag isMobile={isMobile}>{cardInfoData.tags}</StateTag>
       <S.HeightLine />
-      <HashTag isMobile={false} index={0}>
+      <HashTag isMobile={isMobile} index={0}>
         프로젝트
       </HashTag>
-      <HashTag isMobile={false} index={1}>
+      <HashTag isMobile={isMobile} index={1}>
         프론트엔드
       </HashTag>
     </S.TagBox>
