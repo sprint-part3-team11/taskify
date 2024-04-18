@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { CommentItemProps } from './types';
 import styled from 'styled-components';
-import { formatDate } from '@/utils/date';
+import formatDate from '@/utils/date';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -69,9 +70,17 @@ const S = {
   `,
 };
 
-function CommentItem(props: any) {
+function CommentItem({
+  id,
+  author,
+  content,
+  createdDate,
+  updatedDate,
+  modify,
+  destroy,
+}: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [content, newContent] = useState(props.content);
+  const [editContent, setEditContent] = useState(content);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -80,24 +89,25 @@ function CommentItem(props: any) {
     }
   }, [isEditing]);
 
-  const handleEditComment = (e: any) => {
+  const handleEditComment = (e: React.MouseEvent<HTMLLIElement>) => {
+    setEditContent(content);
     setIsEditing(true);
   };
 
-  const changeHandler = (e: any) => {
-    newContent(e.target.value);
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditContent(e.target.value);
   };
 
-  const keyPressHandler = async (e: any) => {
+  const keyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const updatedData = e.target.value;
-      await props.modify(updatedData, props.id);
+      const updatedData = e.currentTarget.value;
+      modify(updatedData, id);
       setIsEditing(false);
-    }
+    } else if (e.key === 'Escape') setIsEditing(false);
   };
 
   const handleDeleteComment = () => {
-    props.destroy(props.id);
+    destroy(id);
   };
 
   return (
@@ -105,28 +115,27 @@ function CommentItem(props: any) {
       <S.ProfileImage
         width={34}
         height={34}
-        src={props.author.profileImageUrl}
-        alt={'프로필 이미지'}
+        src={author.profileImageUrl}
+        alt="프로필 이미지"
       />
       <S.CommentInfoBox>
         <S.NameAndDateBox>
-          <S.CommentNickName>{props.author.nickname}</S.CommentNickName>
-          <S.CommentDate>{formatDate(props.createdDate)}</S.CommentDate>
+          <S.CommentNickName>{author.nickname}</S.CommentNickName>
+          <S.CommentDate>{formatDate(createdDate)}</S.CommentDate>
         </S.NameAndDateBox>
         <S.ContentBox>
           {isEditing ? (
             <S.CommentInput
               type="text"
-              value={content}
+              value={editContent}
               onChange={changeHandler}
               ref={inputRef}
               onKeyDown={keyPressHandler}
             />
           ) : (
-            <S.CommentContent>{props.content}</S.CommentContent>
+            <S.CommentContent>{content}</S.CommentContent>
           )}
         </S.ContentBox>
-        <S.CommentDate>{props.date}</S.CommentDate>
         <S.ButtonBox>
           <S.ModifyComment onClick={handleEditComment}>수정</S.ModifyComment>
           <S.DeleteComment onClick={handleDeleteComment}>삭제</S.DeleteComment>
