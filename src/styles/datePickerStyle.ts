@@ -15,6 +15,10 @@ export const datePickerStyle = css`
     }
     input {
       padding: 1.6rem 3.5rem;
+
+      &::placeholder {
+        color: ${({ theme }) => theme.color.gray};
+      }
     }
   }
 `;

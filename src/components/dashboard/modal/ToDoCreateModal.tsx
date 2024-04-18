@@ -36,10 +36,6 @@ const S = {
     font-size: 1.7rem;
     font-weight: 500;
 
-    &::placeholder {
-      color: ${({ theme }) => theme.color.gray};
-    }
-
     &.required {
       ${RequiredStar('after')}
     }
@@ -57,6 +53,10 @@ const S = {
     border-radius: 0.4rem;
     font-size: 1.6rem;
 
+    &::placeholder {
+      color: ${({ theme }) => theme.color.gray};
+    }
+
     @media screen and (max-width: 768px) {
       font-size: 1.4rem;
     }
@@ -71,6 +71,9 @@ const S = {
 
     &:focus {
       outline: none;
+    }
+    &::placeholder {
+      color: ${({ theme }) => theme.color.gray};
     }
 
     @media screen and (max-width: 768px) {
