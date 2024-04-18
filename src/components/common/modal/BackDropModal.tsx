@@ -24,8 +24,8 @@ const S = {
     position: relative;
 
     padding: 3.2rem 2rem 2rem;
-    background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
+    background: ${({ theme }) => theme.color.white};
 
     animation: ${appearModal} 0.5s ease-in-out;
   `,

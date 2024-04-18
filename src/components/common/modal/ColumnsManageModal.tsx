@@ -21,11 +21,11 @@ const S = {
   `,
   Input: styled(InputField)`
     min-width: 48.4rem;
-    padding: 1.5rem 1.6rem 1.4rem;
     margin-bottom: 2.8rem;
+    padding: 1.5rem 1.6rem 1.4rem;
 
-    border-radius: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border-radius: 0.6rem;
     background: ${({ theme }) => theme.color.white};
 
     color: ${({ theme }) => theme.color.body};
@@ -52,12 +52,12 @@ const S = {
     }
   `,
   DeleteButton: styled.button`
+    display: flex;
+    justify-content: flex-start;
+
     position: absolute;
     bottom: 2rem;
     left: 2rem;
-
-    display: flex;
-    justify-content: flex-start;
 
     color: ${({ theme }) => theme.color.gray};
     font-size: 1.4rem;
