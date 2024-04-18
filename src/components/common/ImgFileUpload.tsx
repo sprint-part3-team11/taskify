@@ -1,27 +1,33 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
 
+const imgUrlState = atom<File | null>({
+  key: 'imgUrlState',
+  default: null,
+});
+
 const S = {
   Label: styled.label<{ $small: boolean }>`
     position: relative;
-    display: inline-block;
+    display: block;
 
-    width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
-    height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
+    width: ${({ $small }) => ($small ? '4.75rem' : '15.37rem')};
+    height: ${({ $small }) => ($small ? '4.75rem' : '15.37rem')};
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '6.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '6.25rem')};
+      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
     }
   `,
   Image: styled.img<{ $small: boolean }>`
     display: flex;
 
-    width: ${(props) => (props.$small ? '4.75rem' : '11.37rem')};
-    height: ${(props) => (props.$small ? '4.75rem' : '11.375rem')};
+    width: ${({ $small }) => ($small ? '4.75rem' : '15.37rem')};
+    height: ${({ $small }) => ($small ? '4.75rem' : '15.375rem')};
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -30,8 +36,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
     }
   `,
   Button: styled.button<{ $small: boolean }>`
@@ -39,23 +45,23 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${(props) => (props.$small ? '100%' : '8.125rem')};
-    height: ${(props) => (props.$small ? '100%' : '8.125rem')};
+    width: ${({ $small }) => ($small ? '100%' : '15.37rem')};
+    height: ${({ $small }) => ($small ? '100%' : '15.37rem')};
 
     cursor: pointer;
     opacity: 0;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
     }
   `,
-  AddIcon: styled(AddIcon)`
+  AddIcon: styled.div<{ $small: boolean }>`
     display: flex;
     flex-shrink: 0;
 
-    width: ${(props) => (props.$small ? 'auto' : '11.375rem')};
-    height: ${(props) => (props.$small ? 'auto' : '11.375rem')};
+    width: ${({ $small }) => ($small ? 'auto' : '15.37rem')};
+    height: ${({ $small }) => ($small ? 'auto' : '15.37rem')};
     padding: 1.5rem;
     justify-content: center;
     align-items: center;
@@ -67,8 +73,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
     }
   `,
   Overlay: styled.div<{ $small: boolean }>`
@@ -77,8 +83,8 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${(props) => (props.$small ? '100%' : '11.375rem')};
-    height: ${(props) => (props.$small ? '100%' : '11.375rem')};
+    width: ${({ $small }) => ($small ? '100%' : '15.37rem')};
+    height: ${({ $small }) => ($small ? '100%' : '15.37rem')};
     justify-content: center;
     align-items: center;
     border-radius: 0.375rem;
@@ -86,8 +92,8 @@ const S = {
     background: rgba(0, 0, 0, 0.6);
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.625rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '3.525rem' : '8.25rem')};
+      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
     }
   `,
   Input: styled.input<{ $small: boolean }>`
@@ -101,7 +107,9 @@ interface ImgFileUploadProps {
 }
 
 function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [uploadedImage, setUploadedImage] = useRecoilState<File | null>(
+    imgUrlState,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick: () => void = () => {
@@ -113,6 +121,7 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   const onChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void = (
     e,
   ) => {
+    e.preventDefault();
     const file = e.target.files?.[0];
     if (file) {
       setUploadedImage(file);
@@ -120,38 +129,38 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   };
 
   return (
-    <>
-      <S.Label htmlFor="fileInput" $small={small}>
-        {uploadedImage ? (
-          <>
-            <S.Image
-              src={URL.createObjectURL(uploadedImage)}
-              alt="업로드된 이미지"
-              $small={small}
-            />
-            {edit && (
-              <S.Overlay $small={small}>
-                <EditIcon />
-              </S.Overlay>
-            )}
-          </>
-        ) : (
-          <S.AddIcon onClick={handleClick} $small={small} />
-        )}
-        <S.Input
-          id="fileInput"
-          type="file"
-          accept="image/*"
-          onChange={onChangeImage}
-          ref={fileInputRef}
-          $small={small}
-        />
-        <S.Button onClick={handleClick} $small={small}>
-          파일 선택
-        </S.Button>
-      </S.Label>
-    </>
+    <S.Label htmlFor="fileInput" $small={small}>
+      {uploadedImage ? (
+        <>
+          <S.Image
+            src={URL.createObjectURL(uploadedImage)}
+            alt="업로드된 이미지"
+            $small={small}
+          />
+          {edit && (
+            <S.Overlay $small={small}>
+              <EditIcon />
+            </S.Overlay>
+          )}
+        </>
+      ) : (
+        <S.AddIcon onClick={handleClick} $small={small}>
+          <AddIcon />
+        </S.AddIcon>
+      )}
+      <S.Input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        onChange={onChangeImage}
+        ref={fileInputRef}
+        $small={small}
+      />
+      <S.Button onClick={handleClick} $small={small}>
+        파일 선택
+      </S.Button>
+    </S.Label>
   );
 }
 
-export default ImgFileUpload;
+export { ImgFileUpload, imgUrlState };

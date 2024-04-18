@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const appearModal = keyframes`
+  0%{opacity:0.2;transform: scale(0.5);}
+
+  100%{opacity:1;transform: scale(1);}
+`;
 const S = {
   ModalBackground: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `,
   ModalContainer: styled.div`
-    padding: 2rem;
-    background: ${({ theme }) => theme.color.white};
+    position: relative;
+
+    padding: 3.2rem 2rem 2rem;
     border-radius: 0.8rem;
+    background: ${({ theme }) => theme.color.white};
+
+    animation: ${appearModal} 0.7s ease-in-out;
   `,
 };
 
@@ -33,48 +43,7 @@ interface BackDropModalProps {
  * @param isOpen - 모달이 열려있는지 확인
  * @param children - 모달 내부 내용
  * @param onClose - 모달을 닫을 때 사용할 함수
- * @example
- * 새 컬럼 생성 예시
- * import React, { useState } from 'react';
- * import BackDropModal from '@/components/common/Modal/BackDropModal';
  *
- * const CreateCategoryModal = () => {
- *   const [isModalOpen, setModalOpen] = useState(false);
- *   const openModal = () => setModalOpen(true);
- *   const closeModal = () => setModalOpen(false);
- *
- *   const [projectName, setProjectName] = useState("");
- *
- *   const handleInputChange = (e) => {
- *     setProjectName(e.target.value);
- *   };
- *
- *   const handleFormSubmit = (e) => {
- *    e.preventDefault(); // 페이지 리로드 방지
- *    // 카테고리 생성 로직 여기 적기
- *    closeModal(); // 모달 닫기
- *   };
- *
- *   return (
- *     <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
- *       <h1>새 카테고리 생성</h1>
- *       <div>이름</div>
- *       <form onSubmit={handleFormSubmit}>
- *         <input
- *           type="text"
- *           placeholder="새로운 프로젝트"
- *           value={projectName}
- *           onChange={handleInputChange}
- *         />
- *       </form>
- *       <button onClick={closeModal}>취소</button>
- *       <button type="button" onClick={handleFormSubmit}>생성</button>
- *     </BackDropModal>
- *   );
- * };
- *
- * export default CreateCategoryModal;
- * );
  */
 
 function BackDropModal({ isOpen, children, onClose }: BackDropModalProps) {

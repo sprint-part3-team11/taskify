@@ -77,24 +77,20 @@ function ColorSelector(): JSX.Element {
   };
 
   return (
-    <>
-      <S.ColorArea>
-        {Object.entries(colorPalette).map(([colorName, colorValue]) => (
-          <S.ColorPalette
-            key={colorName}
-            $bg={colorValue}
-            onClick={() => handleColorClick(colorValue)}
-            $showIcon={colorValue === currentColor && showIcon}
-          >
-            <S.IconContainer
-              $showIcon={colorValue === currentColor && showIcon}
-            >
-              <ColorCheckIcon />
-            </S.IconContainer>
-          </S.ColorPalette>
-        ))}
-      </S.ColorArea>
-    </>
+    <S.ColorArea>
+      {Object.entries(colorPalette).map(([colorName, colorValue]) => (
+        <S.ColorPalette
+          key={colorName}
+          $bg={colorValue}
+          onClick={() => handleColorClick(colorValue)}
+          $showIcon={colorValue === currentColor && showIcon}
+        >
+          <S.IconContainer $showIcon={colorValue === currentColor && showIcon}>
+            <ColorCheckIcon />
+          </S.IconContainer>
+        </S.ColorPalette>
+      ))}
+    </S.ColorArea>
   );
 }
 
