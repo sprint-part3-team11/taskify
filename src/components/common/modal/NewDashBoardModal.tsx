@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-// import { ColorSelector } from '@/components/ColorSelector';
+import {
+  ColorSelector,
+  resultColorState,
+} from '@/components/common/ColorSelector';
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
@@ -57,7 +61,7 @@ const S = {
 interface NewDashBoardModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (email: string) => void;
+  onCreate: (name: string, color: string) => void;
 }
 
 function NewDashBoardModal({
@@ -66,6 +70,8 @@ function NewDashBoardModal({
   onCreate,
 }: NewDashBoardModalProps) {
   const [dashBoardName, setColumnName] = useState('');
+  const selectedColor = useRecoilValue(resultColorState);
+  const setColor = useSetRecoilState(resultColorState);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
@@ -73,11 +79,12 @@ function NewDashBoardModal({
 
   const handleClose = () => {
     setColumnName('');
+    setColor('');
     onClose();
   };
 
   const handleDashBoardName = () => {
-    onCreate(dashBoardName);
+    onCreate(dashBoardName, selectedColor);
     handleClose();
   };
 
@@ -91,7 +98,7 @@ function NewDashBoardModal({
         value={dashBoardName}
         onChange={handleInputChange}
       />
-      {/* <ColorSelector /> */}
+      <ColorSelector />
       <S.ButtonContainer>
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
@@ -100,7 +107,7 @@ function NewDashBoardModal({
           onClick={handleDashBoardName}
           styleType="PRIMARY"
           size="M"
-          disabled={!dashBoardName.trim()}
+          disabled={!dashBoardName.trim() || !selectedColor}
         >
           생성
         </S.ImportButton>
