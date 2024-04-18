@@ -1,17 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-
-  return `${year}.${month}.${day} ${hours}:${minutes}`;
-};
+import { formatDate } from '@/utils/date';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -80,18 +70,18 @@ const S = {
 };
 
 function CommentItem(props: any) {
-  const [liMode, editMode] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [content, newContent] = useState(props.content);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (liMode && inputRef.current) {
+    if (isEditing && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [liMode]);
+  }, [isEditing]);
 
   const handleEditComment = (e: any) => {
-    editMode(true);
+    setIsEditing(true);
   };
 
   const changeHandler = (e: any) => {
@@ -99,11 +89,11 @@ function CommentItem(props: any) {
   };
 
   const keyPressHandler = async (e: any) => {
-    if (e.keyCode === 13) {
+    if (e.key === 'Enter') {
       const updatedData = e.target.value;
       await props.modify(updatedData, props.id);
-      editMode(false);
-    } else if (e.keyCode === 27) editMode(false);
+      setIsEditing(false);
+    }
   };
 
   const handleDeleteComment = () => {
@@ -124,7 +114,7 @@ function CommentItem(props: any) {
           <S.CommentDate>{formatDate(props.createdDate)}</S.CommentDate>
         </S.NameAndDateBox>
         <S.ContentBox>
-          {liMode ? (
+          {isEditing ? (
             <S.CommentInput
               type="text"
               value={content}
