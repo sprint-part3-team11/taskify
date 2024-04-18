@@ -6,6 +6,8 @@ import theme from '@/styles/theme';
 const S = {
   Header: styled.nav`
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -21,6 +23,7 @@ const S = {
     }
     ${MEDIA_QUERIES.onMobile} {
       padding-left: 6.7rem;
+      height: 6rem;
     }
   `,
 
