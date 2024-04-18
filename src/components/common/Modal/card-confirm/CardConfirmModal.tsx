@@ -10,10 +10,19 @@ const S = {
     padding: 3rem 2rem;
     width: 73rem;
     height: 76rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 32rem;
+      height: 60rem;
+    }
   `,
 
   ModalBody: styled.div`
     display: flex;
+    ${MEDIA_QUERIES.onMobile} {
+      display: flex;
+      flex-direction: column;
+    }
   `,
 };
 
