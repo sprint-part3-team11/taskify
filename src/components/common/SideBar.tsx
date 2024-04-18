@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import CircleColor from './CircleColor';
 import styled from 'styled-components';
+import CircleColor from '@/components/common/CircleColor';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
 import CreateByMe from '@/public/icon/creatByMe.svg';
