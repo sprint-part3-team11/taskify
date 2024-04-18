@@ -1,12 +1,10 @@
+import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   ColorSelector,
   resultColorState,
 } from '@/components/common/ColorSelector';
 import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
-import { useState } from 'react';
-import React from 'react';
-import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Sidebar from '@/components/common/SideBar';
 
@@ -30,12 +28,12 @@ function jy() {
   return (
     <>
       {/* true면 ={true} 를 린트가 쓰지 말라고 빨간줄 나오네요! false일때만 false를 명시해주세요 */}
-      <SelectBox title="담당자" options={selectBoxOptions} placeholder />
+      <SelectBox options={selectBoxOptions} placeholder />
       <Sidebar dashboards={dashboards} />
       <ColorSelector />
       {resultColor}
       {console.log(imgUrl)}
-      <ImgFileUpload edit small={false} />
+      <ImgFileUpload edit small />
     </>
   );
 }

@@ -15,19 +15,19 @@ const S = {
     position: relative;
     display: block;
 
-    width: ${({ $small }) => ($small ? '4.75rem' : '15.37rem')};
-    height: ${({ $small }) => ($small ? '4.75rem' : '15.37rem')};
+    width: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
+    height: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
-      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      width: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
+      height: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
     }
   `,
   Image: styled.img<{ $small: boolean }>`
     display: flex;
 
-    width: ${({ $small }) => ($small ? '4.75rem' : '15.37rem')};
-    height: ${({ $small }) => ($small ? '4.75rem' : '15.375rem')};
+    width: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
+    height: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -36,8 +36,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
-      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      width: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
+      height: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
     }
   `,
   Button: styled.button<{ $small: boolean }>`
@@ -45,23 +45,23 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${({ $small }) => ($small ? '100%' : '15.37rem')};
-    height: ${({ $small }) => ($small ? '100%' : '15.37rem')};
+    width: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
+    height: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
 
     cursor: pointer;
     opacity: 0;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
-      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      width: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
+      height: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
     }
   `,
   AddIcon: styled.div<{ $small: boolean }>`
     display: flex;
     flex-shrink: 0;
 
-    width: ${({ $small }) => ($small ? 'auto' : '15.37rem')};
-    height: ${({ $small }) => ($small ? 'auto' : '15.37rem')};
+    width: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
+    height: ${({ $small }) => ($small ? '7.6rem' : '18.2rem')};
     padding: 1.5rem;
     justify-content: center;
     align-items: center;
@@ -73,8 +73,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
-      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      width: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
+      height: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
     }
   `,
   Overlay: styled.div<{ $small: boolean }>`
@@ -83,8 +83,8 @@ const S = {
     top: 0;
     left: 0;
 
-    width: ${({ $small }) => ($small ? '100%' : '15.37rem')};
-    height: ${({ $small }) => ($small ? '100%' : '15.37rem')};
+    width: ${({ $small }) => ($small ? '100%' : '18.2rem')};
+    height: ${({ $small }) => ($small ? '100%' : '18.2rem')};
     justify-content: center;
     align-items: center;
     border-radius: 0.375rem;
@@ -92,8 +92,8 @@ const S = {
     background: rgba(0, 0, 0, 0.6);
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
-      height: ${({ $small }) => ($small ? '4.5rem' : '9.25rem')};
+      width: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
+      height: ${({ $small }) => ($small ? '5.8rem' : '10rem')};
     }
   `,
   Input: styled.input<{ $small: boolean }>`
