@@ -22,7 +22,7 @@ const S = {
     display: flex;
     ${MEDIA_QUERIES.onMobile} {
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
   `,
 };
