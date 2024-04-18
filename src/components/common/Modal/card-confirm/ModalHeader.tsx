@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';
 
@@ -14,6 +15,10 @@ const S = {
   ModalTitle: styled.div`
     font-size: 2.4rem;
     font-weight: 700;
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
   `,
 
   HeaderButton: styled.div`
@@ -27,6 +32,11 @@ const S = {
     width: 3.2rem;
     height: 3.2rem;
     cursor: pointer;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 2rem;
+      height: 2.5rem;
+    }
   `,
   DropdownMenuBox: styled.div`
     display: flex;
