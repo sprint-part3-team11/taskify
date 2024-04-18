@@ -113,8 +113,15 @@ function ColumnsManageModal({
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
         </S.ImportButton>
-        <S.ImportButton onClick={handleChange} styleType="PRIMARY" size="M">
-          생성
+        <S.ImportButton
+          onClick={handleChange}
+          styleType="PRIMARY"
+          size="M"
+          disabled={
+            !columnName.trim() || columnName.trim() === currentColumnName.trim()
+          }
+        >
+          변경
         </S.ImportButton>
       </S.ButtonContainer>
     </BackDropModal>

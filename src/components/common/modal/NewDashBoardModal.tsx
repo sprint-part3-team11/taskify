@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { ColorSelector } from '@/components/ColorSelector';
+// import { ColorSelector } from '@/components/ColorSelector';
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
@@ -91,7 +91,7 @@ function NewDashBoardModal({
         value={dashBoardName}
         onChange={handleInputChange}
       />
-      <ColorSelector />
+      {/* <ColorSelector /> */}
       <S.ButtonContainer>
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
@@ -100,6 +100,7 @@ function NewDashBoardModal({
           onClick={handleDashBoardName}
           styleType="PRIMARY"
           size="M"
+          disabled={!dashBoardName.trim()}
         >
           생성
         </S.ImportButton>
