@@ -23,7 +23,7 @@ function Comment() {
       cardId: Math.floor(Math.random() * 1000),
       author: {
         profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
-        nickname: 'user' + Math.floor(Math.random() * 100),
+        nickname: `user${Math.floor(Math.random() * 100)}`,
         id: Math.floor(Math.random() * 1000),
       },
     };
