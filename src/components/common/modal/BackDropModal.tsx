@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import styled, { keyframes } from 'styled-components';
 
 const appearModal = keyframes`
-  0%{opacity:0.2;transform: scale(0.5);}
+  0%{opacity:0; transform: translate3d(0, 3%, 0);}
 
-  100%{opacity:1;transform: scale(1);}
+  to{opacity:1; transform:translateZ(0);}
 `;
 const S = {
   ModalBackground: styled.div`
@@ -27,7 +27,7 @@ const S = {
     background: ${({ theme }) => theme.color.white};
     border-radius: 0.8rem;
 
-    animation: ${appearModal} 0.7s ease-in-out;
+    animation: ${appearModal} 0.5s ease-in-out;
   `,
 };
 
