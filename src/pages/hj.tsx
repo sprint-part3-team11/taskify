@@ -12,9 +12,18 @@ function hj() {
   const hashTag = ['프로젝트', '프론트엔드', '어려워'];
   const MY_IMAGE_URL = 'https://i.ibb.co/ysRQMyj/me.jpg';
   const invitedUsers = [
-    'https://i.ibb.co/kgykYbx/Ellipse-40.png',
-    'https://i.ibb.co/tPyNYb1/Ellipse-38.png',
-    'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
+    {
+      id: 1,
+      profileImageUrl: 'https://i.ibb.co/kgykYbx/Ellipse-40.png',
+    },
+    {
+      id: 2,
+      profileImageUrl: 'https://i.ibb.co/tPyNYb1/Ellipse-38.png',
+    },
+    {
+      id: 3,
+      profileImageUrl: 'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
+    },
   ];
   const cardInfoData = {
     id: 0,
@@ -42,12 +51,12 @@ function hj() {
   };
   return (
     <S.Container>
-      {/* <DashBoardHeader
-        menuName={'내 대시보드'}
-        profileName={'남현준'}
+      <DashBoardHeader
+        menuName="내 대시보드"
+        profileName="남현준"
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
-      /> */}
+      />
       {/* <div>
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>

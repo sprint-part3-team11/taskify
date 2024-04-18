@@ -108,7 +108,11 @@ interface HeaderProps {
   menuName: string;
   profileName: string;
   profileImgURL: string;
-  invitedUsers?: string[];
+  invitedUsers: InvitedUsersProp[];
+}
+interface InvitedUsersProp {
+  id: number;
+  profileImageUrl: string;
 }
 
 function DashBoardHeader({
@@ -128,12 +132,12 @@ function DashBoardHeader({
       </S.MenuNameAndButtonBox>
       <S.InvitedUsersBox>
         {invitedUsers &&
-          invitedUsers.map((userImgUrl, index) => (
+          invitedUsers.map((invitedUser, index) => (
             <S.InvitedUserImage
-              key={index}
+              key={invitedUser.id}
               width={38}
               height={38}
-              src={userImgUrl}
+              src={invitedUser.profileImageUrl}
               alt="초대된 유저"
               style={{
                 marginLeft: `${0 - 8}px`,
