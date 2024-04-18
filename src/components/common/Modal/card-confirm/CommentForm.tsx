@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   CommentFormBox: styled.div`
@@ -8,6 +9,10 @@ const S = {
 
   Title: styled.h1`
     font-weight: 500;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.4rem;
+    }
   `,
 
   Form: styled.form``,
@@ -24,6 +29,11 @@ const S = {
     width: 100%;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.6rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding: 2rem 0 7rem 1rem;
+      height: 7rem;
+    }
   `,
 
   Button: styled.button`
@@ -64,9 +74,7 @@ function CommentForm({ create, length }: CommentFormProps) {
   return (
     <S.CommentFormBox>
       <S.Form onSubmit={submitHandler}>
-        <S.Title>
-          댓글 <span>({length})</span>
-        </S.Title>
+        <S.Title>댓글 ({length})</S.Title>
 
         <S.InputWrapper>
           <S.Input
