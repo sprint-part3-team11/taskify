@@ -4,8 +4,10 @@ import {
   resultColorState,
 } from '@/components/common/ColorSelector';
 import { useState } from 'react';
+import React from 'react';
 import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
+import Sidebar from '@/components/common/SideBar';
 
 const selectBoxOptions = [
   { value: '배유철', label: '배유철' },
@@ -15,6 +17,11 @@ const selectBoxOptions = [
   { value: '난사람', label: 'alallalalalaalalallalalalalaaalalalaalal' },
 ];
 
+const dashboards = [
+  { id: '1', color: '#FFA500', name: '대시보드 1', createdByMe: true },
+  { id: '2', color: '#FF2660', name: '대시보드 2', createdByMe: true },
+  { id: '3', color: '#7AC555', name: '대시보드 3', createdByMe: false },
+];
 function jy() {
   const resultColor = useRecoilValue(resultColorState);
   return (
@@ -24,6 +31,7 @@ function jy() {
         options={selectBoxOptions}
         placeholder={true}
       />
+      <Sidebar dashboards={dashboards} />
       <ColorSelector />
       {resultColor}
       <ImgFileUpload edit={false} small={true} />

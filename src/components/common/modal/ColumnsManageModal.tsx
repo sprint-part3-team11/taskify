@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/button/Button';
@@ -21,11 +21,11 @@ const S = {
   `,
   Input: styled(InputField)`
     min-width: 48.4rem;
-    padding: 1.5rem 1.6rem 1.4rem;
     margin-bottom: 2.8rem;
+    padding: 1.5rem 1.6rem 1.4rem;
 
-    border-radius: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border-radius: 0.6rem;
     background: ${({ theme }) => theme.color.white};
 
     color: ${({ theme }) => theme.color.body};
@@ -51,50 +51,69 @@ const S = {
       justify-content: space-between;
     }
   `,
+  DeleteButton: styled.button`
+    display: flex;
+    justify-content: flex-start;
+
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+
+    color: ${({ theme }) => theme.color.gray};
+    font-size: 1.4rem;
+    text-decoration-line: underline;
+
+    ${MEDIA_QUERIES.onMobile} {
+      margin-bottom: 1.6rem;
+    }
+  `,
 };
 
-interface AddNewColumnsModalProps {
+interface ColumnsManageModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (columnName: string) => void;
+  onDelete: () => void;
+  onChange: (columnName: string) => void;
+  currentColumnName: string;
 }
 
-function AddNewColumnsModal({
+function ColumnsManageModal({
   isOpen,
   onClose,
-  onCreate,
-}: AddNewColumnsModalProps) {
-  const [columnName, setColumnName] = useState('');
+  onChange,
+  onDelete,
+  currentColumnName = '',
+}: ColumnsManageModalProps) {
+  const [columnName, setColumnName] = useState(currentColumnName);
 
+  useEffect(() => {
+    setColumnName(currentColumnName);
+  }, [currentColumnName]);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
   };
 
-  const handleClose = () => {
-    setColumnName('');
+  const handleChange = () => {
+    onChange(columnName);
     onClose();
   };
 
-  const handleCreate = () => {
-    onCreate(columnName);
-    handleClose();
-  };
-
   return (
-    <BackDropModal isOpen={isOpen} onClose={handleClose}>
-      <S.Title>새 컬럼 생성</S.Title>
+    <BackDropModal isOpen={isOpen} onClose={onClose}>
+      <S.Title>컬럼 관리</S.Title>
       <S.Input
         label="이름"
-        id="addNewColumn"
+        id="manageColumn"
         placeholder="새로운 프로젝트"
         value={columnName}
         onChange={handleInputChange}
       />
+      <S.DeleteButton onClick={onDelete}>삭제하기</S.DeleteButton>
       <S.ButtonContainer>
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
         </S.ImportButton>
-        <S.ImportButton onClick={handleCreate} styleType="PRIMARY" size="M">
+        <S.ImportButton onClick={handleChange} styleType="PRIMARY" size="M">
           생성
         </S.ImportButton>
       </S.ButtonContainer>
@@ -102,4 +121,4 @@ function AddNewColumnsModal({
   );
 }
 
-export default AddNewColumnsModal;
+export default ColumnsManageModal;

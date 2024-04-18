@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import AddNewColumnsModal from '@/components/common/modal/AddNewColumnsModal';
 import BackDropModal from '@/components/common/modal/BackDropModal';
-import ManageColumnsModal from '@/components/common/modal/ManageColumnsModal';
+import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
+import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
+import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import WarningModal from '@/components/common/modal/WarningModal';
 
 const S = {
@@ -21,6 +22,7 @@ function Mj() {
   const [isModalOpen2, setModalOpen2] = useState(false);
   const [isModalOpen3, setModalOpen3] = useState(false);
   const [isModalOpen4, setModalOpen4] = useState(false);
+  const [isModalOpen5, setModalOpen5] = useState(false);
 
   const [tempColumnName, setTempColumnName] = useState('');
 
@@ -28,10 +30,12 @@ function Mj() {
   const openModal2 = () => setModalOpen2(true);
   const openModal3 = () => setModalOpen3(true);
   const openModal4 = () => setModalOpen4(true);
+  const openModal5 = () => setModalOpen5(true);
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
   const closeModal3 = () => setModalOpen3(false);
   const closeModal4 = () => setModalOpen4(false);
+  const closeModal5 = () => setModalOpen5(false);
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
@@ -64,6 +68,11 @@ function Mj() {
     // delete
   };
 
+  // 이메일 보내기 로직
+  const handleEmail = (email: string) => {
+    // post
+  };
+
   // 새 column 생성시 작동하는지 확인
   useEffect(() => {
     if (tempColumnName) {
@@ -77,6 +86,7 @@ function Mj() {
       <S.Button onClick={openModal2}>2번 모달(비밀번호 틀림)</S.Button>
       <S.Button onClick={openModal3}>3번 모달(add column)</S.Button>
       <S.Button onClick={openModal4}>4번 모달(manage column)</S.Button>
+      <S.Button onClick={openModal5}>5번 모달(invite member)</S.Button>
 
       {/* 기본 백드롭 모달 */}
       <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
@@ -102,19 +112,26 @@ function Mj() {
       />
 
       {/* 새 컬럼 추가에 사용되는 모달 형식 */}
-      <AddNewColumnsModal
+      <NewColumnsModal
         isOpen={isModalOpen3}
         onClose={closeModal3}
         onCreate={handleCreate}
       />
 
       {/* 기존의 컬럼을 수정 또는 삭제에 사용되는 모달 형식 */}
-      <ManageColumnsModal
+      <ColumnsManageModal
         isOpen={isModalOpen4}
         onClose={closeModal4}
         currentColumnName={tempColumnName}
         onChange={handleChange}
         onDelete={handleDelete}
+      />
+
+      {/* 팀원 초대 모달 */}
+      <TeamMemberInviteModal
+        isOpen={isModalOpen5}
+        onClose={closeModal5}
+        onCreate={handleEmail}
       />
     </div>
   );
