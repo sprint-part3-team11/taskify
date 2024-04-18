@@ -48,16 +48,16 @@ interface CommentFormProps {
   length: number;
 }
 
-function CommentForm(props: CommentFormProps) {
+function CommentForm({ create, length }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
 
-  const changeHandler = (e: any) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const submitHandler = (e: any) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.create(inputValue);
+    create(inputValue);
     setInputValue('');
   };
 
@@ -65,7 +65,7 @@ function CommentForm(props: CommentFormProps) {
     <S.CommentFormBox>
       <S.Form onSubmit={submitHandler}>
         <S.Title>
-          댓글 <span>({props.length})</span>
+          댓글 <span>({length})</span>
         </S.Title>
 
         <S.InputWrapper>
