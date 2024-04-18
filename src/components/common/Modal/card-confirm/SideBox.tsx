@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   SideContainer: styled.div`
@@ -33,6 +34,7 @@ const S = {
   NickName: styled.div`
     margin-left: 1rem;
   `,
+  DueDateBox: styled.div``,
   DueDate: styled.div`
     font-size: 1.4rem;
   `,
@@ -53,9 +55,10 @@ function SideBox({ cardInfoData }: CardConfirmModalProps) {
           <S.NickName>{cardInfoData.assignee.nickname}</S.NickName>
         </S.Assignee>
       </S.AssigneeBox>
-
-      <S.Label>마감일</S.Label>
-      <S.DueDate>{cardInfoData.dueDate}</S.DueDate>
+      <S.DueDateBox>
+        <S.Label>마감일</S.Label>
+        <S.DueDate>{cardInfoData.dueDate}</S.DueDate>
+      </S.DueDateBox>
     </S.SideContainer>
   );
 }
