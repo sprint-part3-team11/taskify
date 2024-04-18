@@ -17,6 +17,10 @@ const S = {
   ContentBox: styled.div`
     width: 100%;
     margin-bottom: 2.5rem;
+    ${MEDIA_QUERIES.onMobile} {
+      line-height: 1.5rem;
+      font-size: 1.2rem;
+    }
   `,
   Image: styled(Image)`
     ${MEDIA_QUERIES.onMobile} {
