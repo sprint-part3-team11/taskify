@@ -20,3 +20,18 @@ export interface CardInfoProps {
 export interface CardConfirmModalProps {
   cardInfoData: CardInfoProps;
 }
+
+export interface CommentItemProps {
+  id: number;
+  content: string;
+  createdDate: string;
+  updatedDate: string;
+
+  author: {
+    profileImageUrl: string;
+    nickname: string;
+    id: number;
+  };
+  modify: (content: string, id: number) => void;
+  destroy: (id: number) => void;
+}

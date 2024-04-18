@@ -1,6 +1,6 @@
 import HashTag from '../../tag/HashTag';
 import StateTag from '../../tag/StateTag';
-import { CardConfirmModalProps } from './CardConfirmModal';
+import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
 
 const S = {

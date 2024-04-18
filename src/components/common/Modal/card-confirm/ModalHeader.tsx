@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CardConfirmModalProps } from './CardConfirmModal';
+import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';

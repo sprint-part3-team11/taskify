@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { CardConfirmModalProps } from './CardConfirmModal';
+import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
 
 const S = {
@@ -46,7 +46,7 @@ function SideBox({ cardInfoData }: CardConfirmModalProps) {
         <S.Assignee>
           <Image
             src={cardInfoData.assignee.profileImageUrl}
-            alt={'담당자 이름'}
+            alt="담당자 이름"
             width={34}
             height={34}
           />

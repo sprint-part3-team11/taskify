@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { CardConfirmModalProps } from './CardConfirmModal';
+import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
 
 const S = {

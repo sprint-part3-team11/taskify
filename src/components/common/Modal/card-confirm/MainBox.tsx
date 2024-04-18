@@ -1,7 +1,7 @@
-import { CardConfirmModalProps } from './CardConfirmModal';
 import Comment from './Comment';
 import ContentAndImageBox from './ContentAndImageBox';
 import TagBox from './TagBox';
+import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
 
 const S = {
