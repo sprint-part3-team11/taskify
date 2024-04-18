@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import Sidebar from '@/components/common/SideBar';
+import BackButton from '@/components/my-page/BackButton';
 import MypageHeader from '@/components/my-page/MypageHeader';
+import PasswordChange from '@/components/my-page/PasswordChange';
+import ProfileChange from '@/components/my-page/ProfileChange';
 
 // 테스트용 배열
 const dashboards = [
@@ -19,6 +22,10 @@ const S = {
   ContentContainer: styled.div`
     flex: 1;
   `,
+  ContentBox: styled.div`
+    background-color: ${({ theme }) => theme.color.background};
+    height: 90%;
+  `,
 };
 
 function mypage() {
@@ -27,6 +34,11 @@ function mypage() {
       <S.Side dashboards={dashboards} />
       <S.ContentContainer>
         <MypageHeader name="공주들" />
+        <S.ContentBox>
+          <BackButton />
+          <ProfileChange />
+          <PasswordChange />
+        </S.ContentBox>
       </S.ContentContainer>
     </S.Container>
   );
