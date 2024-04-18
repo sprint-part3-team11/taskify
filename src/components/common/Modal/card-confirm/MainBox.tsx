@@ -20,6 +20,7 @@ const S = {
     }
   `,
 };
+
 function MainBox({ cardInfoData }: CardConfirmModalProps) {
   return (
     <S.MainBox>

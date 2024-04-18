@@ -14,7 +14,7 @@ const S = {
     ${MEDIA_QUERIES.onMobile} {
       padding: 2.2rem 2rem;
       width: 32rem;
-      height: 75rem;
+      height: 68rem;
     }
   `,
 
