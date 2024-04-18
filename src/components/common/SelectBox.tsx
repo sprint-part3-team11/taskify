@@ -57,7 +57,7 @@ const S = {
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     background: ${({ theme }) => theme.color.white};
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
-    margin-top: 0.2rem;
+    margin-top: 8rem;
 
     ${MEDIA_QUERIES.onTablet} {
       width: 21.7rem;
