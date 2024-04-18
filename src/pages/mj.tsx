@@ -113,7 +113,7 @@ function Mj() {
       <WarningModal
         isOpen={isModalOpen2}
         onClose={closeModal2}
-        type="ALREADY_USED"
+        type="PASSWORD"
       />
 
       {/* 새 컬럼 추가에 사용되는 모달 형식 */}
@@ -140,7 +140,11 @@ function Mj() {
       />
 
       {/*  */}
-      <NewDashBoardModal />
+      <NewDashBoardModal
+        isOpen={isModalOpen6}
+        onClose={closeModal6}
+        onCreate={handleEmail}
+      />
     </div>
   );
 }
