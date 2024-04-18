@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
+import DateSelector from '@/components/common/DateSelector';
 import ImgFileUpload from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
@@ -66,9 +67,14 @@ const S = {
     padding: 1.6rem;
     border: ${({ theme }) => theme.border.lightGray};
     border-radius: 0.4rem;
+    font-size: 1.6rem;
 
     &:focus {
       outline: none;
+    }
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.4rem;
     }
   `,
 
@@ -108,66 +114,68 @@ function ToDoCreateModal({ isOpen, onClose }: any) {
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
-      <S.Title>📌 할 일 생성</S.Title>
-      <S.FormContainer>
-        <S.FieldBox>
-          <S.Label>담당자</S.Label>
-          <SelectBox options={selectBoxOptions} placeholder={true} />
-        </S.FieldBox>
+      <div style={{ maxHeight: '90rem', overflow: 'scroll' }}>
+        <S.Title>📌 할 일 생성</S.Title>
+        <S.FormContainer>
+          <S.FieldBox>
+            <S.Label>담당자</S.Label>
+            <SelectBox options={selectBoxOptions} placeholder={true} />
+          </S.FieldBox>
 
-        <S.FieldBox>
-          <S.Label htmlFor="title" className="required">
-            제목
-          </S.Label>
-          <S.Input
-            id="title"
-            type="text"
-            placeholder="제목을 입력해주세요"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleOnChange('title', e.target.value)
-            }
-          />
-        </S.FieldBox>
+          <S.FieldBox>
+            <S.Label htmlFor="title" className="required">
+              제목
+            </S.Label>
+            <S.Input
+              id="title"
+              type="text"
+              placeholder="제목을 입력해주세요"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleOnChange('title', e.target.value)
+              }
+            />
+          </S.FieldBox>
 
-        <S.FieldBox>
-          <S.Label className="required">설명</S.Label>
-          <S.Textarea
-            placeholder="설명을 입력해주세요"
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              handleOnChange('description', e.target.value)
-            }
-          />
-        </S.FieldBox>
+          <S.FieldBox>
+            <S.Label className="required">설명</S.Label>
+            <S.Textarea
+              placeholder="설명을 입력해주세요"
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                handleOnChange('description', e.target.value)
+              }
+            />
+          </S.FieldBox>
 
-        <S.FieldBox>
-          <S.Label>마감일</S.Label>
-          라이브러리쓴다~
-        </S.FieldBox>
+          <S.FieldBox>
+            <S.Label>마감일</S.Label>
+            <DateSelector />
+          </S.FieldBox>
 
-        <S.FieldBox>
-          <S.Label htmlFor="tag">태그</S.Label>
-          <S.Input
-            id="tag"
-            type="text"
-            placeholder="태그를 입력해보세요!"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleOnChange('title', e.target.value)
-            }
-          />
-        </S.FieldBox>
+          <S.FieldBox>
+            <S.Label htmlFor="tag">태그</S.Label>
+            <S.Input
+              id="tag"
+              type="text"
+              placeholder="태그를 입력해보세요"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleOnChange('title', e.target.value)
+              }
+            />
+          </S.FieldBox>
 
-        <S.FieldBox>
-          <S.Label>이미지</S.Label>
-          <ImgFileUpload edit={false} small={true} />
-        </S.FieldBox>
-      </S.FormContainer>
+          <S.FieldBox>
+            <S.Label>이미지</S.Label>
+            <ImgFileUpload edit={false} small={true} />
+          </S.FieldBox>
+        </S.FormContainer>
 
-      <S.ButtonContainer>
-        <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
-          취소
-        </Button>
-        <Button disabled>생성</Button>
-      </S.ButtonContainer>
+        <S.ButtonContainer>
+          <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
+            취소
+          </Button>
+          <Button disabled>생성</Button>
+        </S.ButtonContainer>
+      </div>
     </BackDropModal>
   );
 }
