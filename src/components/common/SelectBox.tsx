@@ -11,10 +11,10 @@ const S = {
     align-items: center;
     justify-content: space-between;
 
-    width: 13.5625rem;
-    height: 3rem;
-    padding: 0.5rem;
-    border-radius: 0.375rem;
+    width: 22.7rem;
+    height: 4.8rem;
+    padding: 1.5rem 1rem 1.4rem 1.6rem;
+    border-radius: 0.6rem;
     border: 1px solid
       ${(props) =>
         props.$isFocused
@@ -23,8 +23,13 @@ const S = {
     outline: none;
     background: ${({ theme }) => theme.color.white};
 
+    ${MEDIA_QUERIES.onTablet} {
+      width: 21.7rem;
+    }
+
     ${MEDIA_QUERIES.onMobile} {
-      width: 20.4375rem;
+      width: 32.7rem;
+      padding: 1.3rem 1rem 1.2rem 1.6rem;
     }
 
     &:focus-within {
@@ -35,32 +40,31 @@ const S = {
     flex: 3;
     overflow: hidden;
 
-    margin: 0 0.625rem 0 0.625rem;
+    height: 1.6rem;
+    margin: 1.5rem 2.6rem 1.4rem 1.6rem;
 
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-size: 1rem;
+    font-size: 1.6rem;
     font-weight: 300;
     color: ${(props) =>
       props.$gray ? props.theme.color.gray : props.theme.color.body};
   `,
-  Title: styled.p`
-    margin-bottom: 0.63rem;
-
-    font-size: 1rem;
-    font-weight: 500;
-    color: ${({ theme }) => theme.color.body};
-  `,
   OptionArea: styled.ul`
-    width: 13.5625rem;
-    border-radius: 0.375rem;
+    position: absolute;
+    width: 22.7rem;
+    border-radius: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     background: ${({ theme }) => theme.color.white};
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
-    margin-top: 0.0625rem;
+    margin-top: 0.2rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      width: 21.7rem;
+    }
 
     ${MEDIA_QUERIES.onMobile} {
-      width: 20.4375rem;
+      width: 32.7rem;
     }
   `,
   OptionValue: styled.li`
@@ -76,18 +80,19 @@ const S = {
     }
   `,
   OptionValueText: styled.p<{ $isCheckIcon: boolean }>`
-    font-size: 1rem;
+    padding: 1rem;
+    font-size: 1.6rem;
     font-weight: 400;
 
     color: ${({ theme }) => theme.color.body};
-    margin-left: ${(props) => (props.$isCheckIcon ? '0.6rem' : '2rem')};
+    margin-left: ${(props) => (props.$isCheckIcon ? '' : '2rem')};
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   `,
   CheckIcon: styled(CheckIcon)`
-    width: 1.375rem;
-    height: 1.375rem;
+    width: 2rem;
+    height: 2rem;
   `,
 };
 
