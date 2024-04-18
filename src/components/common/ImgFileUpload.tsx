@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -13,14 +13,14 @@ const imgUrlState = atom<File | null>({
 const S = {
   Label: styled.label<{ $small: boolean }>`
     position: relative;
-    display: inline-block;
+    display: block;
 
     width: ${(props) => (props.$small ? '4.75rem' : '15.37rem')};
     height: ${(props) => (props.$small ? '4.75rem' : '15.37rem')};
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '3.8rem' : '6.25rem')};
-      height: ${(props) => (props.$small ? '3.8rem' : '6.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
     }
   `,
   Image: styled.img<{ $small: boolean }>`
@@ -36,8 +36,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
     }
   `,
   Button: styled.button<{ $small: boolean }>`
@@ -52,15 +52,11 @@ const S = {
     opacity: 0;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
     }
   `,
-  AddIcon: styled(AddIcon)`
-    path {
-      width: 1px;
-      height: 1px;
-    }
+  AddIcon: styled.div<{ $small: boolean }>`
     display: flex;
     flex-shrink: 0;
 
@@ -77,8 +73,8 @@ const S = {
     cursor: pointer;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
     }
   `,
   Overlay: styled.div<{ $small: boolean }>`
@@ -88,7 +84,7 @@ const S = {
     left: 0;
 
     width: ${(props) => (props.$small ? '100%' : '15.37rem')};
-    height: ${(props) => (props.$small ? '100%' : '15.37')};
+    height: ${(props) => (props.$small ? '100%' : '15.37rem')};
     justify-content: center;
     align-items: center;
     border-radius: 0.375rem;
@@ -96,8 +92,8 @@ const S = {
     background: rgba(0, 0, 0, 0.6);
 
     ${MEDIA_QUERIES.onMobile} {
-      width: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
-      height: ${(props) => (props.$small ? '4.5rem' : '8.25rem')};
+      width: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
+      height: ${(props) => (props.$small ? '4.5rem' : '9.25rem')};
     }
   `,
   Input: styled.input<{ $small: boolean }>`
@@ -148,7 +144,9 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
           )}
         </>
       ) : (
-        <S.AddIcon onClick={handleClick} $small={small} />
+        <S.AddIcon onClick={handleClick} $small={small}>
+          <AddIcon />
+        </S.AddIcon>
       )}
       <S.Input
         id="fileInput"
