@@ -12,8 +12,9 @@ const S = {
     height: 76rem;
 
     ${MEDIA_QUERIES.onMobile} {
+      padding: 2.2rem 2rem;
       width: 32rem;
-      height: 60rem;
+      height: 75rem;
     }
   `,
 
