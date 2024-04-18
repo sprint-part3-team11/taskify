@@ -56,7 +56,7 @@ const S = {
     border-radius: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     background: ${({ theme }) => theme.color.white};
-    box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
     margin-top: 0.2rem;
 
     ${MEDIA_QUERIES.onTablet} {
