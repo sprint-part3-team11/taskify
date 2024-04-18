@@ -2,17 +2,25 @@ import theme from '@/styles/theme';
 
 export const buttonStyleBySize = {
   S: `
-    min-width: 7.2rem;
+    padding: 0.7rem 2.9rem;
     border-radius: 0.4rem;
     font-size: 1.4rem;
     font-weight: 500;
+
+    @media screen and (max-width: 768px) {
+      padding: 0.7rem 2.5rem;
+    }
   `,
 
   M: `
-    min-width: 12rem;
+    padding: 1.4rem 4.6rem;
     border-radius: 0.8rem;
     font-size: 1.6rem;
     font-weight: 500;
+
+    @media screen and (max-width: 768px) {
+      padding: 1.2rem 5.6rem;
+    }
   `,
 
   L: `

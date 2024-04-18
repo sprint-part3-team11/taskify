@@ -25,6 +25,10 @@ const theme = Object.freeze({
     lightPink: '#F7DBF0',
     lightSkyBlue: '#DBE6F7',
   },
+
+  border: {
+    lightGray: '1px solid #D9D9D9',
+  },
 });
 
 export default theme;
