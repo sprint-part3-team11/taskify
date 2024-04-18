@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import DateSelector from '@/components/common/DateSelector';
-import ImgFileUpload from '@/components/common/ImgFileUpload';
+import { ImgFileUpload } from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
@@ -24,6 +24,11 @@ const S = {
       width: 46rem;
       margin-top: 3.2rem;
     }
+  `,
+
+  Low: styled.div`
+    display: flex;
+    justify-content: space-between;
   `,
 
   FieldBox: styled.div`
@@ -99,13 +104,14 @@ const selectBoxOptions = [
   { value: '난사람', label: 'alallalalalaalalallalalalalaaalalalaalal' },
 ];
 
-function ToDoCreateModal({ isOpen, onClose }: any) {
+function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
   const [toDoInfo, setToDoInfo] = useState({
     assignee: '',
     title: '',
     description: '',
     dueDate: '',
     tags: [],
+    ...prevData,
   });
 
   const isFilledRequiredFields = () => {
@@ -119,70 +125,78 @@ function ToDoCreateModal({ isOpen, onClose }: any) {
     }));
   };
 
+  const isEditText = isEdit ? '수정' : '생성';
+
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
-      <div style={{ maxHeight: '90rem', overflow: 'scroll' }}>
-        <S.Title>📌 할 일 생성</S.Title>
-        <S.FormContainer>
+      <S.Title>📌 할 일 {isEditText}</S.Title>
+      <S.FormContainer>
+        <S.Low>
+          {isEdit && (
+            <S.FieldBox>
+              <S.Label>상태</S.Label>
+              <SelectBox options={selectBoxOptions} placeholder={true} />
+            </S.FieldBox>
+          )}
           <S.FieldBox>
             <S.Label>담당자</S.Label>
             <SelectBox options={selectBoxOptions} placeholder={true} />
           </S.FieldBox>
+        </S.Low>
 
-          <S.FieldBox>
-            <S.Label htmlFor="title" className="required">
-              제목
-            </S.Label>
-            <S.Input
-              id="title"
-              type="text"
-              placeholder="제목을 입력해주세요"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleOnChange('title', e.target.value)
-              }
-            />
-          </S.FieldBox>
+        <S.FieldBox>
+          <S.Label htmlFor="title" className="required">
+            제목
+          </S.Label>
+          <S.Input
+            id="title"
+            type="text"
+            placeholder="제목을 입력해주세요"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleOnChange('title', e.target.value)
+            }
+          />
+        </S.FieldBox>
 
-          <S.FieldBox>
-            <S.Label className="required">설명</S.Label>
-            <S.Textarea
-              placeholder="설명을 입력해주세요"
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                handleOnChange('description', e.target.value)
-              }
-            />
-          </S.FieldBox>
+        <S.FieldBox>
+          <S.Label className="required">설명</S.Label>
+          <S.Textarea
+            placeholder="설명을 입력해주세요"
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              handleOnChange('description', e.target.value)
+            }
+          />
+        </S.FieldBox>
 
-          <S.FieldBox>
-            <S.Label>마감일</S.Label>
-            <DateSelector />
-          </S.FieldBox>
+        <S.FieldBox>
+          <S.Label>마감일</S.Label>
+          <DateSelector />
+        </S.FieldBox>
 
-          <S.FieldBox>
-            <S.Label htmlFor="tag">태그</S.Label>
-            <S.Input
-              id="tag"
-              type="text"
-              placeholder="태그를 입력해보세요"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleOnChange('title', e.target.value)
-              }
-            />
-          </S.FieldBox>
+        <S.FieldBox>
+          <S.Label htmlFor="tag">태그</S.Label>
+          <S.Input
+            id="tag"
+            type="text"
+            placeholder="태그를 입력해보세요"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleOnChange('title', e.target.value)
+            }
+          />
+        </S.FieldBox>
 
-          <S.FieldBox>
-            <S.Label>이미지</S.Label>
-            <ImgFileUpload edit={false} small={true} />
-          </S.FieldBox>
-        </S.FormContainer>
+        <S.FieldBox>
+          <S.Label>이미지</S.Label>
+          <ImgFileUpload edit={false} small={true} />
+        </S.FieldBox>
+      </S.FormContainer>
 
-        <S.ButtonContainer>
-          <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
-            취소
-          </Button>
-          <Button disabled={!isFilledRequiredFields()}>생성</Button>
-        </S.ButtonContainer>
-      </div>
+      <S.ButtonContainer>
+        <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
+          취소
+        </Button>
+        <Button disabled={!isFilledRequiredFields()}>{isEditText}</Button>
+      </S.ButtonContainer>
     </BackDropModal>
   );
 }

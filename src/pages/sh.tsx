@@ -1,8 +1,17 @@
 import { useState } from 'react';
+import SelectBox from '@/components/common/SelectBox';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import Button from '@/components/common/button/Button';
 import ToDoCreateModal from '@/components/dashboard/modal/ToDoCreateModal';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
+
+const selectBoxOptions = [
+  { value: '배유철', label: '배유철' },
+  { value: '배동석', label: '배동석' },
+  { value: 'ToDo', label: '🔹To Do' },
+  { value: '박지윤', label: '박지윤' },
+  { value: '난사람', label: 'alallalalalaalalallalalalalaaalalalaalal' },
+];
 
 function sh() {
   const [isModalOpen, setisModalOpen] = useState(false);
@@ -33,12 +42,15 @@ function sh() {
         <ToDoCreateModal
           isOpen={isModalOpen}
           onClose={() => setisModalOpen(false)}
+          isEdit={true}
         />
       )}
       <Button styleType={BUTTON_TYPE.SECONDARY}>취소</Button>
 
       <AddIconButton />
       <AddIconButton>새로운 대시보드</AddIconButton>
+
+      <SelectBox options={selectBoxOptions} placeholder />
     </>
   );
 }
