@@ -1,6 +1,5 @@
 import { CardConfirmModalProps } from './CardConfirmModal';
 import Comment from './Comment';
-// import CommentFormBox from './CommentFormBox';
 import ContentAndImageBox from './ContentAndImageBox';
 import TagBox from './TagBox';
 import styled from 'styled-components';
