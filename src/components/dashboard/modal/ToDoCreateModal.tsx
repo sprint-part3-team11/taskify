@@ -108,6 +108,10 @@ function ToDoCreateModal({ isOpen, onClose }: any) {
     tags: [],
   });
 
+  const isFilledRequiredFields = () => {
+    return toDoInfo.title.trim() && toDoInfo.description.trim();
+  };
+
   const handleOnChange = (fieldName: string, value: string | string[]) => {
     setToDoInfo((prev) => ({
       ...prev,
@@ -176,7 +180,7 @@ function ToDoCreateModal({ isOpen, onClose }: any) {
           <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
             취소
           </Button>
-          <Button disabled>생성</Button>
+          <Button disabled={!isFilledRequiredFields()}>생성</Button>
         </S.ButtonContainer>
       </div>
     </BackDropModal>
