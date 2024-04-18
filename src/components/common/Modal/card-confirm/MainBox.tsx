@@ -3,6 +3,7 @@ import ContentAndImageBox from './ContentAndImageBox';
 import TagBox from './TagBox';
 import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   MainAndSideBox: styled.div`
@@ -12,6 +13,11 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 450px;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 100%;
+      word-break: break-all;
+    }
   `,
 };
 function MainBox({ cardInfoData }: CardConfirmModalProps) {
