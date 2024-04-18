@@ -17,6 +17,8 @@ const S = {
   ContentBox: styled.div`
     width: 100%;
     margin-bottom: 2.5rem;
+    line-height: 2rem;
+
     ${MEDIA_QUERIES.onMobile} {
       line-height: 1.5rem;
       font-size: 1.2rem;

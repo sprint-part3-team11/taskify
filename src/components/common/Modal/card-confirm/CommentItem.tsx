@@ -20,15 +20,25 @@ const S = {
 
   ProfileImage: styled(Image)`
     border-radius: 50%;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 2.6rem;
+      height: 2.6rem;
+    }
   `,
 
   CommentInfoBox: styled.div`
     display: flex;
-    gap: 0.5rem;
+    gap: 0.8rem;
     flex-direction: column;
     margin-top: 1rem;
     margin-left: 1rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      gap: 0.6rem;
+    }
   `,
+
   NameAndDateBox: styled.div`
     display: flex;
   `,
@@ -37,17 +47,29 @@ const S = {
   CommentNickName: styled.li`
     margin: 0 1rem;
     font-weight: 600;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
   `,
 
   CommentContent: styled.li`
     flex: 1;
     margin: 0 1rem;
     cursor: pointer;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
   `,
 
   CommentDate: styled.li`
     margin-top: 0.3rem;
     font-size: 1.2rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1rem;
+    }
   `,
 
   ButtonBox: styled.div`
@@ -56,6 +78,10 @@ const S = {
     margin-left: 1rem;
     font-size: 1.2rem;
     color: ${({ theme }) => theme.color.gray};
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1rem;
+    }
   `,
   ModifyComment: styled.li`
     cursor: pointer;
@@ -100,11 +126,11 @@ function CommentItem({
     setIsEditing(true);
   };
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditContent(e.target.value);
   };
 
-  const keyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handlePressKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const updatedData = e.currentTarget.value;
       modify(updatedData, id);
@@ -135,9 +161,9 @@ function CommentItem({
             <S.CommentInput
               type="text"
               value={editContent}
-              onChange={changeHandler}
+              onChange={handleChangeContent}
               ref={inputRef}
-              onKeyDown={keyPressHandler}
+              onKeyDown={handlePressKey}
             />
           ) : (
             <S.CommentContent>{content}</S.CommentContent>
