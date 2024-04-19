@@ -32,6 +32,6 @@ export interface CommentItemProps {
     nickname: string;
     id: number;
   };
-  modify: (content: string, id: number) => void;
-  destroy: (id: number) => void;
+  edit: (content: string, id: number) => void;
+  remove: (id: number) => void;
 }

@@ -13,11 +13,11 @@ export interface CommentListProps {
       id: number;
     };
   }[];
-  modify: (content: string, id: number) => void;
-  destroy: (id: number) => void;
+  edit: (content: string, id: number) => void;
+  remove: (id: number) => void;
 }
 
-function CommentList({ list, modify, destroy }: CommentListProps) {
+function CommentList({ list, edit, remove }: CommentListProps) {
   return (
     <>
       {list.map((comment) => (
@@ -27,8 +27,8 @@ function CommentList({ list, modify, destroy }: CommentListProps) {
           content={comment.content}
           createdDate={comment.createdAt}
           updatedDate={comment.updatedAt}
-          modify={modify}
-          destroy={destroy}
+          edit={edit}
+          remove={remove}
         />
       ))}
     </>
