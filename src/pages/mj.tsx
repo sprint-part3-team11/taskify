@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
+import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import WarningModal from '@/components/common/modal/WarningModal';
 
@@ -23,19 +24,23 @@ function Mj() {
   const [isModalOpen3, setModalOpen3] = useState(false);
   const [isModalOpen4, setModalOpen4] = useState(false);
   const [isModalOpen5, setModalOpen5] = useState(false);
+  const [isModalOpen6, setModalOpen6] = useState(false);
 
   const [tempColumnName, setTempColumnName] = useState('');
+  const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
 
   const openModal1 = () => setModalOpen1(true);
   const openModal2 = () => setModalOpen2(true);
   const openModal3 = () => setModalOpen3(true);
   const openModal4 = () => setModalOpen4(true);
   const openModal5 = () => setModalOpen5(true);
+  const openModal6 = () => setModalOpen6(true);
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
   const closeModal3 = () => setModalOpen3(false);
   const closeModal4 = () => setModalOpen4(false);
   const closeModal5 = () => setModalOpen5(false);
+  const closeModal6 = () => setModalOpen6(false);
 
   const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
@@ -80,6 +85,17 @@ function Mj() {
     }
   }, [tempColumnName]);
 
+  // 대시보드 생성(이름, 색깔)
+  const createdDashBoard = (name: string, color: string) => {
+    setTempDashBoardName([name, color]);
+    setModalOpen6(false);
+  };
+
+  // 대시보드 생성 확인용
+  useEffect(() => {
+    console.log(tempDashBoardName);
+  }, [tempDashBoardName]);
+
   return (
     <div style={{ backgroundColor: 'gray', height: '10000px' }}>
       <S.Button onClick={openModal1}>1번 모달(기본)</S.Button>
@@ -87,6 +103,7 @@ function Mj() {
       <S.Button onClick={openModal3}>3번 모달(add column)</S.Button>
       <S.Button onClick={openModal4}>4번 모달(manage column)</S.Button>
       <S.Button onClick={openModal5}>5번 모달(invite member)</S.Button>
+      <S.Button onClick={openModal6}>5번 모달(add dashboard+color)</S.Button>
 
       {/* 기본 백드롭 모달 */}
       <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
@@ -108,7 +125,7 @@ function Mj() {
       <WarningModal
         isOpen={isModalOpen2}
         onClose={closeModal2}
-        type="ALREADY_USED"
+        type="PASSWORD"
       />
 
       {/* 새 컬럼 추가에 사용되는 모달 형식 */}
@@ -132,6 +149,13 @@ function Mj() {
         isOpen={isModalOpen5}
         onClose={closeModal5}
         onCreate={handleEmail}
+      />
+
+      {/* 대시보드 생성 모달 */}
+      <NewDashBoardModal
+        isOpen={isModalOpen6}
+        onClose={closeModal6}
+        onCreate={createdDashBoard}
       />
     </div>
   );

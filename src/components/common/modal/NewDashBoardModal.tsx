@@ -1,5 +1,10 @@
 import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import {
+  ColorSelector,
+  resultColorState,
+} from '@/components/common/ColorSelector';
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
@@ -41,6 +46,7 @@ const S = {
     padding: 1.4rem 4.6rem;
     ${MEDIA_QUERIES.onMobile} {
       padding: 1.2rem 5.6rem;
+      margin-top: 2.4rem;
     }
   `,
   ButtonContainer: styled.div`
@@ -53,14 +59,20 @@ const S = {
   `,
 };
 
-interface NewColumnsModalProps {
+interface NewDashBoardModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (columnName: string) => void;
+  onCreate: (name: string, color: string) => void;
 }
 
-function NewColumnsModal({ isOpen, onClose, onCreate }: NewColumnsModalProps) {
-  const [columnName, setColumnName] = useState('');
+function NewDashBoardModal({
+  isOpen,
+  onClose,
+  onCreate,
+}: NewDashBoardModalProps) {
+  const [dashBoardName, setColumnName] = useState('');
+  const selectedColor = useRecoilValue(resultColorState);
+  const setColor = useSetRecoilState(resultColorState);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
@@ -68,33 +80,35 @@ function NewColumnsModal({ isOpen, onClose, onCreate }: NewColumnsModalProps) {
 
   const handleClose = () => {
     setColumnName('');
+    setColor('');
     onClose();
   };
 
-  const handleCreate = () => {
-    onCreate(columnName);
+  const handleDashBoardName = () => {
+    onCreate(dashBoardName, selectedColor);
     handleClose();
   };
 
   return (
     <BackDropModal isOpen={isOpen} onClose={handleClose}>
-      <S.Title>새 컬럼 생성</S.Title>
+      <S.Title>새로운 대시보드</S.Title>
       <S.Input
-        label="이름"
-        id="addNewColumn"
-        placeholder="새로운 프로젝트"
-        value={columnName}
+        label="대시보드 이름"
+        id="newDashBoard"
+        placeholder="뉴프로젝트"
+        value={dashBoardName}
         onChange={handleInputChange}
       />
+      <ColorSelector />
       <S.ButtonContainer>
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
         </S.ImportButton>
         <S.ImportButton
-          onClick={handleCreate}
+          onClick={handleDashBoardName}
           styleType="PRIMARY"
           size="M"
-          disabled={!columnName.trim()}
+          disabled={!dashBoardName.trim() || !selectedColor}
         >
           생성
         </S.ImportButton>
@@ -103,4 +117,4 @@ function NewColumnsModal({ isOpen, onClose, onCreate }: NewColumnsModalProps) {
   );
 }
 
-export default NewColumnsModal;
+export default NewDashBoardModal;
