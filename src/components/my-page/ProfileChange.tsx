@@ -21,7 +21,6 @@ function ProfileChange({ name }: ProfileChangeProps) {
       ${MEDIA_QUERIES.onMobile} {
         width: 28.4rem;
         height: 45.2rem;
-        margin: 0 1.2rem 0 1.2rem;
       }
     `,
     AlignBox: styled.div`

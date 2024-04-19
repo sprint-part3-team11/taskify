@@ -17,7 +17,7 @@ const S = {
     ${MEDIA_QUERIES.onMobile} {
       width: 28.4rem;
       height: 45.2rem;
-      margin: 1.2rem 1.2rem 0 1.2rem;
+      margin-top: 1.2rem;
     }
   `,
   Container: styled.div``,
