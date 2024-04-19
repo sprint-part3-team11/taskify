@@ -94,7 +94,12 @@ function TeamMemberInviteModal({
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
         </S.ImportButton>
-        <S.ImportButton onClick={handleEmail} styleType="PRIMARY" size="M">
+        <S.ImportButton
+          onClick={handleEmail}
+          styleType="PRIMARY"
+          size="M"
+          disabled={!email.trim()}
+        >
           초대
         </S.ImportButton>
       </S.ButtonContainer>

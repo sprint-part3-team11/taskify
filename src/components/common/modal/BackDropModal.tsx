@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled, { keyframes } from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const appearModal = keyframes`
-  0%{opacity:0.2;transform: scale(0.5);}
+  0%{opacity:0; transform: translate3d(0, 3%, 0);}
 
-  100%{opacity:1;transform: scale(1);}
+  to{opacity:1; transform:translateZ(0);}
 `;
 const S = {
   ModalBackground: styled.div`
@@ -23,11 +24,15 @@ const S = {
   ModalContainer: styled.div`
     position: relative;
 
-    padding: 3.2rem 2rem 2rem;
+    padding: 3.2rem 2.8rem 2.8rem;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.white};
 
-    animation: ${appearModal} 0.7s ease-in-out;
+    animation: ${appearModal} 0.5s ease-in-out;
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding: 2.8rem 2rem;
+    }
   `,
 };
 
