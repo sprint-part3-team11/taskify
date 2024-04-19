@@ -1,3 +1,4 @@
+import React from 'react';
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
@@ -49,13 +50,18 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
  * @param placeholder - placeholder
  */
 
-function InputField({ label, id, ...htmlInputProps }: InputFieldProps) {
-  return (
-    <S.Layout>
-      <S.Label htmlFor={id}>{label}</S.Label>
-      <S.Input id={id} {...htmlInputProps} />
-    </S.Layout>
-  );
-}
+// React.forwardRef 추가
+const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ label, id, ...htmlInputProps }, ref) => {
+    return (
+      <S.Layout>
+        <S.Label htmlFor={id}>{label}</S.Label>
+        <S.Input ref={ref} id={id} {...htmlInputProps} />
+      </S.Layout>
+    );
+  },
+);
+
+InputField.displayName = 'InputField'; // 디버깅을 위해 displayName 설정
 
 export default InputField;
