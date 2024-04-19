@@ -7,7 +7,7 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8rem;
+    margin-top: 1.6rem;
   `,
   Label: styled.label`
     color: ${({ theme }) => theme.color.body};
@@ -16,6 +16,7 @@ const S = {
   Input: styled.input`
     display: flex;
     align-items: center;
+    margin: 0.8rem 0;
     gap: 1rem;
 
     width: 100%;
