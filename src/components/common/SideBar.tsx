@@ -10,11 +10,11 @@ import LogoText from '@/public/icon/logoText.svg';
 
 const S = {
   SidebarWrapper: styled.div`
-    position: fixed;
+    /* position: fixed;
     top: 0;
-    z-index: 99;
+    z-index: 99; */
 
-    width: 20.75rem;
+    width: 30rem;
     height: 100vh;
     padding: 1.25rem 1.5rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
@@ -22,14 +22,16 @@ const S = {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     ${MEDIA_QUERIES.onTablet} {
-      width: 15rem;
+      width: 16rem;
     }
 
     ${MEDIA_QUERIES.onMobile} {
-      width: 7rem;
+      width: 6.7rem;
     }
   `,
   Logo: styled.div`
+    display: flex;
+    align-items: center;
     margin-bottom: 3.75rem;
     cursor: pointer;
 
@@ -49,13 +51,15 @@ const S = {
   `,
   AddText: styled.span`
     padding-top: 3%;
-    color: ${({ theme }) => theme.color.grayLight};
+    color: ${({ theme }) => theme.color.gray};
     margin-right: 9.5rem;
-    font-size: 1rem;
+    margin-left: 0.7rem;
+    font-size: 1.2rem;
     font-weight: 700;
 
     ${MEDIA_QUERIES.onTablet} {
       margin-right: 3.5rem;
+      margin-top: 0.45rem;
     }
 
     ${MEDIA_QUERIES.onMobile} {
@@ -64,6 +68,11 @@ const S = {
   `,
   AddDashBoardIcon: styled(AddDashBoardIcon)`
     cursor: pointer;
+    margin: 0.2rem 0 0 6rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      margin: 0.2rem 0 0 -0.2rem;
+    }
 
     ${MEDIA_QUERIES.onMobile} {
       margin-left: 0.85rem;
