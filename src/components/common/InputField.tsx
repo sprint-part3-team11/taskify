@@ -10,7 +10,7 @@ const S = {
     gap: 0.8rem;
   `,
   Label: styled.label`
-    color: ${({ theme }) => theme.color.black};
+    color: ${({ theme }) => theme.color.body};
     font-size: 1.6rem;
     font-weight: 400;
   `,
