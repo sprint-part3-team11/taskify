@@ -66,16 +66,16 @@ function BackDropModal({ isOpen, children, onClose }: BackDropModalProps) {
     }
   }, [isOpen]);
 
-  return isOpen && modalRoot
-    ? ReactDOM.createPortal(
-        <S.ModalBackground onClick={onClose}>
-          <S.ModalContainer onClick={(e) => e.stopPropagation()}>
-            {children}
-          </S.ModalContainer>
-        </S.ModalBackground>,
-        modalRoot,
-      )
-    : null;
+  if (!isOpen || !modalRoot) return null;
+
+  return ReactDOM.createPortal(
+    <S.ModalBackground onClick={onClose}>
+      <S.ModalContainer onClick={(e) => e.stopPropagation()}>
+        {children}
+      </S.ModalContainer>
+    </S.ModalBackground>,
+    modalRoot,
+  );
 }
 
 export default BackDropModal;
