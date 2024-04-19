@@ -6,10 +6,10 @@ interface FormProps {
   buttonText: string;
 }
 
-function Form({ children, buttonText }: FormProps) {
+    trigger,
   return (
-    <form>
-      {children}
+        onBlur={() => trigger('email')}
+        onBlur={() => trigger('password')}
       <Button type="submit">{buttonText}</Button>
     </form>
   );
