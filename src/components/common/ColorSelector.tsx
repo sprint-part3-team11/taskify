@@ -15,13 +15,13 @@ const S = {
 
     justify-content: center;
     align-items: center;
-    gap: 0.625rem;
+    gap: 1rem;
   `,
   ColorPalette: styled.div<{ $bg: Color; $showIcon: boolean }>`
     position: relative;
 
-    width: 1.875rem;
-    height: 1.875rem;
+    width: 3rem;
+    height: 3rem;
     flex-shrink: 0;
     background-color: ${(props) => props.$bg};
     border-radius: 50%;

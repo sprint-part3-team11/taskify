@@ -4,7 +4,11 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import theme from '@/styles/theme';
 
 const S = {
-  HeaderContainer: styled.nav`
+  Header: styled.nav`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,6 +26,7 @@ const S = {
     }
     ${MEDIA_QUERIES.onMobile} {
       padding-left: 6.7rem;
+      height: 6rem;
     }
   `,
 
@@ -122,7 +127,7 @@ function DashBoardHeader({
   invitedUsers,
 }: HeaderProps) {
   return (
-    <S.HeaderContainer>
+    <S.Header>
       <S.MenuNameAndButtonBox>
         <S.MenuName>{menuName}</S.MenuName>
         <S.ButtonContainer>
@@ -155,7 +160,7 @@ function DashBoardHeader({
         />
         <S.ProfileName>{profileName}</S.ProfileName>
       </S.ProfileBox>
-    </S.HeaderContainer>
+    </S.Header>
   );
 }
 
