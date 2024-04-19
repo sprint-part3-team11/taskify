@@ -30,7 +30,7 @@ function Comment() {
     setList([newComment, ...list]);
   };
 
-  const modify = (content: string, id: number) => {
+  const edit = (content: string, id: number) => {
     const updatedList = list.map((comment) =>
       comment.id === id
         ? { ...comment, content, updatedAt: new Date().toISOString() }
@@ -39,7 +39,7 @@ function Comment() {
     setList(updatedList);
   };
 
-  const destroy = (id: number) => {
+  const remove = (id: number) => {
     const updatedList = list.filter((comment) => comment.id !== id);
     setList(updatedList);
   };
@@ -47,7 +47,7 @@ function Comment() {
   return (
     <S.CommentContainer className="comment">
       <CommentForm create={create} length={list.length} />
-      <CommentList modify={modify} destroy={destroy} list={list} />
+      <CommentList edit={edit} remove={remove} list={list} />
     </S.CommentContainer>
   );
 }
