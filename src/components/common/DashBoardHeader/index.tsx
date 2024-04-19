@@ -83,7 +83,7 @@ const S = {
     justify-content: center;
     align-items: center;
 
-    padding: 0 40px;
+    padding: 0 4rem;
     border-left: 1px solid ${theme.color.grayLight};
     gap: 1rem;
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import Button from '@/components/common/button/Button';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
@@ -37,27 +38,17 @@ const S = {
     }
   `,
 
-  Button: styled.button`
+  Button: styled(Button)`
     position: absolute;
     bottom: 1rem;
     right: 1rem;
 
-    margin: 0;
-    width: 8rem;
-    height: 3.2rem;
-    box-sizing: border-box;
-    border: 1px solid ${({ theme }) => theme.color.grayLight};
-    border-radius: 0.6rem;
-
-    color: ${({ theme }) => theme.color.main};
-    font-size: 1.4rem;
-    text-decoration: none;
-    text-align: center;
-
     ${MEDIA_QUERIES.onMobile} {
-      bottom: 1rem;
-      right: 1rem;
-      margin: 0;
+      width: 6rem;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   `,
 };
@@ -92,7 +83,7 @@ function CommentForm({ create, length }: CommentFormProps) {
             placeholder="댓글 작성하기"
           />
 
-          <S.Button type="submit">입력</S.Button>
+          <S.Button size="S">입력</S.Button>
         </S.InputWrapper>
       </S.Form>
     </S.CommentFormBox>
