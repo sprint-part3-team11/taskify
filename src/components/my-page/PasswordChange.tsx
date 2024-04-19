@@ -24,7 +24,6 @@ const S = {
   Title: styled.span`
     font-size: 2.4rem;
     font-weight: 700;
-    color: ${({ theme }) => theme.color.body};
   `,
   PasswordContent: styled.div`
     margin-top: 1.2rem;

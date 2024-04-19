@@ -12,7 +12,6 @@ const S = {
   BackText: styled.span`
     font-size: 1.6rem;
     font-weight: 500;
-    color: ${({ theme }) => theme.color.body};
   `,
 };
 

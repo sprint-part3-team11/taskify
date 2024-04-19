@@ -45,7 +45,6 @@ const S = {
   `,
   ProfileName: styled.div`
     margin-left: 1.2rem;
-    color: ${({ theme }) => theme.color.body};
     font-size: 1.6rem;
     font-weight: 500;
     ${MEDIA_QUERIES.onMobile} {

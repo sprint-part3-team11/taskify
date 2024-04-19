@@ -40,7 +40,6 @@ function ProfileChange({ name }: ProfileChangeProps) {
     ImageTitle: styled.span`
       font-size: 2.4rem;
       font-weight: 700;
-      color: ${({ theme }) => theme.color.body};
     `,
     ImageContent: styled.div``,
     InputBox: styled.div`
