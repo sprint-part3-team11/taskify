@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SideBar from '@/components/common/DashBoardHeader/SideBar';
 import DashBoardHeader from '@/components/common/DashBoardHeader/index';
 import CardConfirmModal from '@/components/common/Modal/card-confirm/CardConfirmModal';
+import Sidebar from '@/components/common/SideBar';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
@@ -51,6 +52,12 @@ function Hj() {
     updatedAt: '2024-04-17T07:10:28.745Z',
   };
 
+  const dashboards = [
+    { id: '1', color: '#FFA500', name: '대시보드 1', createdByMe: true },
+    { id: '2', color: '#FF2660', name: '대시보드 2', createdByMe: true },
+    { id: '3', color: '#7AC555', name: '대시보드 3', createdByMe: false },
+  ];
+
   const S = {
     Container: styled.div`
       position: relative;
@@ -63,16 +70,17 @@ function Hj() {
   };
   return (
     <>
-      <S.Button onClick={openModal1}>1번 모달(기본)</S.Button>
-      <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
-        <S.Container>
-          {/* <DashBoardHeader
-            menuName="내 대시보드"
-            profileName="남현준"
-            profileImgURL={MY_IMAGE_URL}
-            invitedUsers={invitedUsers}
-          /> */}
-          {/* <div>
+      {/* <S.Button onClick={openModal1}>1번 모달(기본)</S.Button> */}
+      {/* <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}> */}
+      {/* <S.Container> */}
+      <Sidebar dashboards={dashboards} />
+      <DashBoardHeader
+        menuName="내 대시보드"
+        profileName="남현준"
+        profileImgURL={MY_IMAGE_URL}
+        invitedUsers={invitedUsers}
+      />
+      {/* <div>
         {stateTags.map((tag, index) => (
           <StateTag isMobile={isMobile}>{tag}</StateTag>
         ))}
@@ -82,10 +90,9 @@ function Hj() {
           </HashTag>
         ))}
       </div> */}
-          {/* <SideBar /> */}
-          <CardConfirmModal cardInfoData={cardInfoData} />
-        </S.Container>
-      </BackDropModal>
+      {/* <CardConfirmModal cardInfoData={cardInfoData} /> */}
+      {/* </S.Container> */}
+      {/* </BackDropModal> */}
     </>
   );
 }
