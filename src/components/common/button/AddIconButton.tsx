@@ -16,7 +16,7 @@ const S = {
 
     background-color: ${({ theme }) => theme.color.white};
     color: ${({ theme }) => theme.color.body};
-    font-weight: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 600;
   `,
 
