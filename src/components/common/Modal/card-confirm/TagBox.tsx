@@ -1,7 +1,7 @@
-import HashTag from '../../tag/HashTag';
-import StateTag from '../../tag/StateTag';
-import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import { CardConfirmModalProps } from '@/components/common/Modal/card-confirm/types';
+import HashTag from '@/components/common/tag/HashTag';
+import StateTag from '@/components/common/tag/StateTag';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 

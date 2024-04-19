@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { CommentItemProps } from './types';
 import styled from 'styled-components';
+import { CommentItemProps } from '@/components/common/Modal/card-confirm/types';
 import formatDate from '@/utils/date';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
@@ -83,7 +83,7 @@ const S = {
       font-size: 1rem;
     }
   `,
-  ModifyComment: styled.li`
+  EditComment: styled.li`
     cursor: pointer;
     text-decoration: underline;
   `,
@@ -108,8 +108,8 @@ function CommentItem({
   content,
   createdDate,
   updatedDate,
-  modify,
-  destroy,
+  edit,
+  remove,
 }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
@@ -133,13 +133,13 @@ function CommentItem({
   const handlePressKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const updatedData = e.currentTarget.value;
-      modify(updatedData, id);
+      edit(updatedData, id);
       setIsEditing(false);
     } else if (e.key === 'Escape') setIsEditing(false);
   };
 
   const handleDeleteComment = () => {
-    destroy(id);
+    remove(id);
   };
 
   return (
@@ -171,7 +171,7 @@ function CommentItem({
         </S.ContentBox>
 
         <S.ButtonBox>
-          <S.ModifyComment onClick={handleEditComment}>수정</S.ModifyComment>
+          <S.EditComment onClick={handleEditComment}>수정</S.EditComment>
           <S.DeleteComment onClick={handleDeleteComment}>삭제</S.DeleteComment>
         </S.ButtonBox>
       </S.CommentInfoBox>

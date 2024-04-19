@@ -12,7 +12,7 @@ const S = {
   MainBox: styled.div`
     display: flex;
     flex-direction: column;
-    width: 450px;
+    width: 45rem;
 
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;

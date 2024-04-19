@@ -7,12 +7,11 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   ModalLayout: styled.div`
-    padding: 3rem 2rem;
     width: 73rem;
     height: 76rem;
 
     ${MEDIA_QUERIES.onMobile} {
-      padding: 2.2rem 2rem;
+      padding-top: 2.2rem;
       width: 32rem;
       height: 68rem;
     }

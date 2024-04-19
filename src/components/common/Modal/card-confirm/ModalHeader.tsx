@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import { CardConfirmModalProps } from '@/components/common/Modal/card-confirm/types';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';

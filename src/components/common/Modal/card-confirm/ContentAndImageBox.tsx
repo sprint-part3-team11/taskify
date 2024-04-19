@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { CardConfirmModalProps } from './types';
 import styled from 'styled-components';
+import { CardConfirmModalProps } from '@/components/common/Modal/card-confirm/types';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
