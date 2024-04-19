@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import CircleColor from './CircleColor';
 import styled from 'styled-components';
+import CircleColor from '@/components/common/CircleColor';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
 import CreateByMe from '@/public/icon/creatByMe.svg';
@@ -111,7 +111,7 @@ interface SidebarProps {
   dashboards: DashboardProps[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ dashboards }) => {
+function Sidebar({ dashboards }: SidebarProps) {
   const router = useRouter();
   const [updatedDashboards, setUpdatedDashboards] =
     useState<DashboardProps[]>(dashboards);
@@ -152,6 +152,6 @@ const Sidebar: React.FC<SidebarProps> = ({ dashboards }) => {
       {/* 여기에 모달 추가 */}
     </S.SidebarWrapper>
   );
-};
+}
 
 export default Sidebar;
