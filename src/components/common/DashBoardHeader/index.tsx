@@ -18,6 +18,7 @@ const S = {
     height: 7rem;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
 
+    background-color: ${theme.color.white};
     ${MEDIA_QUERIES.onPc} {
       padding-left: 30rem;
     }
