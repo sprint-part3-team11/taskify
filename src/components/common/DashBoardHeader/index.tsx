@@ -12,6 +12,9 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    position: fixed;
+    width: 100%;
     height: 7rem;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
 
@@ -54,6 +57,10 @@ const S = {
     }
   `,
 
+  ButtonContainer: styled.div`
+    //추후 구현
+  `,
+
   Button: styled.button`
     margin-left: 2rem;
   `,
@@ -75,7 +82,8 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 40px;
+
+    padding: 0 4rem;
     border-left: 1px solid ${theme.color.grayLight};
     gap: 1rem;
 
@@ -105,7 +113,11 @@ interface HeaderProps {
   menuName: string;
   profileName: string;
   profileImgURL: string;
-  invitedUsers?: string[];
+  invitedUsers: InvitedUsersProp[];
+}
+interface InvitedUsersProp {
+  id: number;
+  profileImageUrl: string;
 }
 
 function DashBoardHeader({
@@ -118,20 +130,20 @@ function DashBoardHeader({
     <S.Header>
       <S.MenuNameAndButtonBox>
         <S.MenuName>{menuName}</S.MenuName>
-        <div>
+        <S.ButtonContainer>
           <S.Button>관리</S.Button>
           <S.Button>초대하기</S.Button>
-        </div>
+        </S.ButtonContainer>
       </S.MenuNameAndButtonBox>
       <S.InvitedUsersBox>
         {invitedUsers &&
-          invitedUsers.map((userImgUrl, index) => (
+          invitedUsers.map((invitedUser, index) => (
             <S.InvitedUserImage
-              key={index}
+              key={invitedUser.id}
               width={38}
               height={38}
-              src={userImgUrl}
-              alt={'invitedUsers'}
+              src={invitedUser.profileImageUrl}
+              alt="초대된 유저"
               style={{
                 marginLeft: `${0 - 8}px`,
                 zIndex: invitedUsers.length - index,

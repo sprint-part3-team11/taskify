@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
-//테스트용
 const S = {
   SideBarBox: styled.div`
     position: fixed;
