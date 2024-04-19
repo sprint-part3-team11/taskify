@@ -12,7 +12,6 @@ const S = {
   Label: styled.label`
     color: ${({ theme }) => theme.color.body};
     font-size: 1.6rem;
-    font-weight: 400;
   `,
   Input: styled.input`
     display: flex;
@@ -28,7 +27,6 @@ const S = {
     &::placeholder {
       color: ${({ theme }) => theme.color.gray};
       font-size: 1.6rem;
-      font-weight: 400;
     }
 
     &:focus {
