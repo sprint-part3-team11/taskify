@@ -13,7 +13,7 @@ const S = {
     color: ${({ theme }) => theme.color.body};
     font-size: 1.6rem;
   `,
-  Input: styled.input`
+  Input: styled.input<{ error?: boolean }>`
     display: flex;
     align-items: center;
     margin: 0.8rem 0;
@@ -22,7 +22,8 @@ const S = {
     width: 100%;
     padding: 1.5rem 1.6rem;
     border-radius: 0.8rem;
-    border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border: 1px solid
+      ${({ error, theme }) => (error ? theme.color.red : theme.color.grayLight)};
     background: ${({ theme }) => theme.color.white};
 
     &::placeholder {
@@ -39,6 +40,7 @@ const S = {
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
+  error?: boolean;
 }
 
 /**
@@ -49,18 +51,17 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
  * @param placeholder - placeholder
  */
 
-// React.forwardRef 추가
 const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ label, id, ...htmlInputProps }, ref) => {
+  ({ label, id, error, ...htmlInputProps }, ref) => {
     return (
       <S.Layout>
         <S.Label htmlFor={id}>{label}</S.Label>
-        <S.Input ref={ref} id={id} {...htmlInputProps} />
+        <S.Input ref={ref} id={id} error={error} {...htmlInputProps} />
       </S.Layout>
     );
   },
 );
 
-InputField.displayName = 'InputField'; // 디버깅을 위해 displayName 설정
+// InputField.displayName = 'InputField'; // 디버깅을 위해 displayName 설정
 
 export default InputField;
