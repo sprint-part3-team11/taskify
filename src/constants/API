@@ -8,3 +8,8 @@ export const API = Object.freeze({
   MEMBERS: '/members',
   USERS: '/users',
 });
+
+export const API_AUTH = Object.freeze({
+  LOGIN: `${API.AUTH}/login`,
+  PASSWORD_CHANGE: `${API.AUTH}/password`,
+});
