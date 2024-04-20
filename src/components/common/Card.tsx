@@ -9,12 +9,11 @@ import CalendarIconTablet from '@/public/icon/smallCalendarIcon.svg';
 
 const S = {
   CardContainer: styled.div`
+    width: 31.5rem;
     padding: 2rem;
     border: ${({ theme }) => theme.border.lightGray};
     border-radius: 0.6rem;
     background-color: ${({ theme }) => theme.color.white};
-    width: 31.5rem;
-
     ${MEDIA_QUERIES.onTablet} {
       display: flex;
       width: 54.4rem;
@@ -28,7 +27,6 @@ const S = {
   ImageWrapper: styled.div`
     margin-bottom: 1.2rem;
     border-radius: 0.8rem;
-
     ${MEDIA_QUERIES.onTablet} {
       margin: 0rem 2rem 0rem 0rem;
     }
@@ -38,7 +36,6 @@ const S = {
   `,
   Image: styled(Image)`
     border-radius: 0.8rem;
-
     ${MEDIA_QUERIES.onTablet} {
       width: 9.1rem;
       height: 5.3rem;
@@ -54,7 +51,6 @@ const S = {
     margin-bottom: 1rem;
     font-size: 1.6rem;
     font-weight: 500;
-
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1.4rem;
     }
@@ -70,10 +66,9 @@ const S = {
   `,
   HashTagContainer: styled.div`
     display: flex;
-    margin-bottom: 1rem;
     gap: 0.6rem;
+    margin-bottom: 1rem;
     white-space: nowrap;
-
     ${MEDIA_QUERIES.onTablet} {
       margin: 0.3rem 1.6rem 0rem 0rem;
     }
@@ -86,7 +81,6 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
     }
@@ -102,13 +96,12 @@ const S = {
     }
   `,
   Date: styled.span`
+    margin-left: 0.6rem;
+    padding-top: 0.1rem;
     color: ${({ theme }) => theme.color.grayDark};
     font-size: 1.2rem;
     font-weight: 500;
-    margin-left: 0.6rem;
     align-items: center;
-    padding-top: 0.1rem;
-
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1rem;
       margin: 0rem 0rem;
