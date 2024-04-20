@@ -10,9 +10,9 @@ import LogoText from '@/public/icon/logoText.svg';
 
 const S = {
   SidebarWrapper: styled.div`
-    /* position: fixed;
+    position: fixed;
     top: 0;
-    z-index: 99; */
+    z-index: 99;
 
     width: 30rem;
     height: 100vh;
