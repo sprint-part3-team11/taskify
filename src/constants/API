@@ -43,3 +43,8 @@ export const API_INVITATIONS = Object.freeze({
 export const API_MEMBERS = Object.freeze({
   BY_ID: (memberId: string) => `${API.MEMBERS}/${memberId}`,
 });
+
+export const API_USERS = Object.freeze({
+  MY_INFO: `${API.USERS}/me`,
+  PROFILE_IMG_UPLOAD: `${API.USERS}/me/image`,
+});
