@@ -1,31 +1,37 @@
 import { z } from 'zod';
 import { REGEX } from '@/constants/VALIDATION';
 
-type Validation = z.infer<typeof Validation>;
+export type ValidationType = z.infer<typeof Validation>;
 
 export const Validation = z
   .object({
-    email: z.string().email('이메일 형식으로 작성해주세요.'),
-    name: z.string().min(10, '열 자 이하로 작성해주세요.'),
+    email: z
+      .string()
+      .min(1, '이메일을 입력해주세요.')
+      .email('이메일 형식으로 작성해주세요.'),
+    name: z
+      .string()
+      .min(1, '닉네임을 입력해주세요')
+      .max(10, '열 자 이하로 작성해주세요.'),
     password: z
       .string()
       .regex(
         REGEX.PASSWORD,
         '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
       ),
-    passwordCheck: z.string(),
+    passwordCheck: z
+      .string()
+      .regex(
+        REGEX.PASSWORD,
+        '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
+      ),
     nowPassword: z
       .string()
       .regex(
         REGEX.PASSWORD,
         '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
       ),
-    newPassword: z
-      .string()
-      .regex(
-        REGEX.PASSWORD,
-        '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
-      ),
+    newPassword: z.string(),
     newPasswordCheck: z
       .string()
       .regex(
