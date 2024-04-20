@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import mypage from '../../../pages/mypage';
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import theme from '@/styles/theme';
