@@ -7,7 +7,6 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 1.6rem;
   `,
   Label: styled.label`
     color: ${({ theme }) => theme.color.body};
