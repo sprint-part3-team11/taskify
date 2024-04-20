@@ -12,7 +12,6 @@ const S = {
     min-height: 40rem;
     padding: 3.2rem 2.8rem;
     margin-top: 4rem;
-    border: 1px solid red;
     border-radius: 0.8rem;
     box-shadow: rgba(0, 0, 0, 0.08) 0 1.2rem 2rem 0;
     background-color: ${({ theme }) => theme.color.white};
