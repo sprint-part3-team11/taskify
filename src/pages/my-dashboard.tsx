@@ -7,7 +7,7 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 const S = {
   Container: styled.div`
     padding: 4rem;
-    height: 100vh;
+    /* height: 100%; */
 
     ${MEDIA_QUERIES.onMobile} {
       padding: 2.4rem;

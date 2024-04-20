@@ -29,7 +29,6 @@ export const GridTemplate = styled.div`
     grid-gap: 1rem;
   }
   ${MEDIA_QUERIES.onMobile} {
-    grid-template-columns: repeat(1, 1fr);
     grid-gap: 0.8rem;
   }
 `;
