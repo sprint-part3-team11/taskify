@@ -26,6 +26,8 @@ const S = {
     height: 25.6rem;
 
     padding: 3.2rem 2.8rem;
+    border-radius: 0.8rem;
+
     background-color: ${({ theme }) => theme.color.white};
   `,
   NameAndColorBox: styled.div`
