@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ColorSelector } from '../common/ColorSelector';
 import InputField from '../common/InputField';
 import Button from '../common/button/Button';
+import Form from '../form/Form';
 import styled from 'styled-components';
 
 const dashboardData = {
@@ -15,15 +16,36 @@ const dashboardData = {
 };
 
 const S = {
-  ContentBox: styled.div`
+  DashboardForm: styled.form``,
+
+  ContentContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 62rem;
     height: 25.6rem;
+
+    padding: 3.2rem 2.8rem;
     background-color: ${({ theme }) => theme.color.white};
   `,
+  NameAndColorBox: styled.div`
+    display: flex;
+    justify-content: space-between;
 
-  DashboardName: styled.div``,
+    margin-bottom: 1.5rem;
+  `,
+  DashboardName: styled.div`
+    font-size: 20px;
+    font-weight: 700;
+  `,
 
   TitleInput: styled(InputField)``,
+
+  ButtonBox: styled.div`
+    display: flex;
+    justify-content: end;
+  `,
+  Button: styled(Button)``,
 };
 
 function NameAndColorChangeBox() {
@@ -34,18 +56,24 @@ function NameAndColorChangeBox() {
   };
 
   return (
-    <S.ContentBox>
-      <S.DashboardName>{dashboardData.title}</S.DashboardName>
-      <ColorSelector />
-      <S.TitleInput
-        label="대시보드 이름"
-        id="dashboardName"
-        placeholder="대시보드 이름을 입력하세요."
-        value={dashboardName}
-        onChange={handleInputChange}
-      />
-      <Button size="S">변경</Button>
-    </S.ContentBox>
+    <S.DashboardForm>
+      <S.ContentContainer>
+        <S.NameAndColorBox>
+          <S.DashboardName>{dashboardData.title}</S.DashboardName>
+          <ColorSelector />
+        </S.NameAndColorBox>
+        <S.TitleInput
+          label="대시보드 이름"
+          id="dashboardName"
+          placeholder="대시보드 이름을 입력하세요."
+          value={dashboardName}
+          onChange={handleInputChange}
+        />
+        <S.ButtonBox>
+          <S.Button size="S">변경</S.Button>
+        </S.ButtonBox>
+      </S.ContentContainer>
+    </S.DashboardForm>
   );
 }
 export default NameAndColorChangeBox;
