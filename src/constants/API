@@ -35,3 +35,7 @@ export const API_DASHBOARDS = Object.freeze({
   INVITATIONS_CANCLE: (dashboardsId: string, invitationId: string) =>
     `${API.DASHBOARDS}/${dashboardsId}/invitations/${invitationId}`,
 });
+
+export const API_INVITATIONS = Object.freeze({
+  BY_ID: (invitationId: string) => `${API.INVITATIONS}/${invitationId}`,
+});
