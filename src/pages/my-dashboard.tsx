@@ -25,7 +25,6 @@ function mydashboard() {
       <S.Container>
         <S.InnerWrap>
           <DashBoardList />
-
           <InvitedDashBoardList />
         </S.InnerWrap>
       </S.Container>
