@@ -23,3 +23,7 @@ export const API_COLUMNS = Object.freeze({
   CARD_IMAGE_UPLOAD: (columnsId: string) =>
     `${API.COLUMNS}/${columnsId}/card-image`,
 });
+
+export const API_COMMENTS = Object.freeze({
+  BY_ID: (commentsId: string) => `${API.COMMENTS}/${commentsId}`,
+});
