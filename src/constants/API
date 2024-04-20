@@ -39,3 +39,7 @@ export const API_DASHBOARDS = Object.freeze({
 export const API_INVITATIONS = Object.freeze({
   BY_ID: (invitationId: string) => `${API.INVITATIONS}/${invitationId}`,
 });
+
+export const API_MEMBERS = Object.freeze({
+  BY_ID: (memberId: string) => `${API.MEMBERS}/${memberId}`,
+});
