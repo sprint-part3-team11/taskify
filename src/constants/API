@@ -1,0 +1,10 @@
+export const API = Object.freeze({
+  AUTH: '/auth',
+  CARDS: '/cards',
+  COLUMNS: '/columns',
+  COMMENTS: '/comments',
+  DASHBOARDS: '/dashboards',
+  INVITATIONS: '/invitations',
+  MEMBERS: '/members',
+  USERS: '/users',
+});
