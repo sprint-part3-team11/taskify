@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import AddIconButton from '@/components/common/button/AddIconButton';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import MessageIcon from '@/public/icon/messageIcon.svg';
 
@@ -12,12 +11,15 @@ const S = {
 
     min-height: 40rem;
     padding: 3.2rem 2.8rem;
+    margin-top: 4rem;
     border: 1px solid red;
     border-radius: 0.8rem;
     box-shadow: rgba(0, 0, 0, 0.08) 0 1.2rem 2rem 0;
+    background-color: ${({ theme }) => theme.color.white};
 
     ${MEDIA_QUERIES.onMobile} {
       padding: 2.4rem 1.6rem;
+      margin-top: 2.4rem;
     }
   `,
 
@@ -43,21 +45,24 @@ const S = {
 
     font-size: 1.8rem;
     color: ${({ theme }) => theme.color.gray};
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.4rem;
+    }
   `,
 };
 
-function InitialInvitedBoard() {
+function InvitedDashBoardList() {
   return (
-    <>
-      <S.InvitedBoardBox>
-        <S.Title>초대받은 대시보드</S.Title>
-        <S.NoInvitation>
-          <MessageIcon />
-          아직 초대받은 대시보드가 없어요✨
-        </S.NoInvitation>
-      </S.InvitedBoardBox>
-    </>
+    <S.InvitedBoardBox>
+      <S.Title>초대받은 대시보드</S.Title>
+
+      <S.NoInvitation>
+        <MessageIcon />
+        아직 초대받은 대시보드가 없어요✨
+      </S.NoInvitation>
+    </S.InvitedBoardBox>
   );
 }
 
-export default InitialInvitedBoard;
+export default InvitedDashBoardList;
