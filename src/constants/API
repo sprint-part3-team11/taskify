@@ -17,3 +17,9 @@ export const API_AUTH = Object.freeze({
 export const API_CARDS = Object.freeze({
   BY_ID: (cardId: string) => `${API.CARDS}/${cardId}`,
 });
+
+export const API_COLUMNS = Object.freeze({
+  BY_ID: (columnsId: string) => `${API.COLUMNS}/${columnsId}`,
+  CARD_IMAGE_UPLOAD: (columnsId: string) =>
+    `${API.COLUMNS}/${columnsId}/card-image`,
+});
