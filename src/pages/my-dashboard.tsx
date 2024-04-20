@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
-import AddIconButton from '@/components/common/button/AddIconButton';
-import InitialInvitedBoard from '@/components/dashboard/my-board/InitialInvitedBoard';
+import PageLayout from '@/components/common/PageLayout';
+import DashBoardList from '@/components/dashboard/my-board/DashBoardList';
+import InvitedDashBoardList from '@/components/dashboard/my-board/InvitedDashBoardList';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
@@ -14,34 +15,21 @@ const S = {
   `,
 
   InnerWrap: styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
     max-width: 102rem;
-
-    background-color: ${({ theme }) => theme.color.white};
   `,
 };
 
 function mydashboard() {
   return (
-    <S.Container>
-      <S.InnerWrap>
-        <div style={{ display: 'flex' }}>
-          <AddIconButton style={{ maxWidth: '33rem', height: '7rem' }}>
-            새로운 대시보드
-          </AddIconButton>
-          <AddIconButton style={{ maxWidth: '33rem', height: '7rem' }}>
-            새로운 대시보드
-          </AddIconButton>
-          <AddIconButton style={{ maxWidth: '33rem', height: '7rem' }}>
-            새로운 대시보드
-          </AddIconButton>
-        </div>
+    <PageLayout>
+      <S.Container>
+        <S.InnerWrap>
+          <DashBoardList />
 
-        <InitialInvitedBoard />
-      </S.InnerWrap>
-    </S.Container>
+          <InvitedDashBoardList />
+        </S.InnerWrap>
+      </S.Container>
+    </PageLayout>
   );
 }
 
