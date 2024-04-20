@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Card from '@/components/common/Card';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
@@ -13,6 +14,25 @@ const S = {
     background-color: yellow;
     padding: 30px;
   `,
+};
+
+const cardInfoData = {
+  id: 0,
+  title: '새로운 일정 관리 Taskify',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo.',
+  tags: ['To Do', 'onProgress', 'Done'],
+  dueDate: '2022.12.30 19:00',
+  assignee: {
+    profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
+    nickname: 'jun',
+    id: 0,
+  },
+  imageUrl: 'https://i.ibb.co/5WsrwJY/Group-751.png',
+  teamId: '3',
+  columnId: 0,
+  createdAt: '2024-04-17T07:10:28.745Z',
+  updatedAt: '2024-04-17T07:10:28.745Z',
 };
 
 // modal 사용 설명서
@@ -105,6 +125,12 @@ function Mj() {
       <S.Button onClick={openModal5}>5번 모달(invite member)</S.Button>
       <S.Button onClick={openModal6}>5번 모달(add dashboard+color)</S.Button>
 
+      {/* 비밀번호 입력 실패 시 사용되는 형식 */}
+      <form action="" onSubmit={handleSubmit}>
+        <input type="text" value={inputValue} onChange={handleInputChange} />
+        <button type="submit">1234입력(틀리면 모달나옴)</button>
+      </form>
+
       {/* 기본 백드롭 모달 */}
       <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
         <h1>내가 모달이다</h1>
@@ -113,12 +139,6 @@ function Mj() {
           모달 닫기
         </button>
       </BackDropModal>
-
-      {/* 비밀번호 입력 실패 시 사용되는 형식 */}
-      <form action="" onSubmit={handleSubmit}>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
-        <button type="submit">1234입력(틀리면 모달나옴)</button>
-      </form>
 
       {/* 기본 경고(비밀번호 틀리게 입력, 로그인 성공, 이미 사용중인 아이디)에 사용 */}
       {/* type에 PASSWORD, SUCCESS, ALREADY_USED 중 하나 선택 */}
@@ -157,6 +177,8 @@ function Mj() {
         onClose={closeModal6}
         onCreate={createdDashBoard}
       />
+
+      <Card cardInfoData={cardInfoData} />
     </div>
   );
 }
