@@ -1,12 +1,22 @@
 import React from 'react';
 import { InputHTMLAttributes } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Button from '../button/Button';
+import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
+import { Validation, ValidationType } from '@/constants/SCHEMA';
 
 const S = {
-  Layout: styled.div`
+  Form: styled.form`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 1.8rem;
+    width: 52rem;
+  `,
+  Container: styled.div`
+    margin-top: 0.4rem;
+    width: 100%;
   `,
   Label: styled.label`
     color: ${({ theme }) => theme.color.body};
@@ -15,6 +25,7 @@ const S = {
   Input: styled.input<{ error?: boolean }>`
     display: flex;
     align-items: center;
+    position: relative;
     margin: 0.8rem 0;
     gap: 1rem;
 
@@ -34,11 +45,17 @@ const S = {
       border: 1px solid ${({ theme }) => theme.color.purple};
     }
   `,
+  Error: styled.p`
+    position: absolute;
+
+    color: ${({ theme }) => theme.color.red};
+  `,
+  Button: styled(Button)`
+    margin-top: 1rem;
+  `,
 };
 
-interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  id: string;
+interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
 }
 
@@ -50,17 +67,82 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
  * @param placeholder - placeholder
  */
 
-const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ label, id, error, ...htmlInputProps }, ref) => {
-    return (
-      <S.Layout>
-        <S.Label htmlFor={id}>{label}</S.Label>
-        <S.Input ref={ref} id={id} error={error} {...htmlInputProps} />
-      </S.Layout>
-    );
-  },
-);
+const FormInput = ({ ...htmlInputProps }: FormInputProps) => {
+  const formOptions = { resolver: zodResolver(Validation) };
 
-// InputField.displayName = 'InputField'; // 디버깅을 위해 displayName 설정
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+  } = useForm<ValidationType>(formOptions);
 
-export default InputField;
+  const onSubmit: SubmitHandler<ValidationType> = (data) => {
+    console.log(data);
+    console.log(errors);
+  };
+
+  return (
+    <S.Form onSubmit={handleSubmit(onSubmit)}>
+      <S.Container>
+        <S.Label htmlFor={'email'}>{'이메일'}</S.Label>
+        <S.Input
+          id={'email'}
+          {...htmlInputProps}
+          {...register('email')}
+          onBlur={() => trigger('email')}
+          error={!!errors.email}
+        />
+        {errors?.email && <S.Error>{errors.email.message}</S.Error>}
+      </S.Container>
+      <S.Container>
+        <S.Label htmlFor={'name'}>{'닉네임'}</S.Label>
+        <S.Input
+          id={'name'}
+          {...htmlInputProps}
+          {...register('name')}
+          onBlur={() => trigger('name')}
+          error={!!errors.name}
+        />
+        {errors?.name && <S.Error>{errors.name.message}</S.Error>}
+      </S.Container>
+      <S.Container>
+        <S.Label htmlFor={'password'}>{'비밀번호'}</S.Label>
+        <S.Input
+          id={'password'}
+          {...htmlInputProps}
+          {...register('password')}
+          onBlur={() => {
+            trigger('password');
+            trigger('passwordCheck');
+          }}
+          error={!!errors.password}
+        />
+        {errors?.password && <S.Error>{errors.password.message}</S.Error>}
+      </S.Container>
+      <S.Container>
+        <S.Label htmlFor={'passwordCheck'}>{'비밀번호 확인'}</S.Label>
+        <S.Input
+          id={'passwordCheck'}
+          {...htmlInputProps}
+          {...register('passwordCheck')}
+          onBlur={() => {
+            trigger('passwordCheck');
+          }}
+          error={!!errors.passwordCheck}
+        />
+        {errors?.passwordCheck && (
+          <S.Error>{errors.passwordCheck.message}</S.Error>
+        )}
+      </S.Container>
+
+      <S.Button style={{ padding: '1.4rem' }} type="submit" size="L">
+        {'로그인'}
+      </S.Button>
+    </S.Form>
+  );
+};
+
+// FormInput.displayName = 'FormInput'; // 디버깅을 위해 displayName 설정
+
+export default FormInput;

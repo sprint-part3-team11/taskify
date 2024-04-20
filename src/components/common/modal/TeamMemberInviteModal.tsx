@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import InputField from '@/components/common/InputField';
 import Button from '@/components/common/button/Button';
+import InputField from '@/components/common/input/InputField';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 

@@ -1,6 +1,6 @@
 import AvatarImage from '@/components/common/AvatarImage';
-import InputField from '@/components/common/InputField';
-import Form from '@/components/form/Form';
+// import InputField from '@/components/common/InputField';
+import FormInput from '@/components/common/input/FormInput';
 
 function js() {
   const URL =
@@ -10,7 +10,7 @@ function js() {
     <div>
       <h2>지수 테스트페이지</h2>
       <AvatarImage src={URL} width="10rem" height="10rem" />
-      <InputField
+      {/* <InputField
         label="이메일"
         id="input"
         type="email"
@@ -21,8 +21,8 @@ function js() {
         id="title"
         type="text"
         placeholder="제목을 입력해주세요"
-      />
-      <Form buttonText="로그인" />
+      /> */}
+      <FormInput />
     </div>
   );
 }
