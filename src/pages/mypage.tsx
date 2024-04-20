@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PageLayout from '@/components/common/PageLayout';
 import Sidebar from '@/components/common/SideBar';
 import BackButton from '@/components/my-page/BackButton';
 import MypageHeader from '@/components/my-page/MypageHeader';
@@ -36,17 +37,19 @@ const S = {
 
 function mypage() {
   return (
-    <S.Container>
-      <S.Side dashboards={dashboards} />
-      <S.ContentContainer>
-        <MypageHeader name="공주들" />
-        <S.ContentBox>
-          <BackButton />
-          <ProfileChange name="공주들" />
-          <PasswordChange />
-        </S.ContentBox>
-      </S.ContentContainer>
-    </S.Container>
+    <PageLayout myPage>
+      <S.Container>
+        {/* <S.Side dashboards={dashboards} /> */}
+        <S.ContentContainer>
+          {/* <MypageHeader name="공주들" /> */}
+          <S.ContentBox>
+            <BackButton />
+            <ProfileChange name="공주들" />
+            <PasswordChange />
+          </S.ContentBox>
+        </S.ContentContainer>
+      </S.Container>
+    </PageLayout>
   );
 }
 
