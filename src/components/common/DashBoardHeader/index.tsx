@@ -8,6 +8,8 @@ const S = {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 98;
+
     width: 100%;
     display: flex;
     justify-content: space-between;
