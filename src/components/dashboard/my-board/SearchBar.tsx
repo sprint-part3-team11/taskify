@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { styled } from 'styled-components';
 import handleEnterKeyDown from '@/utils/handleEnterKeyDown';
 import SearchIcon from '@/public/icon/searchIcon.svg';
@@ -28,7 +28,13 @@ const S = {
   `,
 };
 
-function SearchBar({ placeholder, uri, style }) {
+interface SearchBarProps {
+  placeholder: string;
+  uri?: string;
+  style?: React.CSSProperties;
+}
+
+function SearchBar({ placeholder, uri, style }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -43,10 +49,10 @@ function SearchBar({ placeholder, uri, style }) {
   };
 
   return (
-    <S.Container>
+    <S.Container style={style}>
       <SearchIcon />
       <S.SearchInput
-        type="texxt"
+        type="text"
         ref={inputRef}
         placeholder={placeholder}
         onKeyDown={(e) =>
