@@ -12,8 +12,8 @@ function js() {
       <AvatarImage src={URL} width="10rem" height="10rem" />
       <FormInput formType="signIn" />
       <FormInput formType="signUp" />
-      <FormInput formType="editProfile" />
-      <FormInput formType="editPassword" />
+      <FormInput formType="editProfile" btnSize="S" />
+      <FormInput formType="editPassword" btnSize="S" />
     </div>
   );
 }

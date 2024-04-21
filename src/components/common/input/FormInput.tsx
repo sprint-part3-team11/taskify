@@ -60,7 +60,10 @@ const S = {
     color: ${({ theme }) => theme.color.red};
   `,
   Button: styled(Button)`
+    width: ${(props) => (props.size === 'S' ? '8.4rem' : '100%')};
     margin-top: 1rem;
+    padding: ${(props) => (props.size === 'S' ? '0.8rem' : '1.4rem')};
+    font-size: ${(props) => (props.size === 'S' ? '1.4rem' : null)};
   `,
 };
 
@@ -154,14 +157,18 @@ type FormValues = SignInType | SignUpType | EditProfileType | EditPasswordType;
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
+  btnSize?: 'S' | 'M' | 'L';
 }
 
 /**
  * @param formType: 'signIn' | 'signUp' | 'editProfile' | 'editPassword' 사용하는 용도에 맞게 입력
  */
 
-const FormInput = ({ formType, ...htmlInputProps }: FormInputProps) => {
-  // 폼 타입에 따라 적절한 Zod 스키마를 반환하는 함수
+const FormInput = ({
+  formType,
+  btnSize = 'L',
+  ...htmlInputProps
+}: FormInputProps) => {
   const getSchemaForFormType = (formType: FormType) => {
     switch (formType) {
       case 'signIn':
@@ -191,7 +198,6 @@ const FormInput = ({ formType, ...htmlInputProps }: FormInputProps) => {
     console.log(data);
   };
 
-  // 폼 타입에 따라 필드 동적 결정
   const fieldsToRender = formFields[formType] || [];
   //TODO 에러 처리에서 any 없애보기!
   return (
@@ -221,7 +227,7 @@ const FormInput = ({ formType, ...htmlInputProps }: FormInputProps) => {
           )}
         </S.Container>
       ))}
-      <S.Button style={{ padding: '1.4rem' }} type="submit" size="L">
+      <S.Button type="submit" size={btnSize}>
         {buttonText[formType]}
       </S.Button>
     </S.Form>
