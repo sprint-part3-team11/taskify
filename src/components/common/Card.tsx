@@ -25,27 +25,34 @@ const S = {
     }
   `,
   ImageWrapper: styled.div`
+    position: relative;
     margin-bottom: 1.2rem;
     border-radius: 0.8rem;
+
+    width: 27.4rem;
+    height: 16rem;
+
+    overflow: hidden;
+
     ${MEDIA_QUERIES.onTablet} {
       margin: 0rem 2rem 0rem 0rem;
-    }
-    ${MEDIA_QUERIES.onMobile} {
-      margin-bottom: 1rem;
-    }
-  `,
-  Image: styled(Image)`
-    border-radius: 0.8rem;
-    ${MEDIA_QUERIES.onTablet} {
+
       width: 9.1rem;
       height: 5.3rem;
+
       border-radius: 0.4rem;
     }
     ${MEDIA_QUERIES.onMobile} {
+      margin-bottom: 1rem;
+
       width: 26rem;
       height: 15.1rem;
+
       border-radius: 0.6rem;
     }
+  `,
+  Image: styled(Image)`
+    object-fit: cover;
   `,
   Title: styled.p`
     margin-bottom: 1rem;
