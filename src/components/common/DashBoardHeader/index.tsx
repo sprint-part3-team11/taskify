@@ -1,7 +1,11 @@
 import Image from 'next/image';
+import Button from '../button/Button';
 import styled from 'styled-components';
+import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CreateByMe from '@/public/icon/creatByMe.svg';
+import InvitationIcon from '@/public/icon/plus.svg';
+import SettingIcon from '@/public/icon/setting.svg';
 import theme from '@/styles/theme';
 
 const S = {
@@ -38,9 +42,10 @@ const S = {
     display: flex;
     gap: 1rem;
     align-items: center;
-    padding-left: 2rem;
+    padding-left: 3rem;
 
     font-weight: 700;
+    font-size: 2rem;
 
     ${MEDIA_QUERIES.onTablet} {
       display: none;
@@ -56,15 +61,46 @@ const S = {
     display: flex;
     align-items: center;
   `,
-  ButtonBox: styled.div``,
-  Button: styled.button`
-    margin-left: 2rem;
+  ButtonBox: styled.div`
+    display: flex;
+    gap: 1rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      gap: 0.6rem;
+    }
+  `,
+  SettingIcon: styled(SettingIcon)`
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  InvitationIcon: styled(InvitationIcon)`
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+
+  Button: styled(Button)`
+    display: flex;
+    padding: 0.7rem 1.7rem;
+    gap: 0.2rem;
+    /* margin-left: 2rem; */
+    color: ${theme.color.grayDark};
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding: 0.6rem 1.2rem;
+    }
   `,
 
   InvitedUsersBox: styled.div`
+    position: relative;
     display: flex;
     align-items: center;
     margin: 0 2rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      margin: 0 1.2rem;
+    }
   `,
 
   InvitedUserImage: styled(Image)`
@@ -133,8 +169,14 @@ function DashBoardHeader({
 
       <S.ButtonAndUserContainer>
         <S.ButtonBox>
-          <S.Button>관리</S.Button>
-          <S.Button>초대하기</S.Button>
+          <S.Button styleType={BUTTON_TYPE.SECONDARY} size="S">
+            <S.SettingIcon />
+            관리
+          </S.Button>
+          <S.Button styleType={BUTTON_TYPE.SECONDARY} size="S">
+            <S.InvitationIcon />
+            초대하기
+          </S.Button>
         </S.ButtonBox>
         <S.InvitedUsersBox>
           {invitedUsers &&
