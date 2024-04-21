@@ -23,23 +23,26 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     width: 62rem;
     height: 25.6rem;
-
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.color.white};
+
     ${MEDIA_QUERIES.onMobile} {
-      width: calc(100% - 30px);
+      width: calc(100% - 10px);
     }
   `,
+
   NameAndColorBox: styled.div`
     display: flex;
     justify-content: space-between;
 
     margin-bottom: 1.5rem;
   `,
+
   DashboardName: styled.div`
     font-size: 20px;
     font-weight: 700;

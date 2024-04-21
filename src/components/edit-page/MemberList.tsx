@@ -45,14 +45,13 @@ const membersData = {
 const S = {
   MemberListLayout: styled.div`
     width: 62rem;
-    /* height: 40rem; */
     margin-top: 1rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
 
     ${MEDIA_QUERIES.onMobile} {
-      width: calc(100% - 30px);
+      width: calc(100% - 10px);
     }
   `,
 
@@ -72,6 +71,8 @@ const S = {
 
   CurrentPageBox: styled.div`
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
   `,
   CurrentPage: styled.p`
     font-size: 1.4rem;
@@ -79,7 +80,9 @@ const S = {
       font-size: 1.2rem;
     }
   `,
-  ButtonBox: styled.div``,
+  ButtonBox: styled.div`
+    margin-top: 0.2rem;
+  `,
 
   MemberListContainer: styled.div`
     margin-top: 3rem;
