@@ -127,16 +127,15 @@ function Card({ cardInfoData }: CardInfoProps) {
       id={cardInfoData.id}
       // columnId={cardInfoData.columnId}
     >
-      {cardInfoData.imageUrl ? (
+      {cardInfoData.imageUrl && (
         <S.ImageWrapper>
           <S.Image
             src={cardInfoData.imageUrl}
-            width={274}
-            height={160}
+            layout="fill"
             alt="카드 이미지"
           />
         </S.ImageWrapper>
-      ) : null}
+      )}
       <S.CardContentWrapper>
         <S.Title>{cardInfoData.title}</S.Title>
         <S.CardContent>
