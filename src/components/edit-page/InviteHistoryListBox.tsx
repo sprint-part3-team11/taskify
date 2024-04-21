@@ -52,7 +52,7 @@ const S = {
 
   CurrentPageContainer: styled.div`
     display: flex;
-    gap: 1rem;
+    gap: 0.2rem;
     align-items: center;
 
     ${MEDIA_QUERIES.onMobile} {
