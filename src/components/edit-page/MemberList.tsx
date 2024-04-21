@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Button from '../common/button/Button';
 import styled from 'styled-components';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ArrowLeft from '@/public/icon/arrowLeft.svg';
 import ArrowRight from '@/public/icon/arrowRight.svg';
 
@@ -44,11 +45,15 @@ const membersData = {
 const S = {
   MemberListLayout: styled.div`
     width: 62rem;
-    height: 40rem;
+    /* height: 40rem; */
     margin-top: 1rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: calc(100% - 30px);
+    }
   `,
 
   MemberListHeader: styled.div`
@@ -59,12 +64,21 @@ const S = {
   Title: styled.p`
     font-size: 2.4rem;
     font-weight: 700;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 2rem;
+    }
   `,
 
   CurrentPageBox: styled.div`
     display: flex;
   `,
-
+  CurrentPage: styled.p`
+    font-size: 1.4rem;
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
+  `,
   ButtonBox: styled.div``,
 
   MemberListContainer: styled.div`
@@ -95,11 +109,24 @@ const S = {
 
   MemberImage: styled(Image)`
     margin-right: 1rem;
+    ${MEDIA_QUERIES.onMobile} {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
   `,
-  Nickname: styled.p``,
+  Nickname: styled.p`
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.4rem;
+    }
+  `,
   Button: styled(Button)`
     color: ${({ theme }) => theme.color.main};
     font-weight: 500;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 5.2rem;
+      padding: 0.5rem 1.3rem;
+    }
   `,
 };
 
@@ -110,7 +137,7 @@ function MemberList() {
       <S.MemberListHeader>
         <S.Title>구성원</S.Title>
         <S.CurrentPageBox>
-          <p>1페이지 중 1 </p>
+          <S.CurrentPage>1페이지 중 1 </S.CurrentPage>
           <S.ButtonBox>
             <ArrowLeft />
             <ArrowRight />

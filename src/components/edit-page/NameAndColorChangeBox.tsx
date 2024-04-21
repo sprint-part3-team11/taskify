@@ -4,6 +4,7 @@ import InputField from '../common/InputField';
 import Button from '../common/button/Button';
 import Form from '../form/Form';
 import styled from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const dashboardData = {
   id: 0,
@@ -29,6 +30,9 @@ const S = {
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.color.white};
+    ${MEDIA_QUERIES.onMobile} {
+      width: calc(100% - 30px);
+    }
   `,
   NameAndColorBox: styled.div`
     display: flex;
@@ -47,7 +51,16 @@ const S = {
     display: flex;
     justify-content: end;
   `,
-  Button: styled(Button)``,
+  Button: styled(Button)`
+    ${MEDIA_QUERIES.onMobile} {
+      width: 8.6rem;
+      height: 2.8rem;
+      padding: 0.5rem 0.8rem;
+      margin-top: 1rem;
+
+      font-size: 1.2rem;
+    }
+  `,
 };
 
 function NameAndColorChangeBox() {
