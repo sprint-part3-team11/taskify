@@ -39,8 +39,8 @@ const S = {
   IconContainer: styled.div<{ $showIcon: boolean }>`
     position: absolute;
 
-    top: 76%;
-    left: 70%;
+    top: 88%;
+    left: 68%;
     scale: 2;
     transform: translate(-50%, -50%);
     opacity: ${(props) =>

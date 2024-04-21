@@ -56,14 +56,15 @@ const S = {
     justify-content: flex-start;
 
     position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+    bottom: 2.8rem;
+    left: 2.8rem;
 
     color: ${({ theme }) => theme.color.gray};
     font-size: 1.4rem;
     text-decoration-line: underline;
 
     ${MEDIA_QUERIES.onMobile} {
+      position: static;
       margin-bottom: 1.6rem;
     }
   `,
