@@ -4,33 +4,26 @@ import MessageIcon from '@/public/icon/messageIcon.svg';
 
 const S = {
   InvitedBoardBox: styled.div`
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     min-height: 40rem;
-    padding: 3.2rem 2.8rem;
     margin-top: 4rem;
     border-radius: 0.8rem;
     box-shadow: rgba(0, 0, 0, 0.08) 0 1.2rem 2rem 0;
     background-color: ${({ theme }) => theme.color.white};
 
     ${MEDIA_QUERIES.onMobile} {
-      padding: 2.4rem 1.6rem;
       margin-top: 2.4rem;
     }
   `,
 
   Title: styled.h2`
-    position: absolute;
-    top: 3.2rem;
-    left: 2.8rem;
+    padding: 3.2rem 2.8rem 0;
+    border-bottom: 1px solid black;
 
     font-size: 2.4rem;
     font-weight: 700;
 
     ${MEDIA_QUERIES.onMobile} {
+      padding: 2.4rem 1.6rem;
       font-size: 2rem;
     }
   `,
@@ -41,6 +34,7 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 2.4rem;
+    margin-top: 6.7rem;
 
     font-size: 1.8rem;
     color: ${({ theme }) => theme.color.gray};
@@ -52,14 +46,20 @@ const S = {
 };
 
 function InvitedDashBoardList() {
+  const isInvitation = false;
+
   return (
     <S.InvitedBoardBox>
       <S.Title>초대받은 대시보드</S.Title>
-
-      <S.NoInvitation>
-        <MessageIcon />
-        아직 초대받은 대시보드가 없어요✨
-      </S.NoInvitation>
+      {/* 검색바 조건부로 들어가기 */}
+      {!!isInvitation ? (
+        <S.NoInvitation>
+          <MessageIcon />
+          아직 초대받은 대시보드가 없어요✨
+        </S.NoInvitation>
+      ) : (
+        <div>sdfdsf</div>
+      )}
     </S.InvitedBoardBox>
   );
 }
