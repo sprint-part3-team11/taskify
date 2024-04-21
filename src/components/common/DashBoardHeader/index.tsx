@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import CreateByMe from '@/public/icon/creatByMe.svg';
 import theme from '@/styles/theme';
 
 const S = {
@@ -34,8 +35,12 @@ const S = {
   `,
 
   MenuNameBox: styled.div`
-    font-weight: 700;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     padding-left: 2rem;
+
+    font-weight: 700;
 
     ${MEDIA_QUERIES.onTablet} {
       display: none;
@@ -101,7 +106,8 @@ const S = {
 };
 
 interface HeaderProps {
-  menuName: string;
+  dashboardName: string;
+  createdByMe: boolean;
   profileName: string;
   profileImgURL: string;
   invitedUsers: InvitedUsersProp[];
@@ -112,14 +118,19 @@ interface InvitedUsersProp {
 }
 
 function DashBoardHeader({
-  menuName,
+  dashboardName,
+  createdByMe,
   profileName,
   profileImgURL,
   invitedUsers,
 }: HeaderProps) {
   return (
     <S.Header>
-      <S.MenuNameBox>{menuName}</S.MenuNameBox>
+      <S.MenuNameBox>
+        {dashboardName}
+        {createdByMe && <CreateByMe />}
+      </S.MenuNameBox>
+
       <S.ButtonAndUserContainer>
         <S.ButtonBox>
           <S.Button>관리</S.Button>

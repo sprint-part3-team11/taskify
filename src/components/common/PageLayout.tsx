@@ -51,7 +51,8 @@ function PageLayout({ children }: { children: React.ReactNode }) {
     <S.LayoutContainer>
       <Sidebar dashboards={dashboards} />
       <DashBoardHeader
-        menuName="내 대시보드"
+        dashboardName={dashboards[0].name}
+        createdByMe={dashboards[0].createdByMe}
         profileName="남현준"
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
