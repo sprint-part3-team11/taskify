@@ -45,7 +45,6 @@ const membersData = {
 const S = {
   MemberListLayout: styled.div`
     width: 62rem;
-    margin-top: 1rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
@@ -150,7 +149,7 @@ function MemberList() {
 
       <S.MemberListContainer>
         <S.NameTitle>이름</S.NameTitle>
-        <S.MemberListBox>
+        <S.MemberListContainer>
           {members.map((member) => (
             <S.MemberItem key={member.id}>
               <S.ImageAndNameContainer>
@@ -167,7 +166,7 @@ function MemberList() {
               </S.Button>
             </S.MemberItem>
           ))}
-        </S.MemberListBox>
+        </S.MemberListContainer>
       </S.MemberListContainer>
     </S.MemberListLayout>
   );

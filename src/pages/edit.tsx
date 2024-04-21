@@ -1,15 +1,27 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import PageLayout from '@/components/common/PageLayout';
+import Button from '@/components/common/button/Button';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import InviteHistoryList from '@/components/edit-page/InviteHistoryList';
 import MemberList from '@/components/edit-page/MemberList';
 import NameAndColorChangeBox from '@/components/edit-page/NameAndColorChangeBox';
 import BackButton from '@/components/my-page/BackButton';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   MainContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding: 2rem;
+  `,
+  Button: styled(Button)`
+    width: 62rem;
+    margin-top: 3rem;
+    ${MEDIA_QUERIES.onMobile} {
+      width: calc(100% - 10px);
+    }
   `,
 };
 function Edit() {
@@ -37,6 +49,7 @@ function Edit() {
             console.log(`api`);
           }}
         />
+        <S.Button>대시보드 삭제하기</S.Button>
       </S.MainContainer>
     </PageLayout>
   );
