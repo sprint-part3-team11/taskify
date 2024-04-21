@@ -34,7 +34,7 @@ const S = {
     background-color: ${({ theme }) => theme.color.white};
 
     ${MEDIA_QUERIES.onMobile} {
-      width: calc(100% - 30px);
+      width: calc(100% - 10px);
     }
   `,
   InviteListHeader: styled.div`
@@ -121,8 +121,8 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       position: absolute;
-      top: 4rem;
-
+      top: 4.5rem;
+      right: 0;
       width: 8.6rem;
       height: 2.8rem;
       padding: 0.5rem 0.8rem;
@@ -131,7 +131,12 @@ const S = {
     }
   `,
 };
-function InviteHistoryList() {
+
+interface InviteHistoryListProps {
+  openInviteModal: () => void;
+}
+
+function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const { invitations } = inviteData;
 
   return (
@@ -145,7 +150,9 @@ function InviteHistoryList() {
             <ArrowRight />
           </S.ButtonBox>
 
-          <S.InviteButton size="S">초대하기</S.InviteButton>
+          <S.InviteButton onClick={openInviteModal} size="S">
+            초대하기
+          </S.InviteButton>
         </S.CurrentPageContainer>
       </S.InviteListHeader>
 

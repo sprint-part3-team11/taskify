@@ -1,17 +1,45 @@
+import { useState } from 'react';
+import styled from 'styled-components';
 import PageLayout from '@/components/common/PageLayout';
-import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
+import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import InviteHistoryList from '@/components/edit-page/InviteHistoryList';
 import MemberList from '@/components/edit-page/MemberList';
 import NameAndColorChangeBox from '@/components/edit-page/NameAndColorChangeBox';
+import BackButton from '@/components/my-page/BackButton';
 
-function edit() {
+const S = {
+  MainContainer: styled.div`
+    padding: 2rem;
+  `,
+};
+function Edit() {
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+
+  const openInviteModal = () => {
+    setIsInviteModalOpen(true);
+  };
+
+  const closeInviteModal = () => {
+    setIsInviteModalOpen(false);
+  };
+
   return (
     <PageLayout>
-      <NameAndColorChangeBox />
-      <MemberList />
-      <InviteHistoryList />
+      <S.MainContainer>
+        <BackButton />
+        <NameAndColorChangeBox />
+        <MemberList />
+        <InviteHistoryList openInviteModal={openInviteModal} />
+        <TeamMemberInviteModal
+          isOpen={isInviteModalOpen}
+          onClose={closeInviteModal}
+          onCreate={() => {
+            console.log(`api`);
+          }}
+        />
+      </S.MainContainer>
     </PageLayout>
   );
 }
 
-export default edit;
+export default Edit;
