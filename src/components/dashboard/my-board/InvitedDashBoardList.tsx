@@ -56,6 +56,17 @@ const S = {
 
     padding: 2.6rem 6rem;
     border-bottom: ${({ theme }) => theme.border.lightGray};
+
+    ${MEDIA_QUERIES.onTablet} {
+      gap: 4rem;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      flex-direction: column;
+      justify-content: initial;
+      align-items: initial;
+      gap: 1rem;
+      padding: 1.6rem;
+    }
   `,
 
   TitleAndInviter: styled.div`
@@ -66,23 +77,54 @@ const S = {
     gap: 6rem;
     font-size: 1.6rem;
 
-    ${MEDIA_QUERIES.onTablet} {
-      gap: 4rem;
+    ${MEDIA_QUERIES.onMobile} {
+      flex-direction: column;
+      justify-content: initial;
+      align-items: initial;
+      gap: 1rem;
+
+      font-size: 1.4rem;
     }
   `,
 
   BoardTitle: styled.div`
     min-width: 14rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      &::before {
+        content: '이름';
+        padding-right: 1rem;
+        color: ${({ theme }) => theme.color.gray};
+      }
+    }
   `,
 
   Inviter: styled.div`
+    white-space: nowrap;
     padding-right: 1rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      &::before {
+        content: '초대자';
+        padding-right: 1rem;
+        color: ${({ theme }) => theme.color.gray};
+      }
+    }
   `,
 
   ButtonContainer: styled.div`
-    justify-content: flex-end;
     display: flex;
+    justify-content: flex-end;
     gap: 1rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      justify-content: space-between;
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+    }
   `,
 };
 
