@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { InputHTMLAttributes } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../button/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
-import { Validation, ValidationType } from '@/constants/SCHEMA';
+import {
+  EditPassword,
+  EditPasswordType,
+  EditProfile,
+  EditProfileType,
+  SignIn,
+  SignInType,
+  SignUp,
+  SignUpType,
+} from '@/constants/SCHEMA';
 
 const S = {
   Form: styled.form`
@@ -12,7 +21,7 @@ const S = {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.8rem;
-    width: 52rem;
+    width: 100%;
   `,
   Container: styled.div`
     margin-top: 0.4rem;
@@ -55,94 +64,168 @@ const S = {
   `,
 };
 
+const formFields = {
+  signIn: [
+    {
+      id: 'email',
+      label: '이메일',
+      type: 'email',
+      placeholder: '이메일을 입력해주세요',
+    },
+    {
+      id: 'password',
+      label: '비밀번호',
+      type: 'password',
+      placeholder: '비밀번호를 입력해주세요',
+    },
+  ],
+  signUp: [
+    {
+      id: 'email',
+      label: '이메일',
+      type: 'email',
+      placeholder: '이메일을 입력해주세요',
+    },
+    {
+      id: 'name',
+      label: '닉네임',
+      type: 'text',
+      placeholder: '닉네임을 입력해주세요',
+    },
+    {
+      id: 'password',
+      label: '비밀번호',
+      type: 'password',
+      placeholder: '비밀번호를 입력해주세요',
+    },
+    {
+      id: 'passwordCheck',
+      label: '비밀번호 확인',
+      type: 'password',
+      placeholder: '비밀번호를 한번 더 입력해주세요',
+    },
+  ],
+  editProfile: [
+    {
+      id: 'email',
+      label: '이메일',
+      type: 'email',
+      placeholder: '이메일을 입력해주세요',
+    },
+    {
+      id: 'name',
+      label: '닉네임',
+      type: 'text',
+      placeholder: '닉네임을 입력해주세요',
+    },
+  ],
+  editPassword: [
+    {
+      id: 'nowPassword',
+      label: '현재 비밀번호',
+      type: 'password',
+      placeholder: '현재 비밀번호 입력',
+    },
+    {
+      id: 'newPassword',
+      label: '새 비밀번호',
+      type: 'password',
+      placeholder: '새 비밀번호 입력',
+    },
+    {
+      id: 'newPasswordCheck',
+      label: '새 비밀번호 확인',
+      type: 'password',
+      placeholder: '새 비밀번호 입력',
+    },
+  ],
+};
+
+const buttonText = {
+  signIn: '로그인',
+  signUp: '회원가입',
+  editProfile: '저장',
+  editPassword: '변경',
+};
+
+type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
+
+type FormValues = SignInType | SignUpType | EditProfileType | EditPasswordType;
+
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  error?: boolean;
+  formType: FormType;
 }
 
 /**
- * @component
- * @param label - label 이름 (이메일, 제목 ...)
- * @param id - label, input 연결용 id (input, title ...)
- * @param type - input 타입 (email, text ...)
- * @param placeholder - placeholder
+ * @param formType: 'signIn' | 'signUp' | 'editProfile' | 'editPassword' 사용하는 용도에 맞게 입력
  */
 
-const FormInput = ({ ...htmlInputProps }: FormInputProps) => {
-  const formOptions = { resolver: zodResolver(Validation) };
+const FormInput = ({ formType, ...htmlInputProps }: FormInputProps) => {
+  // 폼 타입에 따라 적절한 Zod 스키마를 반환하는 함수
+  const getSchemaForFormType = (formType: FormType) => {
+    switch (formType) {
+      case 'signIn':
+        return SignIn;
+      case 'signUp':
+        return SignUp;
+      case 'editProfile':
+        return EditProfile;
+      case 'editPassword':
+        return EditPassword;
+      default:
+        return undefined;
+    }
+  };
+
+  const schema = getSchemaForFormType(formType);
+  const formOptions = { resolver: schema ? zodResolver(schema) : undefined };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
-  } = useForm<ValidationType>(formOptions);
+  } = useForm<FormValues>(formOptions);
 
-  const onSubmit: SubmitHandler<ValidationType> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
-    console.log(errors);
   };
 
+  // 폼 타입에 따라 필드 동적 결정
+  const fieldsToRender = formFields[formType] || [];
+  //TODO 에러 처리에서 any 없애보기!
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
-      <S.Container>
-        <S.Label htmlFor={'email'}>{'이메일'}</S.Label>
-        <S.Input
-          id={'email'}
-          {...htmlInputProps}
-          {...register('email')}
-          onBlur={() => trigger('email')}
-          error={!!errors.email}
-        />
-        {errors?.email && <S.Error>{errors.email.message}</S.Error>}
-      </S.Container>
-      <S.Container>
-        <S.Label htmlFor={'name'}>{'닉네임'}</S.Label>
-        <S.Input
-          id={'name'}
-          {...htmlInputProps}
-          {...register('name')}
-          onBlur={() => trigger('name')}
-          error={!!errors.name}
-        />
-        {errors?.name && <S.Error>{errors.name.message}</S.Error>}
-      </S.Container>
-      <S.Container>
-        <S.Label htmlFor={'password'}>{'비밀번호'}</S.Label>
-        <S.Input
-          id={'password'}
-          {...htmlInputProps}
-          {...register('password')}
-          onBlur={() => {
-            trigger('password');
-            trigger('passwordCheck');
-          }}
-          error={!!errors.password}
-        />
-        {errors?.password && <S.Error>{errors.password.message}</S.Error>}
-      </S.Container>
-      <S.Container>
-        <S.Label htmlFor={'passwordCheck'}>{'비밀번호 확인'}</S.Label>
-        <S.Input
-          id={'passwordCheck'}
-          {...htmlInputProps}
-          {...register('passwordCheck')}
-          onBlur={() => {
-            trigger('passwordCheck');
-          }}
-          error={!!errors.passwordCheck}
-        />
-        {errors?.passwordCheck && (
-          <S.Error>{errors.passwordCheck.message}</S.Error>
-        )}
-      </S.Container>
-
+      {fieldsToRender.map((field) => (
+        <S.Container key={field.id}>
+          <S.Label htmlFor={field.id}>{field.label}</S.Label>
+          <S.Input
+            id={field.id}
+            type={field.type}
+            placeholder={field.placeholder}
+            {...htmlInputProps}
+            {...register(field.id as keyof FormValues)}
+            onBlur={() => {
+              if (field.id === 'password' || field.id === 'passwordCheck') {
+                trigger(['password', 'passwordCheck']);
+              } else {
+                trigger(field.id as keyof FormValues);
+              }
+            }}
+            error={!!errors[field.id as keyof FormValues]}
+          />
+          {errors[field.id as keyof FormValues] && (
+            <S.Error>
+              {(errors[field.id as keyof FormValues] as any)?.message}
+            </S.Error>
+          )}
+        </S.Container>
+      ))}
       <S.Button style={{ padding: '1.4rem' }} type="submit" size="L">
-        {'로그인'}
+        {buttonText[formType]}
       </S.Button>
     </S.Form>
   );
 };
-
-// FormInput.displayName = 'FormInput'; // 디버깅을 위해 displayName 설정
 
 export default FormInput;
