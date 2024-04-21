@@ -11,20 +11,19 @@ import theme from '@/styles/theme';
 
 const REST_PROFILE_IMG = 'https://i.ibb.co/YQwK6HF/Ellipse-43.png';
 const S = {
-  Header: styled.nav`
+  HeaderLayout: styled.nav`
     position: fixed;
     top: 0;
     left: 0;
     z-index: 98;
 
     width: 100%;
+    height: 7rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    position: fixed;
-    width: 100%;
-    height: 7rem;
+    border-top: none;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
 
     background-color: ${theme.color.white};
@@ -40,7 +39,7 @@ const S = {
     }
   `,
 
-  MenuNameBox: styled.div`
+  MenuNameContainer: styled.div`
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -56,7 +55,10 @@ const S = {
       display: none;
     }
   `,
-
+  CreateByMe: styled(CreateByMe)`
+    width: 2rem;
+    height: 1.6rem;
+  `,
   ButtonAndUserContainer: styled.div`
     position: absolute;
     right: 0;
@@ -191,11 +193,11 @@ function DashBoardHeader({
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
   return (
-    <S.Header>
-      <S.MenuNameBox>
+    <S.HeaderLayout>
+      <S.MenuNameContainer>
         {dashboardName}
-        {createdByMe && <CreateByMe />}
-      </S.MenuNameBox>
+        {createdByMe && <S.CreateByMe />}
+      </S.MenuNameContainer>
 
       <S.ButtonAndUserContainer>
         <S.ButtonBox>
@@ -246,7 +248,7 @@ function DashBoardHeader({
               width={38}
               height={38}
               src={REST_PROFILE_IMG}
-              alt="표시 제외된 총 유저 수"
+              alt="표시 제외된 나머지 유저 수"
             />
 
             {isPc ? (
@@ -266,7 +268,7 @@ function DashBoardHeader({
           <S.ProfileName>{profileName}</S.ProfileName>
         </S.ProfileBox>
       </S.ButtonAndUserContainer>
-    </S.Header>
+    </S.HeaderLayout>
   );
 }
 
