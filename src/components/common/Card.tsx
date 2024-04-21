@@ -19,8 +19,9 @@ const S = {
     background-color: ${({ theme }) => theme.color.white};
     ${MEDIA_QUERIES.onTablet} {
       display: flex;
-      width: 54.4rem;
-      height: 9.3rem;
+      width: 100%;
+      /* width: 54.4rem;
+      height: 9.3rem; */
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 28.4rem;
