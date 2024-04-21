@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ColorSelector } from '../common/ColorSelector';
 import InputField from '../common/InputField';
 import Button from '../common/button/Button';
 import Form from '../form/Form';
@@ -48,7 +47,18 @@ const S = {
     font-weight: 700;
   `,
 
-  TitleInput: styled(InputField)``,
+  TitleInput: styled(InputField)`
+    ${MEDIA_QUERIES.onMobile} {
+      height: 4.2rem;
+      padding: 0.8rem 0.9rem;
+
+      font-size: 1.4rem;
+
+      &:placeholder-shown {
+        text-overflow: ellipsis;
+      }
+    }
+  `,
 
   ButtonBox: styled.div`
     display: flex;
@@ -78,7 +88,6 @@ function NameAndColorChangeBox() {
       <S.ContentContainer>
         <S.NameAndColorBox>
           <S.DashboardName>{dashboardData.title}</S.DashboardName>
-          <ColorSelector />
         </S.NameAndColorBox>
         <S.TitleInput
           label="대시보드 이름"
