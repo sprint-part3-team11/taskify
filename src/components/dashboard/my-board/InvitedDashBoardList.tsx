@@ -1,9 +1,13 @@
+import NoInvitation from './NoInvitation';
+import SearchBar from './SearchBar';
 import { styled } from 'styled-components';
+import Button from '@/components/common/button/Button';
+import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
+import { INVITATION_INFO_TABS } from '@/constants/LIST_INFO';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import MessageIcon from '@/public/icon/messageIcon.svg';
 
 const S = {
-  InvitedBoardBox: styled.div`
+  Container: styled.div`
     min-height: 40rem;
     margin-top: 4rem;
     border-radius: 0.8rem;
@@ -17,31 +21,53 @@ const S = {
 
   Title: styled.h2`
     padding: 3.2rem 2.8rem 0;
-    border-bottom: 1px solid black;
-
     font-size: 2.4rem;
     font-weight: 700;
 
     ${MEDIA_QUERIES.onMobile} {
-      padding: 2.4rem 1.6rem;
+      padding: 2.4rem 1.6rem 0;
       font-size: 2rem;
     }
   `,
 
-  NoInvitation: styled.div`
+  InvitationHeader: styled.div`
+    padding: 2.4rem;
+    border-bottom: 1px solid red;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 2.4rem;
-    margin-top: 6.7rem;
+  `,
 
-    font-size: 1.8rem;
-    color: ${({ theme }) => theme.color.gray};
+  InvitationInfoTabs: styled.ul`
+    display: flex;
+    justify-content: space-between;
+    max-width: 73.8rem;
 
     ${MEDIA_QUERIES.onMobile} {
-      font-size: 1.4rem;
+      display: none;
     }
+  `,
+
+  Tab: styled.li`
+    color: ${({ theme }) => theme.color.gray};
+  `,
+
+  Invitation: styled.ul`
+    padding: 2.7rem 2.4rem;
+    border-bottom: ${({ theme }) => theme.border.lightGray};
+  `,
+
+  InnerWrap: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: 85.6rem;
+  `,
+
+  ButtonContainer: styled.div`
+    display: flex;
+    gap: 1rem;
   `,
 };
 
@@ -49,18 +75,71 @@ function InvitedDashBoardList() {
   const isInvitation = false;
 
   return (
-    <S.InvitedBoardBox>
+    <S.Container>
       <S.Title>초대받은 대시보드</S.Title>
-      {/* 검색바 조건부로 들어가기 */}
       {!!isInvitation ? (
-        <S.NoInvitation>
-          <MessageIcon />
-          아직 초대받은 대시보드가 없어요✨
-        </S.NoInvitation>
+        <NoInvitation />
       ) : (
-        <div>sdfdsf</div>
+        <>
+          <S.InvitationHeader>
+            <SearchBar placeholder="검색" />
+            <S.InvitationInfoTabs>
+              {INVITATION_INFO_TABS.map((tab) => (
+                <S.Tab>{tab}</S.Tab>
+              ))}
+            </S.InvitationInfoTabs>
+          </S.InvitationHeader>
+          <S.Invitation>
+            <S.InnerWrap>
+              <div>코드잇</div>
+              <div>11팀</div>
+              <S.ButtonContainer>
+                <Button size="S">수락</Button>
+                <Button size="S" styleType={BUTTON_TYPE.SECONDARY}>
+                  거절
+                </Button>
+              </S.ButtonContainer>
+            </S.InnerWrap>
+          </S.Invitation>
+          <S.Invitation>
+            <S.InnerWrap>
+              <div>코드잇</div>
+              <div>11팀</div>
+              <S.ButtonContainer>
+                <Button size="S">수락</Button>
+                <Button size="S" styleType={BUTTON_TYPE.SECONDARY}>
+                  거절
+                </Button>
+              </S.ButtonContainer>
+            </S.InnerWrap>
+          </S.Invitation>
+          <S.Invitation>
+            <S.InnerWrap>
+              <div>코드잇</div>
+              <div>11팀</div>
+              <S.ButtonContainer>
+                <Button size="S">수락</Button>
+                <Button size="S" styleType={BUTTON_TYPE.SECONDARY}>
+                  거절
+                </Button>
+              </S.ButtonContainer>
+            </S.InnerWrap>
+          </S.Invitation>
+          <S.Invitation>
+            <S.InnerWrap>
+              <div>코드잇</div>
+              <div>11팀</div>
+              <S.ButtonContainer>
+                <Button size="S">수락</Button>
+                <Button size="S" styleType={BUTTON_TYPE.SECONDARY}>
+                  거절
+                </Button>
+              </S.ButtonContainer>
+            </S.InnerWrap>
+          </S.Invitation>
+        </>
       )}
-    </S.InvitedBoardBox>
+    </S.Container>
   );
 }
 
