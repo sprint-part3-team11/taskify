@@ -45,6 +45,18 @@ function PageLayout({ children }: { children: React.ReactNode }) {
       id: 3,
       profileImageUrl: 'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
     },
+    {
+      id: 4,
+      profileImageUrl: 'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
+    },
+    {
+      id: 5,
+      profileImageUrl: 'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
+    },
+    {
+      id: 6,
+      profileImageUrl: 'https://i.ibb.co/VgZHtYL/Ellipse-39.png',
+    },
   ];
 
   return (
