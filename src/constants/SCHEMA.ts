@@ -10,6 +10,7 @@ const Validation = {
     .string()
     .min(1, '닉네임을 입력해주세요')
     .max(10, '열 자 이하로 작성해주세요.'),
+  SignInPassword: z.string().min(1, '비밀번호를 입력해주세요.'),
   password: z
     .string()
     .regex(
@@ -17,26 +18,16 @@ const Validation = {
       '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
     ),
   passwordCheck: z.string(),
-  nowPassword: z
-    .string()
-    .regex(
-      REGEX.PASSWORD,
-      '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
-    ),
+  nowPassword: z.string().min(1, '현재 비밀번호를 입력해주세요.'),
   newPassword: z.string(),
-  newPasswordCheck: z
-    .string()
-    .regex(
-      REGEX.PASSWORD,
-      '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
-    ),
+  newPasswordCheck: z.string(),
 };
 
 export type SignInType = z.infer<typeof SignIn>;
 
 export const SignIn = z.object({
   email: Validation.email,
-  password: Validation.password,
+  password: Validation.SignInPassword,
 });
 
 export type SignUpType = z.infer<typeof SignUp>;
@@ -53,7 +44,7 @@ export const SignUp = z
     message: '비밀번호가 일치하지 않습니다.',
   });
 
-export type EditProfile = z.infer<typeof EditProfile>;
+export type EditProfileType = z.infer<typeof EditProfile>;
 
 export const EditProfile = z.object({
   email: Validation.email,
