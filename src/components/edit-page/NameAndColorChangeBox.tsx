@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import CircleColor from '../common/CircleColor';
+import { ColorSelector, resultColorState } from '../common/ColorSelector';
 import InputField from '../common/InputField';
 import Button from '../common/button/Button';
 import Form from '../form/Form';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const dashboardData = {
@@ -77,6 +81,11 @@ const S = {
 };
 
 function NameAndColorChangeBox() {
+  //   const { width }: Size = useWindowSize();
+  //   const isMobile: boolean = width !== undefined && width < 768;
+
+  //   const colorState = useRecoilValue(resultColorState);
+  //   console.log(colorState);
   const [dashboardName, setDashboardName] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +97,7 @@ function NameAndColorChangeBox() {
       <S.ContentContainer>
         <S.NameAndColorBox>
           <S.DashboardName>{dashboardData.title}</S.DashboardName>
+          <ColorSelector />
         </S.NameAndColorBox>
         <S.TitleInput
           label="대시보드 이름"
