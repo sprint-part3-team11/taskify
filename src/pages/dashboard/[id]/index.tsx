@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import PageLayout from '@/components/common/PageLayout';
+import AddIconButton from '@/components/common/button/AddIconButton';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
 const cardInfoData = {
@@ -29,13 +31,24 @@ const dashboards = [
 ];
 
 const S = {
+  DashBoardWrapper: styled.div`
+    display: flex;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: block;
+    }
+  `,
   Column: styled.div`
     height: calc(100vh - 7rem);
     width: 35.4rem;
-    background-color: aqua;
+    /* padding: 2rem; */
+    /* background-color: aqua; */
     overflow-y: scroll;
+    border-right: ${({ theme }) => theme.border.lightGray};
 
+    border-bottom: ${({ theme }) => theme.border.lightGray}; // 구분선 추가
     // Chrome, Edge, Safari
+
     &::-webkit-scrollbar {
       display: none;
     }
@@ -43,10 +56,29 @@ const S = {
     scrollbar-width: none;
     // IE and Edge (Legacy)
     -ms-overflow-style: none;
+
+    ${MEDIA_QUERIES.onTablet} {
+      width: 100%;
+      height: calc(33vh - 2.3rem);
+    }
+  `,
+  ColumnTopFixedContent: styled.div`
+    position: sticky;
+    top: 0;
+    z-index: 10; // 다른 컨텐츠 위에 나타나도록 z-index 설정
+    background-color: ${({ theme }) => theme.color.background};
+    padding: 2rem 2rem 0.8rem;
+    /* padding-bottom: 0.8rem; */
+    /* margin: 2rem 2rem 0rem; */
+    /* background-color: inherit; // 배경색이 스크롤 시에도 유지되도록 설정 */
+
+    /* ${MEDIA_QUERIES.onTablet} {
+      border
+    } */
   `,
   ColumnTitleContainer: styled.div`
     display: flex;
-    margin: 2rem 2rem 0rem;
+    justify-content: space-between;
   `,
   ColumnTitleWrapper: styled.div`
     display: flex;
@@ -59,15 +91,11 @@ const S = {
     align-items: center;
   `,
   ColumnTitleDotIcon: styled.div`
-    /* fill: var(--violet-violet_5534DA, #5534da); */
     background-color: ${({ theme }) => theme.color.main};
     width: 0.8rem;
     height: 0.8rem;
     margin: 0 auto;
     border-radius: 50%;
-    /* justify-content: center; */
-
-    /* flex-shrink: 0; */
   `,
   ColumnTitle: styled.div`
     display: flex;
@@ -86,10 +114,15 @@ const S = {
     padding: 0.3rem 0.6rem 0.1rem;
     background-color: ${({ theme }) => theme.color.grayLight};
   `,
-  ColumnContentBox: styled.div`
+  AddButton: styled(AddIconButton)`
+    margin: 2.5rem 0rem 0rem;
+    width: 100%;
+  `,
+  ColumnContentContainer: styled.div`
     display: flex;
     flex-direction: column;
-    margin: 1.6rem 2rem 2rem;
+    margin-top: 0.8rem;
+    padding: 0rem 2rem;
     gap: 1.6rem;
   `,
 };
@@ -97,29 +130,85 @@ const S = {
 export default function DashBoard() {
   return (
     <PageLayout>
-      <S.Column>
-        <S.ColumnTitleContainer>
-          <S.ColumnTitleWrapper>
-            <S.ColumnTitleIconWrapper>
-              <S.ColumnTitleDotIcon />
-            </S.ColumnTitleIconWrapper>
-            <S.ColumnTitle>TO DO</S.ColumnTitle>
-            <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
-          </S.ColumnTitleWrapper>
-          <SettingIcon />
-        </S.ColumnTitleContainer>
+      <S.DashBoardWrapper>
+        <S.Column>
+          <S.ColumnTopFixedContent>
+            <S.ColumnTitleContainer>
+              <S.ColumnTitleWrapper>
+                <S.ColumnTitleIconWrapper>
+                  <S.ColumnTitleDotIcon />
+                </S.ColumnTitleIconWrapper>
+                <S.ColumnTitle>TO DO</S.ColumnTitle>
+                <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
+              </S.ColumnTitleWrapper>
+              <SettingIcon />
+            </S.ColumnTitleContainer>
+            <S.AddButton />
+          </S.ColumnTopFixedContent>
 
-        <S.ColumnContentBox>
-          <Card cardInfoData={cardInfoData} />
-          <Card cardInfoData={cardInfoData} />
-          <Card cardInfoData={cardInfoData} />
-          <Card cardInfoData={cardInfoData} />
-          <Card cardInfoData={cardInfoData} />
-          <Card cardInfoData={cardInfoData} />
-          <Card cardInfoData={cardInfoData} />
-        </S.ColumnContentBox>
-      </S.Column>
-      {/* <Card cardInfoData={cardInfoData} /> */}
+          <S.ColumnContentContainer>
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+          </S.ColumnContentContainer>
+        </S.Column>
+        {/*  */}
+        <S.Column>
+          <S.ColumnTopFixedContent>
+            <S.ColumnTitleContainer>
+              <S.ColumnTitleWrapper>
+                <S.ColumnTitleIconWrapper>
+                  <S.ColumnTitleDotIcon />
+                </S.ColumnTitleIconWrapper>
+                <S.ColumnTitle>TO DO</S.ColumnTitle>
+                <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
+              </S.ColumnTitleWrapper>
+              <SettingIcon />
+            </S.ColumnTitleContainer>
+            <S.AddButton />
+          </S.ColumnTopFixedContent>
+
+          <S.ColumnContentContainer>
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+          </S.ColumnContentContainer>
+        </S.Column>
+        {/*  */}
+        <S.Column>
+          <S.ColumnTopFixedContent>
+            <S.ColumnTitleContainer>
+              <S.ColumnTitleWrapper>
+                <S.ColumnTitleIconWrapper>
+                  <S.ColumnTitleDotIcon />
+                </S.ColumnTitleIconWrapper>
+                <S.ColumnTitle>TO DO</S.ColumnTitle>
+                <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
+              </S.ColumnTitleWrapper>
+              <SettingIcon />
+            </S.ColumnTitleContainer>
+            <S.AddButton />
+          </S.ColumnTopFixedContent>
+
+          <S.ColumnContentContainer>
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+            <Card cardInfoData={cardInfoData} />
+          </S.ColumnContentContainer>
+        </S.Column>
+      </S.DashBoardWrapper>
     </PageLayout>
     // <Sidebar dashboards={dashboards} />
   );
