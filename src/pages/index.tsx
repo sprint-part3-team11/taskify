@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Gnb from '@/components/common/Gnb';
 import Footer from '@/components/landing/Footer';
 import LandingHeader from '@/components/landing/LandingHeader';
 import LandingMiddle from '@/components/landing/LandingMiddle';
 import LandingSetting from '@/components/landing/LandingSetting';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import Gnb from '@/common/header/Gnb';
 
 const S = {
   MainLayout: styled.main`
