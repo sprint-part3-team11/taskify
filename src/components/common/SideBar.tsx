@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import dashboardsApi from '@/api/dashboards.api';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
 import CreateByMe from '@/public/icon/creatByMe.svg';
 import LogoIcon from '@/public/icon/logo.svg';
@@ -120,6 +121,17 @@ interface DashboardProps {
 interface SidebarProps {
   dashboards: DashboardProps[];
 }
+
+async function fetchData() {
+  try {
+    const response = await dashboardsApi.getDashboardList();
+    console.log('데이터:', response.data);
+  } catch (error) {
+    console.error('에러:', error.response.data.message);
+  }
+}
+
+fetchData();
 
 function Sidebar({ dashboards }: SidebarProps) {
   const router = useRouter();
