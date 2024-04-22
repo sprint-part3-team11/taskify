@@ -13,7 +13,7 @@ function ProfileChange({ name }: ProfileChangeProps) {
   const S = {
     Container: styled.div`
       width: 62rem;
-      height: 34.5rem;
+      height: 36rem;
       padding: 3.2rem 2.8rem 2.8rem 2.8rem;
       border-radius: 0.8rem;
       background-color: ${({ theme }) => theme.color.white};
