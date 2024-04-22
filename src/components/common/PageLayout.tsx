@@ -30,7 +30,13 @@ const S = {
   `,
 };
 
-function PageLayout({ children }: { children: React.ReactNode }) {
+function PageLayout({
+  children,
+  myPage,
+}: {
+  children: React.ReactNode;
+  myPage: boolean;
+}) {
   const MY_IMAGE_URL = 'https://i.ibb.co/ysRQMyj/me.jpg';
   const invitedUsers = [
     {
@@ -55,6 +61,7 @@ function PageLayout({ children }: { children: React.ReactNode }) {
         profileName="남현준"
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
+        myPage={myPage}
       />
       <S.BodyContainer>{children}</S.BodyContainer>
     </S.LayoutContainer>

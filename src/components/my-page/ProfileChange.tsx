@@ -74,7 +74,7 @@ function ProfileChange({ name }: ProfileChangeProps) {
       <S.AlignBox>
         <S.ImageBox>
           <S.ImageContent>
-            <ImgFileUpload edit small={false} />
+            <ImgFileUpload edit={false} small={false} />
           </S.ImageContent>
         </S.ImageBox>
 

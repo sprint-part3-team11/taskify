@@ -60,7 +60,8 @@ const S = {
     }
   `,
 
-  ButtonContainer: styled.div`
+  ButtonContainer: styled.div<{ $myPage: boolean }>`
+    display: ${({ $myPage }) => $myPage && 'none'};
     //추후 구현
   `,
 
@@ -68,8 +69,8 @@ const S = {
     margin-left: 2rem;
   `,
 
-  InvitedUsersBox: styled.div`
-    display: flex;
+  InvitedUsersBox: styled.div<{ $myPage: boolean }>`
+    display: ${({ $myPage }) => ($myPage ? 'none' : 'flex')};
     align-items: center;
     margin: 0 2rem;
   `,
@@ -81,13 +82,14 @@ const S = {
     }
   `,
 
-  ProfileBox: styled.div`
+  ProfileBox: styled.div<{ $myPage: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
 
     padding: 0 4rem;
-    border-left: 1px solid ${theme.color.grayLight};
+    border-left: ${({ $myPage }) =>
+      $myPage ? 'none' : `1px solid ${theme.color.grayLight}`};
     gap: 1rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -117,6 +119,7 @@ interface HeaderProps {
   profileName: string;
   profileImgURL: string;
   invitedUsers: InvitedUsersProp[];
+  myPage: boolean;
 }
 interface InvitedUsersProp {
   id: number;
@@ -128,17 +131,18 @@ function DashBoardHeader({
   profileName,
   profileImgURL,
   invitedUsers,
+  myPage,
 }: HeaderProps) {
   return (
     <S.Header>
       <S.MenuNameAndButtonBox>
         <S.MenuName>{menuName}</S.MenuName>
-        <S.ButtonContainer>
+        <S.ButtonContainer $myPage={myPage}>
           <S.Button>관리</S.Button>
           <S.Button>초대하기</S.Button>
         </S.ButtonContainer>
       </S.MenuNameAndButtonBox>
-      <S.InvitedUsersBox>
+      <S.InvitedUsersBox $myPage={myPage}>
         {invitedUsers &&
           invitedUsers.map((invitedUser, index) => (
             <S.InvitedUserImage
@@ -154,7 +158,7 @@ function DashBoardHeader({
             />
           ))}
       </S.InvitedUsersBox>
-      <S.ProfileBox>
+      <S.ProfileBox $myPage={myPage}>
         <S.ProfileImg
           src={profileImgURL}
           width={38}
