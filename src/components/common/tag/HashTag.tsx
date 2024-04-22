@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
-
 interface HashTagProps {
   children: ReactNode;
   index: number;
@@ -23,14 +22,11 @@ const backgroundColor = [
 ];
 const S = {
   HashTagItem: styled.div<HashTagProps>`
-
     border-radius: 0.4rem;
 
     width: fit-content;
     height: ${(props) => (props.isMobile ? '2rem' : '2.2rem')};
-    padding: 0.4rem 0.8rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding: 0.6rem 0.8rem 0.2rem;
     background-color: ${(props) =>
       backgroundColor[props.index % backgroundColor.length]};
     font-size: ${(props) => (props.isMobile ? '1rem' : '1.2rem')};
@@ -39,13 +35,11 @@ const S = {
   `,
 };
 
-
 interface HashTagProps {
   children: ReactNode;
   index: number;
   isMobile: boolean;
 }
-
 
 function HashTag({ children, index, isMobile = false }: HashTagProps) {
   return (

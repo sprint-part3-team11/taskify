@@ -8,6 +8,8 @@ const S = {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 98;
+
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -18,6 +20,7 @@ const S = {
     height: 7rem;
     border-bottom: 0.1rem solid ${theme.color.grayLight};
 
+    background-color: ${theme.color.white};
     ${MEDIA_QUERIES.onPc} {
       padding-left: 30rem;
     }
