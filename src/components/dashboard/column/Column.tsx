@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
@@ -32,7 +33,8 @@ const S = {
     }
   `,
   Column: styled.div`
-    height: calc(100vh - 7rem);
+    /* height: calc(100vh - 7rem); */
+    height: calc(100vh - 7rem - 1.5rem);
     min-width: 35.4rem;
     /* padding: 2rem; */
     /* background-color: aqua; */
@@ -52,11 +54,13 @@ const S = {
 
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
-      height: calc(33vh - 2.3rem);
+      height: 45.5rem;
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
-      height: 30rem;
+      /* height: 30rem; */
+      height: 100%;
+      overflow-y: auto;
     }
   `,
   ColumnTopFixedContent: styled.div`
@@ -119,15 +123,34 @@ const S = {
   ColumnContentContainer: styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 0.8rem;
+    margin: 0.8rem 0rem 2rem 0rem;
     padding: 0rem 2rem;
     gap: 1.6rem;
   `,
+  Scrollbar: styled.div`
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+  `,
 };
 
-function Column({ name }) {
+const Column = React.forwardRef(({ name }, ref) => {
+  // const containerRef = useRef(null);
+  // const scrollbarRef = useRef(null);
+
+  // const handleScrollbar = (e) => {
+  //   const container = containerRef.current;
+  //   const scrollbar = scrollbarRef.current;
+  //   const scrollPercentage = e.clientY / container.offsetHeight;
+  //   container.scrollTop = scrollPercentage * container.scrollHeight;
+  // };
+
   return (
-    <S.Column>
+    <S.Column ref={ref}>
       <S.ColumnTopFixedContent>
         <S.ColumnTitleContainer>
           <S.ColumnTitleWrapper>
@@ -139,20 +162,26 @@ function Column({ name }) {
           </S.ColumnTitleWrapper>
           <SettingIcon />
         </S.ColumnTitleContainer>
+        {/* 카드 데이터 추가 로직 추가 예정 */}
+        {/* <S.AddButton onClick={}/> */}
         <S.AddButton />
       </S.ColumnTopFixedContent>
 
+      {/* <S.ColumnContentContainer ref={containerRef}> */}
       <S.ColumnContentContainer>
+        {/* height 크기만큼 드래그 가능한 스크롤바 제작하면? 나머지 영역에서는 스크롤 안되게 막고 해당 스크롤바로 작성하면? */}
+
         <Card cardInfoData={cardInfoData} />
         <Card cardInfoData={cardInfoData} />
         <Card cardInfoData={cardInfoData} />
         <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
+        {/* <Card cardInfoData={cardInfoData} /> */}
+        {/* <Card cardInfoData={cardInfoData} /> */}
+        {/* <Card cardInfoData={cardInfoData} /> */}
       </S.ColumnContentContainer>
+      {/* <S.Scrollbar ref={scrollbarRef} onMouseDown={handleScrollbar} /> */}
     </S.Column>
   );
-}
+});
 
 export default Column;
