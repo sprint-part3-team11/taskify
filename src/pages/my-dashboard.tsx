@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
-import PageLayout from '@/components/common/PageLayout';
 import DashBoardList from '@/components/dashboard/my-board/DashBoardList';
 import InvitedDashBoardList from '@/components/dashboard/my-board/InvitedDashBoardList';
+import PageLayout from '@/components/template/PageLayout';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {

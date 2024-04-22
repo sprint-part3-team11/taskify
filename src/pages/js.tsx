@@ -1,7 +1,6 @@
 import AvatarImage from '@/components/common/AvatarImage';
-import FormInput from '@/components/form/FormInput';
-import FormLayout from '@/components/form/FormLayout';
-
+import FormInput from '@/components/common/form/Form';
+import SignLayout from '@/components/template/SignLayout';
 
 function js() {
   // const URL =
@@ -9,10 +8,10 @@ function js() {
 
   return (
     <div>
-      <FormLayout pageType="signIn">
+      <SignLayout pageType="signIn">
         {/* <AvatarImage src={URL} width="10rem" height="10rem" /> */}
         <FormInput formType="signIn" />
-      </FormLayout>    
+      </SignLayout>
     </div>
   );
 }

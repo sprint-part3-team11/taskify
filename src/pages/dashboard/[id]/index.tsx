@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import PageLayout from '@/components/common/PageLayout';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
 import Column from '@/components/dashboard/column/Column';
+import PageLayout from '@/components/template/PageLayout';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 // 테스트용 배열

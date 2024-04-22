@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
-import PageLayout from '@/components/common/PageLayout';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
 import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import WarningModal from '@/components/common/modal/WarningModal';
+import PageLayout from '@/components/template/PageLayout';
 
 const S = {
   Button: styled.button`

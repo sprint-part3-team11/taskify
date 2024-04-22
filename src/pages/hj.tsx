@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import SideBar from '@/components/common/DashBoardHeader/SideBar';
 import DashBoardHeader from '@/components/common/DashBoardHeader/index';
 import CardConfirmModal from '@/components/common/Modal/card-confirm/CardConfirmModal';
-import PageLayout from '@/components/common/PageLayout';
 import Sidebar from '@/components/common/SideBar';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
+import PageLayout from '@/components/template/PageLayout';
 import '@/styles/GlobalStyle';
 
 function Hj() {

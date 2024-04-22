@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import PageLayout from '@/components/common/PageLayout';
 import Button from '@/components/common/button/Button';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import InviteHistoryList from '@/components/edit-page/InviteHistoryListBox';
 import MemberList from '@/components/edit-page/MemberListBox';
 import NameAndColorChangeBox from '@/components/edit-page/NameAndColorChangeBox';
 import BackButton from '@/components/my-page/BackButton';
+import PageLayout from '@/components/template/PageLayout';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {

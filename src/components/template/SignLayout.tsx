@@ -71,7 +71,7 @@ interface FormLayoutProps {
   children: React.ReactNode;
 }
 
-function FormLayout({ pageType, children }: FormLayoutProps) {
+function SignLayout({ pageType, children }: FormLayoutProps) {
   return (
     <S.Layout>
       <S.Container>
@@ -92,4 +92,4 @@ function FormLayout({ pageType, children }: FormLayoutProps) {
   );
 }
 
-export default FormLayout;
+export default SignLayout;

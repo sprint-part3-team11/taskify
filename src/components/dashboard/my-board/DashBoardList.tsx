@@ -5,7 +5,7 @@ import AddIconButton from '@/components/common/button/AddIconButton';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CrownIcon from '@/public/icon/crownIcon.svg';
 import RightArrow from '@/public/icon/rightArraowIcon.svg';
-import { GridTemplate } from '@/styles/commonStyle';
+import { GridTemplate } from '@/styles/CommonStyle';
 
 const S = {
   Container: styled.div`

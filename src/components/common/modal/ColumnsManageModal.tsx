@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
-import InputField from '@/components/common/input/InputField';
+import InputField from '@/components/common/form/LabeledInput';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 

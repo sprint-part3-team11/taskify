@@ -1,9 +1,8 @@
-import React, { ReactNode } from 'react';
-import { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, ReactNode } from 'react';
 import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
-import Button from '../button/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
+import Button from '@/components/common/button/Button';
 import {
   EditPassword,
   EditPasswordType,
@@ -165,11 +164,11 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
  * @param formType: 'signIn' | 'signUp' | 'editProfile' | 'editPassword' 사용하는 용도에 맞게 입력
  */
 
-const FormInput = ({
+function FormInput({
   formType,
   btnSize = 'L',
   ...htmlInputProps
-}: FormInputProps) => {
+}: FormInputProps) {
   const getSchemaForFormType = (formType: FormType) => {
     switch (formType) {
       case 'signIn':
@@ -200,7 +199,7 @@ const FormInput = ({
   };
 
   const fieldsToRender = formFields[formType] || [];
-  //TODO 에러 처리에서 any 없애보기!
+  // TODO 에러 처리에서 any 없애보기!
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
       {fieldsToRender.map((field) => (
@@ -233,6 +232,6 @@ const FormInput = ({
       </S.Button>
     </S.Form>
   );
-};
+}
 
 export default FormInput;

@@ -1,6 +1,6 @@
-import DashBoardHeader from './DashBoardHeader';
-import Sidebar from './SideBar';
 import styled from 'styled-components';
+import Sidebar from '@/components/common/SideBar';
+import DashBoardHeader from '@/components/dashboard/DashBoardHeader';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const dashboards = [

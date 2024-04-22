@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
-import { buttonStyleBySize, buttonStyleByType } from '@/styles/buttonStyle';
+import { buttonStyleBySize, buttonStyleByType } from '@/styles/ButtonStyle';
 
 const S = {
   Container: styled.button<{

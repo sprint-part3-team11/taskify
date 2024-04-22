@@ -1,5 +1,4 @@
-import React from 'react';
-import { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const S = {
