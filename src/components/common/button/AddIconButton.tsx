@@ -9,14 +9,14 @@ const S = {
     align-items: center;
     gap: 1.2rem;
 
-    min-width: 24rem;
+    /* min-width: 24rem; */
     padding: 0.6rem 1rem;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.color.white};
     color: ${({ theme }) => theme.color.body};
-    font-weight: 1.6rem;
+    font-size: 1.6rem;
     font-weight: 600;
   `,
 
