@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Gnb from '@/components/common/Gnb';
 import Footer from '@/components/landing/Footer';
 import LandingHeader from '@/components/landing/LandingHeader';
 import LandingMiddle from '@/components/landing/LandingMiddle';
@@ -17,7 +18,6 @@ const S = {
       padding-top: 9.4rem;
     }
   `,
-
   IntroduceBox: styled.div`
     display: flex;
     flex-direction: column;
@@ -33,14 +33,17 @@ export default function Home() {
   }, []);
   return (
     mounted && (
-      <S.MainLayout>
-        <LandingHeader />
-        <S.IntroduceBox>
-          <LandingMiddle />
-          <LandingSetting />
-        </S.IntroduceBox>
-        <Footer />
-      </S.MainLayout>
+      <>
+        <Gnb />
+        <S.MainLayout>
+          <LandingHeader />
+          <S.IntroduceBox>
+            <LandingMiddle />
+            <LandingSetting />
+          </S.IntroduceBox>
+          <Footer />
+        </S.MainLayout>
+      </>
     )
   );
 }

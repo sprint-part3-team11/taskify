@@ -1,3 +1,4 @@
+import React from 'react';
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
@@ -6,28 +7,27 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8rem;
   `,
   Label: styled.label`
-    color: ${({ theme }) => theme.color.black};
+    color: ${({ theme }) => theme.color.body};
     font-size: 1.6rem;
-    font-weight: 400;
   `,
-  Input: styled.input`
+  Input: styled.input<{ error?: boolean }>`
     display: flex;
     align-items: center;
+    margin: 0.8rem 0;
     gap: 1rem;
 
     width: 100%;
     padding: 1.5rem 1.6rem;
     border-radius: 0.8rem;
-    border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border: 1px solid
+      ${({ error, theme }) => (error ? theme.color.red : theme.color.grayLight)};
     background: ${({ theme }) => theme.color.white};
 
     &::placeholder {
       color: ${({ theme }) => theme.color.gray};
       font-size: 1.6rem;
-      font-weight: 400;
     }
 
     &:focus {
@@ -39,6 +39,7 @@ const S = {
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
+  error?: boolean;
 }
 
 /**
@@ -49,13 +50,17 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
  * @param placeholder - placeholder
  */
 
-function InputField({ label, id, ...htmlInputProps }: InputFieldProps) {
-  return (
-    <S.Layout>
-      <S.Label htmlFor={id}>{label}</S.Label>
-      <S.Input id={id} {...htmlInputProps} />
-    </S.Layout>
-  );
-}
+const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ label, id, ...htmlInputProps }) => {
+    return (
+      <S.Layout>
+        <S.Label htmlFor={id}>{label}</S.Label>
+        <S.Input id={id} {...htmlInputProps} />
+      </S.Layout>
+    );
+  },
+);
+
+// InputField.displayName = 'InputField'; // 디버깅을 위해 displayName 설정
 
 export default InputField;
