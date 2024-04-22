@@ -1,6 +1,9 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import styled from 'styled-components';
 import AvatarImage from '@/components/common/AvatarImage';
+import BackDropModal from '@/components/common/modal/BackDropModal';
+import CardConfirmModal from '@/components/common/modal/card-confirm/CardConfirmModal';
 import { CardInfoProps } from '@/components/common/modal/card-confirm/types';
 import HashTag from '@/components/common/tag/HashTag';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
@@ -8,7 +11,7 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CalendarIconTablet from '@/public/icon/smallCalendarIcon.svg';
 
 const S = {
-  CardContainer: styled.div`
+  CardContainer: styled.button`
     width: 31.5rem;
     padding: 2rem;
     border: ${({ theme }) => theme.border.lightGray};
@@ -16,11 +19,10 @@ const S = {
     background-color: ${({ theme }) => theme.color.white};
     ${MEDIA_QUERIES.onTablet} {
       display: flex;
-      width: 54.4rem;
-      height: 9.3rem;
+      width: 100%;
     }
     ${MEDIA_QUERIES.onMobile} {
-      width: 28.4rem;
+      width: 100%;
       padding: 1.2rem;
     }
   `,
@@ -45,7 +47,7 @@ const S = {
     ${MEDIA_QUERIES.onMobile} {
       margin-bottom: 1rem;
 
-      width: 26rem;
+      width: 100%;
       height: 15.1rem;
 
       border-radius: 0.6rem;
@@ -54,8 +56,11 @@ const S = {
   Image: styled(Image)`
     object-fit: cover;
   `,
-  Title: styled.p`
+  Title: styled.div`
+    display: flex;
+
     margin-bottom: 1rem;
+
     font-size: 1.6rem;
     font-weight: 500;
     ${MEDIA_QUERIES.onMobile} {
@@ -129,46 +134,58 @@ function Card({ cardInfoData }: CardInfoProps) {
   const { width }: Size = useWindowSize();
   const isTablet: boolean = width !== undefined && width <= 1200;
   const isMobile: boolean = width !== undefined && width < 768;
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
-    <S.CardContainer
-      id={cardInfoData.id}
-      // columnId={cardInfoData.columnId}
-    >
-      {cardInfoData.imageUrl && (
-        <S.ImageWrapper>
-          <S.Image
-            src={cardInfoData.imageUrl}
-            layout="fill"
-            alt="카드 이미지"
-          />
-        </S.ImageWrapper>
-      )}
-      <S.CardContentWrapper>
-        <S.Title>{cardInfoData.title}</S.Title>
-        <S.CardContent>
-          <S.HashTagContainer>
-            {cardInfoData.tags.map((tag, index) => (
-              <HashTag key={index} index={index} isMobile={isTablet}>
-                {tag}
-              </HashTag>
-            ))}
-          </S.HashTagContainer>
-          <S.DateAndProfileWrapper>
-            <S.CalendarIconWrapper>
-              <S.CalendarIcon />
-              <S.Date>{cardInfoData.dueDate}</S.Date>
-            </S.CalendarIconWrapper>
-            <div>
-              <S.AvatarImage
-                src={cardInfoData.assignee.profileImageUrl}
-                width={isMobile ? '2.2rem' : '2.4rem'}
-                height={isMobile ? '2.2rem' : '2.4rem'}
-              />
-            </div>
-          </S.DateAndProfileWrapper>
-        </S.CardContent>
-      </S.CardContentWrapper>
-    </S.CardContainer>
+    <>
+      <S.CardContainer
+        id={cardInfoData.id}
+        // columnId={cardInfoData.columnId}
+        onClick={openModal}
+      >
+        {cardInfoData.imageUrl && (
+          <S.ImageWrapper>
+            <S.Image
+              src={cardInfoData.imageUrl}
+              layout="fill"
+              alt="카드 이미지"
+            />
+          </S.ImageWrapper>
+        )}
+        <S.CardContentWrapper>
+          <S.Title>{cardInfoData.title}</S.Title>
+          <S.CardContent>
+            <S.HashTagContainer>
+              {cardInfoData.tags.map((tag, index) => (
+                <HashTag key={index} index={index} isMobile={isTablet}>
+                  {tag}
+                </HashTag>
+              ))}
+            </S.HashTagContainer>
+            <S.DateAndProfileWrapper>
+              <S.CalendarIconWrapper>
+                <S.CalendarIcon />
+                <S.Date>{cardInfoData.dueDate}</S.Date>
+              </S.CalendarIconWrapper>
+              <div>
+                <S.AvatarImage
+                  src={cardInfoData.assignee.profileImageUrl}
+                  width={isMobile ? '2.2rem' : '2.4rem'}
+                  height={isMobile ? '2.2rem' : '2.4rem'}
+                />
+              </div>
+            </S.DateAndProfileWrapper>
+          </S.CardContent>
+        </S.CardContentWrapper>
+      </S.CardContainer>
+
+      <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
+        <CardConfirmModal cardInfoData={cardInfoData} />
+      </BackDropModal>
+    </>
   );
 }
 
