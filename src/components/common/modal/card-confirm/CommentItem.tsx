@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { CommentItemProps } from '@/components/common/Modal/card-confirm/types';
-import formatDate from '@/utils/date';
+import { CommentItemProps } from '@/components/common/modal/card-confirm/types';
+import formatDate from '@/utils/formatDate';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {

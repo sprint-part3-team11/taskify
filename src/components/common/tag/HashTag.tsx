@@ -26,7 +26,7 @@ const S = {
 
     width: fit-content;
     height: ${(props) => (props.isMobile ? '2rem' : '2.2rem')};
-    padding: 0.6rem 0.8rem 0.2rem;
+    padding: 0.5rem 0.8rem 0.3rem;
     background-color: ${(props) =>
       backgroundColor[props.index % backgroundColor.length]};
     font-size: ${(props) => (props.isMobile ? '1rem' : '1.2rem')};

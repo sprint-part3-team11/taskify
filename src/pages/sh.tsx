@@ -5,6 +5,8 @@ import Button from '@/components/common/button/Button';
 import Layout from '@/components/dashboard/Layout';
 import ToDoCreateModal from '@/components/dashboard/modal/ToDoCreateModal';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
+import cardsApi from '@/api/cards.api';
+import testApi from '@/api/test.api';
 
 const selectBoxOptions = [
   { value: '배유철', label: '배유철' },
@@ -16,8 +18,22 @@ const selectBoxOptions = [
 
 function sh() {
   const [isModalOpen, setisModalOpen] = useState(false);
+
+  async function fetchData() {
+    try {
+      const response = await testApi.postSignIn({
+        email: 'hey1234@hey.com',
+        password: '123qwe!!!',
+      });
+      console.log('로그인:', response.data);
+    } catch (error) {
+      console.error('로그인 에러:', error.response.data.message);
+    }
+  }
+
+  fetchData();
   return (
-    <Layout>
+    <>
       <Button size="S" styleType={BUTTON_TYPE.DESTRUCTIVE}>
         삭제
       </Button>
@@ -59,7 +75,7 @@ function sh() {
       <Button>버튼할게</Button>
       <Button>버튼할게</Button>
       <Button>버튼할게</Button>
-    </Layout>
+    </>
   );
 }
 
