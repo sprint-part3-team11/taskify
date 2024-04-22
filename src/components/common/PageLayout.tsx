@@ -30,7 +30,13 @@ const S = {
   `,
 };
 
-function PageLayout({ children }: { children: React.ReactNode }) {
+function PageLayout({
+  children,
+  openInviteModal,
+}: {
+  children: React.ReactNode;
+  openInviteModal?: () => void;
+}) {
   const MY_IMAGE_URL = 'https://i.ibb.co/ysRQMyj/me.jpg';
   const invitedUsers = [
     {
@@ -68,6 +74,7 @@ function PageLayout({ children }: { children: React.ReactNode }) {
         profileName="남현준"
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
+        openInviteModal={openInviteModal}
       />
       <S.BodyContainer>{children}</S.BodyContainer>
     </S.LayoutContainer>

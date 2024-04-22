@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import PageLayout from '@/components/common/PageLayout';
 import Button from '@/components/common/button/Button';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
@@ -36,7 +36,7 @@ function Edit() {
   };
 
   return (
-    <PageLayout>
+    <PageLayout openInviteModal={openInviteModal}>
       <S.MainContainer>
         <BackButton />
         <NameAndColorChangeBox />

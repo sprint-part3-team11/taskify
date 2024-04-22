@@ -177,6 +177,7 @@ interface HeaderProps {
   profileName: string;
   profileImgURL: string;
   invitedUsers: InvitedUsersProp[];
+  openInviteModal?: () => void;
 }
 interface InvitedUsersProp {
   id: number;
@@ -189,6 +190,7 @@ function DashBoardHeader({
   profileName,
   profileImgURL,
   invitedUsers,
+  openInviteModal,
 }: HeaderProps) {
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
@@ -205,7 +207,11 @@ function DashBoardHeader({
             <S.SettingIcon />
             관리
           </S.Button>
-          <S.Button styleType={BUTTON_TYPE.SECONDARY} size="S">
+          <S.Button
+            onClick={openInviteModal}
+            styleType={BUTTON_TYPE.SECONDARY}
+            size="S"
+          >
             <S.InvitationIcon />
             초대하기
           </S.Button>
