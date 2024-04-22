@@ -20,8 +20,6 @@ const S = {
     ${MEDIA_QUERIES.onTablet} {
       display: flex;
       width: 100%;
-      /* width: 54.4rem;
-      height: 9.3rem; */
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 28.4rem;
@@ -58,8 +56,11 @@ const S = {
   Image: styled(Image)`
     object-fit: cover;
   `,
-  Title: styled.p`
+  Title: styled.div`
+    display: flex;
+
     margin-bottom: 1rem;
+
     font-size: 1.6rem;
     font-weight: 500;
     ${MEDIA_QUERIES.onMobile} {
