@@ -51,29 +51,45 @@ const S = {
   `,
 };
 
+const LayoutValues = {
+  signIn: {
+    welcomeText: '오늘도 만나서 반가워요!',
+    message: '회원이 아니신가요?',
+    linkText: '회원가입하기',
+    path: '/SignUp',
+  },
+  signUp: {
+    welcomeText: '첫 방문을 환영합니다!',
+    message: '이미 가입하셨나요?',
+    linkText: '로그인하기',
+    path: '/SignIn',
+  },
+};
+
 interface FormLayoutProps {
-  welcomeText?: string;
+  pageType: 'signIn' | 'signUp';
   children: React.ReactNode;
-  message?: string;
-  linkText?: string;
 }
 
-function FormLayout({
-  welcomeText = '오늘도 만나서 반가워요!',
-  children,
-  message = '회원이 아니신가요?',
-  linkText = '회원가입하기',
-}: FormLayoutProps) {
+function FormLayout({ pageType, children }: FormLayoutProps) {
   return (
     <S.Layout>
-      <S.LogoBox>
-        <S.LogoImg />
-        <LogoText />
-        <h2>{welcomeText}</h2>
-      </S.LogoBox>
-      {children}
-      <p>{message}</p>
-      <Link href="/SignUp">{linkText}</Link>
+      <S.Container>
+        <S.LogoBox>
+          <S.LogoImg />
+          <LogoText />
+          <S.WelcomeText>{LayoutValues[pageType].welcomeText}</S.WelcomeText>
+        </S.LogoBox>
+        {children}
+        <S.LinkBox>
+          <p>{LayoutValues[pageType].message}</p>
+          <S.LinkText href={LayoutValues[pageType].path}>
+            {LayoutValues[pageType].linkText}
+          </S.LinkText>
+        </S.LinkBox>
+      </S.Container>
     </S.Layout>
   );
 }
+
+export default FormLayout;
