@@ -22,7 +22,7 @@ const S = {
       width: 100%;
     }
     ${MEDIA_QUERIES.onMobile} {
-      width: 28.4rem;
+      width: 100%;
       padding: 1.2rem;
     }
   `,
@@ -47,7 +47,7 @@ const S = {
     ${MEDIA_QUERIES.onMobile} {
       margin-bottom: 1rem;
 
-      width: 26rem;
+      width: 100%;
       height: 15.1rem;
 
       border-radius: 0.6rem;
