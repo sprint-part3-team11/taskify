@@ -65,8 +65,9 @@ const S = {
     display: flex;
     align-items: center;
   `,
-  ButtonBox: styled.div`
-    display: flex;
+  ButtonContainer: styled.div<{ $myPage: boolean }>`
+    display: ${({ $myPage }) => $myPage ? 'none' :'flex' };
+     //추후 구현
     gap: 1rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -84,6 +85,7 @@ const S = {
     }
   `,
 
+
   Button: styled(Button)`
     display: flex;
     padding: 0.7rem 1.7rem;
@@ -96,9 +98,12 @@ const S = {
     }
   `,
 
-  InvitedUsersBox: styled.div`
-    position: relative;
-    display: flex;
+
+
+
+  InvitedUsersBox: styled.div<{ $myPage: boolean }>`
+   position: relative;
+    display: ${({ $myPage }) => ($myPage ? 'none' : 'flex')};
     align-items: center;
     margin: 0 2rem;
 
@@ -113,6 +118,7 @@ const S = {
       height: 3.4rem;
     }
   `,
+
 
   RestUsers: styled.div`
     position: relative;
@@ -140,13 +146,17 @@ const S = {
     }
   `,
 
-  ProfileBox: styled.div`
+
+
+  ProfileBox: styled.div<{ $myPage: boolean }>`
+
     display: flex;
     justify-content: center;
     align-items: center;
 
     padding: 0 4rem;
-    border-left: 1px solid ${theme.color.grayLight};
+    border-left: ${({ $myPage }) =>
+      $myPage ? 'none' : `1px solid ${theme.color.grayLight}`};
     gap: 1rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -178,6 +188,7 @@ interface HeaderProps {
   profileImgURL: string;
   invitedUsers: InvitedUsersProp[];
   openInviteModal?: () => void;
+  myPage: boolean;
 }
 interface InvitedUsersProp {
   id: number;
@@ -191,10 +202,12 @@ function DashBoardHeader({
   profileImgURL,
   invitedUsers,
   openInviteModal,
+  myPage,
 }: HeaderProps) {
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
   return (
+
     <S.HeaderLayout>
       <S.MenuNameContainer>
         {dashboardName}
@@ -202,7 +215,7 @@ function DashBoardHeader({
       </S.MenuNameContainer>
 
       <S.ButtonAndUserContainer>
-        <S.ButtonBox>
+        <S.ButtonContainer $myPage={myPage}>
           <S.Button styleType={BUTTON_TYPE.SECONDARY} size="S">
             <S.SettingIcon />
             관리
@@ -215,8 +228,8 @@ function DashBoardHeader({
             <S.InvitationIcon />
             초대하기
           </S.Button>
-        </S.ButtonBox>
-        <S.InvitedUsersBox>
+        </S.ButtonContainer>
+        <S.InvitedUsersBox $myPage={myPage}>
           {invitedUsers &&
             isPc &&
             invitedUsers.slice(0, 4).map((invitedUser, index) => (
@@ -250,7 +263,7 @@ function DashBoardHeader({
               </div>
             ))}
           <S.RestUsers>
-            <S.RestUserIcon
+            <S.RestUserIcon 
               width={38}
               height={38}
               src={REST_PROFILE_IMG}
@@ -262,19 +275,21 @@ function DashBoardHeader({
             ) : (
               <S.RestUserText>+{invitedUsers.length - 2}</S.RestUserText>
             )}
-          </S.RestUsers>
-        </S.InvitedUsersBox>
-        <S.ProfileBox>
-          <S.ProfileImg
-            src={profileImgURL}
-            width={38}
-            height={38}
-            alt="profileImg"
-          />
-          <S.ProfileName>{profileName}</S.ProfileName>
-        </S.ProfileBox>
-      </S.ButtonAndUserContainer>
+            
+       </S.RestUsers> 
+      </S.InvitedUsersBox>
+      <S.ProfileBox $myPage={myPage}>
+        <S.ProfileImg
+          src={profileImgURL}
+          width={38}
+          height={38}
+          alt="profileImg"
+        />
+        <S.ProfileName>{profileName}</S.ProfileName>
+      </S.ProfileBox>
+     </S.ButtonAndUserContainer>
     </S.HeaderLayout>
+
   );
 }
 

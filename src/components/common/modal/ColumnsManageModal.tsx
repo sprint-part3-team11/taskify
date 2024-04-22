@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import InputField from '@/components/common/InputField';
 import Button from '@/components/common/button/Button';
+import InputField from '@/components/common/input/InputField';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
@@ -56,14 +56,15 @@ const S = {
     justify-content: flex-start;
 
     position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+    bottom: 2.8rem;
+    left: 2.8rem;
 
     color: ${({ theme }) => theme.color.gray};
     font-size: 1.4rem;
     text-decoration-line: underline;
 
     ${MEDIA_QUERIES.onMobile} {
+      position: static;
       margin-bottom: 1.6rem;
     }
   `,

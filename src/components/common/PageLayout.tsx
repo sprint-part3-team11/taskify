@@ -32,10 +32,12 @@ const S = {
 
 function PageLayout({
   children,
+  myPage,
   openInviteModal,
 }: {
   children: React.ReactNode;
   openInviteModal?: () => void;
+  myPage: boolean;
 }) {
   const MY_IMAGE_URL = 'https://i.ibb.co/ysRQMyj/me.jpg';
   const invitedUsers = [
@@ -75,6 +77,7 @@ function PageLayout({
         profileImgURL={MY_IMAGE_URL}
         invitedUsers={invitedUsers}
         openInviteModal={openInviteModal}
+        myPage={myPage}
       />
       <S.BodyContainer>{children}</S.BodyContainer>
     </S.LayoutContainer>
