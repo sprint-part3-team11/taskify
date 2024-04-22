@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
+import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import dashboardsApi from '@/api/dashboards.api';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
@@ -134,9 +135,24 @@ async function fetchData() {
 fetchData();
 
 function Sidebar({ dashboards }: SidebarProps) {
+  const [isModalOpen6, setModalOpen6] = useState(false);
+  const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
+  const openModal6 = () => setModalOpen6(true);
+  const closeModal6 = () => setModalOpen6(false);
   const router = useRouter();
   const [updatedDashboards, setUpdatedDashboards] =
     useState<DashboardProps[]>(dashboards);
+
+  // 대시보드 생성(이름, 색깔)
+  const createdDashBoard = (name: string, color: string) => {
+    setTempDashBoardName([name, color]);
+    setModalOpen6(false);
+  };
+
+  // 대시보드 생성 확인용
+  useEffect(() => {
+    console.log(tempDashBoardName);
+  }, [tempDashBoardName]);
 
   const handleLogoClick = () => {
     router.push('/');
@@ -146,6 +162,8 @@ function Sidebar({ dashboards }: SidebarProps) {
     router.push(`/dashboard/${dashboardId}`);
   };
 
+  const handleClinkModal = () => {};
+
   return (
     <S.SidebarWrapper>
       <S.Logo onClick={handleLogoClick}>
@@ -154,7 +172,7 @@ function Sidebar({ dashboards }: SidebarProps) {
       </S.Logo>
       <S.AddDashBoard>
         <S.AddText>Dash Boards</S.AddText>
-        <S.AddDashBoardIcon />
+        <S.AddDashBoardIcon onClick={openModal6} />
       </S.AddDashBoard>
       <ul>
         {updatedDashboards.map((dashboard) => (
@@ -170,8 +188,12 @@ function Sidebar({ dashboards }: SidebarProps) {
             </S.DashboardItem>
           </S.DashboardItemWrapper>
         ))}
+        <NewDashBoardModal
+          isOpen={isModalOpen6}
+          onClose={closeModal6}
+          onCreate={createdDashBoard}
+        />
       </ul>
-      {/* 여기에 모달 추가 */}
     </S.SidebarWrapper>
   );
 }
