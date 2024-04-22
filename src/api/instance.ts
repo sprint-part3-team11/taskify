@@ -11,8 +11,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    config.url = `/4-11${config.url}`; // 요청 시, 기수-팀 붙여서 요청
-
     const accessToken = localStorage.getItem('accessToken')?.replace(/"/gi, '');
     if (!accessToken) return config;
 
