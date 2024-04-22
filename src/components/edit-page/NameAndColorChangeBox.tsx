@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import CircleColor from '../common/CircleColor';
-import { ColorSelector, resultColorState } from '../common/ColorSelector';
-import InputField from '../common/InputField';
-import Button from '../common/button/Button';
-import Form from '../form/Form';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import CircleColor from '@/components/common/CircleColor';
+import {
+  ColorSelector,
+  resultColorState,
+} from '@/components/common/ColorSelector';
+import Button from '@/components/common/button/Button';
+import Form from '@/components/common/form/Form';
+import InputField from '@/components/common/form/LabeledInput';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 

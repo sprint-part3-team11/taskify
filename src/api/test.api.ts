@@ -1,5 +1,5 @@
-import instance from './instance';
 import { API, API_AUTH } from '@/constants/API';
+import instance from '@/api/instance';
 
 interface SignUpProps {
   email: string;

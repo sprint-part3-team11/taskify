@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Button from '../button/Button';
 import styled from 'styled-components';
+import Button from '@/components/common/button/Button';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -66,8 +66,8 @@ const S = {
     align-items: center;
   `,
   ButtonContainer: styled.div<{ $myPage: boolean }>`
-    display: ${({ $myPage }) => $myPage ? 'none' :'flex' };
-     //추후 구현
+    display: ${({ $myPage }) => ($myPage ? 'none' : 'flex')};
+    //추후 구현
     gap: 1rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -85,7 +85,6 @@ const S = {
     }
   `,
 
-
   Button: styled(Button)`
     display: flex;
     padding: 0.7rem 1.7rem;
@@ -98,11 +97,8 @@ const S = {
     }
   `,
 
-
-
-
   InvitedUsersBox: styled.div<{ $myPage: boolean }>`
-   position: relative;
+    position: relative;
     display: ${({ $myPage }) => ($myPage ? 'none' : 'flex')};
     align-items: center;
     margin: 0 2rem;
@@ -118,7 +114,6 @@ const S = {
       height: 3.4rem;
     }
   `,
-
 
   RestUsers: styled.div`
     position: relative;
@@ -146,10 +141,7 @@ const S = {
     }
   `,
 
-
-
   ProfileBox: styled.div<{ $myPage: boolean }>`
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -207,7 +199,6 @@ function DashBoardHeader({
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
   return (
-
     <S.HeaderLayout>
       <S.MenuNameContainer>
         {dashboardName}
@@ -263,7 +254,7 @@ function DashBoardHeader({
               </div>
             ))}
           <S.RestUsers>
-            <S.RestUserIcon 
+            <S.RestUserIcon
               width={38}
               height={38}
               src={REST_PROFILE_IMG}
@@ -275,21 +266,19 @@ function DashBoardHeader({
             ) : (
               <S.RestUserText>+{invitedUsers.length - 2}</S.RestUserText>
             )}
-            
-       </S.RestUsers> 
-      </S.InvitedUsersBox>
-      <S.ProfileBox $myPage={myPage}>
-        <S.ProfileImg
-          src={profileImgURL}
-          width={38}
-          height={38}
-          alt="profileImg"
-        />
-        <S.ProfileName>{profileName}</S.ProfileName>
-      </S.ProfileBox>
-     </S.ButtonAndUserContainer>
+          </S.RestUsers>
+        </S.InvitedUsersBox>
+        <S.ProfileBox $myPage={myPage}>
+          <S.ProfileImg
+            src={profileImgURL}
+            width={38}
+            height={38}
+            alt="profileImg"
+          />
+          <S.ProfileName>{profileName}</S.ProfileName>
+        </S.ProfileBox>
+      </S.ButtonAndUserContainer>
     </S.HeaderLayout>
-
   );
 }
 

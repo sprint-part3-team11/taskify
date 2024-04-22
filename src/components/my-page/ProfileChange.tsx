@@ -1,6 +1,6 @@
 import { ImgFileUpload } from '../common/ImgFileUpload';
 import Button from '../common/button/Button';
-import FormInput from '../common/input/FormInput';
+import FormInput from '../common/form/Form';
 import styled from 'styled-components';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import PageLayout from '@/components/common/PageLayout';
 import Sidebar from '@/components/common/SideBar';
 import BackButton from '@/components/my-page/BackButton';
 import PasswordChange from '@/components/my-page/PasswordChange';
 import ProfileChange from '@/components/my-page/ProfileChange';
+import PageLayout from '@/components/template/PageLayout';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 // 테스트용 배열

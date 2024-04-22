@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import FormInput from '@/components/common/input/FormInput';
+import FormInput from '@/components/common/form/Form';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {

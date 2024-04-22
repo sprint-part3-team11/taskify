@@ -6,7 +6,7 @@ import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
-import { RequiredStar } from '@/styles/commonStyle';
+import { RequiredStar } from '@/styles/CommonStyle';
 
 const S = {
   Title: styled.h1`

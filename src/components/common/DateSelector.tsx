@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import { styled } from 'styled-components';
 import calendarIcon from '@/public/icon/calendarIcon.svg';
-import { datePickerStyle } from '@/styles/datePickerStyle';
+import datePickerStyle from '@/styles/DatePickerStyle';
 
 const S = {
   C: styled.div`

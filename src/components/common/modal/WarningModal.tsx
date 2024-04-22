@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import WARNING_MODAL_MESSAGES from '@/constants/WARNING_MODAL_MESSAGES';
+import WARNING_MODAL_MESSAGES from '@/constants/MODAL_MESSAGES';
 
 const S = {
   ContentContainer: styled.div`
