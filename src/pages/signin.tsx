@@ -15,7 +15,7 @@ function SignIn() {
       localStorage.setItem('accessToken', response.data.accessToken);
       router.push('/my-dashboard');
     } catch (error) {
-      console.error('에러', error.response.data.message);
+      alert(error.response.data.message);
     }
   };
 
