@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, ReactNode } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
@@ -13,6 +13,7 @@ import {
   SignUp,
   SignUpType,
 } from '@/constants/SCHEMA';
+import authApi from '@/api/auth.api';
 
 const S = {
   Form: styled.form`
@@ -155,16 +156,22 @@ type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
 
 type FormValues = SignInType | SignUpType | EditProfileType | EditPasswordType;
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
+  onSubmit?: (data) => void;
 }
 
 /**
  * @param formType: 'signIn' | 'signUp' | 'editProfile' | 'editPassword' 사용하는 용도에 맞게 입력
  */
 
-function Form({ formType, btnSize = 'L', ...htmlInputProps }: FormInputProps) {
+function Form({
+  formType,
+  btnSize = 'L',
+  onSubmit,
+  ...htmlInputProps
+}: FormProps) {
   const getSchemaForFormType = (type: FormType) => {
     switch (type) {
       case 'signIn':
@@ -189,10 +196,6 @@ function Form({ formType, btnSize = 'L', ...htmlInputProps }: FormInputProps) {
     formState: { errors },
     trigger,
   } = useForm<FormValues>(formOptions);
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-  };
 
   const fieldsToRender = formFields[formType] || [];
   // TODO 에러 처리에서 any 없애보기!
