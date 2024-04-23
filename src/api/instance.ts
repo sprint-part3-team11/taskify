@@ -14,7 +14,8 @@ instance.interceptors.request.use(
     const accessToken = localStorage.getItem('accessToken')?.replace(/"/gi, '');
     if (!accessToken) return config;
 
-    config.headers.Authorization = accessToken;
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
     return config;
   },
   (error) => {
