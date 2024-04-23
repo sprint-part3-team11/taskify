@@ -94,11 +94,14 @@ function ProfileChange() {
   }, []);
 
   // editMyProfile FormInput에 props로 함수 보내기
-  const editMyProfile = async (nickname: string, profileImageUrl: string) => {
+  const editMyProfile = async (
+    editNickname: string,
+    eidtProfileImageUrl: string,
+  ) => {
     try {
       const response = await usersApi.getMyProfileEdit({
-        nickname: '',
-        profileImageUrl: '',
+        nickname: editNickname,
+        profileImageUrl: eidtProfileImageUrl,
       });
       console.log(response.data);
     } catch (error) {

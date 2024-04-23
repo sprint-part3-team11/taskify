@@ -35,13 +35,13 @@ const S = {
 function PasswordChange() {
   // editMyProfilePassword FormInput에 props로 함수 보내기
   const editMyProfilePassword = async (
-    password: string,
-    newPassword: string,
+    editPassword: string,
+    newEditPassword: string,
   ) => {
     try {
       const response = await authApi.getPasswordChange({
-        password: '',
-        newPassword: '',
+        password: editPassword,
+        newPassword: newEditPassword,
       });
       console.log(response.data);
     } catch (error) {
