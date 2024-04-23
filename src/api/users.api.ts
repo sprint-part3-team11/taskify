@@ -40,6 +40,7 @@ const getProfileImgUpload = ({ profileImageUrl }) => {
   return instance({
     url: API_USERS.PROFILE_IMG_UPLOAD,
     method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
     data: { profileImageUrl },
   });
 };

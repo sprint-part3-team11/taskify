@@ -149,7 +149,6 @@ function Sidebar() {
           page: 1,
           size: 30,
         });
-        console.log('데이터:', response.data.dashboards);
         setDashboardData(response.data.dashboards);
       } catch (error) {
         console.error('에러:', error.response.data.message);
