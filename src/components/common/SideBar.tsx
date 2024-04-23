@@ -1,8 +1,11 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
+import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import dashboardsApi from '@/api/dashboards.api';
+import testApi from '@/api/test.api';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
 import CreateByMe from '@/public/icon/creatByMe.svg';
 import LogoIcon from '@/public/icon/logo.svg';
@@ -113,18 +116,55 @@ const S = {
 interface DashboardProps {
   id: string;
   color: string;
-  name: string;
+  title: string;
   createdByMe: boolean;
 }
 
-interface SidebarProps {
-  dashboards: DashboardProps[];
+async function fetchData() {
+  try {
+    const response = await testApi.postSignIn({
+      email: 'test@test.com',
+      password: '123qwe!!!',
+    });
+  } catch (error) {
+    console.error('로그인 에러:', error.response.data.message);
+  }
 }
 
-function Sidebar({ dashboards }: SidebarProps) {
+fetchData();
+
+function Sidebar() {
+  const [dashboardData, setDashboardData] = useState<DashboardProps[]>([]);
+  const [isModalOpen6, setModalOpen6] = useState(false);
+  const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
+  const openModal6 = () => setModalOpen6(true);
+  const closeModal6 = () => setModalOpen6(false);
   const router = useRouter();
-  const [updatedDashboards, setUpdatedDashboards] =
-    useState<DashboardProps[]>(dashboards);
+
+  useEffect(() => {
+    const fetchData2 = async () => {
+      try {
+        const response = await dashboardsApi.getDashboardList({
+          navigationMethod: 'infiniteScroll',
+          page: 1,
+          size: 30,
+        });
+        console.log('데이터:', response.data.dashboards);
+        setDashboardData(response.data.dashboards);
+      } catch (error) {
+        console.error('에러:', error.response.data.message);
+        setDashboardData([]);
+      }
+    };
+    fetchData2();
+  }, []);
+
+  const createdDashBoard = (name: string, color: string) => {
+    setTempDashBoardName([name, color]);
+    setModalOpen6(false);
+  };
+
+  useEffect(() => {}, [tempDashBoardName]);
 
   const handleLogoClick = () => {
     router.push('/');
@@ -142,24 +182,31 @@ function Sidebar({ dashboards }: SidebarProps) {
       </S.Logo>
       <S.AddDashBoard>
         <S.AddText>Dash Boards</S.AddText>
-        <S.AddDashBoardIcon />
+        <S.AddDashBoardIcon onClick={openModal6} />
       </S.AddDashBoard>
       <ul>
-        {updatedDashboards.map((dashboard) => (
-          <S.DashboardItemWrapper
-            key={dashboard.id}
-            onClick={() => handleDashboardClick(dashboard.id)}
-          >
-            <CircleColor color={dashboard.color} />
-            <S.DashboardItem
-              $active={dashboard.id === router.query.dashboardId}
+        {dashboardData
+          .slice()
+          .reverse()
+          .map((dashboard) => (
+            <S.DashboardItemWrapper
+              key={dashboard.id}
+              onClick={() => handleDashboardClick(dashboard.id)}
             >
-              {dashboard.name} {dashboard.createdByMe && <CreateByMe />}
-            </S.DashboardItem>
-          </S.DashboardItemWrapper>
-        ))}
+              <CircleColor color={dashboard.color} />
+              <S.DashboardItem
+                $active={dashboard.id === router.query.dashboardId}
+              >
+                {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
+              </S.DashboardItem>
+            </S.DashboardItemWrapper>
+          ))}
+        <NewDashBoardModal
+          isOpen={isModalOpen6}
+          onClose={closeModal6}
+          onCreate={createdDashBoard}
+        />
       </ul>
-      {/* 여기에 모달 추가 */}
     </S.SidebarWrapper>
   );
 }
