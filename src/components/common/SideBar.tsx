@@ -185,19 +185,22 @@ function Sidebar() {
         <S.AddDashBoardIcon onClick={openModal6} />
       </S.AddDashBoard>
       <ul>
-        {dashboardData.map((dashboard) => (
-          <S.DashboardItemWrapper
-            key={dashboard.id}
-            onClick={() => handleDashboardClick(dashboard.id)}
-          >
-            <CircleColor color={dashboard.color} />
-            <S.DashboardItem
-              $active={dashboard.id === router.query.dashboardId}
+        {dashboardData
+          .slice()
+          .reverse()
+          .map((dashboard) => (
+            <S.DashboardItemWrapper
+              key={dashboard.id}
+              onClick={() => handleDashboardClick(dashboard.id)}
             >
-              {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
-            </S.DashboardItem>
-          </S.DashboardItemWrapper>
-        ))}
+              <CircleColor color={dashboard.color} />
+              <S.DashboardItem
+                $active={dashboard.id === router.query.dashboardId}
+              >
+                {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
+              </S.DashboardItem>
+            </S.DashboardItemWrapper>
+          ))}
         <NewDashBoardModal
           isOpen={isModalOpen6}
           onClose={closeModal6}
