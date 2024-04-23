@@ -1,59 +1,106 @@
-import { ImgFileUpload } from '../common/ImgFileUpload';
-import Button from '../common/button/Button';
-import FormInput from '../common/form/Form';
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
+import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
+import FormInput from '@/components/common/form/Form';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import usersApi from '@/api/users.api';
 
-interface ProfileChangeProps {
-  name: string;
-}
+const S = {
+  Container: styled.div`
+    width: 62rem;
+    height: 36rem;
+    padding: 3.2rem 2.8rem 2.8rem 2.8rem;
+    border-radius: 0.8rem;
+    background-color: ${({ theme }) => theme.color.white};
 
-function ProfileChange({ name }: ProfileChangeProps) {
-  const S = {
-    Container: styled.div`
-      width: 62rem;
-      height: 36rem;
-      padding: 3.2rem 2.8rem 2.8rem 2.8rem;
-      border-radius: 0.8rem;
-      background-color: ${({ theme }) => theme.color.white};
+    ${MEDIA_QUERIES.onMobile} {
+      width: 28.4rem;
+      height: 46.2rem;
+    }
+  `,
+  AlignBox: styled.div`
+    display: flex;
+    align-items: center;
+    margin: 3.2rem 0 2.4rem 0;
 
-      ${MEDIA_QUERIES.onMobile} {
-        width: 28.4rem;
-        height: 46.2rem;
-      }
-    `,
-    AlignBox: styled.div`
-      display: flex;
-      align-items: center;
-      margin: 3.2rem 0 2.4rem 0;
+    ${MEDIA_QUERIES.onMobile} {
+      flex-direction: column;
+      align-items: normal;
+      margin-top: 8rem;
+    }
+  `,
+  ImageBox: styled.div`
+    flex: 1;
+  `,
+  ImageTitle: styled.span`
+    font-size: 2.4rem;
+    font-weight: 700;
+  `,
+  ImageContent: styled.div`
+    margin-top: -7rem;
+  `,
+  InputBox: styled.div`
+    flex: 2;
+    margin-left: 1.6rem;
 
-      ${MEDIA_QUERIES.onMobile} {
-        flex-direction: column;
-        align-items: normal;
-        margin-top: 8rem;
-      }
-    `,
-    ImageBox: styled.div`
-      flex: 1;
-    `,
-    ImageTitle: styled.span`
-      font-size: 2.4rem;
-      font-weight: 700;
-    `,
-    ImageContent: styled.div`
-      margin-top: -7rem;
-    `,
-    InputBox: styled.div`
-      flex: 2;
-      margin-left: 1.6rem;
+    ${MEDIA_QUERIES.onMobile} {
+      margin-top: 2.4rem;
+      margin-left: 0;
+    }
+  `,
+};
 
-      ${MEDIA_QUERIES.onMobile} {
-        margin-top: 2.4rem;
-        margin-left: 0;
-      }
-    `,
+function ProfileChange() {
+  const urlImg = useRecoilValue(imgUrlState);
+  // profileInfo FormInput에 props로 객체 보내기
+  const [profileInfo, setProfile] = useState({
+    name: '',
+    mail: '',
+  });
+
+  // 파일 업로드 시 이미지 url 서버에서 응답받기
+  const myProfileFileUpload = async () => {
+    try {
+      const response = await usersApi.getProfileImgUpload({
+        profileImageUrl: urlImg,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('에러???:', error.response.data.message);
+    }
   };
+  myProfileFileUpload();
+
+  useEffect(() => {
+    const myProfile = async () => {
+      try {
+        const response = await usersApi.getMyProfile();
+        const { email, nickname } = response.data;
+        setProfile({
+          name: nickname,
+          mail: email,
+        });
+      } catch (error) {
+        console.error('에러:', error.response.data.message);
+      }
+    };
+    myProfile();
+  }, []);
+
+  // editMyProfile FormInput에 props로 함수 보내기
+  const editMyProfile = async () => {
+    try {
+      const response = await usersApi.getMyProfileEdit({
+        nickname: '',
+        profileImageUrl: '',
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('에러:', error.response.data.message);
+    }
+  };
+
   return (
     <S.Container>
       <S.ImageTitle>프로필</S.ImageTitle>
