@@ -56,13 +56,13 @@ const LayoutValues = {
     welcomeText: '오늘도 만나서 반가워요!',
     message: '회원이 아니신가요?',
     linkText: '회원가입하기',
-    path: '/SignUp',
+    path: '/signup',
   },
   signUp: {
     welcomeText: '첫 방문을 환영합니다!',
     message: '이미 가입하셨나요?',
     linkText: '로그인하기',
-    path: '/SignIn',
+    path: '/signin',
   },
 };
 
