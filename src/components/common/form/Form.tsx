@@ -1,8 +1,14 @@
-import React, { InputHTMLAttributes, ReactNode } from 'react';
+import React, {
+  ChangeEvent,
+  InputHTMLAttributes,
+  ReactNode,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import ProfileChange from '@/components/my-page/ProfileChange';
 import {
   EditPassword,
   EditPasswordType,
@@ -197,8 +203,33 @@ function Form({
     trigger,
   } = useForm<FormValues>(formOptions);
 
+  const [value, setValue] = useState({
+    email: '',
+    name: '',
+    password: '',
+    passwordCheck: '',
+    nowPassword: '',
+    newPassword: '',
+    newPasswordCheck: '',
+  });
+
+  const Keys = {
+    signIn: ['email', 'password'],
+    signUp: ['email', 'name', 'password', 'passwordCheck'],
+    editProfile: ['email', 'name'],
+    editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
+  };
+
+  const handleValueChange = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setValue({ ...value, [target.id]: target.value });
+  };
+  const isDisabled = (value, keys) => {
+    console.log(keys.every((key) => value[key].length));
+    return !keys.every((key) => value[key].length);
+  };
+
   const fieldsToRender = formFields[formType] || [];
-  // TODO 에러 처리에서 any 없애보기!
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
       {fieldsToRender.map((field) => (
@@ -217,6 +248,7 @@ function Form({
                 trigger(field.id as keyof FormValues);
               }
             }}
+            onChange={handleValueChange}
             error={!!errors[field.id as keyof FormValues]}
           />
           {errors[field.id as keyof FormValues] && (
@@ -226,7 +258,11 @@ function Form({
           )}
         </S.Container>
       ))}
-      <S.Button type="submit" size={btnSize}>
+      <S.Button
+        type="submit"
+        size={btnSize}
+        disabled={isDisabled(value, Keys[formType])}
+      >
         {buttonText[formType]}
       </S.Button>
     </S.Form>
