@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, ReactNode } from 'react';
-import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
@@ -164,13 +164,9 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
  * @param formType: 'signIn' | 'signUp' | 'editProfile' | 'editPassword' 사용하는 용도에 맞게 입력
  */
 
-function FormInput({
-  formType,
-  btnSize = 'L',
-  ...htmlInputProps
-}: FormInputProps) {
-  const getSchemaForFormType = (formType: FormType) => {
-    switch (formType) {
+function Form({ formType, btnSize = 'L', ...htmlInputProps }: FormInputProps) {
+  const getSchemaForFormType = (type: FormType) => {
+    switch (type) {
       case 'signIn':
         return SignIn;
       case 'signUp':
@@ -222,7 +218,7 @@ function FormInput({
           />
           {errors[field.id as keyof FormValues] && (
             <S.Error>
-              {(errors[field.id as keyof FormValues] as any)?.message}
+              {(errors[field.id as keyof FormValues] as Error)?.message}
             </S.Error>
           )}
         </S.Container>
@@ -234,4 +230,4 @@ function FormInput({
   );
 }
 
-export default FormInput;
+export default Form;
