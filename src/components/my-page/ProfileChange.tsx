@@ -63,10 +63,14 @@ function ProfileChange() {
   // 파일 업로드 시 이미지 url 서버에서 응답받기
   const myProfileFileUpload = async () => {
     try {
-      const response = await usersApi.getProfileImgUpload({
-        profileImageUrl: urlImg,
-      });
-      console.log(response.data);
+      if (urlImg) {
+        const response = await usersApi.getProfileImgUpload({
+          profileImageUrl: urlImg,
+        });
+        console.log(response.data);
+      } else {
+        console.log('urlImg 값이 없습니다.');
+      }
     } catch (error) {
       console.error('에러???:', error.response.data.message);
     }
