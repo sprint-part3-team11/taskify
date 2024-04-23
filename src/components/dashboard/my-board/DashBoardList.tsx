@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import AddIconButton from '@/components/common/button/AddIconButton';
+import useDashboardListQuery from '@/hooks/query/dashboards/useDashboardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import dashboardsApi from '@/api/dashboards.api';
 import CrownIcon from '@/public/icon/crownIcon.svg';
@@ -42,28 +43,17 @@ const S = {
 };
 
 function DashBoardList() {
-  const [dashboards, setDashboards] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await dashboardsApi.getDashboardList('infiniteScroll');
-        setDashboards(response.data); // 받은 데이터를 dashboards 상태로 설정
-      } catch (error) {
-        console.error('목록조회 오류:', error.response.data.message);
-      }
-    };
-
-    fetchData(); // 컴포넌트가 마운트되었을 때 데이터를 가져오도록 호출
-  }, []);
-
-  const boards = dashboards.dashboards;
-  console.log('대시보드 데이터: ', boards);
+  const { data } = useDashboardListQuery({
+    navigationMethod: 'pagination',
+    page: 1,
+    size: 5,
+  });
+  const dashboards = data?.dashboards;
 
   return (
     <GridTemplate>
       <AddIconButton style={{ height: '7rem' }}>새로운 대시보드</AddIconButton>
-      {boards?.map((board) => (
+      {dashboards?.map((board) => (
         <S.Container key={board.id}>
           <S.BoardTitle>
             <CircleColor color={board.color} />
