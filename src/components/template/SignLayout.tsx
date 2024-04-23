@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import LogoText from '@/public/icon/Taskify.svg';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import LogoImg from '@/public/icon/logoImg.svg';
+import LogoText from '@/public/icon/taskify.svg';
 
 const S = {
   Layout: styled.div`
@@ -20,6 +21,10 @@ const S = {
     align-items: center;
     gap: 2.4rem;
     width: 52rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 35.1rem;
+    }
   `,
   LogoBox: styled.div`
     display: flex;
@@ -30,7 +35,23 @@ const S = {
     margin-bottom: 1.4rem;
   `,
   LogoImg: styled(LogoImg)`
+    width: 16.5rem;
+    height: 19rem;
     margin: 0 0 1.7rem 3.9rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 9.87rem;
+      height: 11.39rem;
+    }
+  `,
+  LogoText: styled(LogoText)`
+    width: 19.84rem;
+    height: 5.52rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      width: 11.9rem;
+      height: 3.31rem;
+    }
   `,
   WelcomeText: styled.h2`
     color: ${({ theme }) => theme.color.body};
@@ -77,7 +98,7 @@ function SignLayout({ pageType, children }: FormLayoutProps) {
       <S.Container>
         <S.LogoBox>
           <S.LogoImg />
-          <LogoText />
+          <S.LogoText />
           <S.WelcomeText>{LayoutValues[pageType].welcomeText}</S.WelcomeText>
         </S.LogoBox>
         {children}
