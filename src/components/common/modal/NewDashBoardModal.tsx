@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
@@ -9,6 +9,7 @@ import Button from '@/components/common/button/Button';
 import InputField from '@/components/common/form/LabeledInput';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import dashboardsApi from '@/api/dashboards.api';
 
 const S = {
   Title: styled.p`
@@ -84,9 +85,18 @@ function NewDashBoardModal({
     onClose();
   };
 
-  const handleDashBoardName = () => {
-    onCreate(dashBoardName, selectedColor);
-    handleClose();
+  const handleDashBoardName = async () => {
+    try {
+      const response = await dashboardsApi.getCreatedDashboard({
+        title: dashBoardName,
+        color: selectedColor,
+      });
+      onCreate(dashBoardName, selectedColor);
+      handleClose();
+      window.location.reload();
+    } catch (error) {
+      console.error('에러:', error.response.data.message);
+    }
   };
 
   return (
