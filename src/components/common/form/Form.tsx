@@ -1,14 +1,13 @@
 import React, {
-  ChangeEvent,
   InputHTMLAttributes,
   ReactNode,
+  useEffect,
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
-import ProfileChange from '@/components/my-page/ProfileChange';
 import {
   EditPassword,
   EditPasswordType,
@@ -19,7 +18,6 @@ import {
   SignUp,
   SignUpType,
 } from '@/constants/SCHEMA';
-import authApi from '@/api/auth.api';
 
 const S = {
   Form: styled.form`
@@ -199,19 +197,10 @@ function Form({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     trigger,
   } = useForm<FormValues>(formOptions);
-
-  const [value, setValue] = useState({
-    email: '',
-    name: '',
-    password: '',
-    passwordCheck: '',
-    nowPassword: '',
-    newPassword: '',
-    newPasswordCheck: '',
-  });
 
   const Keys = {
     signIn: ['email', 'password'],
@@ -219,15 +208,17 @@ function Form({
     editProfile: ['email', 'name'],
     editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
   };
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const handleValueChange = (e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    setValue({ ...value, [target.id]: target.value });
-  };
-  const isDisabled = (value, keys) => {
-    console.log(keys.every((key) => value[key].length));
-    return !keys.every((key) => value[key].length);
-  };
+  const watchFields = watch();
+
+  useEffect(() => {
+    const requiredKeys = Keys[formType];
+    const allFieldsFilled = requiredKeys.every(
+      (key) => watchFields[key]?.length > 0,
+    );
+    setIsButtonDisabled(!allFieldsFilled);
+  }, [watchFields, formType]);
 
   const fieldsToRender = formFields[formType] || [];
   return (
@@ -248,7 +239,6 @@ function Form({
                 trigger(field.id as keyof FormValues);
               }
             }}
-            onChange={handleValueChange}
             error={!!errors[field.id as keyof FormValues]}
           />
           {errors[field.id as keyof FormValues] && (
@@ -258,11 +248,7 @@ function Form({
           )}
         </S.Container>
       ))}
-      <S.Button
-        type="submit"
-        size={btnSize}
-        disabled={isDisabled(value, Keys[formType])}
-      >
+      <S.Button type="submit" size={btnSize} disabled={isButtonDisabled}>
         {buttonText[formType]}
       </S.Button>
     </S.Form>
