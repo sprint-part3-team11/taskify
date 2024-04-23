@@ -53,6 +53,7 @@ const S = {
 
 function ProfileChange() {
   const urlImg = useRecoilValue(imgUrlState);
+
   // profileInfo FormInput에 props로 객체 보내기
   const [profileInfo, setProfile] = useState({
     name: '',
