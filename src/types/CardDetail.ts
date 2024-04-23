@@ -32,6 +32,8 @@ export interface CommentItemProps {
     nickname: string;
     id: number;
   };
+}
+export interface CommentFunctionProps extends CommentItemProps {
   edit: (content: string, id: number) => void;
   remove: (id: number) => void;
 }

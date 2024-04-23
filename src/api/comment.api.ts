@@ -37,22 +37,24 @@ const getCommentList = (cardId: string) => {
 
 const putCommentEdit = (content: string) => {
   return instance({
-    url: API_COMMENTS.BY_ID,
+    url: API_COMMENTS.BY_ID(content),
     method: 'PUT',
     data: {
       content,
-    }
+    },
   });
 };
 
-const deleteComment = () => {
-    return instance({
-        url: API_COMMENTS.BY_ID,
-        method:'Delete'
-        data:{
-            
-        }
-    })
-}
+const deleteComment = (commentsId: string) => {
+  return instance({
+    url: API_COMMENTS.BY_ID(commentsId),
+    method: 'Delete',
+  });
+};
 
-export default { getCommentList, postCreateComment, putCommentEdit };
+export default {
+  getCommentList,
+  postCreateComment,
+  putCommentEdit,
+  deleteComment,
+};

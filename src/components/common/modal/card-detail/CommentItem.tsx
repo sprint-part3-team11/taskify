@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import formatDate from '@/utils/formatDate';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CommentItemProps } from '@/types/CardDetail';
+import commentApi from '@/api/comment.api';
+import { CommentFunctionProps, CommentItemProps } from '@/types/CardDetail';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -111,7 +112,7 @@ function CommentItem({
   updatedDate,
   edit,
   remove,
-}: CommentItemProps) {
+}: CommentFunctionProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -131,16 +132,27 @@ function CommentItem({
     setEditContent(e.target.value);
   };
 
-  const handlePressKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handlePressKey = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const updatedData = e.currentTarget.value;
-      edit(updatedData, id);
-      setIsEditing(false);
+      try {
+        const updatedData = e.currentTarget.value;
+        // await commentApi.putCommentEdit(cardId, id, updatedData);
+        edit(updatedData, id);
+        setIsEditing(false);
+      } catch (error) {
+        // console.error('에러:', error.response.data.message);
+      }
     } else if (e.key === 'Escape') setIsEditing(false);
   };
 
-  const handleDeleteComment = () => {
-    remove(id);
+  const handleDeleteComment = async () => {
+    try {
+      const response = await commentApi.deleteComment('');
+      console.log(response);
+      remove(id);
+    } catch (error) {
+      console.error('에러:', error);
+    }
   };
 
   return (

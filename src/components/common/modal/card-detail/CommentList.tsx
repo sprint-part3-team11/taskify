@@ -20,18 +20,21 @@ export interface CommentListProps {
 function CommentList({ list, edit, remove }: CommentListProps) {
   return (
     <>
-      {list.map((comment) => (
-        <CommentItem
-          key={comment.id}
-          id={comment.id}
-          author={comment.author}
-          content={comment.content}
-          createdDate={comment.createdAt}
-          updatedDate={comment.updatedAt}
-          edit={edit}
-          remove={remove}
-        />
-      ))}
+      {list.map(
+        (comment) =>
+          list && (
+            <CommentItem
+              key={comment.id}
+              id={comment.id}
+              author={comment.author}
+              content={comment.content}
+              createdDate={comment.createdAt}
+              updatedDate={comment.updatedAt}
+              edit={edit}
+              remove={remove}
+            />
+          ),
+      )}
     </>
   );
 }

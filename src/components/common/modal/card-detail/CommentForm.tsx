@@ -2,6 +2,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import commentApi from '@/api/comment.api';
+import { CommentItemProps } from '@/types/CardDetail';
 
 const S = {
   CommentFormBox: styled.div`
@@ -23,13 +25,14 @@ const S = {
     display: flex;
     width: 100%;
   `,
-  Input: styled.input`
-    padding: 0 0 7rem 1rem;
+  TextArea: styled.textarea`
+    padding: 1rem 0 7rem 1rem;
     margin-top: 1rem;
     height: 12rem;
     width: 100%;
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.6rem;
+    resize: none;
 
     ${MEDIA_QUERIES.onMobile} {
       box-sizing: border-box;
@@ -60,25 +63,40 @@ interface CommentFormProps {
 
 function CommentForm({ create, length }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
-
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [comment, setComment] = useState(null);
+  console.log(comment);
+  const handleChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitContent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    create(inputValue);
-    setInputValue('');
+    try {
+      const response = await commentApi.postCreateComment({
+        content: inputValue,
+        cardId: 1,
+        columnId: 1,
+        dashboardId: 1,
+      });
+
+      console.log(response.data);
+      const newComment = response.data;
+      setComment(newComment);
+      create(inputValue);
+      setInputValue('');
+    } catch (error) {
+      console.error('에러:', error.response.data.message);
+    }
   };
 
   return (
     <S.CommentFormBox>
-      <S.Form onSubmit={submitHandler}>
+      <S.Form onSubmit={handleSubmitContent}>
         <S.Title>댓글 ({length})</S.Title>
 
         <S.InputWrapper>
-          <S.Input
-            onChange={changeHandler}
+          <S.TextArea
+            onChange={handleChangeInput}
             value={inputValue}
             placeholder="댓글 작성하기"
           />
