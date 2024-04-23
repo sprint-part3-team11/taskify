@@ -6,13 +6,6 @@ import ProfileChange from '@/components/my-page/ProfileChange';
 import PageLayout from '@/components/template/PageLayout';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
-// 테스트용 배열
-const dashboards = [
-  { id: '1', color: '#FFA500', name: '대시보드 1', createdByMe: true },
-  { id: '2', color: '#FF2660', name: '대시보드 2', createdByMe: true },
-  { id: '3', color: '#7AC555', name: '대시보드 3', createdByMe: false },
-];
-
 const S = {
   Container: styled.div`
     display: flex;
@@ -41,7 +34,7 @@ function mypage() {
         <S.ContentContainer>
           <S.ContentBox>
             <BackButton />
-            <ProfileChange name="공주들" />
+            <ProfileChange />
             <PasswordChange />
           </S.ContentBox>
         </S.ContentContainer>
