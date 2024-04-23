@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import Button from '@/components/common/button/Button';
 import NoInvitation from '@/components/dashboard/my-board/NoInvitation';
 import SearchBar from '@/components/dashboard/my-board/SearchBar';
+import useAcceptInvitationMutation from '@/hooks/query/dashboards/useAcceptInvitationMutation';
 import useMyInvitationListQuery from '@/hooks/query/dashboards/useMyInvitationListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -136,6 +137,25 @@ function InvitedDashBoardList() {
   const { data } = useMyInvitationListQuery(10);
   const invitations = data?.invitations;
 
+  const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
+
+  const handleAcceptButtonClick = (invitationId: string) => {
+    responseInvitationMutate({
+      invitationId: invitationId,
+      inviteAccepted: true,
+    });
+  };
+
+  const handleRejectButtonClick = (invitationId: string) => {
+    const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
+    if (confirmReject) {
+      responseInvitationMutate({
+        invitationId: invitationId,
+        inviteAccepted: false,
+      });
+    }
+  };
+
   useEffect(() => {
     setKeyword(searchParams.get('keyword'));
   }, [searchParams]);
@@ -167,8 +187,17 @@ function InvitedDashBoardList() {
                   <S.Inviter>{invitation.inviter.nickname}</S.Inviter>
                 </S.TitleAndInviter>
                 <S.ButtonContainer>
-                  <Button size="S">수락</Button>
-                  <Button size="S" styleType={BUTTON_TYPE.SECONDARY}>
+                  <Button
+                    size="S"
+                    onClick={() => handleAcceptButtonClick(invitation.id)}
+                  >
+                    수락
+                  </Button>
+                  <Button
+                    size="S"
+                    styleType={BUTTON_TYPE.SECONDARY}
+                    onClick={() => handleRejectButtonClick(invitation.id)}
+                  >
                     거절
                   </Button>
                 </S.ButtonContainer>
