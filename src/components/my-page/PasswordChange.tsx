@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import FormInput from '@/components/common/form/Form';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import authApi from '@/api/auth.api';
 
 const S = {
   Layout: styled.div`
@@ -32,6 +33,18 @@ const S = {
 };
 
 function PasswordChange() {
+  // editMyProfilePassword FormInput에 props로 함수 보내기
+  const editMyProfilePassword = async () => {
+    try {
+      const response = await authApi.getPasswordChange({
+        password: '',
+        newPassword: '',
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('에러:', error.response.data.message);
+    }
+  };
   return (
     <S.Layout>
       <S.Container>
