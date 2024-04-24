@@ -9,12 +9,13 @@ interface InvitationResponseParams {
 /**
  * 내가받은 초대목록 조회 api
  */
-const getMyInvitationList = (size: string) => {
+const getMyInvitationList = ({ size, cursorId }) => {
   return instance({
     url: API.INVITATIONS,
     method: 'GET',
     params: {
       size,
+      cursorId,
     },
   });
 };
