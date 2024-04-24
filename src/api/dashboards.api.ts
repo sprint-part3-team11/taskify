@@ -1,4 +1,3 @@
-
 import instance from './instance';
 import { API, API_DASHBOARDS } from '@/constants/API';
 
@@ -19,12 +18,14 @@ const postCreateDashboard = ({ title, color }) => {
 /**
  * 대시보드 목록조회 api
  */
-const getDashboardList = (navigationMethod: string) => {
+const getDashboardList = ({ navigationMethod, page, size }) => {
   return instance({
     url: API.DASHBOARDS,
     method: 'GET',
     params: {
       navigationMethod,
+      page,
+      size,
     },
   });
 };

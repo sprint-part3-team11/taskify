@@ -4,6 +4,8 @@ import { styled } from 'styled-components';
 import Button from '@/components/common/button/Button';
 import NoInvitation from '@/components/dashboard/my-board/NoInvitation';
 import SearchBar from '@/components/dashboard/my-board/SearchBar';
+import useAcceptInvitationMutation from '@/hooks/query/dashboards/useAcceptInvitationMutation';
+import useMyInvitationListQuery from '@/hooks/query/dashboards/useMyInvitationListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
@@ -128,97 +130,31 @@ const S = {
   `,
 };
 
-const invitations = [
-  {
-    id: 1,
-    inviter: {
-      nickname: '공주',
-      email: 'test@test.com',
-      id: 1,
-    },
-    teamId: '1',
-    dashboard: {
-      title: '공주들 화이팅이다다',
-      id: 1,
-    },
-    invitee: {
-      nickname: '11팀',
-      email: 'test1@test.com',
-      id: 1,
-    },
-    inviteAccepted: false,
-    createdAt: '2024-04-21T12:08:17.124Z',
-    updatedAt: '2024-04-21T12:08:17.124Z',
-  },
-  {
-    id: 2,
-    inviter: {
-      nickname: '왕자',
-      email: 'test@test.com',
-      id: 2,
-    },
-    teamId: '1',
-    dashboard: {
-      title: '왕자도화이팅',
-      id: 1,
-    },
-    invitee: {
-      nickname: '11팀',
-      email: 'test1@test.com',
-      id: 1,
-    },
-    inviteAccepted: false,
-    createdAt: '2024-04-21T12:08:17.124Z',
-    updatedAt: '2024-04-21T12:08:17.124Z',
-  },
-  {
-    id: 3,
-    inviter: {
-      nickname: '퀸퀸아머퀸',
-      email: 'test@test.com',
-      id: 1,
-    },
-    teamId: '1',
-    dashboard: {
-      title: '퀸이될게',
-      id: 1,
-    },
-    invitee: {
-      nickname: '11팀',
-      email: 'test1@test.com',
-      id: 1,
-    },
-    inviteAccepted: false,
-    createdAt: '2024-04-21T12:08:17.124Z',
-    updatedAt: '2024-04-21T12:08:17.124Z',
-  },
-  {
-    id: 4,
-    inviter: {
-      nickname: '이게 무슨일이야',
-      email: 'test@test.com',
-      id: 3,
-    },
-    teamId: '1',
-    dashboard: {
-      title: '이제 어떻게 되려나',
-      id: 1,
-    },
-    invitee: {
-      nickname: '11팀',
-      email: 'test1@test.com',
-      id: 1,
-    },
-    inviteAccepted: false,
-    createdAt: '2024-04-21T12:08:17.124Z',
-    updatedAt: '2024-04-21T12:08:17.124Z',
-  },
-];
-
 function InvitedDashBoardList() {
   const searchParams = useSearchParams();
   const [keyword, setKeyword] = useState(searchParams.get('keyword'));
-  const isInvitation = false;
+
+  const { data } = useMyInvitationListQuery(10);
+  const invitations = data?.invitations;
+
+  const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
+
+  const handleAcceptButtonClick = (invitationId: string) => {
+    responseInvitationMutate({
+      invitationId: invitationId,
+      inviteAccepted: true,
+    });
+  };
+
+  const handleRejectButtonClick = (invitationId: string) => {
+    const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
+    if (confirmReject) {
+      responseInvitationMutate({
+        invitationId: invitationId,
+        inviteAccepted: false,
+      });
+    }
+  };
 
   useEffect(() => {
     setKeyword(searchParams.get('keyword'));
@@ -227,7 +163,7 @@ function InvitedDashBoardList() {
   return (
     <S.Container>
       <S.Title>초대받은 대시보드</S.Title>
-      {!!isInvitation ? (
+      {!invitations ? (
         <NoInvitation />
       ) : (
         <>
@@ -245,14 +181,23 @@ function InvitedDashBoardList() {
             </S.InvitationTabBar>
 
             {invitations.map((invitation) => (
-              <S.Invitation>
+              <S.Invitation key={invitation.id}>
                 <S.TitleAndInviter>
                   <S.BoardTitle>{invitation.dashboard.title}</S.BoardTitle>
                   <S.Inviter>{invitation.inviter.nickname}</S.Inviter>
                 </S.TitleAndInviter>
                 <S.ButtonContainer>
-                  <Button size="S">수락</Button>
-                  <Button size="S" styleType={BUTTON_TYPE.SECONDARY}>
+                  <Button
+                    size="S"
+                    onClick={() => handleAcceptButtonClick(invitation.id)}
+                  >
+                    수락
+                  </Button>
+                  <Button
+                    size="S"
+                    styleType={BUTTON_TYPE.SECONDARY}
+                    onClick={() => handleRejectButtonClick(invitation.id)}
+                  >
                     거절
                   </Button>
                 </S.ButtonContainer>

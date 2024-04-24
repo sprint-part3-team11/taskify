@@ -21,7 +21,7 @@ const S = {
 
 function mydashboard() {
   return (
-    <PageLayout>
+    <PageLayout myPage={false}>
       <S.Container>
         <S.InnerWrap>
           <DashBoardList />
