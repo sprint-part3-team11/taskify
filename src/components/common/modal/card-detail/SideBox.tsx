@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps } from '@/types/CardDetail';
 
@@ -53,7 +54,7 @@ const S = {
   `,
 
   NickName: styled.div`
-    margin-left: 1rem;
+    margin-left: 0.8rem;
   `,
   DueDateBox: styled.div`
     display: flex;
@@ -73,23 +74,31 @@ const S = {
 };
 
 function SideBox({ cardInfoData }: CardConfirmModalProps) {
+  const { data } = useDetailCardQuery({
+    cardId: 4914,
+  });
+  const { nickname, profileImageUrl } = data && data.assignee;
+  const dueDate = data && data.dueDate;
+
   return (
     <S.SideContainer>
       <S.AssigneeBox>
         <S.Label>담당자</S.Label>
         <S.Assignee>
-          <Image
-            src={cardInfoData.assignee.profileImageUrl}
-            alt="담당자 이름"
-            width={34}
-            height={34}
-          />
-          <S.NickName>{cardInfoData.assignee.nickname}</S.NickName>
+          {profileImageUrl && (
+            <Image
+              src={profileImageUrl}
+              alt="담당자 이름"
+              width={34}
+              height={34}
+            />
+          )}
+          <S.NickName>{nickname}</S.NickName>
         </S.Assignee>
       </S.AssigneeBox>
       <S.DueDateBox>
         <S.Label>마감일</S.Label>
-        <S.DueDate>{cardInfoData.dueDate}</S.DueDate>
+        <S.DueDate>{dueDate}</S.DueDate>
       </S.DueDateBox>
     </S.SideContainer>
   );

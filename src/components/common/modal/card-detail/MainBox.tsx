@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Comment from '@/components/common/modal/card-detail/Comment';
 import ContentAndImageBox from '@/components/common/modal/card-detail/ContentAndImageBox';
 import TagBox from '@/components/common/modal/card-detail/TagBox';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps } from '@/types/CardDetail';
 
@@ -25,7 +26,7 @@ function MainBox({ cardInfoData }: CardConfirmModalProps) {
   return (
     <S.MainBox>
       <TagBox cardInfoData={cardInfoData} />
-      <ContentAndImageBox cardInfoData={cardInfoData} />
+      <ContentAndImageBox />
       <Comment />
     </S.MainBox>
   );

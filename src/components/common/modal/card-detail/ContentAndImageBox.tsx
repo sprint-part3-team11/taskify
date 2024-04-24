@@ -52,7 +52,7 @@ const S = {
     }
   `,
 };
-function ContentAndImageBox({ cardInfoData }: CardConfirmModalProps) {
+function ContentAndImageBox() {
   const { data } = useDetailCardQuery({
     cardId: 4914,
   });
