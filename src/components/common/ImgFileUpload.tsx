@@ -107,9 +107,7 @@ interface ImgFileUploadProps {
 }
 
 function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
-  const [uploadedImage, setUploadedImage] = useRecoilState<File | null>(
-    imgUrlState,
-  );
+  const [uploadedImage, setUploadedImage] = useRecoilState(imgUrlState);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick: () => void = () => {

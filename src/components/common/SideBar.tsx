@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { reverse } from 'dns';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
+import useDashboardListQuery from '@/hooks/query/dashboards/useDashboardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import dashboardsApi from '@/api/dashboards.api';
 import testApi from '@/api/test.api';
@@ -130,7 +132,6 @@ async function fetchData() {
     console.error('로그인 에러:', error.response.data.message);
   }
 }
-
 fetchData();
 
 function Sidebar() {
@@ -141,18 +142,12 @@ function Sidebar() {
   const closeModal6 = () => setModalOpen6(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchData2 = async () => {
-      try {
-        const response = await dashboardsApi.getDashboardList('infiniteScroll');
-        setDashboardData(response.data.dashboards);
-      } catch (error) {
-        console.error('에러:', error.response.data.message);
-        setDashboardData([]);
-      }
-    };
-    fetchData2();
-  }, []);
+  const { data } = useDashboardListQuery({
+    navigationMethod: 'pagination',
+    page: 1,
+    size: 5,
+  });
+  const dashboards = data?.dashboards;
 
   const createdDashBoard = (name: string, color: string) => {
     setTempDashBoardName([name, color]);
@@ -180,22 +175,19 @@ function Sidebar() {
         <S.AddDashBoardIcon onClick={openModal6} />
       </S.AddDashBoard>
       <ul>
-        {dashboardData
-          .slice()
-          .reverse()
-          .map((dashboard) => (
-            <S.DashboardItemWrapper
-              key={dashboard.id}
-              onClick={() => handleDashboardClick(dashboard.id)}
+        {dashboards?.map((dashboard) => (
+          <S.DashboardItemWrapper
+            key={dashboard.id}
+            onClick={() => handleDashboardClick(dashboard.id)}
+          >
+            <CircleColor color={dashboard.color} />
+            <S.DashboardItem
+              $active={dashboard.id === router.query.dashboardId}
             >
-              <CircleColor color={dashboard.color} />
-              <S.DashboardItem
-                $active={dashboard.id === router.query.dashboardId}
-              >
-                {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
-              </S.DashboardItem>
-            </S.DashboardItemWrapper>
-          ))}
+              {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
+            </S.DashboardItem>
+          </S.DashboardItemWrapper>
+        ))}
         <NewDashBoardModal
           isOpen={isModalOpen6}
           onClose={closeModal6}
