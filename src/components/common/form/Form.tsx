@@ -1,5 +1,10 @@
-import React, { InputHTMLAttributes, ReactNode } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import React, {
+  InputHTMLAttributes,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
@@ -155,16 +160,22 @@ type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
 
 type FormValues = SignInType | SignUpType | EditProfileType | EditPasswordType;
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
+  onSubmit?: (data) => void;
 }
 
 /**
  * @param formType: 'signIn' | 'signUp' | 'editProfile' | 'editPassword' 사용하는 용도에 맞게 입력
  */
 
-function Form({ formType, btnSize = 'L', ...htmlInputProps }: FormInputProps) {
+function Form({
+  formType,
+  btnSize = 'L',
+  onSubmit,
+  ...htmlInputProps
+}: FormProps) {
   const getSchemaForFormType = (type: FormType) => {
     switch (type) {
       case 'signIn':
@@ -186,16 +197,30 @@ function Form({ formType, btnSize = 'L', ...htmlInputProps }: FormInputProps) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     trigger,
   } = useForm<FormValues>(formOptions);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const Keys = {
+    signIn: ['email', 'password'],
+    signUp: ['email', 'name', 'password', 'passwordCheck'],
+    editProfile: ['email', 'name'],
+    editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
   };
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const watchFields = watch();
+
+  useEffect(() => {
+    const requiredKeys = Keys[formType];
+    const allFieldsFilled = requiredKeys.every(
+      (key) => watchFields[key]?.length > 0,
+    );
+    setIsButtonDisabled(!allFieldsFilled);
+  }, [watchFields, formType]);
 
   const fieldsToRender = formFields[formType] || [];
-  // TODO 에러 처리에서 any 없애보기!
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
       {fieldsToRender.map((field) => (
@@ -223,7 +248,7 @@ function Form({ formType, btnSize = 'L', ...htmlInputProps }: FormInputProps) {
           )}
         </S.Container>
       ))}
-      <S.Button type="submit" size={btnSize}>
+      <S.Button type="submit" size={btnSize} disabled={isButtonDisabled}>
         {buttonText[formType]}
       </S.Button>
     </S.Form>
