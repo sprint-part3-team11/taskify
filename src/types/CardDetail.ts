@@ -20,6 +20,9 @@ export interface CardInfoProps {
 export interface CardConfirmModalProps {
   cardInfoData: CardInfoProps;
 }
+export interface ModalCloseProps extends CardConfirmModalProps {
+  onClose: () => void;
+}
 
 export interface CommentItemProps {
   id: number;

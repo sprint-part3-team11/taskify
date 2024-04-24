@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import BackDropModal from '../BackDropModal';
 import MainBox from './MainBox';
 import ModalHeader from './ModalHeader';
 import SideBox from './SideBox';
@@ -25,16 +27,40 @@ const S = {
     }
   `,
 };
+const cardInfoData = {
+  id: 0,
+  title: '새로운 일정 관리 Taskify',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo.',
+  tags: ['To Do'],
+  dueDate: '2022.12.30 19:00',
+  assignee: {
+    profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
+    nickname: 'jun',
+    id: 0,
+  },
+  imageUrl: 'https://i.ibb.co/5WsrwJY/Group-751.png',
+  teamId: '3',
+  columnId: 0,
+  createdAt: '2024-04-17T07:10:28.745Z',
+  updatedAt: '2024-04-17T07:10:28.745Z',
+};
 
-function CardConfirmModal({ cardInfoData }: CardConfirmModalProps) {
+interface ModalOpenAndCloseProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+function CardConfirmModal({ isOpen, onClose }: ModalOpenAndCloseProps) {
   return (
-    <S.ModalLayout>
-      <ModalHeader cardInfoData={cardInfoData} />
-      <S.ModalBody>
-        <MainBox cardInfoData={cardInfoData} />
-        <SideBox cardInfoData={cardInfoData} />
-      </S.ModalBody>
-    </S.ModalLayout>
+    <BackDropModal isOpen={isOpen} onClose={onClose}>
+      <S.ModalLayout>
+        <ModalHeader cardInfoData={cardInfoData} onClose={onClose} />
+        <S.ModalBody>
+          <MainBox cardInfoData={cardInfoData} />
+          <SideBox cardInfoData={cardInfoData} />
+        </S.ModalBody>
+      </S.ModalLayout>
+    </BackDropModal>
   );
 }
 

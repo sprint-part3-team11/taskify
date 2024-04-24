@@ -36,7 +36,7 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       box-sizing: border-box;
-      padding: 2rem 0 5rem 1rem;
+      padding: 1rem 0 5rem 1rem;
       height: 7rem;
     }
   `,
@@ -47,11 +47,14 @@ const S = {
     right: 1rem;
 
     ${MEDIA_QUERIES.onMobile} {
-      width: 6rem;
-      height: 3rem;
+      right: 3rem;
+      width: 5rem;
+      height: 2.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      font-size: 1.2rem;
     }
   `,
 };
@@ -78,7 +81,6 @@ function CommentForm({ create, length }: CommentFormProps) {
         columnId: 1,
         dashboardId: 1,
       });
-
       console.log(response.data);
       const newComment = response.data;
       setComment(newComment);
