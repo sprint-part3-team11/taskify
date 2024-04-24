@@ -53,6 +53,8 @@ const S = {
 
 function ProfileChange() {
   const urlImg = useRecoilValue(imgUrlState);
+  const [imgServerUrl, setImgServerUrl] = useState<string>('');
+
   // profileInfo FormInput에 props로 객체 보내기
   const [profileInfo, setProfile] = useState({
     name: '',
@@ -62,10 +64,12 @@ function ProfileChange() {
   // 파일 업로드 시 이미지 url 서버에서 응답받기
   const myProfileFileUpload = async () => {
     try {
-      const response = await usersApi.getProfileImgUpload({
-        profileImageUrl: urlImg,
-      });
-      console.log(response.data);
+      if (urlImg) {
+        const response = await usersApi.getProfileImgUpload({
+          profileImageUrl: urlImg,
+        });
+        setImgServerUrl(response.data.profileImageUrl);
+      }
     } catch (error) {
       console.error('에러???:', error.response.data.message);
     }
@@ -89,11 +93,11 @@ function ProfileChange() {
   }, []);
 
   // editMyProfile FormInput에 props로 함수 보내기
-  const editMyProfile = async () => {
+  const editMyProfile = async (editNickname: string) => {
     try {
       const response = await usersApi.getMyProfileEdit({
-        nickname: '',
-        profileImageUrl: '',
+        nickname: editNickname,
+        profileImageUrl: imgServerUrl,
       });
       console.log(response.data);
     } catch (error) {

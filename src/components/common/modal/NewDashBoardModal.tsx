@@ -87,7 +87,7 @@ function NewDashBoardModal({
 
   const handleDashBoardName = async () => {
     try {
-      const response = await dashboardsApi.getCreatedDashboard({
+      const response = await dashboardsApi.postCreateDashboard({
         title: dashBoardName,
         color: selectedColor,
       });

@@ -144,11 +144,7 @@ function Sidebar() {
   useEffect(() => {
     const fetchData2 = async () => {
       try {
-        const response = await dashboardsApi.getDashboardList({
-          navigationMethod: 'infiniteScroll',
-          page: 1,
-          size: 30,
-        });
+        const response = await dashboardsApi.getDashboardList('infiniteScroll');
         setDashboardData(response.data.dashboards);
       } catch (error) {
         console.error('에러:', error.response.data.message);
