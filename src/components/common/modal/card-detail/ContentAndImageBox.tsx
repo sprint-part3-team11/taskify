@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps } from '@/types/CardDetail';
 
@@ -7,7 +8,26 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
+    height: 45rem;
+    word-break: break-all;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.color.mainLight};
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 2px solid transparent;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: ${({ theme }) => theme.color.white};
+      border-radius: 10px;
+      box-shadow: inset 0px 0px 5px white;
+    }
 
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
@@ -16,6 +36,7 @@ const S = {
   `,
   ContentBox: styled.div`
     width: 100%;
+
     margin-bottom: 2.5rem;
     line-height: 2rem;
 
@@ -32,15 +53,15 @@ const S = {
   `,
 };
 function ContentAndImageBox({ cardInfoData }: CardConfirmModalProps) {
+  const { data } = useDetailCardQuery({
+    cardId: 4914,
+  });
+  const description = data && data.description;
+  const imageUrl = data && data.imageUrl;
   return (
     <S.Container>
-      <S.ContentBox>{cardInfoData.description}</S.ContentBox>
-      <S.Image
-        src={cardInfoData.imageUrl}
-        width={450}
-        height={260}
-        alt="상세 이미지"
-      />
+      <S.ContentBox>{description}</S.ContentBox>
+      <S.Image src={imageUrl} width={430} height={260} alt="상세 이미지" />
     </S.Container>
   );
 }
