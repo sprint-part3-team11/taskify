@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import formatDate from '@/utils/formatDate';
+import useEditCommentsMutation from '@/hooks/query/comments/useEditCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import commentApi from '@/api/comment.api';
 import { CommentItemsAndFunctionProps } from '@/types/CardDetail';
@@ -104,20 +105,6 @@ const S = {
   `,
 };
 
-// interface CommentItemProps{
-// id:number;
-// author:{
-//   profileImageUrl: string;
-//   nickname: string;
-//   id: number;
-// };
-// content:string;
-// createdDate: string;
-// updatedDate: string;
-// edit:()=>void
-// remove:()=>void
-// }
-
 function CommentItem({
   id,
   author,
@@ -130,6 +117,7 @@ function CommentItem({
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { mutate: responseEditCommentMutate } = useEditCommentsMutation();
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -148,14 +136,11 @@ function CommentItem({
 
   const handlePressKey = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      try {
-        const updatedData = e.currentTarget.value;
-        // await commentApi.putCommentEdit(cardId, id, updatedData);
-        edit(updatedData, id);
-        setIsEditing(false);
-      } catch (error) {
-        // console.error('에러:', error.response.data.message);
-      }
+      const updatedData = e.currentTarget.value;
+
+      responseEditCommentMutate({ content: updatedData, commentId: id });
+      edit(updatedData, id);
+      setIsEditing(false);
     } else if (e.key === 'Escape') setIsEditing(false);
   };
 

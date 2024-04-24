@@ -67,12 +67,8 @@ interface CommentFormProps {
 
 function CommentForm({ create, length }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
-  const [comment, setComment] = useState(null);
   const { mutate: responseCreateComment } = useCreateCommentsMutation();
 
-  // console.log(data);
-  console.log(inputValue);
-  console.log(comment);
   const handleChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
@@ -86,10 +82,7 @@ function CommentForm({ create, length }: CommentFormProps) {
       columnId: 19985,
       dashboardId: 5941,
     });
-    // console.log(response && response.data);
-    // const newComment = response && response.data;
-    // console.log(newComment);
-    // setComment(newComment);
+
     create(inputValue);
     setInputValue('');
   };

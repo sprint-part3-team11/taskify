@@ -35,9 +35,9 @@ const getCommentList = (cardId: string) => {
   });
 };
 
-const putCommentEdit = (content: string) => {
+const putCommentEdit = (content, commentId) => {
   return instance({
-    url: API_COMMENTS.BY_ID(content),
+    url: API_COMMENTS.BY_ID(commentId),
     method: 'PUT',
     data: {
       content,
