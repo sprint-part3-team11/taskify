@@ -6,6 +6,7 @@ import NoInvitation from '@/components/dashboard/my-board/NoInvitation';
 import SearchBar from '@/components/dashboard/my-board/SearchBar';
 import useAcceptInvitationMutation from '@/hooks/query/dashboards/useAcceptInvitationMutation';
 import useMyInvitationListQuery from '@/hooks/query/dashboards/useMyInvitationListQuery';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
@@ -134,27 +135,35 @@ function InvitedDashBoardList() {
   const searchParams = useSearchParams();
   const [keyword, setKeyword] = useState(searchParams.get('keyword'));
 
-  const { data } = useMyInvitationListQuery(10);
-  const invitations = data?.invitations;
+  const { data: invitationData, fetchNextPage } = useMyInvitationListQuery();
 
-  const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
+  console.log(invitationData);
 
-  const handleAcceptButtonClick = (invitationId: string) => {
-    responseInvitationMutate({
-      invitationId: invitationId,
-      inviteAccepted: true,
-    });
-  };
+  // useIntersectionObserver(async () => {
+  //   await fetchNextPage();
+  // }, loaderRef);
 
-  const handleRejectButtonClick = (invitationId: string) => {
-    const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
-    if (confirmReject) {
-      responseInvitationMutate({
-        invitationId: invitationId,
-        inviteAccepted: false,
-      });
-    }
-  };
+  // const { data } = useMyInvitationListQuery(10);
+  // const invitations = data?.invitations;
+
+  // const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
+
+  // const handleAcceptButtonClick = (invitationId: string) => {
+  //   responseInvitationMutate({
+  //     invitationId: invitationId,
+  //     inviteAccepted: true,
+  //   });
+  // };
+
+  // const handleRejectButtonClick = (invitationId: string) => {
+  //   const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
+  //   if (confirmReject) {
+  //     responseInvitationMutate({
+  //       invitationId: invitationId,
+  //       inviteAccepted: false,
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     setKeyword(searchParams.get('keyword'));
@@ -162,7 +171,7 @@ function InvitedDashBoardList() {
 
   return (
     <S.Container>
-      <S.Title>초대받은 대시보드</S.Title>
+      {/* <S.Title>초대받은 대시보드</S.Title>
       {!invitations ? (
         <NoInvitation />
       ) : (
@@ -205,7 +214,7 @@ function InvitedDashBoardList() {
             ))}
           </S.Invitations>
         </>
-      )}
+      )} */}
     </S.Container>
   );
 }
