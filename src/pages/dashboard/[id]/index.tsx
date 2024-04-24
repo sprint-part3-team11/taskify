@@ -52,9 +52,30 @@ const S = {
 
 export default function DashBoard() {
   const [columnList, setColumnList] = useState([
-    { id: 1, name: 'To Do' },
-    { id: 2, name: 'On Progress' },
-    { id: 3, name: 'Done' },
+    {
+      id: 19980,
+      title: 'To do',
+      teamId: '4-11',
+      dashboardId: 5941,
+      createdAt: '2024-04-16T16:26:10.172Z',
+      updatedAt: '2024-04-16T16:26:10.172Z',
+    },
+    {
+      id: 19981,
+      title: 'On progress',
+      teamId: '4-11',
+      dashboardId: 5941,
+      createdAt: '2024-04-16T16:26:10.172Z',
+      updatedAt: '2024-04-16T16:26:10.172Z',
+    },
+    {
+      id: 19982,
+      title: 'Done',
+      teamId: '4-11',
+      dashboardId: 5941,
+      createdAt: '2024-04-16T16:26:10.172Z',
+      updatedAt: '2024-04-16T16:26:10.172Z',
+    },
   ]);
   const initialColumnsCount = useRef(columnList.length);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -66,7 +87,7 @@ export default function DashBoard() {
   const handleCreate = (columnName: string) => {
     const newColumn = {
       id: columnList.length + 1,
-      name: columnName,
+      title: columnName,
     };
     setColumnList([...columnList, newColumn]);
     setModalOpen(false);
@@ -87,17 +108,17 @@ export default function DashBoard() {
   }, [columnList.length]);
 
   // api get 테스트 해보기
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await columnsApi.getColumnList('5941');
-        console.log(response);
-      } catch (error) {
-        console.error('컬럼에러:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await columnsApi.getColumnList('5941');
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('컬럼에러:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   // api post 테스트 해보기
   // useEffect(() => {
@@ -147,13 +168,50 @@ export default function DashBoard() {
   //   fetchData();
   // }, []);
 
+  // api postCardImage 테스트 해보기
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await columnsApi.postCardImage({
+  //         columnsId: '19985',
+  //         imageUrl:
+  //           'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/4-11_19985_1713944400291.jpeg',
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('컬럼에러:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await columnsApi.getColumnList('5941');
+        console.log(response.data.data);
+      } catch (error) {
+        console.error('컬럼에러:', error.message);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // {id: 19980, title: 'To do', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-16T16:26:10.172Z', …}
+  // {id: 19981, title: 'On progress', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-16T16:26:10.172Z', …}
+  // {id: 19982, title: 'Done', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-16T16:26:10.172Z', …}
+  // {id: 19985, title: '아침', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-17T02:04:51.592Z', …}
+  // {id: 19986, title: '점심', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-17T02:05:02.991Z', …}
+  // {id: 22152, title: '민준', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-24T12:52:57.690Z', …}
+  // {id: 22406, title: '민준', teamId: '4-11', dashboardId: 5941, createdAt: '2024-04-24T15:47:52.041Z', …}
+
   return (
     <PageLayout>
       <S.DashBoardWrapper>
         {columnList.map((column, index) => (
           <Column
             key={column.id}
-            name={column.name}
+            title={column.title}
             ref={index === columnList.length - 1 ? scrollRef : null}
           />
         ))}
