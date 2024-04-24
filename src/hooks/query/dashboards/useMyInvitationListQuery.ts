@@ -13,7 +13,11 @@ function useMyInvitationListQuery(size = 5) {
       });
       return data;
     },
-    getNextPageParam: (lastPage) => lastPage.cursorId || undefined,
+    getNextPageParam: (lastPage) => {
+      const nextPageParam = lastPage ? lastPage.cursorId : null;
+      return nextPageParam;
+    },
+    retry: false,
   });
 }
 

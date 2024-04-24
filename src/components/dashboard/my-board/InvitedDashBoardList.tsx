@@ -1,5 +1,6 @@
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import InvitedDashBoardListLoader from './InvitedDashBoardListLoader';
 import { styled } from 'styled-components';
 import Button from '@/components/common/button/Button';
 import NoInvitation from '@/components/dashboard/my-board/NoInvitation';
@@ -132,38 +133,35 @@ const S = {
 };
 
 function InvitedDashBoardList() {
+  const loaderRef = useRef();
   const searchParams = useSearchParams();
   const [keyword, setKeyword] = useState(searchParams.get('keyword'));
 
   const { data: invitationData, fetchNextPage } = useMyInvitationListQuery();
+  const isLastPage = invitationData?.pages?.at(-1)?.cursorId === null;
 
-  console.log(invitationData);
+  useIntersectionObserver(async () => {
+    await fetchNextPage();
+  }, loaderRef);
 
-  // useIntersectionObserver(async () => {
-  //   await fetchNextPage();
-  // }, loaderRef);
+  const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
 
-  // const { data } = useMyInvitationListQuery(10);
-  // const invitations = data?.invitations;
+  const handleAcceptButtonClick = (invitationId: string) => {
+    responseInvitationMutate({
+      invitationId: invitationId,
+      inviteAccepted: true,
+    });
+  };
 
-  // const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
-
-  // const handleAcceptButtonClick = (invitationId: string) => {
-  //   responseInvitationMutate({
-  //     invitationId: invitationId,
-  //     inviteAccepted: true,
-  //   });
-  // };
-
-  // const handleRejectButtonClick = (invitationId: string) => {
-  //   const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
-  //   if (confirmReject) {
-  //     responseInvitationMutate({
-  //       invitationId: invitationId,
-  //       inviteAccepted: false,
-  //     });
-  //   }
-  // };
+  const handleRejectButtonClick = (invitationId: string) => {
+    const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
+    if (confirmReject) {
+      responseInvitationMutate({
+        invitationId: invitationId,
+        inviteAccepted: false,
+      });
+    }
+  };
 
   useEffect(() => {
     setKeyword(searchParams.get('keyword'));
@@ -171,8 +169,8 @@ function InvitedDashBoardList() {
 
   return (
     <S.Container>
-      {/* <S.Title>초대받은 대시보드</S.Title>
-      {!invitations ? (
+      <S.Title>초대받은 대시보드</S.Title>
+      {!invitationData?.pages ? (
         <NoInvitation />
       ) : (
         <>
@@ -188,33 +186,41 @@ function InvitedDashBoardList() {
               </S.TitleAndInviter>
               <div style={{ width: '17.5rem' }}>수락 여부</div>
             </S.InvitationTabBar>
+            <>
+              {invitationData?.pages.map((page) =>
+                page.invitations.map((invitation) => (
+                  <S.Invitation key={invitation.id}>
+                    <S.TitleAndInviter>
+                      <S.BoardTitle>{invitation.dashboard.title}</S.BoardTitle>
+                      <S.Inviter>{invitation.inviter.nickname}</S.Inviter>
+                    </S.TitleAndInviter>
+                    <S.ButtonContainer>
+                      <Button
+                        size="S"
+                        onClick={() => handleAcceptButtonClick(invitation.id)}
+                      >
+                        수락
+                      </Button>
+                      <Button
+                        size="S"
+                        styleType={BUTTON_TYPE.SECONDARY}
+                        onClick={() => handleRejectButtonClick(invitation.id)}
+                      >
+                        거절
+                      </Button>
+                    </S.ButtonContainer>
+                  </S.Invitation>
+                )),
+              )}
 
-            {invitations.map((invitation) => (
-              <S.Invitation key={invitation.id}>
-                <S.TitleAndInviter>
-                  <S.BoardTitle>{invitation.dashboard.title}</S.BoardTitle>
-                  <S.Inviter>{invitation.inviter.nickname}</S.Inviter>
-                </S.TitleAndInviter>
-                <S.ButtonContainer>
-                  <Button
-                    size="S"
-                    onClick={() => handleAcceptButtonClick(invitation.id)}
-                  >
-                    수락
-                  </Button>
-                  <Button
-                    size="S"
-                    styleType={BUTTON_TYPE.SECONDARY}
-                    onClick={() => handleRejectButtonClick(invitation.id)}
-                  >
-                    거절
-                  </Button>
-                </S.ButtonContainer>
-              </S.Invitation>
-            ))}
+              <InvitedDashBoardListLoader
+                loaderRef={loaderRef}
+                style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
+              />
+            </>
           </S.Invitations>
         </>
-      )} */}
+      )}
     </S.Container>
   );
 }

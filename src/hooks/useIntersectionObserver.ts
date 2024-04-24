@@ -14,7 +14,7 @@ function useIntersectionObserver(callback, loaderRef) {
         if (!entry.isIntersecting) return; //요소가 화면에 나타나지 않았다면 그냥 리턴 해서 콜백 실행 안되도록
         callback?.(); // 콜백 함수 있다면 실행
       },
-      { threshold: 0.4 },
+      { threshold: 0.7 },
     );
 
     const observe = (element) => {
