@@ -5,6 +5,7 @@ import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
 import Column from '@/components/dashboard/column/Column';
 import PageLayout from '@/components/template/PageLayout';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import columnsApi from '@/api/columns.api';
 
 // 테스트용 배열
 const dashboards = [
@@ -84,6 +85,67 @@ export default function DashBoard() {
 
     initialColumnsCount.current = columnList.length;
   }, [columnList.length]);
+
+  // api get 테스트 해보기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await columnsApi.getColumnList('5941');
+        console.log(response);
+      } catch (error) {
+        console.error('컬럼에러:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // api post 테스트 해보기
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await columnsApi.postCreateColumn({
+  //         title: '민준',
+  //         dashboardId: 5941,
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('컬럼에러:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // api put 테스트 해보기
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await columnsApi.putEditColumn({
+  //         title: '민준',
+  //         columnsId: '19987',
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('컬럼에러:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // api delete 테스트 해보기
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await columnsApi.deleteColumn({
+  //         title: '민준',
+  //         columnsId: '22151',
+  //       });
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error('컬럼에러:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <PageLayout>
