@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import formFields from '@/constants/FORM_FIELDS';
 import {
   EditPassword,
   EditPasswordType,
@@ -70,83 +71,6 @@ const S = {
     padding: ${(props) => (props.size === 'S' ? '0.8rem' : '1.4rem')};
     font-size: ${(props) => (props.size === 'S' ? '1.4rem' : null)};
   `,
-};
-
-const formFields = {
-  signIn: [
-    {
-      id: 'email',
-      label: '이메일',
-      type: 'email',
-      placeholder: '이메일을 입력해주세요',
-    },
-    {
-      id: 'password',
-      label: '비밀번호',
-      type: 'password',
-      placeholder: '비밀번호를 입력해주세요',
-    },
-  ],
-  signUp: [
-    {
-      id: 'email',
-      label: '이메일',
-      type: 'email',
-      placeholder: '이메일을 입력해주세요',
-    },
-    {
-      id: 'name',
-      label: '닉네임',
-      type: 'text',
-      placeholder: '닉네임을 입력해주세요',
-    },
-    {
-      id: 'password',
-      label: '비밀번호',
-      type: 'password',
-      placeholder: '비밀번호를 입력해주세요',
-    },
-    {
-      id: 'passwordCheck',
-      label: '비밀번호 확인',
-      type: 'password',
-      placeholder: '비밀번호를 한번 더 입력해주세요',
-    },
-  ],
-  editProfile: [
-    {
-      id: 'email',
-      label: '이메일',
-      type: 'email',
-      placeholder: '이메일을 입력해주세요',
-    },
-    {
-      id: 'name',
-      label: '닉네임',
-      type: 'text',
-      placeholder: '닉네임을 입력해주세요',
-    },
-  ],
-  editPassword: [
-    {
-      id: 'nowPassword',
-      label: '현재 비밀번호',
-      type: 'password',
-      placeholder: '현재 비밀번호 입력',
-    },
-    {
-      id: 'newPassword',
-      label: '새 비밀번호',
-      type: 'password',
-      placeholder: '새 비밀번호 입력',
-    },
-    {
-      id: 'newPasswordCheck',
-      label: '새 비밀번호 확인',
-      type: 'password',
-      placeholder: '새 비밀번호 입력',
-    },
-  ],
 };
 
 const buttonText = {
