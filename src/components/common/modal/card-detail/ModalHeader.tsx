@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ToDoCreateModal from '../ToDoCreateModal';
 import styled from 'styled-components';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps, ModalCloseProps } from '@/types/CardDetail';
 import CloseIcon from '@/public/icon/closeIcon.svg';
@@ -86,7 +87,11 @@ const S = {
   `,
 };
 
-function ModalHeader({ cardInfoData, onClose }: ModalCloseProps) {
+function ModalHeader({ onClose }: ModalCloseProps) {
+  const { data } = useDetailCardQuery({
+    cardId: 4914,
+  });
+  const title = data && data.title;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClickKebab = () => {
@@ -98,23 +103,19 @@ function ModalHeader({ cardInfoData, onClose }: ModalCloseProps) {
   // };
 
   return (
-    <>
-      <S.ModalHeader>
-        <S.ModalTitle>{cardInfoData.title}</S.ModalTitle>
-        <S.HeaderButton>
-          <S.KebabIcon onClick={handleClickKebab} />
-          {isOpen && (
-            <S.DropdownMenuBox>
-              <S.MenuItem>수정하기</S.MenuItem>
-              <S.MenuItem>삭제하기</S.MenuItem>
-            </S.DropdownMenuBox>
-          )}
-          <S.CloseIcon onClick={onClose} />
-        </S.HeaderButton>
-      </S.ModalHeader>
-
-      {/* {isEditModalOpen && <ToDoCreateModal />} */}
-    </>
+    <S.ModalHeader>
+      <S.ModalTitle>{title}</S.ModalTitle>
+      <S.HeaderButton>
+        <S.KebabIcon onClick={handleClickKebab} />
+        {isOpen && (
+          <S.DropdownMenuBox>
+            <S.MenuItem>수정하기</S.MenuItem>
+            <S.MenuItem>삭제하기</S.MenuItem>
+          </S.DropdownMenuBox>
+        )}
+        <S.CloseIcon onClick={onClose} />
+      </S.HeaderButton>
+    </S.ModalHeader>
   );
 }
 

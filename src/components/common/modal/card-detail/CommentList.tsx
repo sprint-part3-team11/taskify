@@ -29,29 +29,27 @@ interface CommentItemDataProps {
 }
 function CommentList({ edit, remove }: CommentListProps) {
   const { data } = useCommentsListQuery({
-    cardId: 1,
+    cardId: 4914,
   });
 
-  const comments = data?.comments;
+  const comments = data && data.comments;
 
   return (
-    <>
-      {comments.map(
-        (comment: CommentItemDataProps) =>
-          comments && (
-            <CommentItem
-              key={comment.id}
-              id={comment.id}
-              author={comment.author}
-              content={comment.content}
-              createdDate={comment.createdAt}
-              updatedDate={comment.updatedAt}
-              edit={edit}
-              remove={remove}
-            />
-          ),
-      )}
-    </>
+    <div>
+      {comments &&
+        comments.map((comment: CommentItemDataProps) => (
+          <CommentItem
+            key={comment.id}
+            id={comment.id}
+            author={comment.author}
+            content={comment.content}
+            createdDate={comment.createdAt}
+            updatedDate={comment.updatedAt}
+            edit={edit}
+            remove={remove}
+          />
+        ))}
+    </div>
   );
 }
 export default CommentList;
