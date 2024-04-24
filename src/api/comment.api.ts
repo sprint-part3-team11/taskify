@@ -45,10 +45,10 @@ const putCommentEdit = (content, commentId) => {
   });
 };
 
-const deleteComment = (commentsId: string) => {
+const deleteComment = (commentId: string) => {
   return instance({
-    url: API_COMMENTS.BY_ID(commentsId),
-    method: 'Delete',
+    url: API_COMMENTS.BY_ID(commentId),
+    method: 'DELETE',
   });
 };
 
