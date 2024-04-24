@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps } from '@/types/CardDetail';
@@ -21,18 +22,27 @@ const S = {
   `,
 };
 function TagBox({ cardInfoData }: CardConfirmModalProps) {
+  const { data } = useDetailCardQuery({
+    cardId: 4914,
+  });
+  const tags = data && data.tags;
   const { width }: Size = useWindowSize();
   const isMobile: boolean = width !== undefined && width <= 768;
   return (
     <S.TagBox>
       <StateTag isMobile={isMobile}>{cardInfoData.tags}</StateTag>
       <S.HeightLine />
-      <HashTag isMobile={isMobile} index={0}>
+      {tags.map((tag, color) => (
+        <HashTag isMobile={isMobile} index={color}>
+          {tag}
+        </HashTag>
+      ))}
+      {/* <HashTag isMobile={isMobile} index={0}>
         프로젝트
       </HashTag>
       <HashTag isMobile={isMobile} index={1}>
         프론트엔드
-      </HashTag>
+      </HashTag> */}
     </S.TagBox>
   );
 }
