@@ -3,8 +3,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import AvatarImage from '@/components/common/AvatarImage';
 import BackDropModal from '@/components/common/modal/BackDropModal';
-import CardConfirmModal from '@/components/common/modal/card-confirm/CardConfirmModal';
-import { CardInfoProps } from '@/components/common/modal/card-confirm/types';
+// import CardConfirmModal from '@/components/common/modal/card-confirm/CardConfirmModal';
+// import { CardInfoProps } from '@/components/common/modal/card-confirm/types';
 import HashTag from '@/components/common/tag/HashTag';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -182,9 +182,9 @@ function Card({ cardInfoData }: CardInfoProps) {
         </S.CardContentWrapper>
       </S.CardContainer>
 
-      <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
+      {/* <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
         <CardConfirmModal cardInfoData={cardInfoData} />
-      </BackDropModal>
+            </BackDropModal> */}
     </>
   );
 }
