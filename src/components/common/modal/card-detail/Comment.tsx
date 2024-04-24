@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CommentForm from '@/components/common/modal/card-detail/CommentForm';
 import CommentList from '@/components/common/modal/card-detail/CommentList';
 import MOCK_DATA from '@/components/common/modal/card-detail/MOCK_DATA';
+import useCommentsListQuery from '@/hooks/query/comments/useCommentsListQuery';
 
 const S = {
   CommentContainer: styled.ul`
@@ -12,19 +13,24 @@ const S = {
 };
 
 function Comment() {
-  const [list, setList] = useState(MOCK_DATA);
+  const { data } = useCommentsListQuery({ cardId: 4914 });
+  const comments = data && data.comments;
+  const [list, setList] = useState(comments);
+  if (!data) {
+    return null;
+  }
 
-  const create = (inputValue: string) => {
+  const create = () => {
     const newComment = {
-      id: Math.random(),
-      content: inputValue,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      cardId: Math.floor(Math.random() * 1000),
+      id: comments.id,
+      content: comments.content,
+      createdAt: comments.createdAt,
+      updatedAt: comments.updatedAt,
+      cardId: 4914,
       author: {
-        profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
-        nickname: `user${Math.floor(Math.random() * 100)}`,
-        id: Math.floor(Math.random() * 1000),
+        profileImageUrl: comments?.author?.profileImageUrl,
+        nickname: comments?.author?.nickname,
+        id: comments?.author?.id,
       },
     };
     setList([newComment, ...list]);
