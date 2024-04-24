@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import formatDate from '@/utils/formatDate';
+import useDeleteCommentsMutation from '@/hooks/query/comments/useDeleteCommentsMutation';
 import useEditCommentsMutation from '@/hooks/query/comments/useEditCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import commentApi from '@/api/comment.api';
@@ -12,6 +13,7 @@ const S = {
     display: flex;
     align-items: center;
     padding: 1rem;
+    margin-top: 1.5rem;
     height: 10rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -118,7 +120,7 @@ function CommentItem({
   const [editContent, setEditContent] = useState(content);
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate: responseEditCommentMutate } = useEditCommentsMutation();
-
+  const { mutate: responseDeleteCommentMutate } = useDeleteCommentsMutation();
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
@@ -145,13 +147,8 @@ function CommentItem({
   };
 
   const handleDeleteComment = async () => {
-    try {
-      const response = await commentApi.deleteComment('');
-      console.log(response);
-      remove(id);
-    } catch (error) {
-      console.error('에러:', error);
-    }
+    responseDeleteCommentMutate({ commentId: id });
+    remove(id);
   };
 
   return (
