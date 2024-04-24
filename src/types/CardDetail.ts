@@ -27,13 +27,13 @@ export interface ModalCloseProps extends CardConfirmModalProps {
 export interface CommentItemProps {
   id: number;
   content: string;
-  createdDate: string;
-  updatedDate: string;
-
+  createdAt: string;
+  updatedAt: string;
+  cardId: number;
   author: {
-    profileImageUrl: string;
-    nickname: string;
     id: number;
+    nickname: string;
+    profileImageUrl: string;
   };
 }
 export interface CommentItemsAndFunctionProps extends CommentItemProps {

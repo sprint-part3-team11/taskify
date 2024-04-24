@@ -111,8 +111,8 @@ function CommentItem({
   id,
   author,
   content,
-  createdDate,
-  updatedDate,
+  createdAt,
+  updatedAt,
   edit,
   remove,
 }: CommentItemsAndFunctionProps) {
@@ -162,7 +162,7 @@ function CommentItem({
       <S.CommentInfoBox>
         <S.NameAndDateBox>
           <S.CommentNickName>{author.nickname}</S.CommentNickName>
-          <S.CommentDate>{formatDate(createdDate)}</S.CommentDate>
+          <S.CommentDate>{formatDate(createdAt)}</S.CommentDate>
         </S.NameAndDateBox>
 
         <S.ContentBox>
