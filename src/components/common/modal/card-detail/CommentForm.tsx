@@ -67,6 +67,7 @@ interface CommentFormProps {
 function CommentForm({ create, length }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
   const [comment, setComment] = useState(null);
+
   console.log(comment);
   const handleChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);

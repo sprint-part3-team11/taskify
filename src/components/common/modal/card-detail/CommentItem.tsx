@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import formatDate from '@/utils/formatDate';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import commentApi from '@/api/comment.api';
-import { CommentFunctionProps, CommentItemProps } from '@/types/CardDetail';
+import { CommentItemsAndFunctionProps } from '@/types/CardDetail';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -104,6 +104,20 @@ const S = {
   `,
 };
 
+// interface CommentItemProps{
+// id:number;
+// author:{
+//   profileImageUrl: string;
+//   nickname: string;
+//   id: number;
+// };
+// content:string;
+// createdDate: string;
+// updatedDate: string;
+// edit:()=>void
+// remove:()=>void
+// }
+
 function CommentItem({
   id,
   author,
@@ -112,7 +126,7 @@ function CommentItem({
   updatedDate,
   edit,
   remove,
-}: CommentFunctionProps) {
+}: CommentItemsAndFunctionProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
   const inputRef = useRef<HTMLInputElement>(null);
