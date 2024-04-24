@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import WARNING_MODAL_MESSAGES from '@/constants/MODAL_MESSAGES';
 
 const S = {
   ContentContainer: styled.div`
@@ -45,17 +44,13 @@ const S = {
   `,
 };
 
-type ModalType = keyof typeof WARNING_MODAL_MESSAGES;
-
 interface WarningModalProps {
   isOpen: boolean;
   onClose: () => void;
-  type: ModalType;
+  message: string;
 }
 
-function WarningModal({ isOpen, onClose, type }: WarningModalProps) {
-  const message = WARNING_MODAL_MESSAGES[type];
-
+function WarningModal({ isOpen, onClose, message }: WarningModalProps) {
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.ContentContainer>

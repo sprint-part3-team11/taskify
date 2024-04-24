@@ -138,7 +138,7 @@ const S = {
   `,
 };
 
-const Column = React.forwardRef(({ name }, ref) => {
+const Column = React.forwardRef(({ title }, ref) => {
   // const containerRef = useRef(null);
   // const scrollbarRef = useRef(null);
 
@@ -157,7 +157,7 @@ const Column = React.forwardRef(({ name }, ref) => {
             <S.ColumnTitleIconWrapper>
               <S.ColumnTitleDotIcon />
             </S.ColumnTitleIconWrapper>
-            <S.ColumnTitle>{name}</S.ColumnTitle>
+            <S.ColumnTitle>{title}</S.ColumnTitle>
             <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
           </S.ColumnTitleWrapper>
           <SettingIcon />
@@ -169,12 +169,10 @@ const Column = React.forwardRef(({ name }, ref) => {
 
       {/* <S.ColumnContentContainer ref={containerRef}> */}
       <S.ColumnContentContainer>
-        {/* height 크기만큼 드래그 가능한 스크롤바 제작하면? 나머지 영역에서는 스크롤 안되게 막고 해당 스크롤바로 작성하면? */}
-
         <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
+        {/* <Card cardInfoData={cardInfoData} /> */}
+        {/* <Card cardInfoData={cardInfoData} /> */}
+        {/* <Card cardInfoData={cardInfoData} /> */}
         {/* <Card cardInfoData={cardInfoData} /> */}
         {/* <Card cardInfoData={cardInfoData} /> */}
         {/* <Card cardInfoData={cardInfoData} /> */}
