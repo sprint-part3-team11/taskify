@@ -54,9 +54,23 @@ const deleteColumn = ({ title, columnsId }) => {
   });
 };
 
+/**
+ * 카드 이미지 업로드
+ */
+const postCardImage = ({ columnsId, imageUrl }) => {
+  return instance({
+    url: API_COLUMNS.CARD_IMAGE_UPLOAD(columnsId),
+    method: 'POST',
+    data: {
+      imageUrl,
+    },
+  });
+};
+
 export default {
   postCreateColumn,
   getColumnList,
   putEditColumn,
   deleteColumn,
+  postCardImage,
 };
