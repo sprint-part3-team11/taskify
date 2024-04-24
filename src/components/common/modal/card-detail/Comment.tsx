@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CommentForm from '@/components/common/modal/card-detail/CommentForm';
 import CommentList from '@/components/common/modal/card-detail/CommentList';
@@ -15,7 +15,14 @@ const S = {
 function Comment() {
   const { data } = useCommentsListQuery({ cardId: 4914 });
   const comments = data && data.comments;
-  const [list, setList] = useState(comments);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    if (comments) {
+      setList(comments);
+    }
+  }, [comments]);
+
   if (!data) {
     return null;
   }
