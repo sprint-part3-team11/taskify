@@ -22,10 +22,13 @@ const S = {
   `,
 };
 
-function MainBox({ cardInfoData }: CardConfirmModalProps) {
+interface MainBoxProps {
+  stateTag: string[];
+}
+function MainBox({ stateTag }: MainBoxProps) {
   return (
     <S.MainBox>
-      <TagBox cardInfoData={cardInfoData} />
+      <TagBox stateTag={stateTag} />
       <ContentAndImageBox />
       <Comment />
     </S.MainBox>

@@ -73,11 +73,11 @@ const S = {
   `,
 };
 
-function SideBox({ cardInfoData }: CardConfirmModalProps) {
+function SideBox() {
   const { data } = useDetailCardQuery({
     cardId: 4914,
   });
-  // const { nickname, profileImageUrl } = data && data.assignee;
+
   const { nickname, profileImageUrl } =
     data && data.assignee
       ? data.assignee

@@ -21,7 +21,11 @@ const S = {
     margin: 0 2rem 0.2rem 2rem;
   `,
 };
-function TagBox({ cardInfoData }: CardConfirmModalProps) {
+
+interface TagBoxProps {
+  stateTag: string[];
+}
+function TagBox({ stateTag }: TagBoxProps) {
   const { data } = useDetailCardQuery({
     cardId: 4914,
   });
@@ -31,7 +35,7 @@ function TagBox({ cardInfoData }: CardConfirmModalProps) {
 
   return (
     <S.TagBox>
-      <StateTag isMobile={isMobile}>{cardInfoData.tags}</StateTag>
+      <StateTag isMobile={isMobile}>{stateTag}</StateTag>
       <S.HeightLine />
       {tags &&
         tags.map((tag, color) => (
