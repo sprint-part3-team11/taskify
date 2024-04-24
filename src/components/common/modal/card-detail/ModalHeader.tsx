@@ -87,7 +87,10 @@ const S = {
   `,
 };
 
-function ModalHeader({ onClose }: ModalCloseProps) {
+interface ModalHeaderProps {
+  onClose: () => void;
+}
+function ModalHeader({ onClose }: ModalHeaderProps) {
   const { data } = useDetailCardQuery({
     cardId: 4914,
   });

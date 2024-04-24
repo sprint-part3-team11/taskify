@@ -10,7 +10,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 45rem;
+    height: 37rem;
     word-break: break-all;
     overflow: auto;
 
@@ -31,6 +31,7 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
+      height: 30rem;
       word-break: break-all;
     }
   `,
