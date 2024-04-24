@@ -88,6 +88,8 @@ interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
   onSubmit?: (data) => void;
+  profileInfo?: { mail: string; name: string };
+  placeholder?: { email?: string; name?: string };
 }
 
 /**
@@ -98,6 +100,7 @@ function Form({
   formType,
   btnSize = 'L',
   onSubmit,
+  profileInfo = { mail: 'test@test.com', name: '디두의 심상세계' },
   ...htmlInputProps
 }: FormProps) {
   const getSchemaForFormType = (type: FormType) => {
@@ -121,6 +124,7 @@ function Form({
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
     trigger,
@@ -133,14 +137,32 @@ function Form({
     editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
   };
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [profile, setProfile] = useState(profileInfo);
 
   const watchFields = watch();
 
   useEffect(() => {
+    if (formType === 'editProfile') {
+      // 이메일 필드에 대해 기본값을 설정하고 유효성 검사를 건너뜁니다.
+      setValue('email', profileInfo.mail, { shouldValidate: false });
+    }
+  }, [formType, setValue, profileInfo.mail]);
+
+  useEffect(() => {
     const requiredKeys = Keys[formType];
-    const allFieldsFilled = requiredKeys.every(
-      (key) => watchFields[key]?.length > 0,
-    );
+    let allFieldsFilled = false;
+
+    if (formType === 'editProfile') {
+      const filteredKeys = requiredKeys.filter((key) => key !== 'email');
+      allFieldsFilled = filteredKeys.every(
+        (key) => watchFields[key]?.length > 0,
+      );
+    } else {
+      allFieldsFilled = requiredKeys.every(
+        (key) => watchFields[key]?.length > 0,
+      );
+    }
+
     setIsButtonDisabled(!allFieldsFilled);
   }, [watchFields, formType]);
 
@@ -153,9 +175,18 @@ function Form({
           <S.Input
             id={field.id}
             type={field.type}
-            placeholder={field.placeholder}
+            placeholder={(() => {
+              if (formType === 'editProfile') {
+                if (field.id === 'email') return profile?.mail;
+                if (field.id === 'name') return profile?.name;
+              }
+              return field.placeholder;
+            })()}
+            disabled={!!(formType === 'editProfile' && field.id === 'email')}
             {...htmlInputProps}
-            {...register(field.id as keyof FormValues)}
+            {...(formType !== 'editProfile' || field.id !== 'email'
+              ? register(field.id as keyof FormValues)
+              : {})}
             onBlur={() => {
               if (field.id === 'password' || field.id === 'passwordCheck') {
                 trigger(['password', 'passwordCheck']);
