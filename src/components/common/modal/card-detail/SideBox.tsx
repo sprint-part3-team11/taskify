@@ -77,7 +77,12 @@ function SideBox({ cardInfoData }: CardConfirmModalProps) {
   const { data } = useDetailCardQuery({
     cardId: 4914,
   });
-  const { nickname, profileImageUrl } = data && data.assignee;
+  // const { nickname, profileImageUrl } = data && data.assignee;
+  const { nickname, profileImageUrl } =
+    data && data.assignee
+      ? data.assignee
+      : { nickname: '', profileImageUrl: '' };
+
   const dueDate = data && data.dueDate;
 
   return (

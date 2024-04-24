@@ -28,15 +28,17 @@ function TagBox({ cardInfoData }: CardConfirmModalProps) {
   const tags = data && data.tags;
   const { width }: Size = useWindowSize();
   const isMobile: boolean = width !== undefined && width <= 768;
+
   return (
     <S.TagBox>
       <StateTag isMobile={isMobile}>{cardInfoData.tags}</StateTag>
       <S.HeightLine />
-      {tags.map((tag, color) => (
-        <HashTag isMobile={isMobile} index={color}>
-          {tag}
-        </HashTag>
-      ))}
+      {tags &&
+        tags.map((tag, color) => (
+          <HashTag isMobile={isMobile} index={color}>
+            {tag}
+          </HashTag>
+        ))}
       {/* <HashTag isMobile={isMobile} index={0}>
         프로젝트
       </HashTag>
