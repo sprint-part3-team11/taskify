@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import useCreateCommentsMutation from '@/hooks/query/comments/useCreateCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import commentApi from '@/api/comment.api';
 import { CommentItemProps } from '@/types/CardDetail';
@@ -67,7 +68,10 @@ interface CommentFormProps {
 function CommentForm({ create, length }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
   const [comment, setComment] = useState(null);
+  const { mutate: responseCreateComment } = useCreateCommentsMutation();
 
+  // console.log(data);
+  console.log(inputValue);
   console.log(comment);
   const handleChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
@@ -75,21 +79,19 @@ function CommentForm({ create, length }: CommentFormProps) {
 
   const handleSubmitContent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await commentApi.postCreateComment({
-        content: inputValue,
-        cardId: 1,
-        columnId: 1,
-        dashboardId: 1,
-      });
-      console.log(response.data);
-      const newComment = response.data;
-      setComment(newComment);
-      create(inputValue);
-      setInputValue('');
-    } catch (error) {
-      console.error('에러:', error.response.data.message);
-    }
+
+    responseCreateComment({
+      content: inputValue,
+      cardId: 4914,
+      columnId: 19985,
+      dashboardId: 5941,
+    });
+    // console.log(response && response.data);
+    // const newComment = response && response.data;
+    // console.log(newComment);
+    // setComment(newComment);
+    create(inputValue);
+    setInputValue('');
   };
 
   return (

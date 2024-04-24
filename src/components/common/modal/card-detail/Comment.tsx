@@ -45,9 +45,9 @@ function Comment() {
   };
 
   return (
-    <S.CommentContainer className="comment">
+    <S.CommentContainer>
       <CommentForm create={create} length={list.length} />
-      <CommentList edit={edit} remove={remove} list={list} />
+      <CommentList edit={edit} remove={remove} />
     </S.CommentContainer>
   );
 }

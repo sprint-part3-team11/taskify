@@ -14,7 +14,7 @@ const postCreateComment = ({
   dashboardId,
 }: CreateComments) => {
   return instance({
-    url: API.USERS,
+    url: API.COMMENTS,
     method: 'POST',
     data: {
       content,
