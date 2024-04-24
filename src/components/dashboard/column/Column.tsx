@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
+import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
+import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import cardsApi from '@/api/cards.api';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
 const cardInfoData = {
@@ -136,19 +139,53 @@ const S = {
     border-radius: 5px;
     cursor: pointer;
   `,
+  SettingIcon: styled(SettingIcon)`
+    cursor: pointer;
+  `,
 };
 
 const Column = React.forwardRef(({ title }, ref) => {
-  // const containerRef = useRef(null);
-  // const scrollbarRef = useRef(null);
+  const [isModalOpen1, setModalOpen1] = useState(false);
+  const [isModalOpen2, setModalOpen2] = useState(false);
+  const openModal1 = () => setModalOpen1(true);
+  const openModal2 = () => setModalOpen2(true);
+  const closeModal1 = () => setModalOpen1(false);
+  const closeModal2 = () => setModalOpen2(false);
 
-  // const handleScrollbar = (e) => {
-  //   const container = containerRef.current;
-  //   const scrollbar = scrollbarRef.current;
-  //   const scrollPercentage = e.clientY / container.offsetHeight;
-  //   container.scrollTop = scrollPercentage * container.scrollHeight;
+  const [tempColumnName, setTempColumnName] = useState('');
+  const [cardList, setCardList] = useState([]);
+
+  // const handleCardData = ({ cardInfoData }) => {
+  //   const newCard = {
+  //     ...cardInfoData,
+  //   };
+  //   setCardList([...cardList, newCard]);
   // };
 
+  const handleChange = (columnName: string) => {
+    // api에 post로 보내는 로직 추가해서 사용
+    setTempColumnName(columnName);
+    setModalOpen2(false);
+  };
+
+  const handleDelete = () => {
+    // delete
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await cardsApi.getCardList('19985');
+        setCardList(response.data.cards);
+        // console.log(response.data.cards);
+      } catch (error) {
+        console.error('카드에러:', error.message);
+      }
+    };
+    fetchData();
+    // console.log(tempColumnName);
+  }, []);
+  // res.data.card.length;
   return (
     <S.Column ref={ref}>
       <S.ColumnTopFixedContent>
@@ -158,26 +195,29 @@ const Column = React.forwardRef(({ title }, ref) => {
               <S.ColumnTitleDotIcon />
             </S.ColumnTitleIconWrapper>
             <S.ColumnTitle>{title}</S.ColumnTitle>
-            <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
+            <S.ColumnTaskNumber>{cardList.length}</S.ColumnTaskNumber>
           </S.ColumnTitleWrapper>
-          <SettingIcon />
+          <S.SettingIcon onClick={openModal2} />
         </S.ColumnTitleContainer>
-        {/* 카드 데이터 추가 로직 추가 예정 */}
-        {/* <S.AddButton onClick={}/> */}
-        <S.AddButton />
+        <S.AddButton onClick={openModal1} />
       </S.ColumnTopFixedContent>
 
-      {/* <S.ColumnContentContainer ref={containerRef}> */}
+      <ToDoCreateModal isOpen={isModalOpen1} onClose={closeModal1} />
+      <ColumnsManageModal
+        isOpen={isModalOpen2}
+        onClose={closeModal2}
+        currentColumnName={tempColumnName}
+        onChange={handleChange}
+        onDelete={handleDelete}
+      />
+
       <S.ColumnContentContainer>
+        {cardList.map((card, index) => (
+          <Card cardInfoData={cardInfoData} />
+        ))}
         <Card cardInfoData={cardInfoData} />
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
+        <Card cardInfoData={cardInfoData} />
       </S.ColumnContentContainer>
-      {/* <S.Scrollbar ref={scrollbarRef} onMouseDown={handleScrollbar} /> */}
     </S.Column>
   );
 });
