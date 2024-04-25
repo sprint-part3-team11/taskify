@@ -101,12 +101,10 @@ interface ButtonBoxProps {
 }
 function NameAndColorChangeBox() {
   const colorState = useRecoilValue(resultColorState);
-
   const [dashboardName, setDashboardName] = useState('');
   const [isError, setIsError] = useState(false);
   const router = useRouter();
   const { id } = router.query;
-
   const { data } = useDetailDashboardQuery(id);
 
   const { mutate: responseEditDashboardMutate } = useEditDashboardMutation();
