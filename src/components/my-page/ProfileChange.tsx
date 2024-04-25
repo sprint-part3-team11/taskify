@@ -62,6 +62,7 @@ const S = {
 function ProfileChange() {
   const imgServerUrl = useRecoilValue<string>(resultServerImgState);
   const setProfileImageUrl = useSetRecoilState(profileImageUrlState);
+  const profileImageUrl = useRecoilValue(profileImageUrlState);
 
   const [profileInfo, setProfile] = useState({
     name: '',
@@ -82,7 +83,7 @@ function ProfileChange() {
 
   const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
   const editMyProfile = (data, imgServerUrl) => {
-    editProfile(data, imgServerUrl);
+    editProfile(data, imgServerUrl || profileImageUrl);
   };
 
   return (
