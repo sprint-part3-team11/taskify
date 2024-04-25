@@ -97,7 +97,9 @@ function SignLayout({ pageType, children }: FormLayoutProps) {
     <S.Layout>
       <S.Container>
         <S.LogoBox>
-          <S.LogoImg />
+          <Link href="/">
+            <S.LogoImg />
+          </Link>
           <S.LogoText />
           <S.WelcomeText>{LayoutValues[pageType].welcomeText}</S.WelcomeText>
         </S.LogoBox>

@@ -1,33 +1,36 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import WarningModal from '@/components/common/Modal/WarningModal';
 import Form from '@/components/common/form/Form';
 import SignLayout from '@/components/template/SignLayout';
+import useSignUpMutation from '@/hooks/query/users/useSignUpMutation';
 import usersApi from '@/api/users.api';
 
 function SignUp() {
-  const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const router = useRouter();
 
-  const signupUser = async (data) => {
-    try {
-      const response = await usersApi.getSignUp({
-        email: data.email,
-        nickname: data.name,
-        password: data.password,
-      });
-    } catch (error) {
-      setError(true);
-    }
+  const { mutate: signUp } = useSignUpMutation({
+    setOpen,
+    setModalMessage,
+    router,
+  });
+
+  const signUpUser = (data, error) => {
+    signUp(data, error);
   };
 
   return (
     <div>
       <SignLayout pageType="signUp">
-        <Form formType="signUp" onSubmit={signupUser} />
+        <Form formType="signUp" onSubmit={signUpUser} />
       </SignLayout>
       <WarningModal
-        isOpen={error}
-        onClose={() => setError(false)}
-        type="SUCCESS"
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        message={modalMessage}
       />
     </div>
   );
