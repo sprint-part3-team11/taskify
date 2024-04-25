@@ -42,7 +42,7 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       flex-direction: column;
     }
   `,
@@ -65,9 +65,9 @@ const S = {
     }
   `,
 
-  ButtonBox: styled.div`
+  ButtonBox: styled.div<ButtonBoxProps>`
     display: flex;
-    justify-content: space-between;
+    justify-content: ${({ isError }) => (isError ? 'space-between' : 'end')};
     align-items: center;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -86,7 +86,7 @@ const S = {
 
   Button: styled(Button)`
     ${MEDIA_QUERIES.onMobile} {
-      width: 8.6rem;
+      width: 7rem;
       height: 2.8rem;
       padding: 0.5rem 0.8rem;
       margin-top: 1rem;
@@ -96,6 +96,9 @@ const S = {
   `,
 };
 
+interface ButtonBoxProps {
+  isError: boolean;
+}
 function NameAndColorChangeBox() {
   const colorState = useRecoilValue(resultColorState);
 
@@ -139,7 +142,7 @@ function NameAndColorChangeBox() {
           value={dashboardName}
           onChange={handleInputChange}
         />
-        <S.ButtonBox>
+        <S.ButtonBox isError={isError}>
           {isError && <S.ErrorMessage>{ERROR_MESSAGE}</S.ErrorMessage>}
           <S.Button onClick={handleClickChangeBtn} size="S">
             변경
