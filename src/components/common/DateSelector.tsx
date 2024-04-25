@@ -46,7 +46,8 @@ function DateSelector({ onChange }) {
         onChange={handleChange}
         placeholderText="마감일을 선택해주세요"
         toggleCalendarOnIconClick
-        dateFormat="yyyy.MM.dd"
+        dateFormat="yyyy.MM.dd 👉🏻 aa h:mm"
+        showTimeSelect
       />
     </S.Container>
   );
