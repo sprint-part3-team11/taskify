@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { reverse } from 'dns';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import useDashboardListQuery from '@/hooks/query/dashboards/useDashboardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import dashboardsApi from '@/api/dashboards.api';
-import testApi from '@/api/test.api';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
+import ArrowLeft from '@/public/icon/arrowLeft.svg';
+import ArrowRight from '@/public/icon/arrowRight.svg';
 import CreateByMe from '@/public/icon/creatByMe.svg';
 import LogoIcon from '@/public/icon/logo.svg';
 import LogoText from '@/public/icon/logoText.svg';
@@ -113,29 +112,65 @@ const S = {
       display: none;
     }
   `,
+  PageNavigationBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.6rem;
+    margin-top: 12rem;
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+
+  PageCount: styled.div`
+    font-size: 1.4rem;
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
+  `,
+
+  Buttons: styled.div`
+    display: flex;
+    background-color: blue;
+  `,
+
+  ArrowButton: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 2rem;
+    padding: 1.2rem;
+    border: ${({ theme }) => theme.border.lightGray};
+    background-color: ${({ theme }) => theme.color.white};
+  `,
 };
 
-interface DashboardProps {
-  id: string;
-  color: string;
-  title: string;
-  createdByMe: boolean;
-}
-
 function Sidebar() {
-  const [dashboardData, setDashboardData] = useState<DashboardProps[]>([]);
   const [isModalOpen6, setModalOpen6] = useState(false);
   const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
   const openModal6 = () => setModalOpen6(true);
   const closeModal6 = () => setModalOpen6(false);
   const router = useRouter();
+  const [page, setPage] = useState(1);
 
   const { data } = useDashboardListQuery({
     navigationMethod: 'pagination',
-    page: 1,
-    size: 5,
+    page,
+    size: 8,
   });
   const dashboards = data?.dashboards;
+
+  const totalPages = Math.ceil(data?.totalCount / 8);
+
+  const handlePrevBtnClick = () => {
+    setPage((prev) => prev - 1);
+  };
+  const handleNextBtnClick = () => {
+    setPage((prev) => prev + 1);
+  };
 
   const createdDashBoard = (name: string, color: string) => {
     setTempDashBoardName([name, color]);
@@ -182,6 +217,22 @@ function Sidebar() {
           onCreate={createdDashBoard}
         />
       </ul>
+      <S.PageNavigationBox>
+        <S.PageCount>
+          {totalPages} 페이지중 {page}
+        </S.PageCount>
+        <S.Buttons>
+          <S.ArrowButton disabled={page <= 1} onClick={handlePrevBtnClick}>
+            <ArrowLeft />
+          </S.ArrowButton>
+          <S.ArrowButton
+            disabled={page >= totalPages}
+            onClick={handleNextBtnClick}
+          >
+            <ArrowRight />
+          </S.ArrowButton>
+        </S.Buttons>
+      </S.PageNavigationBox>
     </S.SidebarWrapper>
   );
 }

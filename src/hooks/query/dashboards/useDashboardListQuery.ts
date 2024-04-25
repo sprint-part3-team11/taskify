@@ -5,7 +5,7 @@ import dashboardsApi from '@/api/dashboards.api';
 // 대시보드 목록조회
 function useDashboardListQuery({ navigationMethod, page, size = 5 }) {
   return useQuery({
-    queryKey: [API.DASHBOARDS, navigationMethod, page],
+    queryKey: [API.DASHBOARDS, navigationMethod, page, size],
     queryFn: async () => {
       const { data } = await dashboardsApi.getDashboardList({
         navigationMethod,
