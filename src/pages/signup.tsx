@@ -12,20 +12,7 @@ function SignUp() {
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
 
-  // const signupUser = async (data) => {
-  //   try {
-  //     const response = await usersApi.getSignUp({
-  //       email: data.email,
-  //       nickname: data.name,
-  //       password: data.password,
-  //     });
-  //   } catch (error) {
-  //     setError(true);
-  //   }
-  // };
-
   const { mutate: signUp } = useMutation({
-    // data는 회원가입 폼 데이터를 나타냅니다.
     mutationFn: async (data) => {
       return usersApi.postSignUp({
         email: data.email,
@@ -33,15 +20,11 @@ function SignUp() {
         password: data.password,
       });
     },
-    // 성공적인 요청 후 실행될 콜백 함수
     onSuccess: () => {
-      // setOpen(true);
-      // const message = '가입이 완료되었습니다';
-      // setModalMessage(message);
+      // TODO 나중에 toast로 바꿔보자!
       alert('가입이 완료되었습니다!');
       router.push('/signin');
     },
-    // 실패한 요청 후 실행될 콜백 함수
     onError: (error) => {
       setOpen(true);
       const message = error.response?.data?.message;
@@ -49,14 +32,14 @@ function SignUp() {
     },
   });
 
-  const signupUser = (data) => {
+  const signUpUser = (data) => {
     signUp(data);
   };
 
   return (
     <div>
       <SignLayout pageType="signUp">
-        <Form formType="signUp" onSubmit={signupUser} />
+        <Form formType="signUp" onSubmit={signUpUser} />
       </SignLayout>
       <WarningModal
         isOpen={open}
