@@ -60,7 +60,6 @@ const S = {
 };
 
 function ProfileChange() {
-  const uploadedImage = useRecoilValue(imgUrlState);
   const imgServerUrl = useRecoilValue<string>(resultServerImgState);
   const setProfileImageUrl = useSetRecoilState(profileImageUrlState);
 
@@ -80,13 +79,6 @@ function ProfileChange() {
       }));
     }
   }, [myProfile]);
-
-  const { mutate: profileImg } = useProfileImgUploadMutation();
-  useEffect(() => {
-    if (uploadedImage) {
-      profileImg(uploadedImage);
-    }
-  }, [uploadedImage]);
 
   const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
   const editMyProfile = (data, imgServerUrl) => {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   atom,
   useRecoilState,
@@ -7,7 +7,10 @@ import {
 } from 'recoil';
 import styled from 'styled-components';
 import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
-import { resultServerImgState } from '@/hooks/query/users/useProfileImgUploadMutation';
+import {
+  resultServerImgState,
+  useProfileImgUploadMutation,
+} from '@/hooks/query/users/useProfileImgUploadMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
@@ -114,10 +117,20 @@ interface ImgFileUploadProps {
 }
 
 function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
-  const setUploadedImage = useSetRecoilState(imgUrlState);
-  const imgServerUrl = useRecoilValue<string>(resultServerImgState);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // File 객체 데이터
+  const [uploadedImage, setUploadedImage] = useRecoilState(imgUrlState);
+  // 내가 선택한 사진 url
+  const imgServerUrl = useRecoilValue<string>(resultServerImgState);
+  // 내 프로필 사진 (서버한테 받은)url <마이페이지에서만 사용>
   const profileImageUrl = useRecoilValue(profileImageUrlState);
+
+  const { mutate: profileImg } = useProfileImgUploadMutation();
+  useEffect(() => {
+    if (uploadedImage) {
+      profileImg(uploadedImage);
+    }
+  }, [uploadedImage]);
 
   const handleClick: () => void = () => {
     if (fileInputRef.current) {
@@ -151,8 +164,15 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
             </S.Overlay>
           )}
         </>
-      ) : small ? (
-        <div>이미지를 추가해주세요.</div>
+      ) : small && imgServerUrl ? (
+        <>
+          <S.Image src={imgServerUrl} alt="업로드된 이미지" $small={small} />
+          {edit && (
+            <S.Overlay $small={small}>
+              <EditIcon />
+            </S.Overlay>
+          )}
+        </>
       ) : (
         <S.AddIcon onClick={handleClick} $small={small}>
           <AddIcon />
