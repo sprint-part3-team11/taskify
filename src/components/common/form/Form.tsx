@@ -74,6 +74,40 @@ const S = {
 
     color: ${({ theme }) => theme.color.red};
   `,
+  CheckWrapper: styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  `,
+  CheckBox: styled.input`
+    display: none;
+
+    &:checked + label::after {
+      content: '✔';
+      color: ${({ theme }) => theme.color.primary};
+      font-size: 1.4rem;
+      line-height: 2rem;
+      text-align: center;
+    }
+  `,
+  CheckBoxText: styled.label`
+    position: relative;
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.body};
+    padding-left: 3rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: -0.4rem;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid ${({ theme }) => theme.color.grayLight};
+      border-radius: 0.4rem;
+      background-color: white;
+    }
+  `,
   Button: styled(Button)`
     width: ${(props) => (props.size === 'S' ? '8.4rem' : '100%')};
     margin-top: 1rem;
@@ -98,6 +132,7 @@ interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   btnSize?: 'S' | 'M' | 'L';
   onSubmit?: (data) => void;
   profileInfo?: { mail: string; name: string };
+  children: React.ReactNode;
   placeholder?: { email?: string; name?: string };
 }
 
@@ -110,6 +145,7 @@ function Form({
   btnSize = 'L',
   onSubmit,
   profileInfo,
+  children,
   ...htmlInputProps
 }: FormProps) {
   const getSchemaForFormType = (type: FormType) => {
@@ -166,12 +202,17 @@ function Form({
   useEffect(() => {
     const requiredKeys = Keys[formType];
     let allFieldsFilled = false;
+    const termsChecked = watchFields.terms;
 
     if (formType === 'editProfile') {
       const filteredKeys = requiredKeys.filter((key) => key !== 'email');
       allFieldsFilled = filteredKeys.every(
         (key) => watchFields[key]?.length > 0,
       );
+    } else if (formType === 'signUp') {
+      allFieldsFilled =
+        requiredKeys.every((key) => watchFields[key]?.length > 0) &&
+        termsChecked;
     } else {
       allFieldsFilled = requiredKeys.every(
         (key) => watchFields[key]?.length > 0,
@@ -236,6 +277,14 @@ function Form({
           )}
         </S.Container>
       ))}
+      {formType === 'signUp' && (
+        <S.CheckWrapper>
+          <S.CheckBox id="terms" type="checkbox" {...register('terms')} />
+          <S.CheckBoxText htmlFor="terms">
+            이용약관에 동의합니다.
+          </S.CheckBoxText>
+        </S.CheckWrapper>
+      )}
       <S.Button type="submit" size={btnSize} disabled={isButtonDisabled}>
         {buttonText[formType]}
       </S.Button>
