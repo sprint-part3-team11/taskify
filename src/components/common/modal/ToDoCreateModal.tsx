@@ -5,6 +5,8 @@ import { ImgFileUpload } from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
+import { formatDueDate } from '@/utils/formatDate';
+import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import { RequiredStar } from '@/styles/CommonStyle';
 
@@ -96,15 +98,13 @@ const S = {
   `,
 };
 
-const selectBoxOptions = [
-  { value: '배유철', label: '배유철' },
-  { value: '배동석', label: '배동석' },
-  { value: 'ToDo', label: '🔹To Do' },
-  { value: '박지윤', label: '박지윤' },
-  { value: '난사람', label: 'alallalalalaalalallalalalalaaalalalaalal' },
-];
-
-function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
+function ToDoCreateModal({
+  isOpen,
+  onClose,
+  isEdit = false,
+  prevData,
+  dashboardId = 5941,
+}: any) {
   const [toDoInfo, setToDoInfo] = useState({
     assignee: '',
     title: '',
@@ -127,22 +127,27 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
 
   const isEditText = isEdit ? '수정' : '생성';
 
-  //@todo 수정모드 다시보기, 셀렉트박스 스타일링, 분리할거 분리, 해시태그구현, datePicker 캘린더 스타일링
+  const { data: membersData } = useMemeberListQuery(dashboardId);
+  const selectBoxOptions = membersData?.members;
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.Title>📌 할 일 {isEditText}</S.Title>
       <S.FormContainer>
         <S.Low>
-          {isEdit && (
+          {/* {isEdit && (
             <S.FieldBox>
               <S.Label>상태</S.Label>
               <SelectBox options={selectBoxOptions} placeholder={true} />
             </S.FieldBox>
-          )}
+          )} */}
           <S.FieldBox>
             <S.Label>담당자</S.Label>
-            <SelectBox options={selectBoxOptions} placeholder={true} />
+            <SelectBox
+              options={selectBoxOptions}
+              placeholder={true}
+              onChange={(option) => handleOnChange('assignee', option.id)}
+            />
           </S.FieldBox>
         </S.Low>
 
@@ -172,7 +177,11 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
 
         <S.FieldBox>
           <S.Label>마감일</S.Label>
-          <DateSelector />
+          <DateSelector
+            onChange={(date) => {
+              handleOnChange('dueDate', formatDueDate(date));
+            }}
+          />
         </S.FieldBox>
 
         <S.FieldBox>

@@ -104,9 +104,14 @@ interface Option {
 interface SelectBoxProps {
   options: Option[];
   placeholder: boolean;
+  onChange: (option: Option) => void;
 }
 
-function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
+function SelectBox({
+  options,
+  placeholder,
+  onChange,
+}: SelectBoxProps): JSX.Element {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [filterText, setFilterText] = useState('');
@@ -117,7 +122,7 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
     setSelectedOption(option);
     setFilterText('');
     setIsFocused(false);
-    console.log('선택된 텍스트 값:', option.nickname);
+    onChange(option);
   }
 
   useOutSideClick([optionAreaRef, inputRef], () => {
