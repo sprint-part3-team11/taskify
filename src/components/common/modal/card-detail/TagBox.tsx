@@ -4,7 +4,6 @@ import StateTag from '@/components/common/tag/StateTag';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CardConfirmModalProps } from '@/types/CardDetail';
 
 const S = {
   TagBox: styled.div`
@@ -15,7 +14,9 @@ const S = {
       margin: 1rem 0 2.3rem 0;
     }
   `,
-
+  HashTagBox: styled.div`
+    padding-right: 0.5rem;
+  `,
   HeightLine: styled.div`
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     margin: 0 2rem 0.2rem 2rem;
@@ -39,16 +40,12 @@ function TagBox({ stateTag }: TagBoxProps) {
       <S.HeightLine />
       {tags &&
         tags.map((tag, color) => (
-          <HashTag isMobile={isMobile} index={color}>
-            {tag}
-          </HashTag>
+          <S.HashTagBox>
+            <HashTag isMobile={isMobile} index={color}>
+              {tag}
+            </HashTag>
+          </S.HashTagBox>
         ))}
-      {/* <HashTag isMobile={isMobile} index={0}>
-        프로젝트
-      </HashTag>
-      <HashTag isMobile={isMobile} index={1}>
-        프론트엔드
-      </HashTag> */}
     </S.TagBox>
   );
 }

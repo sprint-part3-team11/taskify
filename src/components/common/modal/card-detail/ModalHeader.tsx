@@ -104,14 +104,12 @@ function ModalHeader({ onClose }: ModalHeaderProps) {
     setIsOpen(!isOpen);
   };
 
-  // const handleCloseCreateModal = () => {
-  //   setIsCreateModalOpen(false);
-  // };
   const handleDeleteCard = () => {
     console.log('a');
     responseInvitationMutate({ cardId: 4975 });
     onClose();
   };
+
   return (
     <S.ModalHeader>
       <S.ModalTitle>{title}</S.ModalTitle>

@@ -13,6 +13,21 @@ const S = {
 
     overflow: auto;
 
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.color.mainLight};
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 2px solid transparent;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: ${({ theme }) => theme.color.white};
+      border-radius: 10px;
+      box-shadow: inset 0px 0px 5px white;
+    }
+
     ${MEDIA_QUERIES.onMobile} {
       padding-top: 2.2rem;
       width: 32rem;
