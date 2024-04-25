@@ -2,21 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import dashboardsApi from '@/api/dashboards.api';
 
-function useEditDashboardMutation() {
+function useDeleteDashboardMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ dashboardId, title, color }) => {
-      return dashboardsApi.putEditDashboard({
-        dashboardId,
-        title,
-        color,
-      });
+    mutationFn: async (dashboardId) => {
+      return dashboardsApi.deleteDashboard(dashboardId);
     },
-    onSuccess: () => {
+    onSuccess() {
       queryClient.invalidateQueries([API.DASHBOARDS]);
     },
   });
 }
 
-export default useEditDashboardMutation;
+export default useDeleteDashboardMutation;

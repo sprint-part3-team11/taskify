@@ -1,33 +1,18 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Button from '../common/button/Button';
 import styled from 'styled-components';
+import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
+import useLoadInvitationQuery from '@/hooks/query/dashboards/useLoadInvitationQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ArrowLeft from '@/public/icon/arrowLeft.svg';
 import ArrowRight from '@/public/icon/arrowRight.svg';
 
-const inviteData = {
-  totalCount: 0,
-  invitations: [
-    {
-      invitee: {
-        nickname: 'string',
-        email: 'CodeitA@codeit.com',
-        id: 0,
-      },
-    },
-    {
-      invitee: {
-        nickname: 'string',
-        email: 'CodeitB@codeit.com',
-        id: 0,
-      },
-    },
-  ],
-};
 const S = {
   InviteListLayout: styled.div`
     width: 62rem;
+    height: 45rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
@@ -136,7 +121,17 @@ interface InviteHistoryListProps {
 }
 
 function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
-  const { invitations } = inviteData;
+  const router = useRouter();
+  const { id } = router.query;
+  const { data } = useLoadInvitationQuery(id);
+  const invitations = data?.invitations;
+
+  const { mutate: responseInvitationCancelMutate } =
+    useCancelInvitationMutation();
+
+  const handleClickCancelBtn = (invitationId) => {
+    responseInvitationCancelMutate({ dashboardId: id, invitationId });
+  };
 
   return (
     <S.InviteListLayout>
@@ -158,14 +153,19 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
       <S.InviteListContainer>
         <S.EmailTitle>이메일</S.EmailTitle>
         <S.InviteListContainer>
-          {invitations.map((invitation) => (
-            <S.InviteItem key={invitation.invitee.id}>
-              <S.Email>{invitation.invitee.email}</S.Email>
-              <S.CancelButton size="S" styleType={BUTTON_TYPE.DESTRUCTIVE}>
-                취소
-              </S.CancelButton>
-            </S.InviteItem>
-          ))}
+          {invitations &&
+            invitations.map((invitation) => (
+              <S.InviteItem key={invitation?.invitee?.id}>
+                <S.Email>{invitation?.invitee?.email}</S.Email>
+                <S.CancelButton
+                  onClick={() => handleClickCancelBtn(invitation.id)}
+                  size="S"
+                  styleType={BUTTON_TYPE.DESTRUCTIVE}
+                >
+                  취소
+                </S.CancelButton>
+              </S.InviteItem>
+            ))}
         </S.InviteListContainer>
       </S.InviteListContainer>
     </S.InviteListLayout>

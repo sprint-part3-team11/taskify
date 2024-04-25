@@ -2,15 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import dashboardsApi from '@/api/dashboards.api';
 
-function useEditDashboardMutation() {
+function useInviteDashboardMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ dashboardId, title, color }) => {
-      return dashboardsApi.putEditDashboard({
+    mutationFn: async ({ dashboardId, email }) => {
+      return dashboardsApi.postInviteDashboard({
         dashboardId,
-        title,
-        color,
+        email,
       });
     },
     onSuccess: () => {
@@ -19,4 +18,4 @@ function useEditDashboardMutation() {
   });
 }
 
-export default useEditDashboardMutation;
+export default useInviteDashboardMutation;
