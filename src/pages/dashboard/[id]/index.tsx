@@ -88,6 +88,7 @@ export default function DashBoard() {
             key={column.id + 1}
             id={column.id}
             title={column.title}
+            dashboardId={dashboardId}
             ref={index === columns?.length - 1 ? scrollRef : null}
           />
         ))}
