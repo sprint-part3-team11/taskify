@@ -1,9 +1,13 @@
 import Image from 'next/image';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
-import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
+import {
+  profileImageUrlState,
+  useMyPropfileQuery,
+} from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -195,6 +199,7 @@ function DashBoardHeader({
   openInviteModal,
   myPage,
 }: HeaderProps) {
+  const profileImageUrl = useRecoilValue(profileImageUrlState);
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
 
@@ -227,12 +232,12 @@ function DashBoardHeader({
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>
           <S.ProfileImg
-            src={myProfile.profileImageUrl}
+            src={myProfile?.profileImageUrl}
             width={38}
             height={38}
             alt="profileImg"
           />
-          <S.ProfileName>{myProfile.nickname}</S.ProfileName>
+          <S.ProfileName>{myProfile?.nickname}</S.ProfileName>
         </S.ProfileBox>
       </S.ButtonAndUserContainer>
     </S.HeaderLayout>
