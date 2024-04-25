@@ -36,7 +36,7 @@ function Edit() {
   };
 
   return (
-    <PageLayout openInviteModal={openInviteModal}>
+    <PageLayout openInviteModal={openInviteModal} myPage={false}>
       <S.MainContainer>
         <BackButton />
         <NameAndColorChangeBox />

@@ -2,16 +2,18 @@ import { useMutation } from '@tanstack/react-query';
 import usersApi from '@/api/users.api';
 
 // 프로필 수정 => 이미지, 닉네임
-function useMyprofileEditMutation() {
+function useProfileEditMutation(imgServerUrl) {
   return useMutation({
-    mutationFn: async ({ nickname, imgServerUrl }) => {
+    mutationFn: async (data) => {
       return usersApi.putMyProfileEdit({
-        nickname,
-        imgServerUrl,
+        nickname: data.name,
+        profileImageUrl: imgServerUrl,
       });
     },
-    onSuccess(data) {},
+    onSuccess: () => {
+      alert('성공');
+    },
   });
 }
 
-export default useMyprofileEditMutation;
+export default useProfileEditMutation;
