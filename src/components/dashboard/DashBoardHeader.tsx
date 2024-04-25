@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import AvatarList from '@/components/dashboard/AvatarList';
+import dataArr from '@/components/dashboard/mockData';
+import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -9,7 +12,6 @@ import InvitationIcon from '@/public/icon/plus.svg';
 import SettingIcon from '@/public/icon/setting.svg';
 import theme from '@/styles/theme';
 
-const REST_PROFILE_IMG = 'https://i.ibb.co/YQwK6HF/Ellipse-43.png';
 const S = {
   HeaderLayout: styled.nav`
     position: fixed;
@@ -101,7 +103,7 @@ const S = {
     position: relative;
     display: ${({ $myPage }) => ($myPage ? 'none' : 'flex')};
     align-items: center;
-    margin: 0 2rem;
+    margin: 0 3.2rem 0 2rem;
 
     ${MEDIA_QUERIES.onMobile} {
       margin: 0 1.2rem;
@@ -146,7 +148,7 @@ const S = {
     justify-content: center;
     align-items: center;
 
-    padding: 0 4rem;
+    padding: 0 4rem 0 3.2rem;
     border-left: ${({ $myPage }) =>
       $myPage ? 'none' : `1px solid ${theme.color.grayLight}`};
     gap: 1rem;
@@ -157,10 +159,7 @@ const S = {
   `,
 
   ProfileImg: styled(Image)`
-    ${MEDIA_QUERIES.onMobile} {
-      width: 3.4rem;
-      height: 3.4rem;
-    }
+    border-radius: 50%;
   `,
 
   ProfileName: styled.div`
@@ -198,6 +197,9 @@ function DashBoardHeader({
 }: HeaderProps) {
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
+
+  const { data: myProfile } = useMyPropfileQuery();
+
   return (
     <S.HeaderLayout>
       <S.MenuNameContainer>
@@ -221,61 +223,16 @@ function DashBoardHeader({
           </S.Button>
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
-          {invitedUsers &&
-            isPc &&
-            invitedUsers.slice(0, 4).map((invitedUser, index) => (
-              <S.InvitedUserImage
-                key={invitedUser.id}
-                width={38}
-                height={38}
-                src={invitedUser.profileImageUrl}
-                alt="초대된 유저"
-                style={{
-                  marginLeft: `${0 - 0.8}rem`,
-                  zIndex: index - invitedUsers.length,
-                }}
-              />
-            ))}
-          {invitedUsers &&
-            !isPc &&
-            invitedUsers.slice(0, 2).map((invitedUser, index) => (
-              <div>
-                <S.InvitedUserImage
-                  key={invitedUser.id}
-                  width={34}
-                  height={34}
-                  src={invitedUser.profileImageUrl}
-                  alt="초대된 유저"
-                  style={{
-                    marginLeft: `${0 - 0.88}rem`,
-                    zIndex: index - invitedUsers.length,
-                  }}
-                />
-              </div>
-            ))}
-          <S.RestUsers>
-            <S.RestUserIcon
-              width={38}
-              height={38}
-              src={REST_PROFILE_IMG}
-              alt="표시 제외된 나머지 유저 수"
-            />
-
-            {isPc ? (
-              <S.RestUserText>+{invitedUsers.length - 4}</S.RestUserText>
-            ) : (
-              <S.RestUserText>+{invitedUsers.length - 2}</S.RestUserText>
-            )}
-          </S.RestUsers>
+          <AvatarList max={isPc ? 5 : 3} dataArr={dataArr} />
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>
           <S.ProfileImg
-            src={profileImgURL}
+            src={myProfile.profileImageUrl}
             width={38}
             height={38}
             alt="profileImg"
           />
-          <S.ProfileName>{profileName}</S.ProfileName>
+          <S.ProfileName>{myProfile.nickname}</S.ProfileName>
         </S.ProfileBox>
       </S.ButtonAndUserContainer>
     </S.HeaderLayout>
