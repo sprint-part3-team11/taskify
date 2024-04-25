@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import FormInput from '@/components/common/form/Form';
+import usePasswordChangeMutation from '@/hooks/query/auth/usePasswordChangeMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import authApi from '@/api/auth.api';
 
@@ -34,26 +35,36 @@ const S = {
 
 function PasswordChange() {
   // editMyProfilePassword FormInput에 props로 함수 보내기
-  const editMyProfilePassword = async (
-    editPassword: string,
-    newEditPassword: string,
-  ) => {
-    try {
-      const response = await authApi.getPasswordChange({
-        password: editPassword,
-        newPassword: newEditPassword,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('에러:', error.response.data.message);
-    }
+  // const editMyProfilePassword = async (
+  //   editPassword: string,
+  //   newEditPassword: string,
+  // ) => {
+  //   try {
+  //     const response = await authApi.getPasswordChange({
+  //       password: editPassword,
+  //       newPassword: newEditPassword,
+  //     });
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error('에러:', error.response.data.message);
+  //   }
+  // };
+
+  const { mutate: passwordChange } = usePasswordChangeMutation();
+
+  const editMyPassword = (data) => {
+    passwordChange(data);
   };
   return (
     <S.Layout>
       <S.Container>
         <S.Title>비밀번호 변경</S.Title>
         <S.PasswordContent>
-          <FormInput formType="editPassword" btnSize="S" />
+          <FormInput
+            onSubmit={editMyPassword}
+            formType="editPassword"
+            btnSize="S"
+          />
         </S.PasswordContent>
       </S.Container>
     </S.Layout>
