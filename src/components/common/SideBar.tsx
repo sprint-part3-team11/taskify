@@ -122,18 +122,6 @@ interface DashboardProps {
   createdByMe: boolean;
 }
 
-async function fetchData() {
-  try {
-    const response = await testApi.postSignIn({
-      email: 'test@test.com',
-      password: '123qwe!!!',
-    });
-  } catch (error) {
-    console.error('로그인 에러:', error.response.data.message);
-  }
-}
-fetchData();
-
 function Sidebar() {
   const [dashboardData, setDashboardData] = useState<DashboardProps[]>([]);
   const [isModalOpen6, setModalOpen6] = useState(false);

@@ -56,6 +56,8 @@ const S = {
     background: ${({ theme }) => theme.color.white};
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
     margin-top: 0.2rem;
+    overflow-y: auto;
+    max-height: 23rem;
 
     ${MEDIA_QUERIES.onTablet} {
       width: 21.7rem;
@@ -95,8 +97,8 @@ const S = {
 };
 
 interface Option {
-  value: string;
-  label: string;
+  id: number;
+  nickname: string;
 }
 
 interface SelectBoxProps {
@@ -115,7 +117,7 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
     setSelectedOption(option);
     setFilterText('');
     setIsFocused(false);
-    console.log('선택된 텍스트 값:', option.value);
+    console.log('선택된 텍스트 값:', option.nickname);
   }
 
   useOutSideClick([optionAreaRef, inputRef], () => {
@@ -136,7 +138,7 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
       <S.Input
         ref={inputRef}
         type="text"
-        value={selectedOption ? selectedOption.label : filterText}
+        value={selectedOption ? selectedOption.nickname : filterText}
         onChange={handleInputChange}
         onFocus={handleInputClick}
         $isFocused={isFocused}
@@ -147,20 +149,18 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
         <S.OptionArea ref={optionAreaRef}>
           {options
             .filter((option) =>
-              option.label.toLowerCase().includes(filterText.toLowerCase()),
+              option.nickname.toLowerCase().includes(filterText.toLowerCase()),
             )
             .map((option) => (
               <S.OptionValue
-                key={option.value}
+                key={option.id}
                 onClick={() => handleSelectOption(option)}
               >
-                {option.value === (selectedOption?.value || '') && (
-                  <S.CheckIcon />
-                )}
+                {option.id === (selectedOption?.id || 0) && <S.CheckIcon />}
                 <S.OptionValueText
-                  $isCheckIcon={option.value === (selectedOption?.value || '')}
+                  $isCheckIcon={option.id === (selectedOption?.id || 0)}
                 >
-                  {option.label}
+                  {option.nickname}
                 </S.OptionValueText>
               </S.OptionValue>
             ))}

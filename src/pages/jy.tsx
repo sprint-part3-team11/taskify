@@ -9,31 +9,32 @@ import SelectBox from '@/components/common/SelectBox';
 import Sidebar from '@/components/common/SideBar';
 
 const selectBoxOptions = [
-  { value: '배유철', label: '배유철' },
-  { value: '배동석', label: '배동석' },
-  { value: 'ToDo', label: '🔹To Do' },
-  { value: '박지윤', label: '박지윤' },
-  { value: '난사람', label: 'alallalalalaalalallalalalalaaalalalaalal' },
-];
-
-const dashboards = [
-  { id: '1', color: '#FFA500', name: '대시보드 1', createdByMe: true },
-  { id: '2', color: '#FF2660', name: '대시보드 2', createdByMe: true },
-  { id: '3', color: '#7AC555', name: '대시보드 3', createdByMe: false },
+  { id: 1, nickname: '배유철' },
+  { id: 2, nickname: '배동석' },
+  { id: 3, nickname: '🔹To Do' },
+  { id: 4, nickname: '박지윤' },
+  { id: 5, nickname: 'alallalalalaalalallalalalalaaalalalaalal' },
+  { id: 11, nickname: '배유철' },
+  { id: 12, nickname: '배동석' },
+  { id: 13, nickname: '🔹To Do' },
+  { id: 14, nickname: '박지윤' },
+  { id: 15, nickname: 'alallalalalaalalallalalalalaaalalalaalal' },
+  { id: 21, nickname: '배유철' },
+  { id: 22, nickname: '배동석' },
+  { id: 23, nickname: '🔹To Do' },
+  { id: 24, nickname: '박지윤' },
+  { id: 25, nickname: 'alallalalalaalalallalalalalaaalalalaalal' },
+  { id: 31, nickname: '배유철' },
+  { id: 32, nickname: '배동석' },
+  { id: 33, nickname: '🔹To Do' },
+  { id: 34, nickname: '박지윤' },
+  { id: 35, nickname: 'alallalalalaalalallalalalalaaalalalaalal' },
 ];
 function jy() {
-  // useRecoilValue을 소문자로된 pages에서는 사용하면 빨간줄이 나타납니다. 컴포넌트에서 사용해야 할 것 같습니다ㅜㅜ 여기는 테스트 페이지니까 놔두겠습니다 ..!
-  const resultColor = useRecoilValue(resultColorState);
-  const imgUrl = useRecoilValue(imgUrlState);
   return (
     <>
       {/* true면 ={true} 를 린트가 쓰지 말라고 빨간줄 나오네요! false일때만 false를 명시해주세요 */}
       <SelectBox options={selectBoxOptions} placeholder />
-      <Sidebar dashboards={dashboards} />
-      <ColorSelector />
-      {resultColor}
-      {console.log(imgUrl)}
-      <ImgFileUpload edit small />
     </>
   );
 }
