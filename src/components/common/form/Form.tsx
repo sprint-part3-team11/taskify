@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, {
   InputHTMLAttributes,
   ReactNode,
@@ -19,6 +20,8 @@ import {
   SignUp,
   SignUpType,
 } from '@/constants/SCHEMA';
+import eyeOff from '@/public/icon/eyeOff.svg';
+import eyeOn from '@/public/icon/eyeOn.svg';
 
 const S = {
   Form: styled.form`
@@ -60,6 +63,12 @@ const S = {
       border: 1px solid ${({ theme }) => theme.color.purple};
     }
   `,
+  EyeIcon: styled.div`
+    position: absolute;
+    top: 3.8rem;
+    right: 1.6rem;
+    cursor: pointer;
+  `,
   Error: styled.p`
     position: absolute;
 
@@ -100,7 +109,7 @@ function Form({
   formType,
   btnSize = 'L',
   onSubmit,
-  profileInfo = { mail: 'test@test.com', name: '디두의 심상세계' },
+  profileInfo,
   ...htmlInputProps
 }: FormProps) {
   const getSchemaForFormType = (type: FormType) => {
@@ -136,17 +145,23 @@ function Form({
     editProfile: ['email', 'name'],
     editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
   };
+  const [passwordFieldType, setPasswordFieldType] = useState('password');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [profile, setProfile] = useState(profileInfo);
+
+  const togglePasswordFieldType = () => {
+    setPasswordFieldType(
+      passwordFieldType === 'password' ? 'text' : 'password',
+    );
+  };
 
   const watchFields = watch();
 
   useEffect(() => {
     if (formType === 'editProfile') {
-      // 이메일 필드에 대해 기본값을 설정하고 유효성 검사를 건너뜁니다.
       setValue('email', profileInfo.mail, { shouldValidate: false });
     }
-  }, [formType, setValue, profileInfo.mail]);
+  }, [formType, setValue, profileInfo?.mail]);
 
   useEffect(() => {
     const requiredKeys = Keys[formType];
@@ -174,7 +189,11 @@ function Form({
           <S.Label htmlFor={field.id}>{field.label}</S.Label>
           <S.Input
             id={field.id}
-            type={field.type}
+            type={
+              field.id === 'password' || field.id === 'passwordCheck'
+                ? passwordFieldType
+                : field.type
+            }
             placeholder={(() => {
               if (formType === 'editProfile') {
                 if (field.id === 'email') return profile?.mail;
@@ -196,6 +215,20 @@ function Form({
             }}
             error={!!errors[field.id as keyof FormValues]}
           />
+          {(field.id === 'password' || field.id === 'passwordCheck') && (
+            <S.EyeIcon onClick={togglePasswordFieldType}>
+              <Image
+                src={
+                  passwordFieldType === 'password'
+                    ? '/icon/eyeOff.svg'
+                    : '/icon/eyeOn.svg'
+                }
+                alt="비밀번호 토글"
+                width={24}
+                height={24}
+              />
+            </S.EyeIcon>
+          )}
           {errors[field.id as keyof FormValues] && (
             <S.Error>
               {(errors[field.id as keyof FormValues] as Error)?.message}
