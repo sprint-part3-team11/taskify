@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import FormInput from '@/components/common/form/Form';
+import WarningModal from '@/components/common/modal/WarningModal';
 import usePasswordChangeMutation from '@/hooks/query/auth/usePasswordChangeMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import authApi from '@/api/auth.api';
 
 const S = {
   Layout: styled.div`
@@ -34,27 +34,16 @@ const S = {
 };
 
 function PasswordChange() {
-  // editMyProfilePassword FormInput에 props로 함수 보내기
-  // const editMyProfilePassword = async (
-  //   editPassword: string,
-  //   newEditPassword: string,
-  // ) => {
-  //   try {
-  //     const response = await authApi.getPasswordChange({
-  //       password: editPassword,
-  //       newPassword: newEditPassword,
-  //     });
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error('에러:', error.response.data.message);
-  //   }
-  // };
-
-  const { mutate: passwordChange } = usePasswordChangeMutation();
-
+  const {
+    mutate: passwordChange,
+    open,
+    setOpen,
+    modalMessage,
+  } = usePasswordChangeMutation();
   const editMyPassword = (data) => {
     passwordChange(data);
   };
+
   return (
     <S.Layout>
       <S.Container>
@@ -66,6 +55,11 @@ function PasswordChange() {
             btnSize="S"
           />
         </S.PasswordContent>
+        <WarningModal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          message={modalMessage}
+        />
       </S.Container>
     </S.Layout>
   );
