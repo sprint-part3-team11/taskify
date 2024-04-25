@@ -1,11 +1,13 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
+import useCardListQuery from '@/hooks/query/cards/useCardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import cardsApi from '@/api/cards.api';
+import columnsApi from '@/api/columns.api';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
 const cardInfoData = {
@@ -40,13 +42,12 @@ const S = {
     height: calc(100vh - 7rem - 1.5rem);
     min-width: 35.4rem;
     /* padding: 2rem; */
-    /* background-color: aqua; */
     overflow-y: scroll;
     border-right: ${({ theme }) => theme.border.lightGray};
 
     border-bottom: ${({ theme }) => theme.border.lightGray}; // 구분선 추가
-    // Chrome, Edge, Safari
 
+    // Chrome, Edge, Safari
     &::-webkit-scrollbar {
       display: none;
     }
@@ -57,7 +58,8 @@ const S = {
 
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
-      height: 45.5rem;
+      /* height: 45.5rem; */
+      height: 100%;
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
@@ -72,12 +74,6 @@ const S = {
     z-index: 10;
     background-color: ${({ theme }) => theme.color.background};
     padding: 2rem 2rem 0.8rem;
-    /* padding-bottom: 0.8rem; */
-    /* margin: 2rem 2rem 0rem; */
-
-    /* ${MEDIA_QUERIES.onTablet} {
-      border
-    } */
   `,
   ColumnTitleContainer: styled.div`
     display: flex;
@@ -90,7 +86,6 @@ const S = {
     display: flex;
     width: 1.6rem;
     height: 2rem;
-    /* background-color: antiquewhite; */
     align-items: center;
   `,
   ColumnTitleDotIcon: styled.div`
@@ -104,7 +99,6 @@ const S = {
     display: flex;
     height: 2rem;
     padding-top: 0.4rem;
-    /* background-color: lightblue; */
     align-items: center;
     font-size: 1.8rem;
     font-weight: 700;
@@ -144,7 +138,7 @@ const S = {
   `,
 };
 
-const Column = React.forwardRef(({ title }, ref) => {
+const Column = React.forwardRef(({ title, id }, ref) => {
   const [isModalOpen1, setModalOpen1] = useState(false);
   const [isModalOpen2, setModalOpen2] = useState(false);
   const openModal1 = () => setModalOpen1(true);
@@ -152,40 +146,17 @@ const Column = React.forwardRef(({ title }, ref) => {
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
 
-  const [tempColumnName, setTempColumnName] = useState('');
+  const [tempColumnName, setTempColumnName] = useState(title);
   const [cardList, setCardList] = useState([]);
+  const { data: cards } = useCardListQuery({ columnId: id });
+  // console.log(cards?.data);
 
-  // const handleCardData = ({ cardInfoData }) => {
-  //   const newCard = {
-  //     ...cardInfoData,
-  //   };
-  //   setCardList([...cardList, newCard]);
-  // };
-
-  const handleChange = (columnName: string) => {
-    // api에 post로 보내는 로직 추가해서 사용
-    setTempColumnName(columnName);
-    setModalOpen2(false);
-  };
+  const handleChange = async (columnName: string) => {};
 
   const handleDelete = () => {
     // delete
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await cardsApi.getCardList('19985');
-        setCardList(response.data.cards);
-        // console.log(response.data.cards);
-      } catch (error) {
-        console.error('카드에러:', error.message);
-      }
-    };
-    fetchData();
-    // console.log(tempColumnName);
-  }, []);
-  // res.data.card.length;
   return (
     <S.Column ref={ref}>
       <S.ColumnTopFixedContent>
@@ -195,7 +166,7 @@ const Column = React.forwardRef(({ title }, ref) => {
               <S.ColumnTitleDotIcon />
             </S.ColumnTitleIconWrapper>
             <S.ColumnTitle>{title}</S.ColumnTitle>
-            <S.ColumnTaskNumber>{cardList.length}</S.ColumnTaskNumber>
+            <S.ColumnTaskNumber>{cards?.data.totalCount}</S.ColumnTaskNumber>
           </S.ColumnTitleWrapper>
           <S.SettingIcon onClick={openModal2} />
         </S.ColumnTitleContainer>
@@ -212,11 +183,9 @@ const Column = React.forwardRef(({ title }, ref) => {
       />
 
       <S.ColumnContentContainer>
-        {cardList.map((card, index) => (
-          <Card cardInfoData={cardInfoData} />
+        {cards?.data.cards.map((card, index) => (
+          <Card key={card.id} cardId={card.id} cardInfoData={cardInfoData} />
         ))}
-        <Card cardInfoData={cardInfoData} />
-        <Card cardInfoData={cardInfoData} />
       </S.ColumnContentContainer>
     </S.Column>
   );
