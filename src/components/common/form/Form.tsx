@@ -195,7 +195,7 @@ function Form({
 
   useEffect(() => {
     if (formType === 'editProfile') {
-      setValue('email', profileInfo.mail, { shouldValidate: false });
+      setValue('email', profileInfo?.mail, { shouldValidate: false });
     }
   }, [formType, setValue, profileInfo?.mail]);
 
