@@ -14,6 +14,7 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CreateByMe from '@/public/icon/creatByMe.svg';
 import InvitationIcon from '@/public/icon/plus.svg';
 import SettingIcon from '@/public/icon/setting.svg';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 import theme from '@/styles/theme';
 
 const S = {
@@ -232,7 +233,7 @@ function DashBoardHeader({
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>
           <S.ProfileImg
-            src={myProfile?.profileImageUrl}
+            src={myProfile ? profileImageUrl : defaultImg}
             width={38}
             height={38}
             alt="profileImg"
