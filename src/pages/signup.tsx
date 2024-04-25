@@ -12,28 +12,14 @@ function SignUp() {
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
 
-  const { mutate: signUp } = useMutation({
-    mutationFn: async (data) => {
-      return usersApi.postSignUp({
-        email: data.email,
-        nickname: data.name,
-        password: data.password,
-      });
-    },
-    onSuccess: () => {
-      // TODO 나중에 toast로 바꿔보자!
-      alert('가입이 완료되었습니다!');
-      router.push('/signin');
-    },
-    onError: (error) => {
-      setOpen(true);
-      const message = error.response?.data?.message;
-      setModalMessage(message);
-    },
+  const { mutate: signUp } = useSignUpMutation({
+    setOpen,
+    setModalMessage,
+    router,
   });
 
-  const signUpUser = (data) => {
-    signUp(data);
+  const signUpUser = (data, error) => {
+    signUp(data, error);
   };
 
   return (
