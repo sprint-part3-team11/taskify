@@ -1,6 +1,13 @@
 import React, { useRef } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from 'recoil';
 import styled from 'styled-components';
+import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
+import { resultServerImgState } from '@/hooks/query/users/useProfileImgUploadMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddIcon from '@/public/icon/addImgIcon.svg';
 import EditIcon from '@/public/icon/editPencilIcon.svg';
@@ -107,8 +114,10 @@ interface ImgFileUploadProps {
 }
 
 function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
-  const [uploadedImage, setUploadedImage] = useRecoilState(imgUrlState);
+  const setUploadedImage = useSetRecoilState(imgUrlState);
+  const imgServerUrl = useRecoilValue<string>(resultServerImgState);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const profileImageUrl = useRecoilValue(profileImageUrlState);
 
   const handleClick: () => void = () => {
     if (fileInputRef.current) {
@@ -128,10 +137,11 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
 
   return (
     <S.Label htmlFor="fileInput" $small={small}>
-      {uploadedImage ? (
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {!small && (imgServerUrl || profileImageUrl) ? (
         <>
           <S.Image
-            src={URL.createObjectURL(uploadedImage)}
+            src={imgServerUrl || profileImageUrl}
             alt="업로드된 이미지"
             $small={small}
           />
@@ -141,6 +151,8 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
             </S.Overlay>
           )}
         </>
+      ) : small ? (
+        <div>이미지를 추가해주세요.</div>
       ) : (
         <S.AddIcon onClick={handleClick} $small={small}>
           <AddIcon />
