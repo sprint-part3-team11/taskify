@@ -19,7 +19,7 @@ interface CommentItemDataProps {
 }
 function CommentList({ edit, remove }: CommentListProps) {
   const { data } = useCommentsListQuery({
-    cardId: 4914,
+    cardId: 4975,
   });
 
   const comments = data && data.comments;

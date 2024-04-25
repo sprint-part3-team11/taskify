@@ -78,7 +78,7 @@ function CommentForm({ create, length }: CommentFormProps) {
 
     responseCreateComment({
       content: inputValue,
-      cardId: 4914,
+      cardId: 4975,
       columnId: 19985,
       dashboardId: 5941,
     });

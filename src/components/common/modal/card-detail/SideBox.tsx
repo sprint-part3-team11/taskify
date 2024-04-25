@@ -75,7 +75,7 @@ const S = {
 
 function SideBox() {
   const { data } = useDetailCardQuery({
-    cardId: 4914,
+    cardId: 5,
   });
 
   const { nickname, profileImageUrl } =

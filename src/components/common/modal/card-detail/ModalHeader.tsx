@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ToDoCreateModal from '../ToDoCreateModal';
 import styled from 'styled-components';
+import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps, ModalCloseProps } from '@/types/CardDetail';
@@ -92,9 +93,11 @@ interface ModalHeaderProps {
 }
 function ModalHeader({ onClose }: ModalHeaderProps) {
   const { data } = useDetailCardQuery({
-    cardId: 4914,
+    cardId: 4975,
   });
   const title = data && data.title;
+  const { mutate: responseInvitationMutate } = useDeleteCardMutation();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClickKebab = () => {
@@ -104,7 +107,11 @@ function ModalHeader({ onClose }: ModalHeaderProps) {
   // const handleCloseCreateModal = () => {
   //   setIsCreateModalOpen(false);
   // };
-
+  const handleDeleteCard = () => {
+    console.log('a');
+    responseInvitationMutate({ cardId: 4975 });
+    onClose();
+  };
   return (
     <S.ModalHeader>
       <S.ModalTitle>{title}</S.ModalTitle>
@@ -113,7 +120,7 @@ function ModalHeader({ onClose }: ModalHeaderProps) {
         {isOpen && (
           <S.DropdownMenuBox>
             <S.MenuItem>수정하기</S.MenuItem>
-            <S.MenuItem>삭제하기</S.MenuItem>
+            <S.MenuItem onClick={handleDeleteCard}>삭제하기</S.MenuItem>
           </S.DropdownMenuBox>
         )}
         <S.CloseIcon onClick={onClose} />

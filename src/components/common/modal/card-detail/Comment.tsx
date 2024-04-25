@@ -13,7 +13,7 @@ const S = {
 };
 
 function Comment() {
-  const { data } = useCommentsListQuery({ cardId: 4914 });
+  const { data } = useCommentsListQuery({ cardId: 4975 });
   const comments = data && data.comments;
   const [list, setList] = useState([]);
 
@@ -33,7 +33,7 @@ function Comment() {
       content: comments.content,
       createdAt: comments.createdAt,
       updatedAt: comments.updatedAt,
-      cardId: 4914,
+      cardId: 4975,
       author: {
         profileImageUrl: comments?.author?.profileImageUrl,
         nickname: comments?.author?.nickname,

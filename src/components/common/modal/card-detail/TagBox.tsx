@@ -27,7 +27,7 @@ interface TagBoxProps {
 }
 function TagBox({ stateTag }: TagBoxProps) {
   const { data } = useDetailCardQuery({
-    cardId: 4914,
+    cardId: 4975,
   });
   const tags = data && data.tags;
   const { width }: Size = useWindowSize();

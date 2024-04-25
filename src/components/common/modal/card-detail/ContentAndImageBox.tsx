@@ -55,7 +55,7 @@ const S = {
 };
 function ContentAndImageBox() {
   const { data } = useDetailCardQuery({
-    cardId: 4914,
+    cardId: 4975,
   });
   const description = data && data.description;
   const imageUrl = data && data.imageUrl;
