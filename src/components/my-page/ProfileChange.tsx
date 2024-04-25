@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
 import FormInput from '@/components/common/form/Form';
 import useMyPropfileQuery from '@/hooks/query/users/useMyPropfileQuery';
-import useMyprofileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
+import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
 import {
   resultServerImgState,
   useProfileImgUploadMutation,
@@ -84,11 +84,11 @@ function ProfileChange() {
   }, [urlImg]);
 
   // editMyProfile FormInput에 props로 함수 보내기
-  const nickname = '메에에에엥';
-  const { mutate: editMyprofile } = useMyprofileEditMutation();
-  useEffect(() => {
-    editMyprofile({ nickname, imgServerUrl });
-  }, []);
+  const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
+
+  const editMyProfile = (data, imgServerUrl) => {
+    editProfile(data, imgServerUrl);
+  };
 
   return (
     <S.Container>
@@ -100,7 +100,12 @@ function ProfileChange() {
           </S.ImageContent>
         </S.ImageBox>
         <S.InputBox>
-          <FormInput formType="editProfile" btnSize="S" />
+          {/* eslint-disable-next-line react/jsx-no-bind */}
+          <FormInput
+            onSubmit={editMyProfile}
+            formType="editProfile"
+            btnSize="S"
+          />
         </S.InputBox>
       </S.AlignBox>
     </S.Container>
