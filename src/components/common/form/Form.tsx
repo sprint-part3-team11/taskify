@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, {
   InputHTMLAttributes,
   ReactNode,
@@ -8,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import formFields from '@/constants/FORM_FIELDS';
 import {
   EditPassword,
   EditPasswordType,
@@ -18,6 +20,8 @@ import {
   SignUp,
   SignUpType,
 } from '@/constants/SCHEMA';
+import eyeOff from '@/public/icon/eyeOff.svg';
+import eyeOn from '@/public/icon/eyeOn.svg';
 
 const S = {
   Form: styled.form`
@@ -59,10 +63,50 @@ const S = {
       border: 1px solid ${({ theme }) => theme.color.purple};
     }
   `,
+  EyeIcon: styled.div`
+    position: absolute;
+    top: 3.8rem;
+    right: 1.6rem;
+    cursor: pointer;
+  `,
   Error: styled.p`
     position: absolute;
 
     color: ${({ theme }) => theme.color.red};
+  `,
+  CheckWrapper: styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  `,
+  CheckBox: styled.input`
+    display: none;
+
+    &:checked + label::after {
+      content: '✔';
+      color: ${({ theme }) => theme.color.primary};
+      font-size: 1.4rem;
+      line-height: 2rem;
+      text-align: center;
+    }
+  `,
+  CheckBoxText: styled.label`
+    position: relative;
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.body};
+    padding-left: 3rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: -0.4rem;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid ${({ theme }) => theme.color.grayLight};
+      border-radius: 0.4rem;
+      background-color: white;
+    }
   `,
   Button: styled(Button)`
     width: ${(props) => (props.size === 'S' ? '8.4rem' : '100%')};
@@ -70,83 +114,6 @@ const S = {
     padding: ${(props) => (props.size === 'S' ? '0.8rem' : '1.4rem')};
     font-size: ${(props) => (props.size === 'S' ? '1.4rem' : null)};
   `,
-};
-
-const formFields = {
-  signIn: [
-    {
-      id: 'email',
-      label: '이메일',
-      type: 'email',
-      placeholder: '이메일을 입력해주세요',
-    },
-    {
-      id: 'password',
-      label: '비밀번호',
-      type: 'password',
-      placeholder: '비밀번호를 입력해주세요',
-    },
-  ],
-  signUp: [
-    {
-      id: 'email',
-      label: '이메일',
-      type: 'email',
-      placeholder: '이메일을 입력해주세요',
-    },
-    {
-      id: 'name',
-      label: '닉네임',
-      type: 'text',
-      placeholder: '닉네임을 입력해주세요',
-    },
-    {
-      id: 'password',
-      label: '비밀번호',
-      type: 'password',
-      placeholder: '비밀번호를 입력해주세요',
-    },
-    {
-      id: 'passwordCheck',
-      label: '비밀번호 확인',
-      type: 'password',
-      placeholder: '비밀번호를 한번 더 입력해주세요',
-    },
-  ],
-  editProfile: [
-    {
-      id: 'email',
-      label: '이메일',
-      type: 'email',
-      placeholder: '이메일을 입력해주세요',
-    },
-    {
-      id: 'name',
-      label: '닉네임',
-      type: 'text',
-      placeholder: '닉네임을 입력해주세요',
-    },
-  ],
-  editPassword: [
-    {
-      id: 'nowPassword',
-      label: '현재 비밀번호',
-      type: 'password',
-      placeholder: '현재 비밀번호 입력',
-    },
-    {
-      id: 'newPassword',
-      label: '새 비밀번호',
-      type: 'password',
-      placeholder: '새 비밀번호 입력',
-    },
-    {
-      id: 'newPasswordCheck',
-      label: '새 비밀번호 확인',
-      type: 'password',
-      placeholder: '새 비밀번호 입력',
-    },
-  ],
 };
 
 const buttonText = {
@@ -164,6 +131,9 @@ interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
   onSubmit?: (data) => void;
+  profileInfo?: { mail: string; name: string };
+  children: React.ReactNode;
+  placeholder?: { email?: string; name?: string };
 }
 
 /**
@@ -174,6 +144,8 @@ function Form({
   formType,
   btnSize = 'L',
   onSubmit,
+  profileInfo,
+  children,
   ...htmlInputProps
 }: FormProps) {
   const getSchemaForFormType = (type: FormType) => {
@@ -197,6 +169,7 @@ function Form({
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
     trigger,
@@ -208,15 +181,44 @@ function Form({
     editProfile: ['email', 'name'],
     editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
   };
+  const [passwordFieldType, setPasswordFieldType] = useState('password');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [profile, setProfile] = useState(profileInfo);
+
+  const togglePasswordFieldType = () => {
+    setPasswordFieldType(
+      passwordFieldType === 'password' ? 'text' : 'password',
+    );
+  };
 
   const watchFields = watch();
 
   useEffect(() => {
+    if (formType === 'editProfile') {
+      setValue('email', profileInfo?.mail, { shouldValidate: false });
+    }
+  }, [formType, setValue, profileInfo?.mail]);
+
+  useEffect(() => {
     const requiredKeys = Keys[formType];
-    const allFieldsFilled = requiredKeys.every(
-      (key) => watchFields[key]?.length > 0,
-    );
+    let allFieldsFilled = false;
+    const termsChecked = watchFields.terms;
+
+    if (formType === 'editProfile') {
+      const filteredKeys = requiredKeys.filter((key) => key !== 'email');
+      allFieldsFilled = filteredKeys.every(
+        (key) => watchFields[key]?.length > 0,
+      );
+    } else if (formType === 'signUp') {
+      allFieldsFilled =
+        requiredKeys.every((key) => watchFields[key]?.length > 0) &&
+        termsChecked;
+    } else {
+      allFieldsFilled = requiredKeys.every(
+        (key) => watchFields[key]?.length > 0,
+      );
+    }
+
     setIsButtonDisabled(!allFieldsFilled);
   }, [watchFields, formType]);
 
@@ -228,10 +230,23 @@ function Form({
           <S.Label htmlFor={field.id}>{field.label}</S.Label>
           <S.Input
             id={field.id}
-            type={field.type}
-            placeholder={field.placeholder}
+            type={
+              field.id === 'password' || field.id === 'passwordCheck'
+                ? passwordFieldType
+                : field.type
+            }
+            placeholder={(() => {
+              if (formType === 'editProfile') {
+                if (field.id === 'email') return profile?.mail;
+                if (field.id === 'name') return profile?.name;
+              }
+              return field.placeholder;
+            })()}
+            disabled={!!(formType === 'editProfile' && field.id === 'email')}
             {...htmlInputProps}
-            {...register(field.id as keyof FormValues)}
+            {...(formType !== 'editProfile' || field.id !== 'email'
+              ? register(field.id as keyof FormValues)
+              : {})}
             onBlur={() => {
               if (field.id === 'password' || field.id === 'passwordCheck') {
                 trigger(['password', 'passwordCheck']);
@@ -241,6 +256,20 @@ function Form({
             }}
             error={!!errors[field.id as keyof FormValues]}
           />
+          {(field.id === 'password' || field.id === 'passwordCheck') && (
+            <S.EyeIcon onClick={togglePasswordFieldType}>
+              <Image
+                src={
+                  passwordFieldType === 'password'
+                    ? '/icon/eyeOff.svg'
+                    : '/icon/eyeOn.svg'
+                }
+                alt="비밀번호 토글"
+                width={24}
+                height={24}
+              />
+            </S.EyeIcon>
+          )}
           {errors[field.id as keyof FormValues] && (
             <S.Error>
               {(errors[field.id as keyof FormValues] as Error)?.message}
@@ -248,6 +277,14 @@ function Form({
           )}
         </S.Container>
       ))}
+      {formType === 'signUp' && (
+        <S.CheckWrapper>
+          <S.CheckBox id="terms" type="checkbox" {...register('terms')} />
+          <S.CheckBoxText htmlFor="terms">
+            이용약관에 동의합니다.
+          </S.CheckBoxText>
+        </S.CheckWrapper>
+      )}
       <S.Button type="submit" size={btnSize} disabled={isButtonDisabled}>
         {buttonText[formType]}
       </S.Button>
