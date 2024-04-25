@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
@@ -46,11 +46,21 @@ const S = {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
+    gap: 1.6rem;
     margin-top: 1rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      gap: 1.2rem;
+    }
   `,
 
-  PageCount: styled.div``,
+  PageCount: styled.div`
+    font-size: 1.4rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
+  `,
 
   Buttons: styled.div`
     display: flex;
@@ -69,16 +79,18 @@ const S = {
 
 function DashBoardList() {
   const [page, setPage] = useState(1);
-
+  const router = useRouter();
   const { data } = useDashboardListQuery({
     navigationMethod: 'pagination',
     page: page,
   });
 
-  console.log('대시보드목록:', data);
-
   const dashboards = data?.dashboards;
+  const totalPages = Math.ceil(data?.totalCount / 5);
 
+  const handlePrevBtnClick = () => {
+    setPage((prev) => prev - 1);
+  };
   const handleNextBtnClick = () => {
     setPage((prev) => prev + 1);
   };
@@ -90,7 +102,10 @@ function DashBoardList() {
           새로운 대시보드
         </AddIconButton>
         {dashboards?.map((board) => (
-          <S.Container key={board.id}>
+          <S.Container
+            key={board.id}
+            onClick={() => router.push(`/dashboard/${board.id}`)}
+          >
             <S.BoardTitle>
               <CircleColor color={board.color} />
               <div>
@@ -98,16 +113,23 @@ function DashBoardList() {
                 {board.createdByMe && <CrownIcon className="crown" />}
               </div>
             </S.BoardTitle>
-            <Link href={`/dashboard/${board.id}`}>
-              <RightArrow />
-            </Link>
+
+            <RightArrow />
           </S.Container>
         ))}
       </GridTemplate>
       <S.PageNavigationBox>
-        <S.PageCount>n 페이지중 n</S.PageCount>
+        <S.PageCount>
+          {totalPages} 페이지중 {page}
+        </S.PageCount>
         <S.Buttons>
-          <S.ArrowButton onClick={handleNextBtnClick}>
+          <S.ArrowButton disabled={page <= 1} onClick={handlePrevBtnClick}>
+            <ArrowLeft />
+          </S.ArrowButton>
+          <S.ArrowButton
+            disabled={page >= totalPages}
+            onClick={handleNextBtnClick}
+          >
             <ArrowRight />
           </S.ArrowButton>
         </S.Buttons>
