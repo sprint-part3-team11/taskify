@@ -19,7 +19,6 @@ const S = {
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
-    overflow: auto;
 
     ${MEDIA_QUERIES.onMobile} {
       width: calc(100% - 10px);
@@ -40,6 +39,44 @@ const S = {
     }
   `,
 
+  PageNavigationBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.6rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding-right: 0.3rem;
+      align-items: center;
+    }
+  `,
+
+  PageCount: styled.div`
+    font-size: 1.4rem;
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
+  `,
+
+  Buttons: styled.div`
+    display: flex;
+    background-color: blue;
+  `,
+
+  ArrowButton: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 2rem;
+    padding: 1.2rem;
+
+    border: ${({ theme }) => theme.border.lightGray};
+
+    background-color: ${({ theme }) => theme.color.white};
+  `,
+
   CurrentPageBox: styled.div`
     display: flex;
     align-items: center;
@@ -56,7 +93,7 @@ const S = {
   `,
 
   MemberListContainer: styled.div`
-    margin-top: 3rem;
+    margin-top: 1rem;
   `,
 
   NameTitle: styled.p`
@@ -94,7 +131,7 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       width: 5.2rem;
-      padding: 0.5rem 1.3rem;
+      padding: 0.5rem 1rem;
     }
   `,
 };
@@ -105,10 +142,19 @@ function MemberList() {
 
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useMembersListQuery(id);
+  const [page, setPage] = useState(1);
+  const { data } = useMembersListQuery({ dashboardId: id, page, size: 4 });
   const members = data?.members;
   const [list, setList] = useState(members);
   const { mutate: responseDeleteCommentMutate } = useDeleteMembersMutation();
+  const totalPages = Math.ceil(data?.totalCount / 4);
+
+  const handlePrevBtnClick = () => {
+    setPage((prev) => prev - 1);
+  };
+  const handleNextBtnClick = () => {
+    setPage((prev) => prev + 1);
+  };
 
   const remove = (id: number) => {
     const updatedList = list && list.filter((member) => member.id !== id);
@@ -120,13 +166,22 @@ function MemberList() {
     <S.MemberListLayout>
       <S.MemberListHeader>
         <S.Title>구성원</S.Title>
-        <S.CurrentPageBox>
-          <S.CurrentPage>1페이지 중 1 </S.CurrentPage>
-          <S.ButtonBox>
-            <ArrowLeft />
-            <ArrowRight />
-          </S.ButtonBox>
-        </S.CurrentPageBox>
+        <S.PageNavigationBox>
+          <S.PageCount>
+            {totalPages} 페이지중 {page}
+          </S.PageCount>
+          <S.Buttons>
+            <S.ArrowButton disabled={page <= 1} onClick={handlePrevBtnClick}>
+              <ArrowLeft />
+            </S.ArrowButton>
+            <S.ArrowButton
+              disabled={page >= totalPages}
+              onClick={handleNextBtnClick}
+            >
+              <ArrowRight />
+            </S.ArrowButton>
+          </S.Buttons>
+        </S.PageNavigationBox>
       </S.MemberListHeader>
 
       <S.MemberListContainer>

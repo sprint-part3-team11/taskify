@@ -3,11 +3,15 @@ import { API } from '@/constants/API';
 import membersApi from '@/api/members.api';
 
 // 대시보드 멤버 목록 조회
-function useMembersListQuery(dashboardId) {
+function useMembersListQuery({ dashboardId, page, size = 4 }) {
   return useQuery({
-    queryKey: [API.MEMBERS, dashboardId],
+    queryKey: [API.MEMBERS, dashboardId, page, size],
     queryFn: async () => {
-      const { data } = await membersApi.getDashboardMembers(dashboardId);
+      const { data } = await membersApi.getDashboardMembers({
+        dashboardId,
+        page,
+        size,
+      });
       return data;
     },
     // { Success or Error 처리 등의 옵션자리 }
