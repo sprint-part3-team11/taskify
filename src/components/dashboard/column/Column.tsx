@@ -1,8 +1,13 @@
-import React, { useRef } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
+import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
+import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
+import useCardListQuery from '@/hooks/query/cards/useCardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import columnsApi from '@/api/columns.api';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
 const cardInfoData = {
@@ -37,13 +42,12 @@ const S = {
     height: calc(100vh - 7rem - 1.5rem);
     min-width: 35.4rem;
     /* padding: 2rem; */
-    /* background-color: aqua; */
     overflow-y: scroll;
     border-right: ${({ theme }) => theme.border.lightGray};
 
     border-bottom: ${({ theme }) => theme.border.lightGray}; // 구분선 추가
-    // Chrome, Edge, Safari
 
+    // Chrome, Edge, Safari
     &::-webkit-scrollbar {
       display: none;
     }
@@ -54,7 +58,8 @@ const S = {
 
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
-      height: 45.5rem;
+      /* height: 45.5rem; */
+      height: 100%;
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
@@ -69,12 +74,6 @@ const S = {
     z-index: 10;
     background-color: ${({ theme }) => theme.color.background};
     padding: 2rem 2rem 0.8rem;
-    /* padding-bottom: 0.8rem; */
-    /* margin: 2rem 2rem 0rem; */
-
-    /* ${MEDIA_QUERIES.onTablet} {
-      border
-    } */
   `,
   ColumnTitleContainer: styled.div`
     display: flex;
@@ -87,7 +86,6 @@ const S = {
     display: flex;
     width: 1.6rem;
     height: 2rem;
-    /* background-color: antiquewhite; */
     align-items: center;
   `,
   ColumnTitleDotIcon: styled.div`
@@ -101,7 +99,6 @@ const S = {
     display: flex;
     height: 2rem;
     padding-top: 0.4rem;
-    /* background-color: lightblue; */
     align-items: center;
     font-size: 1.8rem;
     font-weight: 700;
@@ -136,18 +133,29 @@ const S = {
     border-radius: 5px;
     cursor: pointer;
   `,
+  SettingIcon: styled(SettingIcon)`
+    cursor: pointer;
+  `,
 };
 
-const Column = React.forwardRef(({ title }, ref) => {
-  // const containerRef = useRef(null);
-  // const scrollbarRef = useRef(null);
+const Column = React.forwardRef(({ title, id }, ref) => {
+  const [isModalOpen1, setModalOpen1] = useState(false);
+  const [isModalOpen2, setModalOpen2] = useState(false);
+  const openModal1 = () => setModalOpen1(true);
+  const openModal2 = () => setModalOpen2(true);
+  const closeModal1 = () => setModalOpen1(false);
+  const closeModal2 = () => setModalOpen2(false);
 
-  // const handleScrollbar = (e) => {
-  //   const container = containerRef.current;
-  //   const scrollbar = scrollbarRef.current;
-  //   const scrollPercentage = e.clientY / container.offsetHeight;
-  //   container.scrollTop = scrollPercentage * container.scrollHeight;
-  // };
+  const [tempColumnName, setTempColumnName] = useState(title);
+  const [cardList, setCardList] = useState([]);
+  const { data: cards } = useCardListQuery({ columnId: id });
+  // console.log(cards?.data);
+
+  const handleChange = async (columnName: string) => {};
+
+  const handleDelete = () => {
+    // delete
+  };
 
   return (
     <S.Column ref={ref}>
@@ -158,26 +166,27 @@ const Column = React.forwardRef(({ title }, ref) => {
               <S.ColumnTitleDotIcon />
             </S.ColumnTitleIconWrapper>
             <S.ColumnTitle>{title}</S.ColumnTitle>
-            <S.ColumnTaskNumber>3</S.ColumnTaskNumber>
+            <S.ColumnTaskNumber>{cards?.data.totalCount}</S.ColumnTaskNumber>
           </S.ColumnTitleWrapper>
-          <SettingIcon />
+          <S.SettingIcon onClick={openModal2} />
         </S.ColumnTitleContainer>
-        {/* 카드 데이터 추가 로직 추가 예정 */}
-        {/* <S.AddButton onClick={}/> */}
-        <S.AddButton />
+        <S.AddButton onClick={openModal1} />
       </S.ColumnTopFixedContent>
 
-      {/* <S.ColumnContentContainer ref={containerRef}> */}
+      <ToDoCreateModal isOpen={isModalOpen1} onClose={closeModal1} />
+      <ColumnsManageModal
+        isOpen={isModalOpen2}
+        onClose={closeModal2}
+        currentColumnName={tempColumnName}
+        onChange={handleChange}
+        onDelete={handleDelete}
+      />
+
       <S.ColumnContentContainer>
-        <Card cardInfoData={cardInfoData} />
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
-        {/* <Card cardInfoData={cardInfoData} /> */}
+        {cards?.data.cards.map((card, index) => (
+          <Card key={card.id} cardId={card.id} cardInfoData={cardInfoData} />
+        ))}
       </S.ColumnContentContainer>
-      {/* <S.Scrollbar ref={scrollbarRef} onMouseDown={handleScrollbar} /> */}
     </S.Column>
   );
 });

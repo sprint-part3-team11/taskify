@@ -1,22 +1,18 @@
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
 import Column from '@/components/dashboard/column/Column';
 import PageLayout from '@/components/template/PageLayout';
+import useAddColumnMutation from '@/hooks/query/columns/useAddColumnMutation';
+import useColumnListQuery from '@/hooks/query/columns/useColumnListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import columnsApi from '@/api/columns.api';
-
-// 테스트용 배열
-const dashboards = [
-  { id: '1', color: '#FFA500', name: '대시보드 1', createdByMe: true },
-  { id: '2', color: '#FF2660', name: '대시보드 2', createdByMe: true },
-  { id: '3', color: '#7AC555', name: '대시보드 3', createdByMe: false },
-];
 
 const S = {
   DashBoardWrapper: styled.div`
     display: flex;
+
     ${MEDIA_QUERIES.onTablet} {
       display: block;
     }
@@ -51,29 +47,27 @@ const S = {
 };
 
 export default function DashBoard() {
-  const [columnList, setColumnList] = useState([
-    { id: 1, name: 'To Do' },
-    { id: 2, name: 'On Progress' },
-    { id: 3, name: 'Done' },
-  ]);
-  const initialColumnsCount = useRef(columnList.length);
   const [isModalOpen, setModalOpen] = useState(false);
   const scrollRef = useRef(null);
+
+  const router = useRouter();
+  const dashboardId = router.query.id;
+
+  const { data: columns } = useColumnListQuery({ dashboardId });
+  const addColumnMutation = useAddColumnMutation();
+
+  const initialColumnsCount = useRef(columns);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
+  // useMutation 수정하여 적용
   const handleCreate = (columnName: string) => {
-    const newColumn = {
-      id: columnList.length + 1,
-      name: columnName,
-    };
-    setColumnList([...columnList, newColumn]);
-    setModalOpen(false);
+    addColumnMutation.mutate({ title: columnName, dashboardId });
   };
 
   useEffect(() => {
-    if (columnList.length > initialColumnsCount.current) {
+    if (columns?.length > initialColumnsCount.current) {
       if (scrollRef.current) {
         scrollRef.current.scrollIntoView({
           behavior: 'smooth',
@@ -83,82 +77,25 @@ export default function DashBoard() {
       }
     }
 
-    initialColumnsCount.current = columnList.length;
-  }, [columnList.length]);
-
-  // api get 테스트 해보기
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await columnsApi.getColumnList('5941');
-        console.log(response);
-      } catch (error) {
-        console.error('컬럼에러:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // api post 테스트 해보기
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await columnsApi.postCreateColumn({
-  //         title: '민준',
-  //         dashboardId: 5941,
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('컬럼에러:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // api put 테스트 해보기
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await columnsApi.putEditColumn({
-  //         title: '민준',
-  //         columnsId: '19987',
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('컬럼에러:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // api delete 테스트 해보기
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await columnsApi.deleteColumn({
-  //         title: '민준',
-  //         columnsId: '22151',
-  //       });
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('컬럼에러:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+    initialColumnsCount.current = columns?.length;
+  }, [columns?.length]);
 
   return (
     <PageLayout>
       <S.DashBoardWrapper>
-        {columnList.map((column, index) => (
+        {columns?.map((column, index) => (
           <Column
-            key={column.id}
-            name={column.name}
-            ref={index === columnList.length - 1 ? scrollRef : null}
+            key={column.id + 1}
+            id={column.id}
+            title={column.title}
+            ref={index === columns?.length - 1 ? scrollRef : null}
           />
         ))}
+
         <S.IconWrapper>
-          <S.AddIconButton onClick={openModal}>새로운 대시보드</S.AddIconButton>
+          <S.AddIconButton onClick={openModal}>
+            새로운 컬럼 추가하기
+          </S.AddIconButton>
         </S.IconWrapper>
         <NewColumnsModal
           isOpen={isModalOpen}

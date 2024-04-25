@@ -18,7 +18,7 @@ const postCreateColumn = ({ title, dashboardId }) => {
 /**
  * 컬럼 목록조회 api
  */
-const getColumnList = (dashboardId: string) => {
+const getColumnList = (dashboardId: number) => {
   return instance({
     url: API.COLUMNS,
     method: 'GET',
