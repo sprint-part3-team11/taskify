@@ -1,12 +1,5 @@
-import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import {
-  ColorSelector,
-  resultColorState,
-} from '@/components/common/ColorSelector';
-import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
+import React from 'react';
 import SelectBox from '@/components/common/SelectBox';
-import Sidebar from '@/components/common/SideBar';
 
 const selectBoxOptions = [
   { id: 1, nickname: '배유철' },
