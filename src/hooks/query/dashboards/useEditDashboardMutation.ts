@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import dashboardsApi from '@/api/dashboards.api';
 
-// 초대 응답
 function useEditDashboardMutation() {
   const queryClient = useQueryClient();
 

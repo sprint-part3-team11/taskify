@@ -33,7 +33,7 @@ const getDashboardList = ({ navigationMethod, page, size }) => {
 /**
  * 대시보드 상세조회 api
  */
-const getDashboardDetial = (dashboardId: string) => {
+const getDashboardDetail = (dashboardId: string) => {
   return instance({
     url: API_DASHBOARDS.BY_ID(dashboardId),
     method: 'GET',
@@ -100,7 +100,7 @@ const deleteDashboardInvitation = ({ dashboardId, invitationId }) => {
 export default {
   postCreateDashboard,
   getDashboardList,
-  getDashboardDetial,
+  getDashboardDetail,
   putEditDashboard,
   deleteDashboard,
   postInviteDashboard,

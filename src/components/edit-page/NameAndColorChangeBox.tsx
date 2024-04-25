@@ -1,26 +1,18 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import CircleColor from '@/components/common/CircleColor';
 import {
   ColorSelector,
   resultColorState,
 } from '@/components/common/ColorSelector';
 import Button from '@/components/common/button/Button';
-import Form from '@/components/common/form/Form';
 import InputField from '@/components/common/form/LabeledInput';
-import useWindowSize, { Size } from '@/hooks/useWindowSize';
+import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
+import useEditDashboardMutation from '@/hooks/query/dashboards/useEditDashboardMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
-const dashboardData = {
-  id: 0,
-  title: '프로젝트',
-  color: 'red',
-  createdAt: '2024-04-20T06:58:07.454Z',
-  updatedAt: '2024-04-20T06:58:07.454Z',
-  createdByMe: true,
-  userId: 0,
-};
+const ERROR_MESSAGE = '대시보드 이름 또는 색상 값이 비어있습니다.';
 
 const S = {
   DashboardForm: styled.form``,
@@ -47,6 +39,12 @@ const S = {
     justify-content: space-between;
 
     margin-bottom: 1.5rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+    }
   `,
 
   DashboardName: styled.div`
@@ -69,8 +67,23 @@ const S = {
 
   ButtonBox: styled.div`
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
+
+    ${MEDIA_QUERIES.onMobile} {
+      gap: 1rem;
+      font-size: 1.2rem;
+    }
   `,
+
+  ErrorMessage: styled.div`
+    color: ${({ theme }) => theme.color.red};
+
+    ${MEDIA_QUERIES.onMobile} {
+      margin-top: 1rem;
+    }
+  `,
+
   Button: styled(Button)`
     ${MEDIA_QUERIES.onMobile} {
       width: 8.6rem;
@@ -84,22 +97,39 @@ const S = {
 };
 
 function NameAndColorChangeBox() {
-  //   const { width }: Size = useWindowSize();
-  //   const isMobile: boolean = width !== undefined && width < 768;
+  const colorState = useRecoilValue(resultColorState);
 
-  //   const colorState = useRecoilValue(resultColorState);
-  //   console.log(colorState);
   const [dashboardName, setDashboardName] = useState('');
+  const [isError, setIsError] = useState(false);
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data } = useDetailDashboardQuery(id);
+
+  const { mutate: responseEditDashboardMutate } = useEditDashboardMutation();
+  const title = data?.title;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDashboardName(e.target.value);
   };
 
+  const handleClickChangeBtn = (e) => {
+    if (!colorState || !dashboardName) {
+      e.preventDefault();
+      setIsError(!isError);
+      return;
+    }
+    responseEditDashboardMutate({
+      dashboardId: id,
+      title: dashboardName,
+      color: colorState,
+    });
+  };
   return (
     <S.DashboardForm>
       <S.ContentContainer>
         <S.NameAndColorBox>
-          <S.DashboardName>{dashboardData.title}</S.DashboardName>
+          <S.DashboardName>{title}</S.DashboardName>
           <ColorSelector />
         </S.NameAndColorBox>
         <S.TitleInput
@@ -110,7 +140,10 @@ function NameAndColorChangeBox() {
           onChange={handleInputChange}
         />
         <S.ButtonBox>
-          <S.Button size="S">변경</S.Button>
+          {isError && <S.ErrorMessage>{ERROR_MESSAGE}</S.ErrorMessage>}
+          <S.Button onClick={handleClickChangeBtn} size="S">
+            변경
+          </S.Button>
         </S.ButtonBox>
       </S.ContentContainer>
     </S.DashboardForm>
