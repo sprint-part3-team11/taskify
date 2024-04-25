@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
 import FormInput from '@/components/common/form/Form';
-import useMyPropfileQuery from '@/hooks/query/users/useMyPropfileQuery';
+import {
+  profileImageUrlState,
+  useMyPropfileQuery,
+} from '@/hooks/query/users/useMyPropfileQuery';
 import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
 import {
   resultServerImgState,
@@ -57,15 +60,16 @@ const S = {
 };
 
 function ProfileChange() {
-  const urlImg = useRecoilValue(imgUrlState);
   const imgServerUrl = useRecoilValue<string>(resultServerImgState);
-  // profileInfo FormInput에 props로 객체 보내기
+  const setProfileImageUrl = useSetRecoilState(profileImageUrlState);
+
   const [profileInfo, setProfile] = useState({
     name: '',
     mail: '',
   });
 
   const { data: myProfile } = useMyPropfileQuery();
+  setProfileImageUrl(myProfile && myProfile.profileImageUrl);
   useEffect(() => {
     if (myProfile && myProfile.nickname && myProfile.email) {
       setProfile((prevProfile) => ({
@@ -76,16 +80,7 @@ function ProfileChange() {
     }
   }, [myProfile]);
 
-  const { mutate: profileImg } = useProfileImgUploadMutation();
-  useEffect(() => {
-    if (urlImg) {
-      profileImg(urlImg);
-    }
-  }, [urlImg]);
-
-  // editMyProfile FormInput에 props로 함수 보내기
   const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
-
   const editMyProfile = (data, imgServerUrl) => {
     editProfile(data, imgServerUrl);
   };

@@ -119,7 +119,7 @@ export default function LandingHeader() {
   const router = useRouter();
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push('/signin');
   };
   return (
     <S.MainBox>
