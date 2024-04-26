@@ -43,9 +43,9 @@ const getCardList = (columnId: string) => {
   });
 };
 
-// /**
-//  * 카드 수정 api
-//  */
+/**
+ * 카드 수정 api
+ */
 const putEditCard = (
   cardId,
   columnId,

@@ -7,7 +7,7 @@ import calendarIcon from '@/public/icon/calendarIcon.svg';
 import datePickerStyle from '@/styles/DatePickerStyle';
 
 const S = {
-  C: styled.div`
+  Container: styled.div`
     width: 100%;
     ${datePickerStyle}
   `,
@@ -27,23 +27,29 @@ const S = {
   `,
 };
 
-function DateSelector() {
+function DateSelector({ onChange }) {
   const [dueDate, setDueDate] = useState<Date | null>(null);
+
+  const handleChange = (date) => {
+    setDueDate(date);
+    onChange(date);
+  };
+
   return (
-    <S.C>
+    <S.Container>
       <S.DatePicker
-        className="나데이트"
         locale={ko}
         showIcon
         icon={calendarIcon}
         showPopperArrow={false}
         selected={dueDate}
-        onChange={(date) => setDueDate(date)}
+        onChange={handleChange}
         placeholderText="마감일을 선택해주세요"
         toggleCalendarOnIconClick
-        dateFormat="yyyy.MM.dd"
+        dateFormat="yyyy.MM.dd 👉🏻 aa h:mm"
+        showTimeSelect
       />
-    </S.C>
+    </S.Container>
   );
 }
 
