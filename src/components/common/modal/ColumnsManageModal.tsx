@@ -4,6 +4,7 @@ import Button from '@/components/common/button/Button';
 import InputField from '@/components/common/form/LabeledInput';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import useDeleteColumnMutation from '@/hooks/query/columns/useDeleteColumnMutation';
+import useEditColumnMutation from '@/hooks/query/columns/useEditColumnMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
@@ -89,6 +90,7 @@ function ColumnsManageModal({
   const [columnName, setColumnName] = useState(currentColumnName);
 
   const { mutate: responseDeleteColumnMutate } = useDeleteColumnMutation();
+  const { mutate: responseEditColumnMutate } = useEditColumnMutation();
 
   useEffect(() => {
     setColumnName(currentColumnName);
@@ -98,7 +100,7 @@ function ColumnsManageModal({
   };
 
   const handleChange = () => {
-    onChange(columnName);
+    responseEditColumnMutate({ title: columnName, columnsId });
     onClose();
   };
   const handleDelete = () => {
