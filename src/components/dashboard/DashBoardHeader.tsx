@@ -235,7 +235,7 @@ function DashBoardHeader({ myPage }: HeaderProps) {
           <TeamMemberInviteModal
             isOpen={isModalOpen5}
             onClose={closeModal5}
-            onCreate={handleEmail}
+            onSubmit={handleEmail}
           />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
