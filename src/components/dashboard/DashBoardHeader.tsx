@@ -1,10 +1,17 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import {
+  TeamMemberInviteModal,
+  inviteEmailValueState,
+} from '../common/modal/TeamMemberInviteModal';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
+import useInviteDashboardMutation from '@/hooks/query/dashboards/useInviteDashboardMutation';
 import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
@@ -176,40 +183,30 @@ const S = {
 };
 
 interface HeaderProps {
-  dashboardName: string;
-  createdByMe: boolean;
-  profileName: string;
-  profileImgURL: string;
-  invitedUsers: InvitedUsersProp[];
-  openInviteModal?: () => void;
   myPage: boolean;
 }
-interface InvitedUsersProp {
-  id: number;
-  profileImageUrl: string;
-}
 
-function DashBoardHeader({
-  dashboardName,
-  createdByMe,
-  profileName,
-  profileImgURL,
-  invitedUsers,
-  openInviteModal,
-  myPage,
-}: HeaderProps) {
+function DashBoardHeader({ myPage }: HeaderProps) {
+  const [isModalOpen5, setModalOpen5] = useState(false);
+  const openModal5 = () => setModalOpen5(true); // 모달을 여는 함수
+  const closeModal5 = () => setModalOpen5(false); // 모달을 닫는 함수
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
   const router = useRouter();
   const { id } = router.query;
+  const email = useRecoilValue(inviteEmailValueState);
 
   const { data: myProfile } = useMyPropfileQuery();
   const { data: dashBoardDetail } = useDetailDashboardQuery(id);
+  const { mutate: inviteUser } = useInviteDashboardMutation();
 
   const handleEdit = () => {
     router.push(`/dashboard/${id}/edit`);
   };
 
+  const handleEmail = () => {
+    inviteUser(email, id);
+  };
   return (
     <S.HeaderLayout>
       <S.MenuNameContainer>
@@ -230,13 +227,18 @@ function DashBoardHeader({
             </S.Button>
           )}
           <S.Button
-            onClick={openInviteModal}
             styleType={BUTTON_TYPE.SECONDARY}
             size="S"
+            onClick={openModal5}
           >
             <S.InvitationIcon />
             초대하기
           </S.Button>
+          <TeamMemberInviteModal
+            isOpen={isModalOpen5}
+            onClose={closeModal5}
+            onCreate={handleEmail}
+          />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
           <AvatarList max={isPc ? 5 : 3} dataArr={dataArr} />
