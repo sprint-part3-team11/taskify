@@ -233,7 +233,11 @@ function DashBoardHeader({
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>
           <S.ProfileImg
-            src={myProfile ? profileImageUrl : defaultImg}
+            src={
+              myProfile?.profileImageUrl
+                ? myProfile.profileImageUrl
+                : defaultImg
+            }
             width={38}
             height={38}
             alt="profileImg"
