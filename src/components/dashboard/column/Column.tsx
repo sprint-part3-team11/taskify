@@ -1,13 +1,12 @@
-import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
 import useCardListQuery from '@/hooks/query/cards/useCardListQuery';
+import useDeleteColumnMutation from '@/hooks/query/columns/useDeleteColumnMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import columnsApi from '@/api/columns.api';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
 const S = {
@@ -38,13 +37,18 @@ const S = {
 
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
-      /* height: 45.5rem; */
-      height: 100%;
+      height: 6rem;
+      height: ${({ isExpanded }) =>
+        isExpanded ? 'calc(100vh - 7rem)' : '6rem'};
+      /* height: 100%; */
+      overflow-y: scroll;
+
+      transition: height 0.3s ease-in-out;
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
-      /* height: 30rem; */
-      height: 100%;
+      height: 12rem;
+      /* height: 100%; */
       overflow-y: auto;
     }
   `,
@@ -121,23 +125,29 @@ const S = {
 const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
   const [isModalOpen1, setModalOpen1] = useState(false);
   const [isModalOpen2, setModalOpen2] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [tempColumnName, setTempColumnName] = useState(title);
+
+  const { data: cards } = useCardListQuery({ columnId: id });
+
   const openModal1 = () => setModalOpen1(true);
   const openModal2 = () => setModalOpen2(true);
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
 
-  const [tempColumnName, setTempColumnName] = useState(title);
-  const [cardList, setCardList] = useState([]);
-  const { data: cards } = useCardListQuery({ columnId: id });
+  const toggleHeight = () => {
+    setIsExpanded(!isExpanded);
+    if (ref && ref.current) {
+      setTimeout(() => {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  };
 
   const handleChange = async (columnName: string) => {};
 
-  const handleDelete = () => {
-    // delete
-  };
-
   return (
-    <S.Column ref={ref}>
+    <S.Column ref={ref} isExpanded={isExpanded} onClick={toggleHeight}>
       <S.ColumnTopFixedContent>
         <S.ColumnTitleContainer>
           <S.ColumnTitleWrapper>
@@ -162,12 +172,12 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         onClose={closeModal2}
         currentColumnName={tempColumnName}
         onChange={handleChange}
-        onDelete={handleDelete}
+        columnsId={id}
       />
 
       <S.ColumnContentContainer>
         {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} cardId={card.id} />
+          <Card key={card.id} data={card} />
         ))}
       </S.ColumnContentContainer>
     </S.Column>
