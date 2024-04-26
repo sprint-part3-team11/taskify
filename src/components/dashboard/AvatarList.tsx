@@ -8,17 +8,13 @@ function AvatarList({ max, dataArr }) {
 
   useEffect(() => {
     setTimeout(() => {
-      // api로 부터 받아온 댓글 사용자 데이터 넣기
       setData(dataArr);
-    }, 100);
+    }, 10);
   }, []);
 
-  const clickAvatarHandler = (id) => {
-    console.log(id);
-  };
   return (
     <AvatarGroup max={max}>
-      {data.map(({ nickname, profileImageUrl, id, isOwner }) => {
+      {data?.map(({ nickname, profileImageUrl, id, isOwner }) => {
         if (isOwner) return null;
         return (
           <Avatar
@@ -26,9 +22,6 @@ function AvatarList({ max, dataArr }) {
             alt={nickname}
             sx={{ bgcolor: theme.color.lightPink }}
             src={profileImageUrl}
-            onClick={() => {
-              clickAvatarHandler(id);
-            }}
           />
         );
       })}
