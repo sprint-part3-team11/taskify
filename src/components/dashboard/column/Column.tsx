@@ -38,13 +38,12 @@ const S = {
     }
   `,
   Column: styled.div`
-    /* height: calc(100vh - 7rem); */
-    height: calc(100vh - 7rem - 1.5rem);
+    height: calc(100vh - 7rem);
     min-width: 35.4rem;
-    /* padding: 2rem; */
-    overflow-y: scroll;
-    border-right: ${({ theme }) => theme.border.lightGray};
 
+    overflow-y: scroll;
+
+    border-right: ${({ theme }) => theme.border.lightGray};
     border-bottom: ${({ theme }) => theme.border.lightGray}; // 구분선 추가
 
     // Chrome, Edge, Safari

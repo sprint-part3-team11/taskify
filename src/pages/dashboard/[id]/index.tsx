@@ -12,6 +12,12 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 const S = {
   DashBoardWrapper: styled.div`
     display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     ${MEDIA_QUERIES.onTablet} {
       display: block;
