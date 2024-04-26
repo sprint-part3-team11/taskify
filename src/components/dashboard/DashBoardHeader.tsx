@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import TeamMemberInviteModal from '../common/Modal/TeamMemberInviteModal';
+import DropDown from '../common/DropDown';
 import styled from 'styled-components';
+import TeamMemberInviteModal from '@/components/common/Modal/TeamMemberInviteModal';
 import Button from '@/components/common/button/Button';
 import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
@@ -169,9 +170,9 @@ const S = {
     border-radius: 50%;
   `,
 
-  ProfileName: styled.div`
-    font-size: 1.6rem;
-    font-weight: 500;
+  ProfileName: styled(DropDown)`
+    /* font-size: 1.6rem;
+    font-weight: 500; */
 
     ${MEDIA_QUERIES.onMobile} {
       display: none;
@@ -252,7 +253,7 @@ function DashBoardHeader({ myPage }: HeaderProps) {
             height={38}
             alt="profileImg"
           />
-          <S.ProfileName>{myProfile?.nickname}</S.ProfileName>
+          <S.ProfileName userName={myProfile?.nickname} />
         </S.ProfileBox>
       </S.ButtonAndUserContainer>
     </S.HeaderLayout>

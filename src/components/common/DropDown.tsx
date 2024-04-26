@@ -1,7 +1,6 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import styled from "styled-components";
-
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import styled from 'styled-components';
 
 const S = {
   Container: styled.div`
@@ -19,6 +18,7 @@ const S = {
     justify-content: center;
     align-items: center;
     position: absolute;
+    top: 2.7rem;
     gap: 0.6rem;
     z-index: 100;
 
@@ -82,7 +82,8 @@ function DropDown({ userName }: DropDownProps) {
           </S.DropDownList>
         </S.Dropdown>
       )}
-  </S.Container>)
+    </S.Container>
+  );
 }
 
 export default DropDown;
