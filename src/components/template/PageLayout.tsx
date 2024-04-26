@@ -16,6 +16,10 @@ const S = {
     width: 100%;
     height: 100vh;
     background-color: ${({ theme }) => theme.color.background};
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `,
   BodyContainer: styled.div`
     padding: 7rem 0 0 30rem;
