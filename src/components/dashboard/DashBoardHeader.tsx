@@ -8,6 +8,7 @@ import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
 import useInviteDashboardMutation from '@/hooks/query/dashboards/useInviteDashboardMutation';
+import useDashboardMemberQuery from '@/hooks/query/member/useDashBoardMemberQuery';
 import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
@@ -194,6 +195,8 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const { data: myProfile } = useMyPropfileQuery();
   const { data: dashBoardDetail } = useDetailDashboardQuery(id);
   const { mutate: inviteUser } = useInviteDashboardMutation();
+  const { data: memberList } = useDashboardMemberQuery(id);
+  const memberLists = memberList?.members;
 
   const handleEdit = () => {
     router.push(`/dashboard/${id}/edit`);
@@ -232,11 +235,11 @@ function DashBoardHeader({ myPage }: HeaderProps) {
           <TeamMemberInviteModal
             isOpen={isModalOpen5}
             onClose={closeModal5}
-            onCreate={handleEmail}
+            onSubmit={handleEmail}
           />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
-          <AvatarList max={isPc ? 5 : 3} dataArr={dataArr} />
+          <AvatarList max={isPc ? 5 : 3} dataArr={memberLists} />
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>
           <S.ProfileImg
