@@ -5,6 +5,9 @@ import { ImgFileUpload } from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
+import { formatDueDate } from '@/utils/formatDate';
+import useCreateCardMutation from '@/hooks/query/cards/useCreateCardMutation';
+import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import { RequiredStar } from '@/styles/CommonStyle';
 
@@ -96,23 +99,30 @@ const S = {
   `,
 };
 
-const selectBoxOptions = [
-  { value: '배유철', label: '배유철' },
-  { value: '배동석', label: '배동석' },
-  { value: 'ToDo', label: '🔹To Do' },
-  { value: '박지윤', label: '박지윤' },
-  { value: '난사람', label: 'alallalalalaalalallalalalalaaalalalaalal' },
-];
-
-function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
+function ToDoCreateModal({
+  isOpen,
+  onClose,
+  isEdit = false,
+  dashboardId = 7053,
+  columnId = 23643,
+}: any) {
   const [toDoInfo, setToDoInfo] = useState({
-    assignee: '',
+    assigneeUserId: 0,
     title: '',
     description: '',
     dueDate: '',
     tags: [],
-    ...prevData,
+    imageUrl: '',
   });
+
+  const { data: membersData } = useMemeberListQuery(dashboardId);
+  const selectBoxOptions = membersData?.members;
+
+  const { mutate: createCardMutate } = useCreateCardMutation(
+    dashboardId,
+    columnId,
+    onClose,
+  );
 
   const isFilledRequiredFields = () => {
     return toDoInfo.title.trim() && toDoInfo.description.trim();
@@ -125,24 +135,58 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
     }));
   };
 
-  const isEditText = isEdit ? '수정' : '생성';
+  const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newTag = e.currentTarget.value.trim();
+      if (newTag) {
+        setToDoInfo((prev) => ({
+          ...prev,
+          tags: [...prev.tags, newTag],
+        }));
+        e.currentTarget.value = ''; //입력초기화
+      }
+    }
+  };
 
-  //@todo 수정모드 다시보기, 셀렉트박스 스타일링, 분리할거 분리, 해시태그구현, datePicker 캘린더 스타일링
+  const removeTag = (tagToRemove) => {
+    setToDoInfo((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
+
+  const handleImageUpload = (url: string) => {
+    setToDoInfo((prev) => ({
+      ...prev,
+      imageUrl: url,
+    }));
+  };
+
+  const handleCreateBtnClick = () => {
+    createCardMutate(toDoInfo);
+  };
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
-      <S.Title>📌 할 일 {isEditText}</S.Title>
+      <S.Title>📌 할 일 생성</S.Title>
       <S.FormContainer>
         <S.Low>
-          {isEdit && (
+          {/* {isEdit && (
             <S.FieldBox>
               <S.Label>상태</S.Label>
               <SelectBox options={selectBoxOptions} placeholder={true} />
             </S.FieldBox>
-          )}
+          )} */}
           <S.FieldBox>
             <S.Label>담당자</S.Label>
-            <SelectBox options={selectBoxOptions} placeholder={true} />
+            <SelectBox
+              options={selectBoxOptions}
+              placeholder={true}
+              onChange={(option) =>
+                handleOnChange('assigneeUserId', option.userId)
+              }
+            />
           </S.FieldBox>
         </S.Low>
 
@@ -172,7 +216,11 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
 
         <S.FieldBox>
           <S.Label>마감일</S.Label>
-          <DateSelector />
+          <DateSelector
+            onChange={(date) => {
+              handleOnChange('dueDate', formatDueDate(date));
+            }}
+          />
         </S.FieldBox>
 
         <S.FieldBox>
@@ -181,15 +229,25 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
             id="tag"
             type="text"
             placeholder="태그를 입력해보세요"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleOnChange('title', e.target.value)
-            }
+            onKeyPress={handleTagInput}
           />
         </S.FieldBox>
+        <div style={{ display: 'flex' }}>
+          {toDoInfo.tags.map((tag, index) => (
+            <div key={index}>
+              {tag}
+              <button onClick={() => removeTag(tag)}>X</button>
+            </div>
+          ))}
+        </div>
 
         <S.FieldBox>
           <S.Label>이미지</S.Label>
-          <ImgFileUpload edit={false} small={true} />
+          <ImgFileUpload
+            edit={false}
+            small={true}
+            onImageUpload={handleImageUpload}
+          />
         </S.FieldBox>
       </S.FormContainer>
 
@@ -197,7 +255,12 @@ function ToDoCreateModal({ isOpen, onClose, isEdit = false, prevData }: any) {
         <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
           취소
         </Button>
-        <Button disabled={!isFilledRequiredFields()}>{isEditText}</Button>
+        <Button
+          disabled={!isFilledRequiredFields()}
+          onClick={handleCreateBtnClick}
+        >
+          생성
+        </Button>
       </S.ButtonContainer>
     </BackDropModal>
   );

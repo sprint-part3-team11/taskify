@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { styled } from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import AddIconButton from '@/components/common/button/AddIconButton';
+import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import useDashboardListQuery from '@/hooks/query/dashboards/useDashboardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ArrowLeft from '@/public/icon/arrowLeft.svg';
@@ -78,8 +79,10 @@ const S = {
 };
 
 function DashBoardList() {
-  const [page, setPage] = useState(1);
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page, setPage] = useState(1);
+
   const { data } = useDashboardListQuery({
     navigationMethod: 'pagination',
     page: page,
@@ -98,9 +101,21 @@ function DashBoardList() {
   return (
     <>
       <GridTemplate>
-        <AddIconButton style={{ height: '7rem' }}>
+        <AddIconButton
+          style={{ height: '7rem' }}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
           새로운 대시보드
         </AddIconButton>
+        {isModalOpen && (
+          <NewDashBoardModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
+
         {dashboards?.map((board) => (
           <S.Container
             key={board.id}

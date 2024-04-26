@@ -1,5 +1,10 @@
-import { API, API_MEMBERS } from '@/constants/API';
+
+import { API } from '@/constants/API';
 import instance from '@/api/instance';
+
+/**
+ * 대시보드 멤버 목록 조회
+ */
 
 const getDashboardMembers = ({ dashboardId, page, size }) => {
   return instance({
