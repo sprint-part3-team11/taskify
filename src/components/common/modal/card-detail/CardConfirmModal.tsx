@@ -49,15 +49,16 @@ const stateTag = ['To Do'];
 interface ModalOpenAndCloseProps {
   isOpen: boolean;
   onClose: () => void;
+  cardId: number;
 }
-function CardConfirmModal({ isOpen, onClose }: ModalOpenAndCloseProps) {
+function CardConfirmModal({ isOpen, onClose, cardId }: ModalOpenAndCloseProps) {
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.ModalLayout>
-        <ModalHeader onClose={onClose} />
+        <ModalHeader onClose={onClose} card_Id={cardId} />
         <S.ModalBody>
-          <MainBox stateTag={stateTag} />
-          <SideBox />
+          <MainBox stateTag={stateTag} card_Id={cardId} />
+          <SideBox card_Id={cardId} />
         </S.ModalBody>
       </S.ModalLayout>
     </BackDropModal>

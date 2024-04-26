@@ -73,9 +73,12 @@ const S = {
   `,
 };
 
-function SideBox() {
+interface SideBoxProps {
+  card_Id: number;
+}
+function SideBox({ card_Id }: SideBoxProps) {
   const { data } = useDetailCardQuery({
-    cardId: 5,
+    cardId: card_Id,
   });
 
   const { nickname, profileImageUrl } =

@@ -12,9 +12,14 @@ const S = {
   `,
 };
 
-function Comment() {
-  const { data } = useCommentsListQuery({ cardId: 4975 });
+interface CommentProps {
+  card_Id: number;
+}
+function Comment({ card_Id }: CommentProps) {
+  const { data } = useCommentsListQuery({ cardId: card_Id });
+  console.log('1', data);
   const comments = data && data.comments;
+  console.log('3', comments);
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -33,13 +38,14 @@ function Comment() {
       content: comments.content,
       createdAt: comments.createdAt,
       updatedAt: comments.updatedAt,
-      cardId: 4975,
+      cardId: card_Id,
       author: {
         profileImageUrl: comments?.author?.profileImageUrl,
         nickname: comments?.author?.nickname,
         id: comments?.author?.id,
       },
     };
+    console.log(newComment);
     setList([newComment, ...list]);
   };
 
@@ -59,8 +65,8 @@ function Comment() {
 
   return (
     <S.CommentContainer>
-      <CommentForm create={create} length={list.length} />
-      <CommentList edit={edit} remove={remove} />
+      <CommentForm create={create} length={list.length} card_Id={card_Id} />
+      <CommentList edit={edit} remove={remove} card_Id={card_Id} />
     </S.CommentContainer>
   );
 }

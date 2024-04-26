@@ -24,13 +24,14 @@ const S = {
 
 interface MainBoxProps {
   stateTag: string[];
+  card_Id: number;
 }
-function MainBox({ stateTag }: MainBoxProps) {
+function MainBox({ stateTag, card_Id }: MainBoxProps) {
   return (
     <S.MainBox>
-      <TagBox stateTag={stateTag} />
-      <ContentAndImageBox />
-      <Comment />
+      <TagBox stateTag={stateTag} card_Id={card_Id} />
+      <ContentAndImageBox card_Id={card_Id} />
+      <Comment card_Id={card_Id} />
     </S.MainBox>
   );
 }

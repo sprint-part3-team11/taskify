@@ -25,10 +25,11 @@ const S = {
 
 interface TagBoxProps {
   stateTag: string[];
+  card_Id: number;
 }
-function TagBox({ stateTag }: TagBoxProps) {
+function TagBox({ stateTag, card_Id }: TagBoxProps) {
   const { data } = useDetailCardQuery({
-    cardId: 4975,
+    cardId: card_Id,
   });
   const tags = data && data.tags;
   const { width }: Size = useWindowSize();
