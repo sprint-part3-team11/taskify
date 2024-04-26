@@ -80,10 +80,15 @@ const postInviteDashboard = ({ dashboardId, email }) => {
 /**
  * 대시보드 초대 불러오는 api
  */
-const getDashboardInvitation = (dashboardId: string) => {
+const getDashboardInvitation = ({ dashboardId, page, size }) => {
   return instance({
     url: API_DASHBOARDS.INVITATIONS(dashboardId),
     method: 'GET',
+    params: {
+      dashboardId,
+      page,
+      size,
+    },
   });
 };
 

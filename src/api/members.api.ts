@@ -1,12 +1,14 @@
 import { API, API_MEMBERS } from '@/constants/API';
 import instance from '@/api/instance';
 
-const getDashboardMembers = (dashboardId) => {
+const getDashboardMembers = ({ dashboardId, page, size }) => {
   return instance({
     url: API.MEMBERS,
     method: 'GET',
     params: {
       dashboardId,
+      page,
+      size,
     },
   });
 };

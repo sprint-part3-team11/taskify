@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Button from '../common/button/Button';
 import styled from 'styled-components';
 import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
@@ -12,7 +13,7 @@ import ArrowRight from '@/public/icon/arrowRight.svg';
 const S = {
   InviteListLayout: styled.div`
     width: 62rem;
-    height: 45rem;
+    height: 40rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white};
@@ -24,6 +25,7 @@ const S = {
   InviteListHeader: styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
   `,
 
   Title: styled.p`
@@ -37,30 +39,57 @@ const S = {
 
   CurrentPageContainer: styled.div`
     display: flex;
-    gap: 0.2rem;
+    gap: 2.2rem;
     align-items: center;
 
     ${MEDIA_QUERIES.onMobile} {
       position: relative;
     }
   `,
-  CurrentPage: styled.p`
+  PageNavigationBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.6rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding-right: 0.3rem;
+      align-items: center;
+    }
+  `,
+
+  PageCount: styled.div`
     font-size: 1.4rem;
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1.2rem;
     }
   `,
 
-  ButtonBox: styled.div`
-    ${MEDIA_QUERIES.onMobile} {
-      font-size: 1.2rem;
-    }
+  Buttons: styled.div`
+    display: flex;
+    background-color: blue;
+  `,
+
+  ArrowButton: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 2rem;
+    padding: 1.2rem;
+    border: ${({ theme }) => theme.border.lightGray};
+    background-color: ${({ theme }) => theme.color.white};
   `,
 
   InviteListContainer: styled.div`
     margin-top: 3rem;
   `,
-
+  LoadingMessage: styled.h1`
+    padding: 8rem 0;
+    font-size: 2rem;
+    text-align: center;
+  `,
   EmailTitle: styled.p`
     color: ${({ theme }) => theme.color.gray};
   `,
@@ -74,6 +103,9 @@ const S = {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 0 1.5rem 0;
+
+    border-bottom: 1px solid ${({ theme }) => theme.color.grayLight};
+
     &:not(:last-child) {
       border-bottom: 1px solid ${({ theme }) => theme.color.grayLight};
     }
@@ -105,7 +137,7 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       position: absolute;
-      top: 4.5rem;
+      top: 7.8rem;
       right: 0;
       width: 8.6rem;
       height: 2.8rem;
@@ -123,11 +155,26 @@ interface InviteHistoryListProps {
 function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useLoadInvitationQuery(id);
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading } = useLoadInvitationQuery({
+    dashboardId: id,
+    page,
+    size: 4,
+  });
   const invitations = data?.invitations;
 
   const { mutate: responseInvitationCancelMutate } =
     useCancelInvitationMutation();
+
+  const totalPages = Math.ceil(data?.totalCount / 4);
+
+  const handlePrevBtnClick = () => {
+    setPage((prev) => prev - 1);
+  };
+  const handleNextBtnClick = () => {
+    setPage((prev) => prev + 1);
+  };
 
   const handleClickCancelBtn = (invitationId) => {
     responseInvitationCancelMutate({ dashboardId: id, invitationId });
@@ -138,11 +185,22 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
       <S.InviteListHeader>
         <S.Title>초대 내역</S.Title>
         <S.CurrentPageContainer>
-          <S.CurrentPage>1페이지 중 1 </S.CurrentPage>
-          <S.ButtonBox>
-            <ArrowLeft />
-            <ArrowRight />
-          </S.ButtonBox>
+          <S.PageNavigationBox>
+            <S.PageCount>
+              {totalPages} 페이지중 {page}
+            </S.PageCount>
+            <S.Buttons>
+              <S.ArrowButton disabled={page <= 1} onClick={handlePrevBtnClick}>
+                <ArrowLeft />
+              </S.ArrowButton>
+              <S.ArrowButton
+                disabled={page >= totalPages}
+                onClick={handleNextBtnClick}
+              >
+                <ArrowRight />
+              </S.ArrowButton>
+            </S.Buttons>
+          </S.PageNavigationBox>
 
           <S.InviteButton onClick={openInviteModal} size="S">
             초대하기
@@ -153,6 +211,7 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
       <S.InviteListContainer>
         <S.EmailTitle>이메일</S.EmailTitle>
         <S.InviteListContainer>
+          {isLoading && <S.LoadingMessage>불러오는 중...</S.LoadingMessage>}
           {invitations &&
             invitations.map((invitation) => (
               <S.InviteItem key={invitation?.invitee?.id}>
