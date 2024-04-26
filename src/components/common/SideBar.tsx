@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
+import useCreateDashboardMutation from '@/hooks/query/dashboards/useCreateDashboardMutation';
 import useDashboardListQuery from '@/hooks/query/dashboards/useDashboardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
@@ -154,6 +155,7 @@ function Sidebar() {
   const openModal6 = () => setModalOpen6(true);
   const closeModal6 = () => setModalOpen6(false);
   const router = useRouter();
+
   const [page, setPage] = useState(1);
 
   const { data } = useDashboardListQuery({

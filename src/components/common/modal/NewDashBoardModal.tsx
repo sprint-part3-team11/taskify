@@ -8,6 +8,7 @@ import {
 import Button from '@/components/common/button/Button';
 import InputField from '@/components/common/form/LabeledInput';
 import BackDropModal from '@/components/common/modal/BackDropModal';
+import useCreateDashboardMutation from '@/hooks/query/dashboards/useCreateDashboardMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import dashboardsApi from '@/api/dashboards.api';
 
@@ -74,6 +75,8 @@ function NewDashBoardModal({
   const [dashBoardName, setColumnName] = useState('');
   const selectedColor = useRecoilValue(resultColorState);
   const setColor = useSetRecoilState(resultColorState);
+  const { mutate: creatDashboard } = useCreateDashboardMutation();
+  console.log(dashBoardName);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
@@ -86,17 +89,9 @@ function NewDashBoardModal({
   };
 
   const handleDashBoardName = async () => {
-    try {
-      const response = await dashboardsApi.postCreateDashboard({
-        title: dashBoardName,
-        color: selectedColor,
-      });
-      onCreate(dashBoardName, selectedColor);
-      handleClose();
-      window.location.reload();
-    } catch (error) {
-      console.error('에러:', error.response.data.message);
-    }
+    onCreate(dashBoardName, selectedColor);
+    creatDashboard({ title: dashBoardName, color: selectedColor });
+    handleClose();
   };
 
   return (
