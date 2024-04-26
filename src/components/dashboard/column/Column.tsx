@@ -138,7 +138,7 @@ const S = {
   `,
 };
 
-const Column = React.forwardRef(({ title, id }, ref) => {
+const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
   const [isModalOpen1, setModalOpen1] = useState(false);
   const [isModalOpen2, setModalOpen2] = useState(false);
   const openModal1 = () => setModalOpen1(true);
@@ -173,7 +173,11 @@ const Column = React.forwardRef(({ title, id }, ref) => {
         <S.AddButton onClick={openModal1} />
       </S.ColumnTopFixedContent>
 
-      <ToDoCreateModal isOpen={isModalOpen1} onClose={closeModal1} />
+      <ToDoCreateModal
+        dashboardId={dashboardId}
+        isOpen={isModalOpen1}
+        onClose={closeModal1}
+      />
       <ColumnsManageModal
         isOpen={isModalOpen2}
         onClose={closeModal2}
@@ -184,7 +188,7 @@ const Column = React.forwardRef(({ title, id }, ref) => {
 
       <S.ColumnContentContainer>
         {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} cardId={card.id} cardInfoData={cardInfoData} />
+          <Card key={card.id} cardId={card.id} />
         ))}
       </S.ColumnContentContainer>
     </S.Column>
