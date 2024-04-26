@@ -1,11 +1,9 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import WarningModal from '@/components/common/Modal/WarningModal';
 import Form from '@/components/common/form/Form';
 import SignLayout from '@/components/template/SignLayout';
 import useSignUpMutation from '@/hooks/query/users/useSignUpMutation';
-import usersApi from '@/api/users.api';
 
 function SignUp() {
   const [open, setOpen] = useState(false);

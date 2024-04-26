@@ -78,6 +78,7 @@ function ProfileChange() {
 
   useEffect(() => {
     if (myProfile && myProfile.nickname && myProfile.email) {
+      console.log(myProfile);
       setProfile((prevProfile) => ({
         ...prevProfile,
         name: myProfile.nickname,
@@ -99,6 +100,7 @@ function ProfileChange() {
           {/* eslint-disable-next-line react/jsx-no-bind */}
           <FormInput
             onSubmit={editMyProfile}
+            profileInfo={profileInfo}
             formType="editProfile"
             btnSize="S"
           />

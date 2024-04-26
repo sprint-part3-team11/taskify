@@ -3,7 +3,7 @@ import { useState } from 'react';
 import WarningModal from '@/components/common/Modal/WarningModal';
 import Form from '@/components/common/form/Form';
 import SignLayout from '@/components/template/SignLayout';
-import useSignInMutation from '@/hooks/query/useSignInMutation';
+import useSignInMutation from '@/hooks/query/auth/useSignInMutation';
 
 function SignIn() {
   const [open, setOpen] = useState(false);

@@ -21,6 +21,9 @@ function useTeamMemberInviteModalMutation({
       // TODO 나중에 toast로 바꿔보자!
       alert('초대가 전송되었습니다!');
     },
+    onError: (error) => {
+      alert(error.response?.data?.message);
+    },
   });
 }
 
