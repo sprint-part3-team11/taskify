@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import InputField from '@/components/common/form/LabeledInput';
@@ -53,6 +54,11 @@ const S = {
   `,
 };
 
+const inviteEmailValueState = atom({
+  key: 'inviteEmailValueState', // 고유 키
+  default: '', // 기본값
+});
+
 interface TeamMemberInviteModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -64,7 +70,7 @@ function TeamMemberInviteModal({
   onClose,
   onCreate,
 }: TeamMemberInviteModalProps) {
-  const [email, setColumnName] = useState('');
+  const [email, setColumnName] = useRecoilState(inviteEmailValueState);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
@@ -107,4 +113,4 @@ function TeamMemberInviteModal({
   );
 }
 
-export default TeamMemberInviteModal;
+export { TeamMemberInviteModal, inviteEmailValueState };
