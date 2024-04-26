@@ -98,26 +98,30 @@ const S = {
 
 interface Option {
   id: number;
-  nickname: string;
+  [key: string]: unknown;
 }
-
 interface SelectBoxProps {
   options: Option[];
   placeholder: boolean;
+  displayFieldName: string;
 }
 
-function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+function SelectBox({
+  options,
+  placeholder,
+  displayFieldName,
+}: SelectBoxProps): JSX.Element {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
   const [filterText, setFilterText] = useState('');
   const optionAreaRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function handleSelectOption(option: Option): void {
+  function handleSelectOption(option): void {
     setSelectedOption(option);
     setFilterText('');
     setIsFocused(false);
-    console.log('선택된 텍스트 값:', option.nickname);
+    console.log('선택된 텍스트 값:', option[displayFieldName]);
   }
 
   useOutSideClick([optionAreaRef, inputRef], () => {
@@ -138,7 +142,7 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
       <S.Input
         ref={inputRef}
         type="text"
-        value={selectedOption ? selectedOption.nickname : filterText}
+        value={selectedOption ? selectedOption[displayFieldName] : filterText}
         onChange={handleInputChange}
         onFocus={handleInputClick}
         $isFocused={isFocused}
@@ -149,7 +153,9 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
         <S.OptionArea ref={optionAreaRef}>
           {options
             .filter((option) =>
-              option.nickname.toLowerCase().includes(filterText.toLowerCase()),
+              option[displayFieldName]
+                .toLowerCase()
+                .includes(filterText.toLowerCase()),
             )
             .map((option) => (
               <S.OptionValue
@@ -160,7 +166,7 @@ function SelectBox({ options, placeholder }: SelectBoxProps): JSX.Element {
                 <S.OptionValueText
                   $isCheckIcon={option.id === (selectedOption?.id || 0)}
                 >
-                  {option.nickname}
+                  {option[displayFieldName]}
                 </S.OptionValueText>
               </S.OptionValue>
             ))}
