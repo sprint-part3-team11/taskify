@@ -1,13 +1,11 @@
 import Image from 'next/image';
-import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
-import {
-  profileImageUrlState,
-  useMyPropfileQuery,
-} from '@/hooks/query/users/useMyPropfileQuery';
+import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
+import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -200,25 +198,37 @@ function DashBoardHeader({
   openInviteModal,
   myPage,
 }: HeaderProps) {
-  const profileImageUrl = useRecoilValue(profileImageUrlState);
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
+  const router = useRouter();
+  const { id } = router.query;
 
   const { data: myProfile } = useMyPropfileQuery();
+  const { data: dashBoardDetail } = useDetailDashboardQuery(id);
+
+  const handleEdit = () => {
+    router.push(`/dashboard/${id}/edit`);
+  };
 
   return (
     <S.HeaderLayout>
       <S.MenuNameContainer>
-        {dashboardName}
-        {createdByMe && <S.CreateByMe />}
+        {dashBoardDetail?.title}
+        {dashBoardDetail?.createdByMe && <S.CreateByMe />}
       </S.MenuNameContainer>
 
       <S.ButtonAndUserContainer>
         <S.ButtonContainer $myPage={myPage}>
-          <S.Button styleType={BUTTON_TYPE.SECONDARY} size="S">
-            <S.SettingIcon />
-            관리
-          </S.Button>
+          {dashBoardDetail?.createdByMe && (
+            <S.Button
+              styleType={BUTTON_TYPE.SECONDARY}
+              size="S"
+              onClick={handleEdit}
+            >
+              <S.SettingIcon />
+              관리
+            </S.Button>
+          )}
           <S.Button
             onClick={openInviteModal}
             styleType={BUTTON_TYPE.SECONDARY}
