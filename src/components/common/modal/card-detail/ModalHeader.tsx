@@ -90,10 +90,11 @@ const S = {
 
 interface ModalHeaderProps {
   onClose: () => void;
+  card_Id: number;
 }
-function ModalHeader({ onClose }: ModalHeaderProps) {
+function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
   const { data } = useDetailCardQuery({
-    cardId: 4975,
+    cardId: card_Id,
   });
   const title = data && data.title;
   const { mutate: responseInvitationMutate } = useDeleteCardMutation();
@@ -106,7 +107,7 @@ function ModalHeader({ onClose }: ModalHeaderProps) {
 
   const handleDeleteCard = () => {
     console.log('a');
-    responseInvitationMutate({ cardId: 4975 });
+    responseInvitationMutate({ cardId: card_Id });
     onClose();
   };
 

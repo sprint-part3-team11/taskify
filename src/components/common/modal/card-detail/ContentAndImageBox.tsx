@@ -53,9 +53,13 @@ const S = {
     }
   `,
 };
-function ContentAndImageBox() {
+
+interface ContentAndImageBoxProps {
+  card_Id: number;
+}
+function ContentAndImageBox({ card_Id }: ContentAndImageBoxProps) {
   const { data } = useDetailCardQuery({
-    cardId: 4975,
+    cardId: card_Id,
   });
   const description = data && data.description;
   const imageUrl = data && data.imageUrl;

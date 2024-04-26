@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useCreateCommentsMutation from '@/hooks/query/comments/useCreateCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import commentApi from '@/api/comment.api';
@@ -61,12 +62,19 @@ const S = {
 };
 
 interface CommentFormProps {
-  create: (inputValue: string) => void;
+  create: () => void;
   length: number;
+  card_Id: number;
 }
 
-function CommentForm({ create, length }: CommentFormProps) {
+function CommentForm({ create, length, card_Id: CARD_ID }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
+  const { data } = useDetailCardQuery({
+    cardId: CARD_ID,
+  });
+
+  const { columnId: COLUMN_ID, dashboardId: DASHBOARD_ID } = data;
+
   const { mutate: responseCreateComment } = useCreateCommentsMutation();
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,12 +86,12 @@ function CommentForm({ create, length }: CommentFormProps) {
 
     responseCreateComment({
       content: inputValue,
-      cardId: 4975,
-      columnId: 19985,
-      dashboardId: 5941,
+      cardId: CARD_ID,
+      columnId: COLUMN_ID,
+      dashboardId: DASHBOARD_ID,
     });
 
-    create(inputValue);
+    create();
     setInputValue('');
   };
 
