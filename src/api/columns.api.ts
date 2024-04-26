@@ -57,13 +57,12 @@ const deleteColumn = ({ title, columnsId }) => {
 /**
  * 카드 이미지 업로드
  */
-const postCardImage = ({ columnsId, imageUrl }) => {
+const postCardImage = ({ columnId, cardImageUrl }) => {
   return instance({
-    url: API_COLUMNS.CARD_IMAGE_UPLOAD(columnsId),
+    url: API_COLUMNS.CARD_IMAGE_UPLOAD(columnId),
     method: 'POST',
-    data: {
-      imageUrl,
-    },
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data: { image: cardImageUrl },
   });
 };
 
