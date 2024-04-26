@@ -1,10 +1,5 @@
 import Image from 'next/image';
-import React, {
-  InputHTMLAttributes,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import React, { InputHTMLAttributes, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
@@ -20,8 +15,6 @@ import {
   SignUp,
   SignUpType,
 } from '@/constants/SCHEMA';
-import eyeOff from '@/public/icon/eyeOff.svg';
-import eyeOn from '@/public/icon/eyeOn.svg';
 
 const S = {
   Form: styled.form`
@@ -130,7 +123,7 @@ type FormValues = SignInType | SignUpType | EditProfileType | EditPasswordType;
 interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
-  onSubmit?: (data) => void;
+  onSubmit?: (data: FormValues) => void;
   profileInfo?: { mail: string; name: string };
   children: React.ReactNode;
   placeholder?: { email?: string; name?: string };
