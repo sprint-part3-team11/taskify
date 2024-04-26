@@ -30,7 +30,7 @@ export const API_COMMENTS = Object.freeze({
 
 export const API_DASHBOARDS = Object.freeze({
   BY_ID: (dashboardsId: string) => `${API.DASHBOARDS}/${dashboardsId}`,
-  INVITATIONS: (dashboardsId: string) =>
+  INVITATIONS: (dashboardsId: number) =>
     `${API.DASHBOARDS}/${dashboardsId}/invitations`,
   INVITATIONS_CANCLE: (dashboardsId: string, invitationId: string) =>
     `${API.DASHBOARDS}/${dashboardsId}/invitations/${invitationId}`,

@@ -33,7 +33,7 @@ const getDashboardList = ({ navigationMethod, page, size }) => {
 /**
  * 대시보드 상세조회 api
  */
-const getDashboardDetial = (dashboardId: string) => {
+const getDashboardDetail = (dashboardId: string) => {
   return instance({
     url: API_DASHBOARDS.BY_ID(dashboardId),
     method: 'GET',
@@ -67,7 +67,14 @@ const deleteDashboard = (dashboardId: string) => {
 /**
  * 대시보드 초대 api
  */
-const postInviteDashboard = ({ dashboardId, email }) => {
+interface PostInviteDashboardProps {
+  dashboardId: number;
+  email: string;
+}
+const postInviteDashboard = ({
+  dashboardId,
+  email,
+}: PostInviteDashboardProps) => {
   return instance({
     url: API_DASHBOARDS.INVITATIONS(dashboardId),
     method: 'POST',
@@ -80,10 +87,15 @@ const postInviteDashboard = ({ dashboardId, email }) => {
 /**
  * 대시보드 초대 불러오는 api
  */
-const getDashboardInvitation = (dashboardId: string) => {
+const getDashboardInvitation = ({ dashboardId, page, size }) => {
   return instance({
     url: API_DASHBOARDS.INVITATIONS(dashboardId),
     method: 'GET',
+    params: {
+      dashboardId,
+      page,
+      size,
+    },
   });
 };
 
@@ -100,7 +112,7 @@ const deleteDashboardInvitation = ({ dashboardId, invitationId }) => {
 export default {
   postCreateDashboard,
   getDashboardList,
-  getDashboardDetial,
+  getDashboardDetail,
   putEditDashboard,
   deleteDashboard,
   postInviteDashboard,

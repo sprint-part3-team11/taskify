@@ -51,10 +51,10 @@ export default function DashBoard() {
   const scrollRef = useRef(null);
 
   const router = useRouter();
-  const dashboardId = router.query.id;
+  const dashboardId = Number(router.query.id);
 
   const { data: columns } = useColumnListQuery({ dashboardId });
-  const addColumnMutation = useAddColumnMutation();
+  const { mutate: addColumnMutation } = useAddColumnMutation();
 
   const initialColumnsCount = useRef(columns);
 
@@ -63,7 +63,7 @@ export default function DashBoard() {
 
   // useMutation 수정하여 적용
   const handleCreate = (columnName: string) => {
-    addColumnMutation.mutate({ title: columnName, dashboardId });
+    addColumnMutation({ title: columnName, dashboardId });
   };
 
   useEffect(() => {
@@ -88,6 +88,7 @@ export default function DashBoard() {
             key={column.id + 1}
             id={column.id}
             title={column.title}
+            dashboardId={dashboardId}
             ref={index === columns?.length - 1 ? scrollRef : null}
           />
         ))}
