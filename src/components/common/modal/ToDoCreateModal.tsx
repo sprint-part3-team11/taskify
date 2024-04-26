@@ -103,7 +103,6 @@ function ToDoCreateModal({
   isOpen,
   onClose,
   isEdit = false,
-  prevData,
   dashboardId = 7053,
   columnId = 23643,
 }: any) {
@@ -112,11 +111,18 @@ function ToDoCreateModal({
     title: '',
     description: '',
     dueDate: '',
-    tags: ['태그'],
-    imageUrl:
-      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/4-11_23796_1714043049934.jpeg',
-    ...prevData,
+    tags: [],
+    imageUrl: '',
   });
+
+  const { data: membersData } = useMemeberListQuery(dashboardId);
+  const selectBoxOptions = membersData?.members;
+
+  const { mutate: createCardMutate } = useCreateCardMutation(
+    dashboardId,
+    columnId,
+    onClose,
+  );
 
   const isFilledRequiredFields = () => {
     return toDoInfo.title.trim() && toDoInfo.description.trim();
@@ -128,18 +134,34 @@ function ToDoCreateModal({
       [fieldName]: value,
     }));
   };
-  console.log('폼데이터:', toDoInfo);
 
-  const isEditText = isEdit ? '수정' : '생성';
+  const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newTag = e.currentTarget.value.trim();
+      if (newTag) {
+        setToDoInfo((prev) => ({
+          ...prev,
+          tags: [...prev.tags, newTag],
+        }));
+        e.currentTarget.value = ''; //입력초기화
+      }
+    }
+  };
 
-  const { data: membersData } = useMemeberListQuery(dashboardId);
-  const selectBoxOptions = membersData?.members;
+  const removeTag = (tagToRemove) => {
+    setToDoInfo((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
 
-  const { mutate: createCardMutate } = useCreateCardMutation(
-    dashboardId,
-    columnId,
-    onClose,
-  );
+  const handleImageUpload = (url: string) => {
+    setToDoInfo((prev) => ({
+      ...prev,
+      imageUrl: url,
+    }));
+  };
 
   const handleCreateBtnClick = () => {
     createCardMutate(toDoInfo);
@@ -147,7 +169,7 @@ function ToDoCreateModal({
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
-      <S.Title>📌 할 일 {isEditText}</S.Title>
+      <S.Title>📌 할 일 생성</S.Title>
       <S.FormContainer>
         <S.Low>
           {/* {isEdit && (
@@ -207,15 +229,25 @@ function ToDoCreateModal({
             id="tag"
             type="text"
             placeholder="태그를 입력해보세요"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleOnChange('title', e.target.value)
-            }
+            onKeyPress={handleTagInput}
           />
         </S.FieldBox>
+        <div style={{ display: 'flex' }}>
+          {toDoInfo.tags.map((tag, index) => (
+            <div key={index}>
+              {tag}
+              <button onClick={() => removeTag(tag)}>X</button>
+            </div>
+          ))}
+        </div>
 
         <S.FieldBox>
           <S.Label>이미지</S.Label>
-          <ImgFileUpload edit={false} small={true} />
+          <ImgFileUpload
+            edit={false}
+            small={true}
+            onImageUpload={handleImageUpload}
+          />
         </S.FieldBox>
       </S.FormContainer>
 
@@ -227,7 +259,7 @@ function ToDoCreateModal({
           disabled={!isFilledRequiredFields()}
           onClick={handleCreateBtnClick}
         >
-          {isEditText}
+          생성
         </Button>
       </S.ButtonContainer>
     </BackDropModal>

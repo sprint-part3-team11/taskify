@@ -115,9 +115,14 @@ const S = {
 interface ImgFileUploadProps {
   edit: boolean;
   small: boolean;
+  onImageUpload?: (url: string) => void;
 }
 
-function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
+function ImgFileUpload({
+  edit,
+  small,
+  onImageUpload,
+}: ImgFileUploadProps): JSX.Element {
   const fileInputRef = useRef<HTMLInputElement>(null);
   // File 객체 데이터
   const [uploadedImage, setUploadedImage] = useRecoilState(imgUrlState);
@@ -126,11 +131,11 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   // 내 프로필 사진 (서버한테 받은)url <마이페이지에서만 사용>
   const profileImageUrl = useRecoilValue(profileImageUrlState);
 
-  const { mutate: cardImgMutate, data: cardImgServerUrl } =
+  const { mutate: cardImgMutate, data: cardImg } =
     useCardImgUploadMutation(23643);
   const { mutate: profileImg } = useProfileImgUploadMutation();
 
-  console.log('넘어온', cardImgServerUrl);
+  console.log('넘어온', cardImg?.imageUrl);
   useEffect(() => {
     if (uploadedImage) {
       profileImg(uploadedImage);
@@ -141,6 +146,7 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
     if (uploadedImage) {
       // 이미지가 업로드되면 카드 이미지 업로드 함수를 호출합니다.
       cardImgMutate(uploadedImage); // columnId 전달
+      onImageUpload(cardImg?.imageUrl);
     }
   }, [uploadedImage]);
 
