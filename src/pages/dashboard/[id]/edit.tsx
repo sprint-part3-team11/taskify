@@ -10,7 +10,7 @@ import BackButton from '@/components/my-page/BackButton';
 import PageLayout from '@/components/template/PageLayout';
 import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
 import useDeleteDashboardMutation from '@/hooks/query/dashboards/useDeleteDashboardMutation';
-import useInviteDashboardMutation from '@/hooks/query/dashboards/useInviteDashboardMutation';
+import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
@@ -28,12 +28,24 @@ const S = {
     }
   `,
 };
+
 function Edit() {
   const router = useRouter();
   const { id } = router.query;
+  const dashboardId = Number(id);
+  const [email, setEmail] = useState('');
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const { mutate: responseDeleteDashboardMutate } =
     useDeleteDashboardMutation();
+  const { mutate: invite } = useTeamMemberInviteModalMutation({
+    dashboardId,
+    email,
+  });
+
+  const InviteUser = (email: string) => {
+    setEmail(email);
+    invite({ dashboardId, email });
+  };
 
   const openInviteModal = () => {
     setIsInviteModalOpen(true);
@@ -58,8 +70,8 @@ function Edit() {
         <TeamMemberInviteModal
           isOpen={isInviteModalOpen}
           onClose={closeInviteModal}
-          onCreate={() => {
-            console.log(`api`);
+          onSubmit={(email) => {
+            InviteUser(email);
           }}
         />
         <S.Button onClick={handleDeleteDashboard}>대시보드 삭제하기</S.Button>
