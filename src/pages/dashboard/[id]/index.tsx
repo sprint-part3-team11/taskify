@@ -37,6 +37,7 @@ const S = {
       margin: 0;
     }
     ${MEDIA_QUERIES.onMobile} {
+      margin-top: 3rem;
     }
   `,
   AddIconButton: styled(AddIconButton)`
@@ -47,6 +48,9 @@ const S = {
     font-weight: 700;
 
     ${MEDIA_QUERIES.onTablet} {
+      width: 100%;
+    }
+    ${MEDIA_QUERIES.onMobile} {
       width: 100%;
     }
   `,
