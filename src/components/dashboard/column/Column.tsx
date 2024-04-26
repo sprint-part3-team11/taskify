@@ -1,33 +1,13 @@
-import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
 import useCardListQuery from '@/hooks/query/cards/useCardListQuery';
+import useDeleteColumnMutation from '@/hooks/query/columns/useDeleteColumnMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import columnsApi from '@/api/columns.api';
 import SettingIcon from '@/public/icon/settingIcon.svg';
-
-const cardInfoData = {
-  id: 0,
-  title: '새로운 일정 관리 Taskify',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo.',
-  tags: ['To Do', 'onProgress', 'Done'],
-  dueDate: '2022.12.30 19:00',
-  assignee: {
-    profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
-    nickname: 'jun',
-    id: 0,
-  },
-  imageUrl: 'https://i.ibb.co/5WsrwJY/Group-751.png',
-  teamId: '3',
-  columnId: 0,
-  createdAt: '2024-04-17T07:10:28.745Z',
-  updatedAt: '2024-04-17T07:10:28.745Z',
-};
 
 const S = {
   DashBoardWrapper: styled.div`
@@ -38,14 +18,13 @@ const S = {
     }
   `,
   Column: styled.div`
-    /* height: calc(100vh - 7rem); */
-    height: calc(100vh - 7rem - 1.5rem);
+    height: calc(100vh - 7rem);
     min-width: 35.4rem;
-    /* padding: 2rem; */
-    overflow-y: scroll;
-    border-right: ${({ theme }) => theme.border.lightGray};
 
-    border-bottom: ${({ theme }) => theme.border.lightGray}; // 구분선 추가
+    overflow-y: scroll;
+
+    border-right: ${({ theme }) => theme.border.lightGray};
+    border-bottom: ${({ theme }) => theme.border.lightGray};
 
     // Chrome, Edge, Safari
     &::-webkit-scrollbar {
@@ -58,13 +37,18 @@ const S = {
 
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
-      /* height: 45.5rem; */
-      height: 100%;
+      height: 6rem;
+      height: ${({ isExpanded }) =>
+        isExpanded ? 'calc(100vh - 7rem)' : '6rem'};
+      /* height: 100%; */
+      overflow-y: scroll;
+
+      transition: height 0.3s ease-in-out;
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
-      /* height: 30rem; */
-      height: 100%;
+      height: 12rem;
+      /* height: 100%; */
       overflow-y: auto;
     }
   `,
@@ -141,24 +125,29 @@ const S = {
 const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
   const [isModalOpen1, setModalOpen1] = useState(false);
   const [isModalOpen2, setModalOpen2] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [tempColumnName, setTempColumnName] = useState(title);
+
+  const { data: cards } = useCardListQuery({ columnId: id });
+
   const openModal1 = () => setModalOpen1(true);
   const openModal2 = () => setModalOpen2(true);
   const closeModal1 = () => setModalOpen1(false);
   const closeModal2 = () => setModalOpen2(false);
 
-  const [tempColumnName, setTempColumnName] = useState(title);
-  const [cardList, setCardList] = useState([]);
-  const { data: cards } = useCardListQuery({ columnId: id });
-  // console.log(cards?.data);
+  const toggleHeight = () => {
+    setIsExpanded(!isExpanded);
+    if (ref && ref.current) {
+      setTimeout(() => {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  };
 
   const handleChange = async (columnName: string) => {};
 
-  const handleDelete = () => {
-    // delete
-  };
-
   return (
-    <S.Column ref={ref}>
+    <S.Column ref={ref} isExpanded={isExpanded} onClick={toggleHeight}>
       <S.ColumnTopFixedContent>
         <S.ColumnTitleContainer>
           <S.ColumnTitleWrapper>
@@ -183,12 +172,12 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         onClose={closeModal2}
         currentColumnName={tempColumnName}
         onChange={handleChange}
-        onDelete={handleDelete}
+        columnsId={id}
       />
 
       <S.ColumnContentContainer>
         {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} cardId={card.id} />
+          <Card key={card.id} data={card} />
         ))}
       </S.ColumnContentContainer>
     </S.Column>

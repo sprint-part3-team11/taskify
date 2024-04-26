@@ -6,11 +6,10 @@ import BackDropModal from '@/components/common/modal/BackDropModal';
 // import CardConfirmModal from '@/components/common/modal/card-confirm/CardConfirmModal';
 // import { CardInfoProps } from '@/components/common/modal/card-confirm/types';
 import HashTag from '@/components/common/tag/HashTag';
-import useCardDetailQuery from '@/hooks/query/cards/useCardDetailQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CalendarIconTablet from '@/public/icon/smallCalendarIcon.svg';
-import landingCard from '@/public/image/landingCard.png';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   CardContainer: styled.button`
@@ -132,9 +131,8 @@ const S = {
   `,
 };
 
-function Card({ cardId }) {
-  const { data: cardDetail } = useCardDetailQuery({ cardId });
-  const cardInfoData = cardDetail?.data;
+function Card({ data }) {
+  const cardInfoData = data;
 
   const { width }: Size = useWindowSize();
   const isTablet: boolean = width !== undefined && width <= 1200;
@@ -146,13 +144,11 @@ function Card({ cardId }) {
 
   return (
     <>
-      <S.CardContainer id={cardInfoData?.id} onClick={openModal}>
+      <S.CardContainer id={cardInfoData.id} onClick={openModal}>
         {cardInfoData?.imageUrl && (
           <S.ImageWrapper>
             <S.Image
               src={cardInfoData?.imageUrl}
-              // 이미지 테스트 src
-              // src="https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/3-1_17940_1711223518438.png"
               layout="fill"
               alt="카드 이미지"
             />
@@ -175,7 +171,7 @@ function Card({ cardId }) {
               </S.CalendarIconWrapper>
               <div>
                 <S.AvatarImage
-                  src={cardInfoData?.assignee.profileImageUrl || landingCard}
+                  src={cardInfoData?.assignee.profileImageUrl || defaultImg}
                   width={isMobile ? '2.2rem' : '2.4rem'}
                   height={isMobile ? '2.2rem' : '2.4rem'}
                 />
@@ -188,6 +184,12 @@ function Card({ cardId }) {
       {/* <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
         <CardConfirmModal cardInfo_Data={cardInfo_Data} />
             </BackDropModal> */}
+
+      {/* <CardConfirmModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        cardId={cardInfoData.id}
+      /> */}
     </>
   );
 }
