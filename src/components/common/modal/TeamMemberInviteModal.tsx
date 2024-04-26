@@ -66,8 +66,6 @@ function TeamMemberInviteModal({
 }: TeamMemberInviteModalProps) {
   const [email, setEmail] = useState('');
 
-  const { mutate } = postInviteDashboard(dashboardId, email);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
