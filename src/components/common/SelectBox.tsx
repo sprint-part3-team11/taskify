@@ -103,14 +103,12 @@ interface Option {
 interface SelectBoxProps {
   options: Option[];
   placeholder: boolean;
-  onChange: (option: Option) => void;
   displayFieldName: string;
 }
 
 function SelectBox({
   options,
   placeholder,
-  onChange,
   displayFieldName,
 }: SelectBoxProps): JSX.Element {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -123,7 +121,6 @@ function SelectBox({
     setSelectedOption(option);
     setFilterText('');
     setIsFocused(false);
-    onChange(option);
   }
 
   useOutSideClick([optionAreaRef, inputRef], () => {
@@ -154,12 +151,14 @@ function SelectBox({
       {isFocused && (
         <S.OptionArea ref={optionAreaRef}>
           {options
-            .filter((option) =>
-              option[displayFieldName]
-                .toLowerCase()
-                .includes(filterText.toLowerCase()),
+            ?.filter(
+              (option) =>
+                typeof option[displayFieldName] === 'string' &&
+                option[displayFieldName]
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()),
             )
-            .map((option) => (
+            ?.map((option) => (
               <S.OptionValue
                 key={option.id}
                 onClick={() => handleSelectOption(option)}
