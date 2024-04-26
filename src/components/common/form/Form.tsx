@@ -194,10 +194,11 @@ function Form({
   const watchFields = watch();
 
   useEffect(() => {
-    if (formType === 'editProfile') {
-      setValue('email', profileInfo?.mail, { shouldValidate: false });
+    if (formType === 'editProfile' && profileInfo) {
+      setValue('email', profileInfo?.mail, { shouldValidate: true });
+      setValue('name', profileInfo?.name, { shouldValidate: true });
     }
-  }, [formType, setValue, profileInfo?.mail]);
+  }, [formType, setValue, profileInfo]);
 
   useEffect(() => {
     const requiredKeys = Keys[formType];
@@ -243,6 +244,11 @@ function Form({
               return field.placeholder;
             })()}
             disabled={!!(formType === 'editProfile' && field.id === 'email')}
+            value={
+              formType === 'editProfile' && field.id === 'email'
+                ? profileInfo?.mail
+                : undefined
+            }
             {...htmlInputProps}
             {...(formType !== 'editProfile' || field.id !== 'email'
               ? register(field.id as keyof FormValues)
