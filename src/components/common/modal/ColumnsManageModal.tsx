@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import InputField from '@/components/common/form/LabeledInput';
 import BackDropModal from '@/components/common/modal/BackDropModal';
+import useDeleteColumnMutation from '@/hooks/query/columns/useDeleteColumnMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
@@ -73,7 +74,7 @@ const S = {
 interface ColumnsManageModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onDelete: () => void;
+  columnsId: number;
   onChange: (columnName: string) => void;
   currentColumnName: string;
 }
@@ -82,10 +83,12 @@ function ColumnsManageModal({
   isOpen,
   onClose,
   onChange,
-  onDelete,
+  columnsId,
   currentColumnName = '',
 }: ColumnsManageModalProps) {
   const [columnName, setColumnName] = useState(currentColumnName);
+
+  const { mutate: responseDeleteColumnMutate } = useDeleteColumnMutation();
 
   useEffect(() => {
     setColumnName(currentColumnName);
@@ -98,6 +101,9 @@ function ColumnsManageModal({
     onChange(columnName);
     onClose();
   };
+  const handleDelete = () => {
+    responseDeleteColumnMutate({ title: columnName, columnsId });
+  };
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
@@ -109,7 +115,7 @@ function ColumnsManageModal({
         value={columnName}
         onChange={handleInputChange}
       />
-      <S.DeleteButton onClick={onDelete}>삭제하기</S.DeleteButton>
+      <S.DeleteButton onClick={handleDelete}>삭제하기</S.DeleteButton>
       <S.ButtonContainer>
         <S.ImportButton onClick={onClose} styleType="SECONDARY" size="M">
           취소
