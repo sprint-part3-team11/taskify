@@ -8,6 +8,8 @@ import PageLayout from '@/components/template/PageLayout';
 import useAddColumnMutation from '@/hooks/query/columns/useAddColumnMutation';
 import useColumnListQuery from '@/hooks/query/columns/useColumnListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import ArrowLeft from '@/public/icon/arrowLeft.svg';
+import ArrowRight from '@/public/icon/arrowRight.svg';
 
 const S = {
   DashBoardWrapper: styled.div`
@@ -47,35 +49,119 @@ const S = {
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
     }
+  `,
+  MoveToLeftButton1: styled.button`
+    position: fixed;
+    bottom: 4rem;
+    left: 34rem;
+
+    width: 4rem;
+    height: 4rem;
+    background-color: ${({ theme }) => theme.color.main};
+    border-radius: 1rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
     ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  ArrowLeft: styled(ArrowLeft)`
+    margin-right: -0.8rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  MoveToLeftButton2: styled.button`
+    position: fixed;
+    bottom: 4rem;
+    left: 38.5rem;
+
+    width: 4rem;
+    height: 4rem;
+    background-color: ${({ theme }) => theme.color.main};
+    border-radius: 1rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  MoveToRightButton1: styled.button`
+    position: fixed;
+    bottom: 4rem;
+    right: 4rem;
+
+    width: 4rem;
+    height: 4rem;
+    background-color: ${({ theme }) => theme.color.main};
+    border-radius: 1rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  ArrowRight: styled(ArrowRight)`
+    margin-right: -0.8rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  MoveToRightButton2: styled.button`
+    position: fixed;
+    bottom: 4rem;
+    right: 8.5rem;
+
+    width: 4rem;
+    height: 4rem;
+    background-color: ${({ theme }) => theme.color.main};
+    border-radius: 1rem;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
     }
   `,
 };
 
 export default function DashBoard() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const scrollRef = useRef(null);
-
-  const router = useRouter();
-  const dashboardId = Number(router.query.id);
+  const dashboardId = Number(useRouter().query.id);
 
   const { data: columns } = useColumnListQuery({ dashboardId });
   const { mutate: addColumnMutation } = useAddColumnMutation();
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const addColumnRef = useRef(null);
+  const dashboardRef = useRef(null);
   const initialColumnsCount = useRef(columns);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  // useMutation 수정하여 적용
   const handleCreate = (columnName: string) => {
     addColumnMutation({ title: columnName, dashboardId });
   };
 
   useEffect(() => {
     if (columns?.length > initialColumnsCount.current) {
-      if (scrollRef.current) {
-        scrollRef.current.scrollIntoView({
+      if (addColumnRef.current) {
+        addColumnRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'nearest',
           inline: 'start',
@@ -86,16 +172,53 @@ export default function DashBoard() {
     initialColumnsCount.current = columns?.length;
   }, [columns?.length]);
 
+  const scrollToLeft1 = () => {
+    if (dashboardRef.current) {
+      dashboardRef.current.scrollTo({
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+  const scrollToLeft2 = () => {
+    if (dashboardRef.current) {
+      dashboardRef.current.scrollBy({
+        left: -354,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollToRight1 = () => {
+    if (dashboardRef.current) {
+      const maxScrollRight =
+        dashboardRef.current.scrollWidth - dashboardRef.current.clientWidth;
+
+      dashboardRef.current.scrollTo({
+        left: maxScrollRight,
+        behavior: 'smooth',
+      });
+    }
+  };
+  const scrollToRight2 = () => {
+    if (dashboardRef.current) {
+      dashboardRef.current.scrollBy({
+        left: 354,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <PageLayout>
-      <S.DashBoardWrapper>
+      <S.DashBoardWrapper ref={dashboardRef}>
         {columns?.map((column, index) => (
           <Column
             key={column.id + 1}
             id={column.id}
             title={column.title}
             dashboardId={dashboardId}
-            ref={index === columns?.length - 1 ? scrollRef : null}
+            ref={index === columns?.length - 1 ? addColumnRef : null}
           />
         ))}
 
@@ -104,6 +227,22 @@ export default function DashBoard() {
             새로운 컬럼 추가하기
           </S.AddIconButton>
         </S.IconWrapper>
+
+        <S.MoveToLeftButton1 onClick={scrollToLeft1}>
+          <S.ArrowLeft />
+          <ArrowLeft />
+        </S.MoveToLeftButton1>
+        <S.MoveToLeftButton2 onClick={scrollToLeft2}>
+          <ArrowLeft />
+        </S.MoveToLeftButton2>
+        <S.MoveToRightButton1 onClick={scrollToRight1}>
+          <S.ArrowRight />
+          <ArrowRight />
+        </S.MoveToRightButton1>
+        <S.MoveToRightButton2 onClick={scrollToRight2}>
+          <ArrowRight />
+        </S.MoveToRightButton2>
+
         <NewColumnsModal
           isOpen={isModalOpen}
           onClose={closeModal}
