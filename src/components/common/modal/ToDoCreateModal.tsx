@@ -6,6 +6,7 @@ import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import { formatDueDate } from '@/utils/formatDate';
+import useCreateCardMutation from '@/hooks/query/cards/useCreateCardMutation';
 import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import { RequiredStar } from '@/styles/CommonStyle';
@@ -103,14 +104,17 @@ function ToDoCreateModal({
   onClose,
   isEdit = false,
   prevData,
-  dashboardId = 5941,
+  dashboardId = 7053,
+  columnId = 23643,
 }: any) {
   const [toDoInfo, setToDoInfo] = useState({
-    assignee: '',
+    assigneeUserId: 0,
     title: '',
     description: '',
     dueDate: '',
-    tags: [],
+    tags: ['태그'],
+    imageUrl:
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/4-11_23796_1714043049934.jpeg',
     ...prevData,
   });
 
@@ -124,11 +128,22 @@ function ToDoCreateModal({
       [fieldName]: value,
     }));
   };
+  console.log('폼데이터:', toDoInfo);
 
   const isEditText = isEdit ? '수정' : '생성';
 
   const { data: membersData } = useMemeberListQuery(dashboardId);
   const selectBoxOptions = membersData?.members;
+
+  const { mutate: createCardMutate } = useCreateCardMutation(
+    dashboardId,
+    columnId,
+    onClose,
+  );
+
+  const handleCreateBtnClick = () => {
+    createCardMutate(toDoInfo);
+  };
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
@@ -146,7 +161,9 @@ function ToDoCreateModal({
             <SelectBox
               options={selectBoxOptions}
               placeholder={true}
-              onChange={(option) => handleOnChange('assignee', option.id)}
+              onChange={(option) =>
+                handleOnChange('assigneeUserId', option.userId)
+              }
             />
           </S.FieldBox>
         </S.Low>
@@ -206,7 +223,12 @@ function ToDoCreateModal({
         <Button styleType={BUTTON_TYPE.SECONDARY} onClick={onClose}>
           취소
         </Button>
-        <Button disabled={!isFilledRequiredFields()}>{isEditText}</Button>
+        <Button
+          disabled={!isFilledRequiredFields()}
+          onClick={handleCreateBtnClick}
+        >
+          {isEditText}
+        </Button>
       </S.ButtonContainer>
     </BackDropModal>
   );
