@@ -62,14 +62,20 @@ const S = {
 function ProfileChange() {
   const imgServerUrl = useRecoilValue<string>(resultServerImgState);
   const setProfileImageUrl = useSetRecoilState(profileImageUrlState);
-
+  const profileImageUrl = useRecoilValue(profileImageUrlState);
   const [profileInfo, setProfile] = useState({
     name: '',
     mail: '',
   });
-
   const { data: myProfile } = useMyPropfileQuery();
+  const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
+
   setProfileImageUrl(myProfile && myProfile.profileImageUrl);
+
+  const editMyProfile = (data, imgServerUrl) => {
+    editProfile(data, imgServerUrl || profileImageUrl);
+  };
+
   useEffect(() => {
     if (myProfile && myProfile.nickname && myProfile.email) {
       setProfile((prevProfile) => ({
@@ -79,11 +85,6 @@ function ProfileChange() {
       }));
     }
   }, [myProfile]);
-
-  const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
-  const editMyProfile = (data, imgServerUrl) => {
-    editProfile(data, imgServerUrl);
-  };
 
   return (
     <S.Container>
