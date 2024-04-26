@@ -56,27 +56,29 @@ const S = {
 interface TeamMemberInviteModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (email: string) => void;
+  onSubmit: (email: string) => void;
 }
 
 function TeamMemberInviteModal({
   isOpen,
   onClose,
-  onCreate,
+  onSubmit,
 }: TeamMemberInviteModalProps) {
-  const [email, setColumnName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const { mutate } = postInviteDashboard(dashboardId, email);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColumnName(e.target.value);
+    setEmail(e.target.value);
   };
 
   const handleClose = () => {
-    setColumnName('');
+    setEmail('');
     onClose();
   };
 
   const handleEmail = () => {
-    onCreate(email);
+    onSubmit(email);
     handleClose();
   };
 
@@ -84,7 +86,7 @@ function TeamMemberInviteModal({
     <BackDropModal isOpen={isOpen} onClose={handleClose}>
       <S.Title>초대하기</S.Title>
       <S.Input
-        label="이름"
+        label="이메일"
         id="inviteTeamMember"
         placeholder="codeit@codeit.com"
         value={email}

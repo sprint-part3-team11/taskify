@@ -58,7 +58,7 @@ function Edit() {
         <TeamMemberInviteModal
           isOpen={isInviteModalOpen}
           onClose={closeInviteModal}
-          onCreate={() => {
+          onSubmit={() => {
             console.log(`api`);
           }}
         />
