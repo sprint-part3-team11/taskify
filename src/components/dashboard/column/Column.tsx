@@ -10,25 +10,6 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import columnsApi from '@/api/columns.api';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
-const cardInfoData = {
-  id: 0,
-  title: '새로운 일정 관리 Taskify',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo.',
-  tags: ['To Do', 'onProgress', 'Done'],
-  dueDate: '2022.12.30 19:00',
-  assignee: {
-    profileImageUrl: 'https://i.ibb.co/ysRQMyj/me.jpg',
-    nickname: 'jun',
-    id: 0,
-  },
-  imageUrl: 'https://i.ibb.co/5WsrwJY/Group-751.png',
-  teamId: '3',
-  columnId: 0,
-  createdAt: '2024-04-17T07:10:28.745Z',
-  updatedAt: '2024-04-17T07:10:28.745Z',
-};
-
 const S = {
   DashBoardWrapper: styled.div`
     display: flex;
@@ -44,7 +25,7 @@ const S = {
     overflow-y: scroll;
 
     border-right: ${({ theme }) => theme.border.lightGray};
-    border-bottom: ${({ theme }) => theme.border.lightGray}; // 구분선 추가
+    border-bottom: ${({ theme }) => theme.border.lightGray};
 
     // Chrome, Edge, Safari
     &::-webkit-scrollbar {
@@ -148,7 +129,6 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
   const [tempColumnName, setTempColumnName] = useState(title);
   const [cardList, setCardList] = useState([]);
   const { data: cards } = useCardListQuery({ columnId: id });
-  // console.log(cards?.data);
 
   const handleChange = async (columnName: string) => {};
 
