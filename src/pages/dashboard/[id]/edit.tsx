@@ -10,10 +10,7 @@ import BackButton from '@/components/my-page/BackButton';
 import PageLayout from '@/components/template/PageLayout';
 import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
 import useDeleteDashboardMutation from '@/hooks/query/dashboards/useDeleteDashboardMutation';
-import useInviteDashboardMutation from '@/hooks/query/dashboards/useInviteDashboardMutation';
-import useTeamMemberInviteModalMutation, {
-  UseTeamMemberInviteModalMutationProps,
-} from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
+import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
