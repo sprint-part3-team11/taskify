@@ -1,13 +1,9 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import {
-  TeamMemberInviteModal,
-  inviteEmailValueState,
-} from '../common/modal/TeamMemberInviteModal';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
@@ -194,7 +190,6 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const isPc: boolean = width !== undefined && width >= 1200;
   const router = useRouter();
   const { id } = router.query;
-  const email = useRecoilValue(inviteEmailValueState);
 
   const { data: myProfile } = useMyPropfileQuery();
   const { data: dashBoardDetail } = useDetailDashboardQuery(id);
@@ -204,8 +199,8 @@ function DashBoardHeader({ myPage }: HeaderProps) {
     router.push(`/dashboard/${id}/edit`);
   };
 
-  const handleEmail = () => {
-    inviteUser(email, id);
+  const handleEmail = (email: string) => {
+    inviteUser({ dashboardId: id, email });
   };
   return (
     <S.HeaderLayout>
