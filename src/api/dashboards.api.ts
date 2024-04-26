@@ -68,7 +68,7 @@ const deleteDashboard = (dashboardId: string) => {
  * 대시보드 초대 api
  */
 interface PostInviteDashboardProps {
-  dashboardId: string;
+  dashboardId: number;
   email: string;
 }
 const postInviteDashboard = ({
