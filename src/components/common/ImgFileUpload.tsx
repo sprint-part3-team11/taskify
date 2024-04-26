@@ -6,6 +6,7 @@ import {
   useSetRecoilState,
 } from 'recoil';
 import styled from 'styled-components';
+import { useCardImgUploadMutation } from '@/hooks/query/cards/useCardImgUploadMutation';
 import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
 import {
   resultServerImgState,
@@ -125,10 +126,21 @@ function ImgFileUpload({ edit, small }: ImgFileUploadProps): JSX.Element {
   // 내 프로필 사진 (서버한테 받은)url <마이페이지에서만 사용>
   const profileImageUrl = useRecoilValue(profileImageUrlState);
 
+  const { mutate: cardImgMutate, data: cardImgServerUrl } =
+    useCardImgUploadMutation(23643);
   const { mutate: profileImg } = useProfileImgUploadMutation();
+
+  console.log('넘어온', cardImgServerUrl);
   useEffect(() => {
     if (uploadedImage) {
       profileImg(uploadedImage);
+    }
+  }, [uploadedImage]);
+
+  useEffect(() => {
+    if (uploadedImage) {
+      // 이미지가 업로드되면 카드 이미지 업로드 함수를 호출합니다.
+      cardImgMutate(uploadedImage); // columnId 전달
     }
   }, [uploadedImage]);
 
