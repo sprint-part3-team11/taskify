@@ -1,13 +1,14 @@
 import Image from 'next/image';
-import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
+import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import AvatarList from '@/components/dashboard/AvatarList';
 import dataArr from '@/components/dashboard/mockData';
-import {
-  profileImageUrlState,
-  useMyPropfileQuery,
-} from '@/hooks/query/users/useMyPropfileQuery';
+import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
+import useInviteDashboardMutation from '@/hooks/query/dashboards/useInviteDashboardMutation';
+import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -178,55 +179,61 @@ const S = {
 };
 
 interface HeaderProps {
-  dashboardName: string;
-  createdByMe: boolean;
-  profileName: string;
-  profileImgURL: string;
-  invitedUsers: InvitedUsersProp[];
-  openInviteModal?: () => void;
   myPage: boolean;
 }
-interface InvitedUsersProp {
-  id: number;
-  profileImageUrl: string;
-}
 
-function DashBoardHeader({
-  dashboardName,
-  createdByMe,
-  profileName,
-  profileImgURL,
-  invitedUsers,
-  openInviteModal,
-  myPage,
-}: HeaderProps) {
-  const profileImageUrl = useRecoilValue(profileImageUrlState);
+function DashBoardHeader({ myPage }: HeaderProps) {
+  const [isModalOpen5, setModalOpen5] = useState(false);
+  const openModal5 = () => setModalOpen5(true); // 모달을 여는 함수
+  const closeModal5 = () => setModalOpen5(false); // 모달을 닫는 함수
   const { width }: Size = useWindowSize();
   const isPc: boolean = width !== undefined && width >= 1200;
+  const router = useRouter();
+  const { id } = router.query;
 
   const { data: myProfile } = useMyPropfileQuery();
+  const { data: dashBoardDetail } = useDetailDashboardQuery(id);
+  const { mutate: inviteUser } = useInviteDashboardMutation();
 
+  const handleEdit = () => {
+    router.push(`/dashboard/${id}/edit`);
+  };
+
+  const handleEmail = (email: string) => {
+    inviteUser({ dashboardId: id, email });
+  };
   return (
     <S.HeaderLayout>
       <S.MenuNameContainer>
-        {dashboardName}
-        {createdByMe && <S.CreateByMe />}
+        {dashBoardDetail?.title}
+        {dashBoardDetail?.createdByMe && <S.CreateByMe />}
       </S.MenuNameContainer>
 
       <S.ButtonAndUserContainer>
         <S.ButtonContainer $myPage={myPage}>
-          <S.Button styleType={BUTTON_TYPE.SECONDARY} size="S">
-            <S.SettingIcon />
-            관리
-          </S.Button>
+          {dashBoardDetail?.createdByMe && (
+            <S.Button
+              styleType={BUTTON_TYPE.SECONDARY}
+              size="S"
+              onClick={handleEdit}
+            >
+              <S.SettingIcon />
+              관리
+            </S.Button>
+          )}
           <S.Button
-            onClick={openInviteModal}
             styleType={BUTTON_TYPE.SECONDARY}
             size="S"
+            onClick={openModal5}
           >
             <S.InvitationIcon />
             초대하기
           </S.Button>
+          <TeamMemberInviteModal
+            isOpen={isModalOpen5}
+            onClose={closeModal5}
+            onCreate={handleEmail}
+          />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
           <AvatarList max={isPc ? 5 : 3} dataArr={dataArr} />
