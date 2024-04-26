@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import DropDown from '../common/DropDown';
 import styled from 'styled-components';
+import DropDown from '@/components/common/DropDown';
 import TeamMemberInviteModal from '@/components/common/Modal/TeamMemberInviteModal';
 import Button from '@/components/common/button/Button';
 import AvatarList from '@/components/dashboard/AvatarList';

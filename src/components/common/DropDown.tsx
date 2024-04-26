@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
+import useOutSideClick from '@/hooks/useClickOutside';
 
 const S = {
   Container: styled.div`
@@ -29,6 +30,8 @@ const S = {
     background-color: ${({ theme }) => theme.color.white};
 
     font-size: 1.4rem;
+
+    box-shadow: 0.5rem 0.5rem 10rem ${({ theme }) => theme.color.grayLight};
   `,
   DropDownList: styled.li`
     display: flex;
@@ -54,7 +57,13 @@ interface DropDownProps {
 
 function DropDown({ userName }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const optionAreaRef = useRef<HTMLUListElement>(null);
+
   const router = useRouter();
+
+  useOutSideClick([optionAreaRef], () => {
+    setIsOpen(false);
+  });
 
   const handleDropDown = () => {
     setIsOpen(!isOpen);
@@ -70,7 +79,7 @@ function DropDown({ userName }: DropDownProps) {
         {userName}
       </S.DropDownBtn>
       {isOpen && (
-        <S.Dropdown>
+        <S.Dropdown ref={optionAreaRef}>
           <S.DropDownList onClick={() => handleList('/')}>
             로그아웃
           </S.DropDownList>
