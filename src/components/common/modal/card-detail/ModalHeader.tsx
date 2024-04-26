@@ -106,7 +106,6 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
   };
 
   const handleDeleteCard = () => {
-    console.log('a');
     responseInvitationMutate({ cardId: card_Id });
     onClose();
   };

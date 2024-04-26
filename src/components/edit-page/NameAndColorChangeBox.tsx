@@ -115,10 +115,10 @@ function NameAndColorChangeBox() {
   };
 
   const handleClickChangeBtn = (e) => {
+    e.preventDefault();
+
     if (!colorState || !dashboardName) {
-      e.preventDefault();
-      setIsError(!isError);
-      return;
+      return setIsError(!isError);
     }
     responseEditDashboardMutate({
       dashboardId: id,

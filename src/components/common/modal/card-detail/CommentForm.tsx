@@ -46,7 +46,7 @@ const S = {
   Button: styled(Button)`
     position: absolute;
     bottom: 1rem;
-    right: 1rem;
+    right: 3rem;
 
     ${MEDIA_QUERIES.onMobile} {
       right: 3rem;
@@ -73,7 +73,8 @@ function CommentForm({ create, length, card_Id: CARD_ID }: CommentFormProps) {
     cardId: CARD_ID,
   });
 
-  const { columnId: COLUMN_ID, dashboardId: DASHBOARD_ID } = data;
+  const COLUMN_ID = data?.columnId;
+  const DASHBOARD_ID = data?.dashboardId;
 
   const { mutate: responseCreateComment } = useCreateCommentsMutation();
 
