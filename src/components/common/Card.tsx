@@ -10,7 +10,7 @@ import useCardDetailQuery from '@/hooks/query/cards/useCardDetailQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CalendarIconTablet from '@/public/icon/smallCalendarIcon.svg';
-import landingCard from '@/public/image/landingCard.png';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   CardContainer: styled.button`
@@ -175,7 +175,7 @@ function Card({ cardId }) {
               </S.CalendarIconWrapper>
               <div>
                 <S.AvatarImage
-                  src={cardInfoData?.assignee.profileImageUrl || landingCard}
+                  src={cardInfoData?.assignee.profileImageUrl || defaultImg}
                   width={isMobile ? '2.2rem' : '2.4rem'}
                   height={isMobile ? '2.2rem' : '2.4rem'}
                 />
