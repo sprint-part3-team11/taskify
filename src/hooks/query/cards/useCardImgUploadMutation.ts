@@ -10,9 +10,7 @@ function useCardImgUploadMutation(columnId) {
       });
       return data;
     },
-    onSuccess: (data) => {
-      console.log('요청성공');
-    },
+    onSuccess: (data) => {},
   });
 }
 

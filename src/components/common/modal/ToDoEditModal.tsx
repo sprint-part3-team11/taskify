@@ -123,13 +123,13 @@ function ToDoEditModal({
   imageUrl,
 }: any) {
   const [toDoInfo, setToDoInfo] = useState({
-    columnId: columnId,
+    columnId,
     assigneeUserId: assignee.id,
-    title: title,
-    description: description,
-    dueDate: dueDate,
-    tags: tags,
-    imageUrl: imageUrl,
+    title,
+    description,
+    dueDate,
+    tags,
+    imageUrl,
   });
   const dashId = Number(dashboardId);
 
@@ -158,7 +158,7 @@ function ToDoEditModal({
           ...prev,
           tags: [...prev.tags, newTag],
         }));
-        e.currentTarget.value = ''; //입력초기화
+        e.currentTarget.value = ''; // 입력초기화
       }
     }
   };
@@ -180,8 +180,6 @@ function ToDoEditModal({
   const handleEditBtnClick = () => {
     editMutate(toDoInfo);
   };
-
-  console.log(assignee.nickname);
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
@@ -274,11 +272,7 @@ function ToDoEditModal({
 
         <S.FieldBox>
           <S.Label>이미지</S.Label>
-          <ImgFileUpload
-            edit={true}
-            small={true}
-            onImageUpload={handleImageUpload}
-          />
+          <ImgFileUpload edit small onImageUpload={handleImageUpload} />
         </S.FieldBox>
       </S.FormContainer>
 

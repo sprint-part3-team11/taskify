@@ -17,9 +17,7 @@ interface CommentProps {
 }
 function Comment({ card_Id }: CommentProps) {
   const { data } = useCommentsListQuery({ cardId: card_Id });
-  console.log('1', data);
   const comments = data && data.comments;
-  console.log('3', comments);
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -45,7 +43,7 @@ function Comment({ card_Id }: CommentProps) {
         id: comments?.author?.id,
       },
     };
-    console.log('new', newComment);
+
     setList([newComment, ...list]);
   };
 

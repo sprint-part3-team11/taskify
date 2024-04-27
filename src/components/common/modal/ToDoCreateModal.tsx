@@ -141,8 +141,6 @@ function ToDoCreateModal({
       ...prev,
       [fieldName]: value,
     }));
-
-    console.log('롬', toDoInfo);
   };
 
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -154,7 +152,7 @@ function ToDoCreateModal({
           ...prev,
           tags: [...prev.tags, newTag],
         }));
-        e.currentTarget.value = ''; //입력초기화
+        e.currentTarget.value = ''; // 입력초기화
       }
     }
   };
@@ -186,7 +184,7 @@ function ToDoCreateModal({
             <S.Label>담당자</S.Label>
             <SelectBox
               options={selectBoxOptions}
-              placeholder={true}
+              placeholder
               onChange={(option) =>
                 handleOnChange('assigneeUserId', option.userId)
               }
@@ -255,7 +253,7 @@ function ToDoCreateModal({
           <S.Label>이미지</S.Label>
           <ImgFileUpload
             edit={false}
-            small={true}
+            small
             onImageUpload={handleImageUpload}
             columnId={columnId}
           />
