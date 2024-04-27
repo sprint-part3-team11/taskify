@@ -117,8 +117,8 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    gap: 1.6rem;
+    align-items: center;
+    gap: 1rem;
     margin-top: 12rem;
     ${MEDIA_QUERIES.onMobile} {
       display: none;
@@ -126,6 +126,8 @@ const S = {
   `,
 
   PageCount: styled.div`
+    display: flex;
+    text-align: center;
     font-size: 1.4rem;
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1.2rem;
@@ -134,7 +136,6 @@ const S = {
 
   Buttons: styled.div`
     display: flex;
-    background-color: blue;
   `,
 
   ArrowButton: styled.button`
@@ -220,9 +221,6 @@ function Sidebar() {
         />
       </ul>
       <S.PageNavigationBox>
-        <S.PageCount>
-          {totalPages} 페이지중 {page}
-        </S.PageCount>
         <S.Buttons>
           <S.ArrowButton disabled={page <= 1} onClick={handlePrevBtnClick}>
             <ArrowLeft />
@@ -234,6 +232,9 @@ function Sidebar() {
             <ArrowRight />
           </S.ArrowButton>
         </S.Buttons>
+        <S.PageCount>
+          {page} / {totalPages}
+        </S.PageCount>
       </S.PageNavigationBox>
     </S.SidebarWrapper>
   );
