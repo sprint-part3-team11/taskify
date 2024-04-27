@@ -33,11 +33,13 @@ const postCard = ({
 /**
  * 카드 목록 조회 api
  */
-const getCardList = (columnId: string) => {
+const getCardList = ({ size, cursorId, columnId }) => {
   return instance({
     url: API.CARDS,
     method: 'GET',
     params: {
+      size,
+      cursorId,
       columnId,
     },
   });
@@ -59,7 +61,7 @@ const putEditCard = (
   return instance({
     url: API_CARDS.BY_ID(cardId),
     method: 'PUT',
-    params: {
+    data: {
       columnId,
       assigneeUserId,
       title,
