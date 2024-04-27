@@ -61,7 +61,6 @@ const S = {
 
     font-size: 1.4rem;
 
-
     box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
 
     ${MEDIA_QUERIES.onMobile} {
@@ -113,7 +112,6 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
   const { mutate: responseInvitationMutate } = useDeleteCardMutation();
 
   const [isOpen, setIsOpen] = useState(false);
-  const optionAreaRef = useRef<HTMLUListElement>(null);
 
   const router = useRouter();
 
