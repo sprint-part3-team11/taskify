@@ -7,7 +7,8 @@ import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import HashTag from '@/components/common/tag/HashTag';
 import { formatDueDate } from '@/utils/formatDate';
-import useCreateCardMutation from '@/hooks/query/cards/useCreateCardMutation';
+import useEditCardMutation from '@/hooks/query/cards/useEditCardMutation';
+import useColumnListQuery from '@/hooks/query/columns/useColumnListQuery';
 import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import { RequiredStar } from '@/styles/CommonStyle';
@@ -108,29 +109,34 @@ const S = {
   `,
 };
 
-function ToDoCreateModal({
+function ToDoEditModal({
   isOpen,
   onClose,
-  dashboardId = 7373, // 받아오면 기본값 삭제
-  columnId = 24728, // 받아오면 삭제
+  id: cardId,
+  dashboardId,
+  columnId,
+  title,
+  description,
+  dueDate,
+  tags,
+  assignee,
+  imageUrl,
 }: any) {
   const [toDoInfo, setToDoInfo] = useState({
-    assigneeUserId: 0,
-    title: '',
-    description: '',
-    dueDate: '',
-    tags: [],
-    imageUrl: '',
+    columnId: columnId,
+    assigneeUserId: assignee.id,
+    title: title,
+    description: description,
+    dueDate: dueDate,
+    tags: tags,
+    imageUrl: imageUrl,
   });
+  const dashId = Number(dashboardId);
 
   const { data: membersData } = useMemeberListQuery(dashboardId);
-  const selectBoxOptions = membersData?.members;
-
-  const { mutate: createCardMutate } = useCreateCardMutation(
-    dashboardId,
-    columnId,
-    onClose,
-  );
+  const assigneeOptions = membersData?.members;
+  const { data: stateOptions } = useColumnListQuery(dashId);
+  const { mutate: editMutate } = useEditCardMutation(onClose, cardId);
 
   const isFilledRequiredFields = () => {
     return toDoInfo.title.trim() && toDoInfo.description.trim();
@@ -141,8 +147,6 @@ function ToDoCreateModal({
       ...prev,
       [fieldName]: value,
     }));
-
-    console.log('롬', toDoInfo);
   };
 
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -173,20 +177,33 @@ function ToDoCreateModal({
     }));
   };
 
-  const handleCreateBtnClick = () => {
-    createCardMutate(toDoInfo);
+  const handleEditBtnClick = () => {
+    editMutate(toDoInfo);
   };
+
+  console.log(assignee.nickname);
 
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
-      <S.Title>📌 할 일 생성</S.Title>
+      <S.Title>📌 할 일 수정</S.Title>
       <S.FormContainer>
         <S.Low>
           <S.FieldBox>
+            <S.Label>상태</S.Label>
+            <SelectBox
+              // initialValue={assignee} // 컬럼명이들어가야함
+              options={stateOptions}
+              placeholder={false}
+              onChange={(option) => handleOnChange('columnId', option.id)}
+              displayFieldName="title"
+            />
+          </S.FieldBox>
+          <S.FieldBox>
             <S.Label>담당자</S.Label>
             <SelectBox
-              options={selectBoxOptions}
-              placeholder={true}
+              // initialValue={assignee}
+              options={assigneeOptions}
+              placeholder={false}
               onChange={(option) =>
                 handleOnChange('assigneeUserId', option.userId)
               }
@@ -202,7 +219,7 @@ function ToDoCreateModal({
           <S.Input
             id="title"
             type="text"
-            placeholder="제목을 입력해주세요"
+            value={toDoInfo.title}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleOnChange('title', e.target.value)
             }
@@ -210,9 +227,12 @@ function ToDoCreateModal({
         </S.FieldBox>
 
         <S.FieldBox>
-          <S.Label className="required">설명</S.Label>
+          <S.Label htmlFor="description" className="required">
+            설명
+          </S.Label>
           <S.Textarea
-            placeholder="설명을 입력해주세요"
+            id="description"
+            value={toDoInfo.description}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleOnChange('description', e.target.value)
             }
@@ -222,6 +242,7 @@ function ToDoCreateModal({
         <S.FieldBox>
           <S.Label>마감일</S.Label>
           <DateSelector
+            value={formatDueDate(toDoInfo.dueDate)}
             onChange={(date) => {
               handleOnChange('dueDate', formatDueDate(date));
             }}
@@ -233,7 +254,7 @@ function ToDoCreateModal({
           <S.Input
             id="tag"
             type="text"
-            placeholder="태그를 입력해보세요"
+            placeholder="태그 입력후 Enter!"
             onKeyPress={handleTagInput}
           />
         </S.FieldBox>
@@ -254,10 +275,9 @@ function ToDoCreateModal({
         <S.FieldBox>
           <S.Label>이미지</S.Label>
           <ImgFileUpload
-            edit={false}
+            edit={true}
             small={true}
             onImageUpload={handleImageUpload}
-            columnId={columnId}
           />
         </S.FieldBox>
       </S.FormContainer>
@@ -268,13 +288,13 @@ function ToDoCreateModal({
         </Button>
         <Button
           disabled={!isFilledRequiredFields()}
-          onClick={handleCreateBtnClick}
+          onClick={handleEditBtnClick}
         >
-          생성
+          수정
         </Button>
       </S.ButtonContainer>
     </BackDropModal>
   );
 }
 
-export default ToDoCreateModal;
+export default ToDoEditModal;
