@@ -13,10 +13,7 @@ const Validation = {
   SignInPassword: z.string().min(1, '비밀번호를 입력해주세요.'),
   password: z
     .string()
-    .regex(
-      REGEX.PASSWORD,
-      '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.',
-    ),
+    .regex(REGEX.PASSWORD, '영문+숫자+특수문자 조합 8~15자리를 입력해주세요.'),
   passwordCheck: z.string(),
   nowPassword: z.string().min(1, '현재 비밀번호를 입력해주세요.'),
   newPassword: z.string(),
