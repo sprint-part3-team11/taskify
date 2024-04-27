@@ -72,13 +72,13 @@ export default function Footer() {
         <S.Text>FAQ</S.Text>
       </S.PrivacyPolicyAndFAQWrapper>
       <S.IconWrapper>
-        <Link href="/">
+        <Link href="https://www.google.com/intl/ko/gmail/about/">
           <Emil />
         </Link>
-        <Link href="/">
+        <Link href="https://www.facebook.com/?locale=ko_KR">
           <Facebook />
         </Link>
-        <Link href="/">
+        <Link href="https://www.instagram.com/">
           <Insta />
         </Link>
       </S.IconWrapper>
