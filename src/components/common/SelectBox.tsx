@@ -179,3 +179,5 @@ function SelectBox({
     </S.InputContainer>
   );
 }
+
+export default SelectBox;
