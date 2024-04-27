@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
+import CardLoader from '@/components/dashboard/column/CardLoader';
 import useCardListQuery from '@/hooks/query/cards/useCardListQuery';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
@@ -38,7 +40,7 @@ const S = {
         isExpanded && cardCount === 0
           ? '12.5rem'
           : isExpanded
-            ? 'calc(45.5rem)'
+            ? 'calc(45.3rem)'
             : '6rem'};
 
       overflow-y: ${({ isExpanded }) => (isExpanded ? 'scroll' : 'hidden')};
@@ -150,14 +152,21 @@ const S = {
 };
 
 const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
+  const loaderRef = useRef();
   const [isModalOpen1, setModalOpen1] = useState(false);
   const [isModalOpen2, setModalOpen2] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [tempColumnName, setTempColumnName] = useState(title);
 
-  const { data: cards } = useCardListQuery({ columnId: id });
+  const { data: cards, fetchNextPage } = useCardListQuery({ columnId: id });
 
-  const cardCount = cards?.data.totalCount || 0;
+  const isLastPage = cards?.pages?.at(-1)?.cursorId === null;
+
+  const cardCount = cards?.pages[0].totalCount || 0;
+
+  useIntersectionObserver(async () => {
+    await fetchNextPage();
+  }, loaderRef);
 
   const openModal1 = () => setModalOpen1(true);
   const openModal2 = () => setModalOpen2(true);
@@ -167,6 +176,10 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
   const toggleHeight = () => {
     setIsExpanded(!isExpanded);
   };
+
+  useIntersectionObserver(async () => {
+    await fetchNextPage();
+  }, loaderRef);
 
   const handleChange = async (columnName: string) => {};
 
@@ -201,9 +214,15 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
 
       <S.ColumnContentContainer>
         <S.AddButtonContent onClick={openModal1} />
-        {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} data={card} columnTitle={title} />
-        ))}
+        {cards?.pages.map((page) =>
+          page.cards.map((card) => (
+            <Card key={card.id} data={card} columnTitle={title} />
+          )),
+        )}
+        <CardLoader
+          loaderRef={loaderRef}
+          style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
+        />
       </S.ColumnContentContainer>
     </S.Column>
   );
