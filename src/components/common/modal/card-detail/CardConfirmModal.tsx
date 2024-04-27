@@ -46,17 +46,23 @@ interface ModalOpenAndCloseProps {
   onClose: () => void;
   cardId: number;
   title: string;
+  openToDoEditModal: () => void;
 }
 function CardConfirmModal({
   isOpen,
   onClose,
   cardId,
   title,
+  openToDoEditModal,
 }: ModalOpenAndCloseProps) {
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.ModalLayout>
-        <ModalHeader onClose={onClose} card_Id={cardId} />
+        <ModalHeader
+          onClose={onClose}
+          card_Id={cardId}
+          openToDoEditModal={openToDoEditModal}
+        />
         <S.ModalBody>
           <MainBox stateTag={title} card_Id={cardId} />
           <SideBox card_Id={cardId} />

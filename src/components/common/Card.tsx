@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import ToDoEditModal from './modal/ToDoEditModal';
 import CardConfirmModal from './modal/card-detail/CardConfirmModal';
 import styled from 'styled-components';
 import AvatarImage from '@/components/common/AvatarImage';
@@ -143,6 +144,10 @@ function Card({ data, columnTitle }) {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
+  const [isToDoEditModalOpen, setToDoEditModalOpen] = useState(false);
+  const openToDoEditModal = () => setToDoEditModalOpen(true);
+  const closeToDoEditModal = () => setToDoEditModalOpen(false);
+
   return (
     <>
       <S.CardContainer id={cardInfoData.id} onClick={openModal}>
@@ -191,6 +196,21 @@ function Card({ data, columnTitle }) {
         onClose={closeModal}
         cardId={cardInfoData.id}
         title={columnTitle}
+        openToDoEditModal={openToDoEditModal}
+      />
+
+      <ToDoEditModal
+        isOpen={isToDoEditModalOpen}
+        onClose={closeToDoEditModal}
+        id={cardInfoData?.id}
+        dashboardId={cardInfoData?.dashboardId}
+        columnId={cardInfoData?.columnId}
+        title={cardInfoData?.title}
+        description={cardInfoData?.description}
+        dueDate={cardInfoData?.dueDate}
+        tags={cardInfoData?.tags}
+        assignee={cardInfoData?.assignee}
+        imageUrl={cardInfoData?.imageUrl}
       />
     </>
   );
