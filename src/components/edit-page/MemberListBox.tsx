@@ -15,7 +15,7 @@ import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   MemberListLayout: styled.div`
-    width: 62rem;
+    width: 60rem;
     height: 40rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
@@ -149,7 +149,7 @@ function MemberList() {
   const members = data?.members;
   const [list, setList] = useState(members);
   const { mutate: responseDeleteCommentMutate } = useDeleteMembersMutation();
-  const totalPages = Math.ceil(data?.totalCount / 4);
+  const totalPages = data ? Math.ceil(data.totalCount / 4) : 0;
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);

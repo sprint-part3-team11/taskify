@@ -6,7 +6,7 @@ function useLoadInvitationQuery({ dashboardId, page, size = 4 }) {
   const queryClient = useQueryClient();
 
   return useQuery({
-    queryKey: [API.DASHBOARDS],
+    queryKey: [API.DASHBOARDS, page],
     queryFn: async () => {
       const { data } = await dashboardsApi.getDashboardInvitation({
         dashboardId,
