@@ -22,7 +22,7 @@ const S = {
     ${MEDIA_QUERIES.onMobile} {
       display: flex;
       flex-direction: row;
-      width: 28rem;
+      width: 100%;
       height: 6.7rem;
       margin-left: 0;
       padding: 0;
