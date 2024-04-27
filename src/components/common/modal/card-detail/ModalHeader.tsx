@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
+import useOutSideClick from '@/hooks/useClickOutside';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';
@@ -103,8 +105,15 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
   const { mutate: responseInvitationMutate } = useDeleteCardMutation();
 
   const [isOpen, setIsOpen] = useState(false);
+  const optionAreaRef = useRef<HTMLUListElement>(null);
 
-  const handleClickKebab = () => {
+  const router = useRouter();
+
+  useOutSideClick([optionAreaRef], () => {
+    setIsOpen(false);
+  });
+
+  const handleDropDown = () => {
     setIsOpen(!isOpen);
   };
 
@@ -117,9 +126,9 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
     <S.ModalHeader>
       <S.ModalTitle>{title}</S.ModalTitle>
       <S.HeaderButton>
-        <S.KebabIcon onClick={handleClickKebab} />
+        <S.KebabIcon onClick={handleDropDown} />
         {isOpen && (
-          <S.DropdownBox>
+          <S.DropdownBox ref={optionAreaRef}>
             <S.DropDownList>수정하기</S.DropDownList>
             <S.DropDownList onClick={handleDeleteCard}>삭제하기</S.DropDownList>
           </S.DropdownBox>
