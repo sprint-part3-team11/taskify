@@ -129,6 +129,7 @@ const S = {
     display: flex;
     text-align: center;
     font-size: 1.4rem;
+    color: ${({ theme }) => theme.color.grayDark};
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1.2rem;
     }
@@ -233,7 +234,7 @@ function Sidebar() {
           </S.ArrowButton>
         </S.Buttons>
         <S.PageCount>
-          {page} / {totalPages}
+          {page} page of {totalPages}
         </S.PageCount>
       </S.PageNavigationBox>
     </S.SidebarWrapper>
