@@ -24,7 +24,7 @@ const S = {
     gap: 0.6rem;
     z-index: 100;
 
-    min-width: 9rem;
+    width: 100%;
     padding: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.gray};
     border-radius: 0.6rem;
