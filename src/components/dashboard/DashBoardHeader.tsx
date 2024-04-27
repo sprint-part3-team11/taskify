@@ -240,7 +240,9 @@ function DashBoardHeader({ myPage }: HeaderProps) {
           />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
-          <AvatarList max={isPc ? 5 : 3} dataArr={memberLists} />
+          {memberLists && (
+            <AvatarList max={isPc ? 5 : 3} dataArr={memberLists} />
+          )}
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>
           <S.ProfileImg

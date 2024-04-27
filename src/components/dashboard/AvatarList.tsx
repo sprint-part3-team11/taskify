@@ -4,6 +4,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import theme from '@/styles/theme';
 
 function AvatarList({ max, dataArr }) {
+  console.log('아바타:', dataArr);
   const [data, setData] = useState([]);
 
   useEffect(() => {
