@@ -76,7 +76,6 @@ function NewDashBoardModal({
   const selectedColor = useRecoilValue(resultColorState);
   const setColor = useSetRecoilState(resultColorState);
   const { mutate: creatDashboard } = useCreateDashboardMutation();
-  console.log(dashBoardName);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(e.target.value);
