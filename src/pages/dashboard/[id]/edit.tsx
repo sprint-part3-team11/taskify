@@ -55,10 +55,9 @@ function Edit() {
     setIsInviteModalOpen(false);
   };
 
-  // const handleCreateInvitation = () => {};
-
   const handleDeleteDashboard = () => {
     responseDeleteDashboardMutate(id);
+    router.push(`/my-dashboard`);
   };
   return (
     <PageLayout openInviteModal={openInviteModal} myPage={false}>
