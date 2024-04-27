@@ -8,10 +8,8 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   ModalLayout: styled.div`
-    max-width: 73rem;
-    height: 76rem;
-
-    overflow: auto;
+    width: 73rem;
+    max-height: 76rem;
 
     &::-webkit-scrollbar {
       width: 10px;

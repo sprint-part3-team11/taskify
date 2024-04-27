@@ -11,6 +11,7 @@ import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ArrowLeft from '@/public/icon/arrowLeft.svg';
 import ArrowRight from '@/public/icon/arrowRight.svg';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   MemberListLayout: styled.div`
@@ -192,13 +193,17 @@ function MemberList() {
             members.map((member) => (
               <S.MemberItem key={member.id}>
                 <S.ImageAndNameContainer>
-                  {member.profileImageUrl && (
+                  {
                     <S.AvatarImage
-                      src={member.profileImageUrl || ''}
+                      src={
+                        member.profileImageUrl
+                          ? member.profileImageUrl
+                          : defaultImg
+                      }
                       width={isMobile ? '3.4rem' : '3.8rem'}
                       height={isMobile ? '3.4rem' : '3.8rem'}
                     />
-                  )}
+                  }
                   <S.Nickname>{member.nickname}</S.Nickname>
                 </S.ImageAndNameContainer>
                 <S.Button

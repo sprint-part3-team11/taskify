@@ -14,6 +14,7 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 45rem;
+    flex: 1;
 
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;

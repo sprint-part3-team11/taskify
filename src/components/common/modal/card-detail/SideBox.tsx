@@ -1,8 +1,11 @@
 import Image from 'next/image';
+import AvatarImage from '../../AvatarImage';
 import styled from 'styled-components';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
+import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps } from '@/types/CardDetail';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   SideContainer: styled.div`
@@ -83,6 +86,8 @@ interface SideBoxProps {
   card_Id: number;
 }
 function SideBox({ card_Id }: SideBoxProps) {
+  const { width }: Size = useWindowSize();
+  const isMobile: boolean = width !== undefined && width < 768;
   const { data } = useDetailCardQuery({
     cardId: card_Id,
   });
@@ -99,14 +104,12 @@ function SideBox({ card_Id }: SideBoxProps) {
       <S.AssigneeBox>
         <S.Label>담당자</S.Label>
         <S.Assignee>
-          {profileImageUrl && (
-            <Image
-              src={profileImageUrl}
-              alt="담당자 이름"
-              width={34}
-              height={34}
-            />
-          )}
+          <AvatarImage
+            src={profileImageUrl || defaultImg}
+            width={isMobile ? '2.6rem' : '3.4rem'}
+            height={isMobile ? '2.6rem' : '3.4rem'}
+          />
+
           <S.NickName>{nickname}</S.NickName>
         </S.Assignee>
       </S.AssigneeBox>

@@ -66,6 +66,7 @@ function Comment({ card_Id }: CommentProps) {
   return (
     <S.CommentContainer>
       <CommentForm create={create} length={list.length} card_Id={card_Id} />
+
       <CommentList edit={edit} remove={remove} card_Id={card_Id} />
     </S.CommentContainer>
   );

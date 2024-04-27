@@ -11,7 +11,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 37rem;
+    max-height: 38rem;
     word-break: break-all;
     overflow: auto;
 
@@ -39,7 +39,7 @@ const S = {
   ContentBox: styled.div`
     width: 100%;
 
-    margin-bottom: 2.5rem;
+    margin-bottom: 3.5rem;
     line-height: 2rem;
 
     ${MEDIA_QUERIES.onMobile} {

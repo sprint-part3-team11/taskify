@@ -136,14 +136,13 @@ function CommentItem({
     setEditContent(e.target.value);
   };
 
-  const handlePressKey = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const updatedData = e.currentTarget.value;
-
-      responseEditCommentMutate({ content: updatedData, commentId: id });
-      edit(updatedData, id);
-      setIsEditing(false);
-    } else if (e.key === 'Escape') setIsEditing(false);
+  const handleSubmitCommentEdit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
+    e.preventDefault();
+    responseEditCommentMutate({ content: editContent, commentId: id });
+    edit(editContent, id);
+    setIsEditing(false);
   };
 
   const handleDeleteComment = async () => {
@@ -167,13 +166,17 @@ function CommentItem({
 
         <S.ContentBox>
           {isEditing ? (
-            <S.CommentInput
-              type="text"
-              value={editContent}
-              onChange={handleChangeContent}
-              ref={inputRef}
-              onKeyDown={handlePressKey}
-            />
+            <form onSubmit={handleSubmitCommentEdit}>
+              <S.CommentInput
+                type="text"
+                value={editContent}
+                onChange={handleChangeContent}
+                ref={inputRef}
+              />
+              <button type="submit" style={{ display: 'none' }}>
+                제출
+              </button>
+            </form>
           ) : (
             <S.CommentContent>{content}</S.CommentContent>
           )}
