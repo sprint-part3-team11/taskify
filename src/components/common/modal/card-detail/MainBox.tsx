@@ -14,6 +14,7 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 45rem;
+    flex: 1;
 
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
@@ -23,7 +24,7 @@ const S = {
 };
 
 interface MainBoxProps {
-  stateTag: string[];
+  stateTag: string;
   card_Id: number;
 }
 function MainBox({ stateTag, card_Id }: MainBoxProps) {

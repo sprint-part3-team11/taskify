@@ -177,7 +177,7 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
 
       <S.ColumnContentContainer>
         {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} data={card} />
+          <Card key={card.id} data={card} columnTitle={title} />
         ))}
       </S.ColumnContentContainer>
     </S.Column>

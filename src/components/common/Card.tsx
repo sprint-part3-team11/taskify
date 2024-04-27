@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import CardConfirmModal from './modal/card-detail/CardConfirmModal';
 import styled from 'styled-components';
 import AvatarImage from '@/components/common/AvatarImage';
 import BackDropModal from '@/components/common/modal/BackDropModal';
@@ -131,7 +132,7 @@ const S = {
   `,
 };
 
-function Card({ data }) {
+function Card({ data, columnTitle }) {
   const cardInfoData = data;
 
   const { width }: Size = useWindowSize();
@@ -185,11 +186,12 @@ function Card({ data }) {
         <CardConfirmModal cardInfo_Data={cardInfo_Data} />
             </BackDropModal> */}
 
-      {/* <CardConfirmModal
+      <CardConfirmModal
         isOpen={isModalOpen}
         onClose={closeModal}
         cardId={cardInfoData.id}
-      /> */}
+        title={columnTitle}
+      />
     </>
   );
 }

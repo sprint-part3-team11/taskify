@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CardConfirmModalProps } from '@/types/CardDetail';
+import defaultImage from '@/public/image/landing.png';
 
 const S = {
   Container: styled.div`
@@ -10,7 +11,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 37rem;
+    max-height: 38rem;
     word-break: break-all;
     overflow: auto;
 
@@ -31,14 +32,14 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
-      height: 30rem;
+      max-height: 20rem;
       word-break: break-all;
     }
   `,
   ContentBox: styled.div`
     width: 100%;
 
-    margin-bottom: 2.5rem;
+    margin-bottom: 3.5rem;
     line-height: 2rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -47,6 +48,7 @@ const S = {
     }
   `,
   Image: styled(Image)`
+    width: 100%;
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
       height: 16rem;
@@ -66,7 +68,12 @@ function ContentAndImageBox({ card_Id }: ContentAndImageBoxProps) {
   return (
     <S.Container>
       <S.ContentBox>{description}</S.ContentBox>
-      <S.Image src={imageUrl} width={430} height={260} alt="상세 이미지" />
+      <S.Image
+        src={imageUrl || defaultImage}
+        width={430}
+        height={260}
+        alt="상세 이미지"
+      />
     </S.Container>
   );
 }

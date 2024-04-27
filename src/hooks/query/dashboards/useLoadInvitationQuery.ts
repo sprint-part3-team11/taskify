@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import dashboardsApi from '@/api/dashboards.api';
 
-function useLoadInvitationQuery({ dashboardId, page, size = 5 }) {
+function useLoadInvitationQuery({ dashboardId, page, size = 4 }) {
   const queryClient = useQueryClient();
 
   return useQuery({
