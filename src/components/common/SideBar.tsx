@@ -209,7 +209,7 @@ function Sidebar() {
             <S.DashboardItem
               $active={dashboard.id === router.query.dashboardId}
             >
-              {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
+              {dashboard.createdByMe && <CreateByMe />} &nbsp; {dashboard.title}
             </S.DashboardItem>
           </S.DashboardItemWrapper>
         ))}
