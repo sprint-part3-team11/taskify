@@ -11,7 +11,7 @@ const S = {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     padding: 16rem 0;
     background-color: ${({ theme }) => theme.color.background};
   `,
