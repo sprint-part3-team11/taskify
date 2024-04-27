@@ -66,7 +66,7 @@ const S = {
 
     font-size: 1.4rem;
 
-    box-shadow: 0.5rem 0.5rem 10rem ${({ theme }) => theme.color.grayLight};
+    box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
 
     ${MEDIA_QUERIES.onMobile} {
       width: 8rem;
@@ -120,6 +120,13 @@ function ModalHeader({
   const { mutate: responseInvitationMutate } = useDeleteCardMutation();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const router = useRouter();
+
+  useOutSideClick([optionAreaRef], () => {
+    setIsOpen(false);
+  });
+
 
   const handleClickEdit = () => {
     openToDoEditModal();

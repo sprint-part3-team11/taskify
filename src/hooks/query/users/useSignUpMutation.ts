@@ -1,8 +1,11 @@
-import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import usersApi from '@/api/users.api';
 
 // 회원가입 => 이메일, 닉네임, 비밀번호
 function useSignUpMutation({ setOpen, setModalMessage, router }) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (data) => {
       return usersApi.postSignUp({
@@ -12,8 +15,8 @@ function useSignUpMutation({ setOpen, setModalMessage, router }) {
       });
     },
     onSuccess: () => {
-      // TODO 나중에 toast로 바꿔보자!
-      alert('가입이 완료되었습니다!');
+      toast.success('환영합니다~가입이 완료되었습니다!🤗');
+      queryClient.invalidateQueries();
       router.push('/signin');
     },
     onError: (error) => {
