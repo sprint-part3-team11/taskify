@@ -117,8 +117,8 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    gap: 1.6rem;
+    align-items: center;
+    gap: 1rem;
     margin-top: 12rem;
     ${MEDIA_QUERIES.onMobile} {
       display: none;
@@ -126,7 +126,10 @@ const S = {
   `,
 
   PageCount: styled.div`
+    display: flex;
+    text-align: center;
     font-size: 1.4rem;
+    color: ${({ theme }) => theme.color.grayDark};
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1.2rem;
     }
@@ -134,7 +137,6 @@ const S = {
 
   Buttons: styled.div`
     display: flex;
-    background-color: blue;
   `,
 
   ArrowButton: styled.button`
@@ -209,7 +211,7 @@ function Sidebar() {
             <S.DashboardItem
               $active={dashboard.id === router.query.dashboardId}
             >
-              {dashboard.title} {dashboard.createdByMe && <CreateByMe />}
+              {dashboard.createdByMe && <CreateByMe />} &nbsp; {dashboard.title}
             </S.DashboardItem>
           </S.DashboardItemWrapper>
         ))}
@@ -220,9 +222,6 @@ function Sidebar() {
         />
       </ul>
       <S.PageNavigationBox>
-        <S.PageCount>
-          {totalPages} 페이지중 {page}
-        </S.PageCount>
         <S.Buttons>
           <S.ArrowButton disabled={page <= 1} onClick={handlePrevBtnClick}>
             <ArrowLeft />
@@ -234,6 +233,9 @@ function Sidebar() {
             <ArrowRight />
           </S.ArrowButton>
         </S.Buttons>
+        <S.PageCount>
+          {page} page of {totalPages}
+        </S.PageCount>
       </S.PageNavigationBox>
     </S.SidebarWrapper>
   );
