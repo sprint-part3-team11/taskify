@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Card from '@/components/common/Card';
 import AddIconButton from '@/components/common/button/AddIconButton';
 import ColumnsManageModal from '@/components/common/modal/ColumnsManageModal';
 import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
+import CardLoader from '@/components/dashboard/column/CardLoader';
 import useCardListQuery from '@/hooks/query/cards/useCardListQuery';
-import useDeleteColumnMutation from '@/hooks/query/columns/useDeleteColumnMutation';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import SettingIcon from '@/public/icon/settingIcon.svg';
 
@@ -26,30 +27,39 @@ const S = {
     border-right: ${({ theme }) => theme.border.lightGray};
     border-bottom: ${({ theme }) => theme.border.lightGray};
 
-    // Chrome, Edge, Safari
     &::-webkit-scrollbar {
       display: none;
     }
-    // Firefox
     scrollbar-width: none;
-    // IE and Edge (Legacy)
     -ms-overflow-style: none;
 
     ${MEDIA_QUERIES.onTablet} {
       width: 100%;
       height: 6rem;
-      height: ${({ isExpanded }) =>
-        isExpanded ? 'calc(100vh - 7rem)' : '6rem'};
-      /* height: 100%; */
-      overflow-y: scroll;
+      height: ${({ isExpanded, cardCount }) =>
+        isExpanded && cardCount === 0
+          ? '12.5rem'
+          : isExpanded
+            ? 'calc(45.3rem)'
+            : '6rem'};
+
+      overflow-y: ${({ isExpanded }) => (isExpanded ? 'scroll' : 'hidden')};
 
       transition: height 0.3s ease-in-out;
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
-      height: 12rem;
-      /* height: 100%; */
-      overflow-y: auto;
+      height: 6rem;
+      height: ${({ isExpanded, cardCount }) =>
+        isExpanded && cardCount === 0
+          ? '12.5rem'
+          : isExpanded
+            ? 'calc(80rem)'
+            : '6rem'};
+
+      overflow-y: ${({ isExpanded }) => (isExpanded ? 'scroll' : 'hidden')};
+
+      transition: height 0.3s ease-in-out;
     }
   `,
   ColumnTopFixedContent: styled.div`
@@ -97,9 +107,28 @@ const S = {
 
     border-radius: 0.4rem;
   `,
-  AddButton: styled(AddIconButton)`
+  AddButtonTop: styled(AddIconButton)`
     margin: 2.5rem 0rem 0rem;
     width: 100%;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: none;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: none;
+    }
+  `,
+  AddButtonContent: styled(AddIconButton)`
+    margin: 0.5rem 0rem 0rem;
+    width: 100%;
+    display: none;
+
+    ${MEDIA_QUERIES.onTablet} {
+      display: flex;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      display: flex;
+    }
   `,
   ColumnContentContainer: styled.div`
     display: flex;
@@ -123,12 +152,21 @@ const S = {
 };
 
 const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
+  const loaderRef = useRef();
   const [isModalOpen1, setModalOpen1] = useState(false);
   const [isModalOpen2, setModalOpen2] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [tempColumnName, setTempColumnName] = useState(title);
 
-  const { data: cards } = useCardListQuery({ columnId: id });
+  const { data: cards, fetchNextPage } = useCardListQuery({ columnId: id });
+
+  const isLastPage = cards?.pages?.at(-1)?.cursorId === null;
+
+  const cardCount = cards?.pages[0].totalCount || 0;
+
+  useIntersectionObserver(async () => {
+    await fetchNextPage();
+  }, loaderRef);
 
   const openModal1 = () => setModalOpen1(true);
   const openModal2 = () => setModalOpen2(true);
@@ -137,29 +175,28 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
 
   const toggleHeight = () => {
     setIsExpanded(!isExpanded);
-    if (ref && ref.current) {
-      setTimeout(() => {
-        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
-    }
   };
+
+  useIntersectionObserver(async () => {
+    await fetchNextPage();
+  }, loaderRef);
 
   const handleChange = async (columnName: string) => {};
 
   return (
-    <S.Column ref={ref} isExpanded={isExpanded} onClick={toggleHeight}>
-      <S.ColumnTopFixedContent>
+    <S.Column ref={ref} isExpanded={isExpanded} cardCount={cardCount}>
+      <S.ColumnTopFixedContent onClick={toggleHeight}>
         <S.ColumnTitleContainer>
           <S.ColumnTitleWrapper>
             <S.ColumnTitleIconWrapper>
               <S.ColumnTitleDotIcon />
             </S.ColumnTitleIconWrapper>
             <S.ColumnTitle>{title}</S.ColumnTitle>
-            <S.ColumnTaskNumber>{cards?.data.totalCount}</S.ColumnTaskNumber>
+            <S.ColumnTaskNumber>{cardCount}</S.ColumnTaskNumber>
           </S.ColumnTitleWrapper>
           <S.SettingIcon onClick={openModal2} />
         </S.ColumnTitleContainer>
-        <S.AddButton onClick={openModal1} />
+        <S.AddButtonTop onClick={openModal1} />
       </S.ColumnTopFixedContent>
 
       <ToDoCreateModal
@@ -176,9 +213,16 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
       />
 
       <S.ColumnContentContainer>
-        {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} data={card} columnTitle={title} />
-        ))}
+        <S.AddButtonContent onClick={openModal1} />
+        {cards?.pages.map((page) =>
+          page.cards.map((card) => (
+            <Card key={card.id} data={card} columnTitle={title} />
+          )),
+        )}
+        <CardLoader
+          loaderRef={loaderRef}
+          style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
+        />
       </S.ColumnContentContainer>
     </S.Column>
   );

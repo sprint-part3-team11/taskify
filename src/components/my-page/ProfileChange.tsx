@@ -89,7 +89,6 @@ function ProfileChange() {
 
   useEffect(() => {
     if (myProfile && myProfile.nickname && myProfile.email) {
-      console.log(myProfile);
       setProfile((prevProfile) => ({
         ...prevProfile,
         name: myProfile.nickname,

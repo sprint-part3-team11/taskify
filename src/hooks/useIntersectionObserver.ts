@@ -11,7 +11,7 @@ function useIntersectionObserver(callback, loaderRef) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         // 배열 구조분해로 IntersectionObserverEntry 객체 받음
-        if (!entry.isIntersecting) return; //요소가 화면에 나타나지 않았다면 그냥 리턴 해서 콜백 실행 안되도록
+        if (!entry.isIntersecting) return; // 요소가 화면에 나타나지 않았다면 그냥 리턴 해서 콜백 실행 안되도록
         callback?.(); // 콜백 함수 있다면 실행
       },
       { threshold: 0.7 },

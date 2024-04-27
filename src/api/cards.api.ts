@@ -33,11 +33,13 @@ const postCard = ({
 /**
  * 카드 목록 조회 api
  */
-const getCardList = (columnId: string) => {
+const getCardList = ({ size, cursorId, columnId }) => {
   return instance({
     url: API.CARDS,
     method: 'GET',
     params: {
+      size,
+      cursorId,
       columnId,
     },
   });
