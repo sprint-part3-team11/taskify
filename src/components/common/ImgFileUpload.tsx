@@ -137,7 +137,6 @@ function ImgFileUpload({
     useCardImgUploadMutation(columnId);
   const { mutate: profileImg } = useProfileImgUploadMutation();
 
-  console.log('넘어온', cardImg?.imageUrl);
   useEffect(() => {
     if (uploadedImage) {
       profileImg(uploadedImage);
