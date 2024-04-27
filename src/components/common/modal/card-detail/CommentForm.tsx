@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
+import useCommentsListQuery from '@/hooks/query/comments/useCommentsListQuery';
 import useCreateCommentsMutation from '@/hooks/query/comments/useCreateCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import commentApi from '@/api/comment.api';
@@ -36,9 +37,24 @@ const S = {
     border-radius: 0.6rem;
     resize: none;
 
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.color.mainLight};
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 2px solid transparent;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: ${({ theme }) => theme.color.white};
+      border-radius: 10px;
+      box-shadow: inset 0px 0px 5px white;
+    }
+
     ${MEDIA_QUERIES.onMobile} {
       box-sizing: border-box;
-      padding: 1.5rem 0 5rem 1rem;
+      padding: 0.7rem 7rem 5rem 1.2rem;
       height: 7rem;
     }
   `,
@@ -63,19 +79,20 @@ const S = {
 };
 
 interface CommentFormProps {
-  create: () => void;
-  length: number;
   card_Id: number;
 }
 
-function CommentForm({ create, length, card_Id: CARD_ID }: CommentFormProps) {
+function CommentForm({ card_Id: CARD_ID }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
-  const { data } = useDetailCardQuery({
+  const { data: cardDetailData } = useDetailCardQuery({
     cardId: CARD_ID,
   });
+  const { data: commentsData } = useCommentsListQuery({ cardId: CARD_ID });
 
-  const COLUMN_ID = data?.columnId;
-  const DASHBOARD_ID = data?.dashboardId;
+  const comments = commentsData?.comments;
+
+  const COLUMN_ID = cardDetailData?.columnId;
+  const DASHBOARD_ID = cardDetailData?.dashboardId;
 
   const { mutate: responseCreateComment } = useCreateCommentsMutation();
 
@@ -93,14 +110,15 @@ function CommentForm({ create, length, card_Id: CARD_ID }: CommentFormProps) {
       dashboardId: DASHBOARD_ID,
     });
 
-    create();
     setInputValue('');
   };
+
+  useEffect(() => {}, [comments]);
 
   return (
     <S.CommentFormBox>
       <S.Form onSubmit={handleSubmitContent}>
-        <S.Title>댓글 ({length})</S.Title>
+        <S.Title>댓글 ({comments ? comments.length : 0})</S.Title>
 
         <S.InputWrapper>
           <S.TextArea
@@ -109,7 +127,9 @@ function CommentForm({ create, length, card_Id: CARD_ID }: CommentFormProps) {
             placeholder="댓글 작성하기"
           />
 
-          <S.Button size="S">입력</S.Button>
+          <S.Button disabled={!inputValue} size="S">
+            입력
+          </S.Button>
         </S.InputWrapper>
       </S.Form>
     </S.CommentFormBox>

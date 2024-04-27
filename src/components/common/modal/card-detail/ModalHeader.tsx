@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ToDoCreateModal from '../ToDoCreateModal';
 import styled from 'styled-components';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
@@ -41,18 +41,24 @@ const S = {
       height: 2.5rem;
     }
   `,
-  DropdownMenuBox: styled.div`
+
+  DropdownContainer: styled.div`
+    /* position: relative;
+    right: 10rem; */
+  `,
+  Dropdown: styled.ul`
+    position: absolute;
+    top: 3rem;
+    right: 6.5rem;
+    width: 11rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 4rem;
-    right: 6rem;
-    z-index: 1;
+    gap: 0.6rem;
+    z-index: 100;
 
-    width: 10rem;
-    height: 9rem;
+    padding: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.gray};
     border-radius: 0.6rem;
 
@@ -60,19 +66,22 @@ const S = {
 
     font-size: 1.4rem;
 
+    box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
+
     ${MEDIA_QUERIES.onMobile} {
-      top: 3rem;
-      right: 5rem;
+      width: 8rem;
+
+      font-size: 1.2rem;
     }
   `,
-  MenuItem: styled.div`
+  DropDownList: styled.li`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.2rem 1.3rem;
-    margin: 0.5rem 0;
     border-radius: 0.4rem;
+    width: 100%;
     height: 100%;
+    padding: 0.8rem 1.6rem;
 
     text-align: center;
 
@@ -80,7 +89,12 @@ const S = {
       background-color: ${({ theme }) => theme.color.mainLight};
       cursor: pointer;
     }
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding: 0.8rem 0.5rem;
+    }
   `,
+
   CloseIcon: styled(CloseIcon)`
     width: 3.2rem;
     height: 3.2rem;
@@ -91,8 +105,14 @@ const S = {
 interface ModalHeaderProps {
   onClose: () => void;
   card_Id: number;
+  openToDoEditModal: () => void;
 }
-function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
+function ModalHeader({
+  onClose,
+  card_Id,
+  openToDoEditModal,
+}: ModalHeaderProps) {
+  const optionAreaRef = useRef<HTMLUListElement>(null);
   const { data } = useDetailCardQuery({
     cardId: card_Id,
   });
@@ -101,6 +121,17 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
+
+  useOutSideClick([optionAreaRef], () => {
+    setIsOpen(false);
+  });
+
+
+  const handleClickEdit = () => {
+    openToDoEditModal();
+    onClose();
+  };
   const handleClickKebab = () => {
     setIsOpen(!isOpen);
   };
@@ -115,12 +146,19 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
       <S.ModalTitle>{title}</S.ModalTitle>
       <S.HeaderButton>
         <S.KebabIcon onClick={handleClickKebab} />
-        {isOpen && (
-          <S.DropdownMenuBox>
-            <S.MenuItem>수정하기</S.MenuItem>
-            <S.MenuItem onClick={handleDeleteCard}>삭제하기</S.MenuItem>
-          </S.DropdownMenuBox>
-        )}
+        <S.DropdownContainer>
+          {isOpen && (
+            <S.Dropdown ref={optionAreaRef}>
+              <S.DropDownList onClick={handleClickEdit}>
+                수정하기
+              </S.DropDownList>
+              <S.DropDownList onClick={handleDeleteCard}>
+                삭제하기
+              </S.DropDownList>
+            </S.Dropdown>
+          )}
+        </S.DropdownContainer>
+
         <S.CloseIcon onClick={onClose} />
       </S.HeaderButton>
     </S.ModalHeader>

@@ -12,7 +12,7 @@ import ArrowRight from '@/public/icon/arrowRight.svg';
 
 const S = {
   InviteListLayout: styled.div`
-    width: 62rem;
+    width: 60rem;
     height: 40rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
@@ -158,7 +158,7 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const { id } = router.query;
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, refetch } = useLoadInvitationQuery({
+  const { data, isLoading } = useLoadInvitationQuery({
     dashboardId: id,
     page,
     size: 4,
@@ -180,10 +180,6 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const handleClickCancelBtn = (invitationId) => {
     responseInvitationCancelMutate({ dashboardId: id, invitationId });
   };
-
-  useEffect(() => {
-    refetch();
-  }, [page]);
 
   return (
     <S.InviteListLayout>
