@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import useOutSideClick from '@/hooks/useClickOutside';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   Container: styled.div`
@@ -13,7 +14,7 @@ const S = {
     font-style: normal;
     font-weight: 500;
   `,
-  Dropdown: styled.ul`
+  DropdownBox: styled.ul`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,6 +24,7 @@ const S = {
     gap: 0.6rem;
     z-index: 100;
 
+    min-width: 9rem;
     padding: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.gray};
     border-radius: 0.6rem;
@@ -32,6 +34,10 @@ const S = {
     font-size: 1.4rem;
 
     box-shadow: 0.5rem 0.5rem 10rem ${({ theme }) => theme.color.grayLight};
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
   `,
   DropDownList: styled.li`
     display: flex;
@@ -40,12 +46,14 @@ const S = {
     border-radius: 0.4rem;
     width: 100%;
     height: 100%;
-    padding: 0.8rem 1.6rem;
+    padding: 0.8rem 0;
 
     text-align: center;
 
     &:hover {
       background-color: ${({ theme }) => theme.color.mainLight};
+
+      color: ${({ theme }) => theme.color.main};
       cursor: pointer;
     }
   `,
@@ -79,7 +87,7 @@ function DropDown({ userName }: DropDownProps) {
         {userName}
       </S.DropDownBtn>
       {isOpen && (
-        <S.Dropdown ref={optionAreaRef}>
+        <S.DropdownBox ref={optionAreaRef}>
           <S.DropDownList onClick={() => handleList('/')}>
             로그아웃
           </S.DropDownList>
@@ -89,7 +97,7 @@ function DropDown({ userName }: DropDownProps) {
           <S.DropDownList onClick={() => handleList('/my-dashboard')}>
             내 대시보드
           </S.DropDownList>
-        </S.Dropdown>
+        </S.DropdownBox>
       )}
     </S.Container>
   );
