@@ -8,7 +8,6 @@ import MemberList from '@/components/edit-page/MemberListBox';
 import NameAndColorChangeBox from '@/components/edit-page/NameAndColorChangeBox';
 import BackButton from '@/components/my-page/BackButton';
 import PageLayout from '@/components/template/PageLayout';
-import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
 import useDeleteDashboardMutation from '@/hooks/query/dashboards/useDeleteDashboardMutation';
 import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -21,7 +20,7 @@ const S = {
     padding: 2rem;
   `,
   Button: styled(Button)`
-    width: 62rem;
+    width: 60rem;
     margin-top: 3rem;
     ${MEDIA_QUERIES.onMobile} {
       width: calc(100% - 10px);

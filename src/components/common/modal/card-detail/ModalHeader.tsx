@@ -61,10 +61,12 @@ const S = {
 
     font-size: 1.4rem;
 
+
     box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
 
     ${MEDIA_QUERIES.onMobile} {
       right: 4rem;
+
       font-size: 1.2rem;
     }
   `,
@@ -85,7 +87,12 @@ const S = {
       color: ${({ theme }) => theme.color.main};
       cursor: pointer;
     }
+
+    ${MEDIA_QUERIES.onMobile} {
+      padding: 0.8rem 0.5rem;
+    }
   `,
+
   CloseIcon: styled(CloseIcon)`
     width: 3.2rem;
     height: 3.2rem;
@@ -98,6 +105,7 @@ interface ModalHeaderProps {
   card_Id: number;
 }
 function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
+  const optionAreaRef = useRef<HTMLUListElement>(null);
   const { data } = useDetailCardQuery({
     cardId: card_Id,
   });

@@ -7,13 +7,11 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 const S = {
   CommentListContainer: styled.div`
-    overflow: scroll;
-    height: 13rem;
+    /* overflow: scroll;
+    height: 13rem; */
   `,
 };
 export interface CommentListProps {
-  edit: (content: string, id: number) => void;
-  remove: (id: number) => void;
   card_Id: number;
 }
 interface CommentItemDataProps {
@@ -28,18 +26,18 @@ interface CommentItemDataProps {
     id: number;
   };
 }
-function CommentList({ edit, remove, card_Id }: CommentListProps) {
+function CommentList({ card_Id }: CommentListProps) {
   const loaderRef = useRef();
-  const { data, fetchNextPage } = useCommentsListQuery({
+  const { data } = useCommentsListQuery({
     cardId: card_Id,
   });
   const isLastPage = data?.pages?.at(-1)?.cursorId === null;
 
   const comments = data && data.comments;
 
-  useIntersectionObserver(async () => {
-    await fetchNextPage();
-  }, loaderRef);
+  // useIntersectionObserver(async () => {
+  //   await fetchNextPage();
+  // }, loaderRef);
 
   return (
     <S.CommentListContainer>
@@ -53,8 +51,6 @@ function CommentList({ edit, remove, card_Id }: CommentListProps) {
             content={comment.content}
             createdAt={comment.createdAt}
             updatedAt={comment.updatedAt}
-            edit={edit}
-            remove={remove}
           />
         ))}
       {/* <InvitedDashBoardListLoader

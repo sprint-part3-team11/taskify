@@ -5,8 +5,7 @@ import { formatDate } from '@/utils/formatDate';
 import useDeleteCommentsMutation from '@/hooks/query/comments/useDeleteCommentsMutation';
 import useEditCommentsMutation from '@/hooks/query/comments/useEditCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import commentApi from '@/api/comment.api';
-import { CommentItemsAndFunctionProps } from '@/types/CardDetail';
+import { CommentItemProps } from '@/types/CardDetail';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -113,9 +112,7 @@ function CommentItem({
   content,
   createdAt,
   updatedAt,
-  edit,
-  remove,
-}: CommentItemsAndFunctionProps) {
+}: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -141,13 +138,13 @@ function CommentItem({
   ) => {
     e.preventDefault();
     responseEditCommentMutate({ content: editContent, commentId: id });
-    edit(editContent, id);
+    // edit(editContent, id);
     setIsEditing(false);
   };
 
   const handleDeleteComment = async () => {
     responseDeleteCommentMutate({ commentId: id });
-    remove(id);
+    // remove(id);
   };
 
   return (
