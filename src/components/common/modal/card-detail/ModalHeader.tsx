@@ -1,10 +1,10 @@
+import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
-import ToDoCreateModal from '../ToDoCreateModal';
 import styled from 'styled-components';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
+import useOutSideClick from '@/hooks/useClickOutside';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CardConfirmModalProps, ModalCloseProps } from '@/types/CardDetail';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';
 
@@ -41,23 +41,18 @@ const S = {
       height: 2.5rem;
     }
   `,
-
-  DropdownContainer: styled.div`
-    /* position: relative;
-    right: 10rem; */
-  `,
-  Dropdown: styled.ul`
-    position: absolute;
-    top: 3rem;
-    right: 6.5rem;
-    width: 11rem;
+  DropdownBox: styled.ul`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 3rem;
+    right: 5.5rem;
     gap: 0.6rem;
     z-index: 100;
 
+    min-width: 9rem;
     padding: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.gray};
     border-radius: 0.6rem;
@@ -66,10 +61,11 @@ const S = {
 
     font-size: 1.4rem;
 
-    box-shadow: 0.5rem 0.5rem 10rem ${({ theme }) => theme.color.grayLight};
+
+    box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
 
     ${MEDIA_QUERIES.onMobile} {
-      width: 8rem;
+      right: 4rem;
 
       font-size: 1.2rem;
     }
@@ -81,12 +77,14 @@ const S = {
     border-radius: 0.4rem;
     width: 100%;
     height: 100%;
-    padding: 0.8rem 1.6rem;
+    padding: 0.8rem 0;
 
     text-align: center;
 
     &:hover {
       background-color: ${({ theme }) => theme.color.mainLight};
+
+      color: ${({ theme }) => theme.color.main};
       cursor: pointer;
     }
 
@@ -115,8 +113,15 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
   const { mutate: responseInvitationMutate } = useDeleteCardMutation();
 
   const [isOpen, setIsOpen] = useState(false);
+  const optionAreaRef = useRef<HTMLUListElement>(null);
 
-  const handleClickKebab = () => {
+  const router = useRouter();
+
+  useOutSideClick([optionAreaRef], () => {
+    setIsOpen(false);
+  });
+
+  const handleDropDown = () => {
     setIsOpen(!isOpen);
   };
 
@@ -129,18 +134,13 @@ function ModalHeader({ onClose, card_Id }: ModalHeaderProps) {
     <S.ModalHeader>
       <S.ModalTitle>{title}</S.ModalTitle>
       <S.HeaderButton>
-        <S.KebabIcon onClick={handleClickKebab} />
-        <S.DropdownContainer>
-          {isOpen && (
-            <S.Dropdown ref={optionAreaRef}>
-              <S.DropDownList>수정하기</S.DropDownList>
-              <S.DropDownList onClick={handleDeleteCard}>
-                삭제하기
-              </S.DropDownList>
-            </S.Dropdown>
-          )}
-        </S.DropdownContainer>
-
+        <S.KebabIcon onClick={handleDropDown} />
+        {isOpen && (
+          <S.DropdownBox ref={optionAreaRef}>
+            <S.DropDownList>수정하기</S.DropDownList>
+            <S.DropDownList onClick={handleDeleteCard}>삭제하기</S.DropDownList>
+          </S.DropdownBox>
+        )}
         <S.CloseIcon onClick={onClose} />
       </S.HeaderButton>
     </S.ModalHeader>
