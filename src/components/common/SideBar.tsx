@@ -85,8 +85,12 @@ const S = {
     }
   `,
   DashboardItemWrapper: styled.div`
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 27.6rem;
     height: 3.85rem;
-    display: flex;
+    display: inline-block;
     align-items: center;
     margin-top: 0.85rem;
     padding: 10px;
@@ -96,6 +100,9 @@ const S = {
       border-radius: 0.55rem;
       background: var(--violet-violet-8, #f1effd);
       transition: all 0.1s ease-in-out;
+    }
+    ${MEDIA_QUERIES.onTablet} {
+      max-width: 13.4rem;
     }
   `,
   DashboardItem: styled.li<{ $active: boolean }>`
