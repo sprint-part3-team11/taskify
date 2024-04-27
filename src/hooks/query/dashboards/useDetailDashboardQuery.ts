@@ -7,6 +7,7 @@ function useDetailDashboardQuery(dashboardId) {
   return useQuery({
     queryKey: [API.DASHBOARDS, dashboardId],
     queryFn: async () => {
+      if (!dashboardId) return null;
       const { data } = await dashboardsApi.getDashboardDetail(dashboardId);
       return data;
     },
