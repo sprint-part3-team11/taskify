@@ -5,6 +5,7 @@ import { ImgFileUpload } from '@/components/common/ImgFileUpload';
 import SelectBox from '@/components/common/SelectBox';
 import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
+import HashTag from '@/components/common/tag/HashTag';
 import { formatDueDate } from '@/utils/formatDate';
 import useCreateCardMutation from '@/hooks/query/cards/useCreateCardMutation';
 import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
@@ -97,14 +98,21 @@ const S = {
 
     margin-top: 2.8rem;
   `,
+
+  Tag: styled(HashTag)`
+    display: flex;
+
+    &button {
+      margin-left: 1rem;
+    }
+  `,
 };
 
 function ToDoCreateModal({
   isOpen,
   onClose,
-  isEdit = false,
-  dashboardId = 7053,
-  columnId = 23643,
+  dashboardId = 7373, // 받아오면 기본값 삭제
+  columnId = 24728, // 받아오면 삭제
 }: any) {
   const [toDoInfo, setToDoInfo] = useState({
     assigneeUserId: 0,
@@ -133,6 +141,8 @@ function ToDoCreateModal({
       ...prev,
       [fieldName]: value,
     }));
+
+    console.log('롬', toDoInfo);
   };
 
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -172,12 +182,6 @@ function ToDoCreateModal({
       <S.Title>📌 할 일 생성</S.Title>
       <S.FormContainer>
         <S.Low>
-          {/* {isEdit && (
-            <S.FieldBox>
-              <S.Label>상태</S.Label>
-              <SelectBox options={selectBoxOptions} placeholder={true} />
-            </S.FieldBox>
-          )} */}
           <S.FieldBox>
             <S.Label>담당자</S.Label>
             <SelectBox
@@ -186,6 +190,7 @@ function ToDoCreateModal({
               onChange={(option) =>
                 handleOnChange('assigneeUserId', option.userId)
               }
+              displayFieldName="nickname"
             />
           </S.FieldBox>
         </S.Low>
@@ -232,12 +237,17 @@ function ToDoCreateModal({
             onKeyPress={handleTagInput}
           />
         </S.FieldBox>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', gap: '0.8rem' }}>
           {toDoInfo.tags.map((tag, index) => (
-            <div key={index}>
+            <S.Tag key={index} index={index}>
               {tag}
-              <button onClick={() => removeTag(tag)}>X</button>
-            </div>
+              <button
+                onClick={() => removeTag(tag)}
+                style={{ marginLeft: '0.05rem' }}
+              >
+                X
+              </button>
+            </S.Tag>
           ))}
         </div>
 
@@ -247,6 +257,7 @@ function ToDoCreateModal({
             edit={false}
             small={true}
             onImageUpload={handleImageUpload}
+            columnId={columnId}
           />
         </S.FieldBox>
       </S.FormContainer>
