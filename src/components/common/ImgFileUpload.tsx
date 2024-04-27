@@ -116,12 +116,14 @@ interface ImgFileUploadProps {
   edit: boolean;
   small: boolean;
   onImageUpload?: (url: string) => void;
+  columnId?: string;
 }
 
 function ImgFileUpload({
   edit,
   small,
   onImageUpload,
+  columnId,
 }: ImgFileUploadProps): JSX.Element {
   const fileInputRef = useRef<HTMLInputElement>(null);
   // File 객체 데이터
@@ -132,7 +134,7 @@ function ImgFileUpload({
   const profileImageUrl = useRecoilValue(profileImageUrlState);
 
   const { mutate: cardImgMutate, data: cardImg } =
-    useCardImgUploadMutation(23643);
+    useCardImgUploadMutation(columnId);
   const { mutate: profileImg } = useProfileImgUploadMutation();
 
   console.log('넘어온', cardImg?.imageUrl);
