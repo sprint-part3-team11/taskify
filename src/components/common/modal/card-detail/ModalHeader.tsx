@@ -1,10 +1,10 @@
+import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
-import ToDoCreateModal from '../ToDoCreateModal';
 import styled from 'styled-components';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
+import useOutSideClick from '@/hooks/useClickOutside';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CardConfirmModalProps, ModalCloseProps } from '@/types/CardDetail';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';
 
@@ -42,10 +42,7 @@ const S = {
     }
   `,
 
-  DropdownContainer: styled.div`
-    /* position: relative;
-    right: 10rem; */
-  `,
+  DropdownContainer: styled.div``,
   Dropdown: styled.ul`
     position: absolute;
     top: 3rem;
@@ -126,7 +123,6 @@ function ModalHeader({
   useOutSideClick([optionAreaRef], () => {
     setIsOpen(false);
   });
-
 
   const handleClickEdit = () => {
     openToDoEditModal();
