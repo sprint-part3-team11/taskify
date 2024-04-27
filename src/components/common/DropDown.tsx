@@ -33,7 +33,7 @@ const S = {
 
     font-size: 1.4rem;
 
-    box-shadow: 0.5rem 0.5rem 10rem ${({ theme }) => theme.color.grayLight};
+    box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.08);
 
     ${MEDIA_QUERIES.onMobile} {
       font-size: 1.2rem;
