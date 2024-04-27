@@ -40,6 +40,7 @@ const S = {
   `,
   ImageBox: styled.div`
     flex: 1;
+    text-align: center;
   `,
   ImageTitle: styled.span`
     font-size: 2.4rem;
@@ -47,6 +48,16 @@ const S = {
   `,
   ImageContent: styled.div`
     margin-top: -7rem;
+  `,
+  ImageText: styled.p`
+    margin-top: 0.5rem;
+    font-size: 1.3rem;
+    color: ${({ theme }) => theme.color.grayDark};
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 0.9rem;
+      text-align: start;
+    }
   `,
   InputBox: styled.div`
     flex: 2;
@@ -95,6 +106,7 @@ function ProfileChange() {
           <S.ImageContent>
             <ImgFileUpload edit={false} small={false} />
           </S.ImageContent>
+          <S.ImageText>이미지를 클릭해 수정하세요</S.ImageText>
         </S.ImageBox>
         <S.InputBox>
           {/* eslint-disable-next-line react/jsx-no-bind */}

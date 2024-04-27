@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../common/button/Button';
 import styled from 'styled-components';
 import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
@@ -48,14 +48,15 @@ const S = {
   `,
   PageNavigationBox: styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     gap: 1.6rem;
 
     ${MEDIA_QUERIES.onMobile} {
       padding-right: 0.3rem;
       align-items: center;
+      display: flex;
+      flex-direction: column;
     }
   `,
 
@@ -157,7 +158,7 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const { id } = router.query;
   const [page, setPage] = useState(1);
 
-  const { data, isLoading } = useLoadInvitationQuery({
+  const { data, isLoading, refetch } = useLoadInvitationQuery({
     dashboardId: id,
     page,
     size: 4,
@@ -179,6 +180,10 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const handleClickCancelBtn = (invitationId) => {
     responseInvitationCancelMutate({ dashboardId: id, invitationId });
   };
+
+  useEffect(() => {
+    refetch();
+  }, [page]);
 
   return (
     <S.InviteListLayout>

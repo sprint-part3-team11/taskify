@@ -37,10 +37,7 @@ function Edit() {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const { mutate: responseDeleteDashboardMutate } =
     useDeleteDashboardMutation();
-  const { mutate: invite } = useTeamMemberInviteModalMutation({
-    dashboardId,
-    email,
-  });
+  const { mutate: invite } = useTeamMemberInviteModalMutation();
 
   const InviteUser = (email: string) => {
     setEmail(email);
@@ -55,10 +52,9 @@ function Edit() {
     setIsInviteModalOpen(false);
   };
 
-  // const handleCreateInvitation = () => {};
-
   const handleDeleteDashboard = () => {
     responseDeleteDashboardMutate(id);
+    router.push(`/my-dashboard`);
   };
   return (
     <PageLayout openInviteModal={openInviteModal} myPage={false}>

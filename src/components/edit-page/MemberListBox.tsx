@@ -11,6 +11,7 @@ import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import ArrowLeft from '@/public/icon/arrowLeft.svg';
 import ArrowRight from '@/public/icon/arrowRight.svg';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   MemberListLayout: styled.div`
@@ -41,12 +42,13 @@ const S = {
 
   PageNavigationBox: styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     gap: 1.6rem;
 
     ${MEDIA_QUERIES.onMobile} {
+      display: flex;
+      flex-direction: column;
       padding-right: 0.3rem;
       align-items: center;
     }
@@ -189,27 +191,29 @@ function MemberList() {
         <S.MemberListContainer>
           {members &&
             members.map((member) => (
-              <>
-                <S.MemberItem key={member.id}>
-                  <S.ImageAndNameContainer>
-                    {member.profileImageUrl && (
-                      <S.AvatarImage
-                        src={member.profileImageUrl || ''}
-                        width={isMobile ? '3.4rem' : '3.8rem'}
-                        height={isMobile ? '3.4rem' : '3.8rem'}
-                      />
-                    )}
-                    <S.Nickname>{member.nickname}</S.Nickname>
-                  </S.ImageAndNameContainer>
-                  <S.Button
-                    onClick={() => remove(member.id)}
-                    size="S"
-                    styleType={BUTTON_TYPE.DESTRUCTIVE}
-                  >
-                    삭제
-                  </S.Button>
-                </S.MemberItem>
-              </>
+              <S.MemberItem key={member.id}>
+                <S.ImageAndNameContainer>
+                  {
+                    <S.AvatarImage
+                      src={
+                        member.profileImageUrl
+                          ? member.profileImageUrl
+                          : defaultImg
+                      }
+                      width={isMobile ? '3.4rem' : '3.8rem'}
+                      height={isMobile ? '3.4rem' : '3.8rem'}
+                    />
+                  }
+                  <S.Nickname>{member.nickname}</S.Nickname>
+                </S.ImageAndNameContainer>
+                <S.Button
+                  onClick={() => remove(member.id)}
+                  size="S"
+                  styleType={BUTTON_TYPE.DESTRUCTIVE}
+                >
+                  삭제
+                </S.Button>
+              </S.MemberItem>
             ))}
         </S.MemberListContainer>
       </S.MemberListContainer>

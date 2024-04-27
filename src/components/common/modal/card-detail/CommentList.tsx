@@ -1,9 +1,16 @@
 import { useRef } from 'react';
+import styled from 'styled-components';
 import CommentItem from '@/components/common/modal/card-detail/CommentItem';
 import InvitedDashBoardListLoader from '@/components/dashboard/my-board/InvitedDashBoardListLoader';
 import useCommentsListQuery from '@/hooks/query/comments/useCommentsListQuery';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
+const S = {
+  CommentListContainer: styled.div`
+    overflow: scroll;
+    height: 13rem;
+  `,
+};
 export interface CommentListProps {
   edit: (content: string, id: number) => void;
   remove: (id: number) => void;
@@ -35,7 +42,7 @@ function CommentList({ edit, remove, card_Id }: CommentListProps) {
   }, loaderRef);
 
   return (
-    <div>
+    <S.CommentListContainer>
       {comments &&
         comments.map((comment: CommentItemDataProps) => (
           <CommentItem
@@ -54,7 +61,7 @@ function CommentList({ edit, remove, card_Id }: CommentListProps) {
         loaderRef={loaderRef}
         style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
       /> */}
-    </div>
+    </S.CommentListContainer>
   );
 }
 export default CommentList;

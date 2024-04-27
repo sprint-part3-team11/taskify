@@ -24,7 +24,7 @@ const S = {
 };
 
 interface TagBoxProps {
-  stateTag: string[];
+  stateTag: string;
   card_Id: number;
 }
 function TagBox({ stateTag, card_Id }: TagBoxProps) {

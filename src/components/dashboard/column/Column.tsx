@@ -186,13 +186,6 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         <S.AddButtonTop onClick={openModal1} />
       </S.ColumnTopFixedContent>
 
-      <S.ColumnContentContainer>
-        <S.AddButtonContent onClick={openModal1} />
-        {cards?.data.cards.map((card, index) => (
-          <Card key={card.id} data={card} />
-        ))}
-      </S.ColumnContentContainer>
-
       <ToDoCreateModal
         dashboardId={dashboardId}
         isOpen={isModalOpen1}
@@ -205,6 +198,13 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         onChange={handleChange}
         columnsId={id}
       />
+
+      <S.ColumnContentContainer>
+        <S.AddButtonContent onClick={openModal1} />
+        {cards?.data.cards.map((card, index) => (
+          <Card key={card.id} data={card} columnTitle={title} />
+        ))}
+      </S.ColumnContentContainer>
     </S.Column>
   );
 });

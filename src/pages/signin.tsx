@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import WarningModal from '@/components/common/Modal/WarningModal';
 import Form from '@/components/common/form/Form';
+import WarningModal from '@/components/common/modal/WarningModal';
 import SignLayout from '@/components/template/SignLayout';
 import useSignInMutation from '@/hooks/query/auth/useSignInMutation';
 
