@@ -4,17 +4,11 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import theme from '@/styles/theme';
 
 function AvatarList({ max, dataArr }) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setData(dataArr);
-    }, 10);
-  }, []);
+  console.log('아바타:', dataArr);
 
   return (
     <AvatarGroup max={max}>
-      {data?.map(({ nickname, profileImageUrl, id, isOwner }) => {
+      {dataArr?.map(({ nickname, profileImageUrl, id, isOwner }) => {
         if (isOwner) return null;
         return (
           <Avatar
