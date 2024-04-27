@@ -23,7 +23,7 @@ const S = {
 };
 
 interface MainBoxProps {
-  stateTag: string[];
+  stateTag: string;
   card_Id: number;
 }
 function MainBox({ stateTag, card_Id }: MainBoxProps) {

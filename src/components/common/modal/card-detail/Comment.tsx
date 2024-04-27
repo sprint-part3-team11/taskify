@@ -45,7 +45,7 @@ function Comment({ card_Id }: CommentProps) {
         id: comments?.author?.id,
       },
     };
-    console.log(newComment);
+    console.log('new', newComment);
     setList([newComment, ...list]);
   };
 

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import formatDate from '@/utils/formatDate';
+import { formatDate } from '@/utils/formatDate';
 import useDeleteCommentsMutation from '@/hooks/query/comments/useDeleteCommentsMutation';
 import useEditCommentsMutation from '@/hooks/query/comments/useEditCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';

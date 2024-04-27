@@ -38,7 +38,7 @@ const S = {
 
     ${MEDIA_QUERIES.onMobile} {
       box-sizing: border-box;
-      padding: 1rem 0 5rem 1rem;
+      padding: 1.5rem 0 5rem 1rem;
       height: 7rem;
     }
   `,
@@ -46,10 +46,11 @@ const S = {
   Button: styled(Button)`
     position: absolute;
     bottom: 1rem;
-    right: 3rem;
+    right: 2rem;
 
     ${MEDIA_QUERIES.onMobile} {
-      right: 3rem;
+      top: 5rem;
+      right: 2rem;
       width: 5rem;
       height: 2.5rem;
       display: flex;

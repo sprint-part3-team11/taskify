@@ -8,7 +8,7 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   ModalLayout: styled.div`
-    width: 73rem;
+    max-width: 73rem;
     height: 76rem;
 
     overflow: auto;
@@ -29,9 +29,8 @@ const S = {
     }
 
     ${MEDIA_QUERIES.onMobile} {
-      padding-top: 2.2rem;
-      width: 32rem;
-      height: 68rem;
+      max-width: 32rem;
+      max-height: 60rem;
     }
   `,
 
@@ -44,20 +43,24 @@ const S = {
   `,
 };
 
-const stateTag = ['To Do'];
-
 interface ModalOpenAndCloseProps {
   isOpen: boolean;
   onClose: () => void;
   cardId: number;
+  title: string;
 }
-function CardConfirmModal({ isOpen, onClose, cardId }: ModalOpenAndCloseProps) {
+function CardConfirmModal({
+  isOpen,
+  onClose,
+  cardId,
+  title,
+}: ModalOpenAndCloseProps) {
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.ModalLayout>
         <ModalHeader onClose={onClose} card_Id={cardId} />
         <S.ModalBody>
-          <MainBox stateTag={stateTag} card_Id={cardId} />
+          <MainBox stateTag={title} card_Id={cardId} />
           <SideBox card_Id={cardId} />
         </S.ModalBody>
       </S.ModalLayout>

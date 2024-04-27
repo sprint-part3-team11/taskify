@@ -55,6 +55,12 @@ const S = {
 
   NickName: styled.div`
     margin-left: 0.8rem;
+
+    font-size: 1.4rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      font-size: 1.2rem;
+    }
   `,
   DueDateBox: styled.div`
     display: flex;
