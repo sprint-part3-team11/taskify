@@ -71,6 +71,7 @@ const S = {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding: 1rem 0;
   `,
   CheckBox: styled.input`
     display: none;
