@@ -54,6 +54,7 @@ const S = {
   IconWrapper: styled.div`
     display: flex;
     gap: 2rem;
+    margin-top: 8.8rem;
 
     ${MEDIA_QUERIES.onTablet} {
       gap: 1.4rem;
