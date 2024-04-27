@@ -1,28 +1,25 @@
-import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dashboardsApi from '@/api/dashboards.api';
 
-export interface UseTeamMemberInviteModalMutationProps {
-  dashboardId: number;
-  email: string;
-}
 // 초대하기 모달 => 이메일
-function useTeamMemberInviteModalMutation({
-  dashboardId,
-  email,
-}: UseTeamMemberInviteModalMutationProps) {
+function useTeamMemberInviteModalMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({ dashboardId, email }) => {
       return dashboardsApi.postInviteDashboard({
         dashboardId,
         email,
       });
     },
     onSuccess: () => {
-      // TODO 나중에 toast로 바꿔보자!
-      alert('초대가 전송되었습니다!');
+      toast.success('초대가 전송되었습니다!');
+      queryClient.invalidateQueries();
     },
     onError: (error) => {
-      alert(error.response?.data?.message);
+      const errorMessage = error.response?.data?.message;
+      toast.error(`Error: ${errorMessage}`);
     },
   });
 }

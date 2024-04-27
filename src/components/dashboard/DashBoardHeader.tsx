@@ -6,9 +6,8 @@ import DropDown from '@/components/common/DropDown';
 import TeamMemberInviteModal from '@/components/common/Modal/TeamMemberInviteModal';
 import Button from '@/components/common/button/Button';
 import AvatarList from '@/components/dashboard/AvatarList';
-import dataArr from '@/components/dashboard/mockData';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
-import useInviteDashboardMutation from '@/hooks/query/dashboards/useInviteDashboardMutation';
+import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
 import useDashboardMemberQuery from '@/hooks/query/member/useDashBoardMemberQuery';
 import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
@@ -195,7 +194,7 @@ function DashBoardHeader({ myPage }: HeaderProps) {
 
   const { data: myProfile } = useMyPropfileQuery();
   const { data: dashBoardDetail } = useDetailDashboardQuery(id);
-  const { mutate: inviteUser } = useInviteDashboardMutation();
+  const { mutate: inviteUser } = useTeamMemberInviteModalMutation();
   const { data: memberList } = useDashboardMemberQuery(id);
   const memberLists = memberList?.members;
 
