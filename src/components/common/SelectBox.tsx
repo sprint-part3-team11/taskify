@@ -105,6 +105,7 @@ interface SelectBoxProps {
   placeholder: boolean;
   onChange: (option: Option) => void;
   displayFieldName: string;
+  initialValue?: Option;
 }
 
 function SelectBox({
@@ -112,6 +113,7 @@ function SelectBox({
   placeholder,
   onChange,
   displayFieldName,
+  initialValue,
 }: SelectBoxProps): JSX.Element {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -144,7 +146,13 @@ function SelectBox({
       <S.Input
         ref={inputRef}
         type="text"
-        value={selectedOption ? selectedOption[displayFieldName] : filterText}
+        value={
+          initialValue && !isFocused // 초기값이 있고, 인풋에 포커스가 되어 있지 않을 때 초기값을 보여줍니다.
+            ? initialValue[displayFieldName]
+            : selectedOption // 그렇지 않으면 기존 로직을 따릅니다.
+              ? selectedOption[displayFieldName]
+              : filterText
+        }
         onChange={handleInputChange}
         onFocus={handleInputClick}
         $isFocused={isFocused}

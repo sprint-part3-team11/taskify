@@ -27,7 +27,7 @@ const S = {
   `,
 };
 
-function DateSelector({ onChange }) {
+function DateSelector({ onChange, value = '' }) {
   const [dueDate, setDueDate] = useState<Date | null>(null);
 
   const handleChange = (date) => {
@@ -38,6 +38,7 @@ function DateSelector({ onChange }) {
   return (
     <S.Container>
       <S.DatePicker
+        value={value}
         locale={ko}
         showIcon
         icon={calendarIcon}
