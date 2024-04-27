@@ -22,7 +22,7 @@ const S = {
     flex-direction: column;
     justify-content: space-between;
 
-    width: 62rem;
+    width: 60rem;
     height: 25.6rem;
     padding: 3.2rem 2.8rem;
     border-radius: 0.8rem;
