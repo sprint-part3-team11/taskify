@@ -50,16 +50,14 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
  */
 
 const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ label, id, ...htmlInputProps }) => {
+  ({ label, id, ...htmlInputProps }, ref) => {
     return (
       <S.Layout>
         <S.Label htmlFor={id}>{label}</S.Label>
-        <S.Input id={id} {...htmlInputProps} />
+        <S.Input id={id} ref={ref} {...htmlInputProps} />
       </S.Layout>
     );
   },
 );
-
-// InputField.displayName = 'InputField'; // 디버깅을 위해 displayName 설정
 
 export default InputField;
