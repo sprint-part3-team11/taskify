@@ -6,11 +6,11 @@ function useDeleteDashboardMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (dashboardId) => {
+    mutationFn: async (dashboardId: number) => {
       return dashboardsApi.deleteDashboard(dashboardId);
     },
     onSuccess() {
-      queryClient.invalidateQueries([API.DASHBOARDS]);
+      queryClient.invalidateQueries({ queryKey: [API.DASHBOARDS] });
     },
   });
 }
