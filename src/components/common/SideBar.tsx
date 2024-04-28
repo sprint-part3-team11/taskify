@@ -92,7 +92,7 @@ const S = {
     display: inline-block;
     align-items: center;
     margin-top: 0.85rem;
-    padding: 10px;
+    padding: 1rem 0.5rem 1rem 1rem;
     cursor: pointer;
     border-radius: 0.55rem;
     background: ${({ isActive }) =>
@@ -107,11 +107,17 @@ const S = {
     ${MEDIA_QUERIES.onTablet} {
       max-width: 13.4rem;
     }
+    ${MEDIA_QUERIES.onMobile} {
+      max-width: 3.8rem;
+    }
   `,
   CircleColor: styled.div`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    ${MEDIA_QUERIES.onMobile} {
+      left: 1rem;
+    }
   `,
   DashboardItem: styled.li<{ $active: boolean }>`
     overflow: hidden;
