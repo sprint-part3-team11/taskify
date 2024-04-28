@@ -136,7 +136,8 @@ function ImgFileUpload({
   const { mutate: cardImgMutate, data: cardImg } =
     useCardImgUploadMutation(columnId);
   const { mutate: profileImg } = useProfileImgUploadMutation();
-
+  const cardImgUrl = cardImg?.imageUrl;
+  console.log('uploadedImage', uploadedImage);
   useEffect(() => {
     if (uploadedImage) {
       profileImg(uploadedImage);
@@ -145,11 +146,13 @@ function ImgFileUpload({
 
   useEffect(() => {
     if (uploadedImage) {
-      // 이미지가 업로드되면 카드 이미지 업로드 함수를 호출합니다.
-      cardImgMutate(uploadedImage); // columnId 전달
-      onImageUpload(cardImg?.imageUrl);
+      cardImgMutate(uploadedImage);
     }
   }, [uploadedImage]);
+
+  useEffect(() => {
+    onImageUpload(cardImg?.imageUrl);
+  }, [cardImg]);
 
   const handleClick: () => void = () => {
     if (fileInputRef.current) {
@@ -183,9 +186,9 @@ function ImgFileUpload({
             </S.Overlay>
           )}
         </>
-      ) : small && imgServerUrl ? (
+      ) : small && cardImgUrl ? (
         <>
-          <S.Image src={imgServerUrl} alt="업로드된 이미지" $small={small} />
+          <S.Image src={cardImgUrl} alt="업로드된 이미지" $small={small} />
           {edit && (
             <S.Overlay $small={small}>
               <EditIcon />
