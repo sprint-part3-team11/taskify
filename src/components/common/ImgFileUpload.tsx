@@ -148,7 +148,7 @@ function ImgFileUpload({
   }, [uploadedImage]);
 
   useEffect(() => {
-    onImageUpload(cardImgUrl);
+    onImageUpload?.(cardImgUrl);
   }, [cardImg]);
   console.log('카드이미지유알', cardImgUrl);
   console.log('이니셜이미지', initialImageUrl);

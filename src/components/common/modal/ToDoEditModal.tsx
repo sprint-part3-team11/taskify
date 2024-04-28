@@ -121,15 +121,17 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
     tags: cardDetailData?.tags,
     imageUrl: cardDetailData?.imageUrl,
   });
-  console.log('카드데이터', cardDetailData);
 
-  console.log('투두인포', toDoInfo);
   const dashId = Number(dashboardId);
 
   const { data: membersData } = useMemberListQuery(dashboardId);
   const assigneeOptions = membersData?.members;
   const { data: stateOptions } = useColumnListQuery({ dashboardId: dashId });
   const { mutate: editMutate } = useEditCardMutation(onClose, cardId);
+
+  const stateTitle = stateOptions?.find(
+    (item) => item.id === cardDetailData?.columnId,
+  )?.title;
 
   const isFilledRequiredFields = () => {
     return toDoInfo.title?.trim() && toDoInfo.description?.trim();
@@ -151,7 +153,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           ...prev,
           tags: [...prev.tags, newTag],
         }));
-        e.currentTarget.value = ''; // 입력초기화
+        e.currentTarget.value = '';
       }
     }
   };
@@ -182,7 +184,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           <S.FieldBox>
             <S.Label>상태</S.Label>
             <SelectBox
-              // initialValue={assignee} // 컬럼명이들어가야함
+              initialValue={stateTitle}
               options={stateOptions}
               placeholder={false}
               onChange={(option) => handleOnChange('columnId', option.id)}
@@ -192,7 +194,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           <S.FieldBox>
             <S.Label>담당자</S.Label>
             <SelectBox
-              // initialValue={assignee}
+              initialValue={cardDetailData?.assignee.nickname}
               options={assigneeOptions}
               placeholder={false}
               onChange={(option) =>

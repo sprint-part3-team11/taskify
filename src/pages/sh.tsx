@@ -78,6 +78,8 @@ function sh() {
         <ToDoCreateModal
           isOpen={isModalOpen}
           onClose={() => setisModalOpen(false)}
+          dashboardId={cardDetailInfo.dashboardId}
+          columnId={cardDetailInfo.columnId}
         />
       )}
       <Button styleType={BUTTON_TYPE.SECONDARY}>취소</Button>

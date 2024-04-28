@@ -9,7 +9,7 @@ import AvatarList from '@/components/dashboard/AvatarList';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
 import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
 import useMemberListQuery from '@/hooks/query/members/useMemberListQuery';
-import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
+import { useMyProfileQuery } from '@/hooks/query/users/useMyProfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -191,19 +191,23 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const isPc: boolean = width !== undefined && width >= 1200;
   const router = useRouter();
   const { id } = router.query;
+  const dashboardId = Number(id);
 
-  const { data: myProfile } = useMyPropfileQuery();
-  const { data: dashBoardDetail } = useDetailDashboardQuery(id);
+  const { data: myProfile } = useMyProfileQuery();
+  const { data: dashBoardDetail } = useDetailDashboardQuery(dashboardId);
   const { mutate: inviteUser } = useTeamMemberInviteModalMutation();
-  const { data: memberList } = useMemberListQuery(id);
-  const memberLists = memberList?.members;
+  const { data: memberList } = useMemberListQuery(dashboardId);
+  const myEmail = myProfile?.email;
+  const filteredMemberList = memberList?.members?.filter(
+    (member: string) => member.email !== myEmail,
+  );
 
   const handleEdit = () => {
     router.push(`/dashboard/${id}/edit`);
   };
 
   const handleEmail = (email: string) => {
-    inviteUser({ dashboardId: id, email });
+    inviteUser({ dashboardId, email });
   };
   return (
     <S.HeaderLayout>
@@ -239,8 +243,8 @@ function DashBoardHeader({ myPage }: HeaderProps) {
           />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
-          {memberLists && (
-            <AvatarList max={isPc ? 5 : 3} dataArr={memberLists} />
+          {filteredMemberList && (
+            <AvatarList max={isPc ? 5 : 3} dataArr={filteredMemberList} />
           )}
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>

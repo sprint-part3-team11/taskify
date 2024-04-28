@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import { styled } from 'styled-components';
 import handleEnterKeyDown from '@/utils/handleEnterKeyDown';
+import CloseIcon from '@/public/icon/closeIcon.svg';
 import SearchIcon from '@/public/icon/searchIcon.svg';
 
 const S = {
@@ -26,6 +27,11 @@ const S = {
     border: none;
     font-size: 1.4rem;
   `,
+
+  CloseIcon: styled(CloseIcon)`
+    width: 2rem;
+    cursor: pointer;
+  `,
 };
 
 interface SearchBarProps {
@@ -40,12 +46,25 @@ function SearchBar({ placeholder, uri, style }: SearchBarProps) {
 
   const navigateToKeyword = (input: string) => {
     const keyword = input?.replace(/(\s*)/g, '');
-    if (keyword === '') return;
+    if (keyword === '') {
+      clearInput();
+      return;
+    }
 
     router.push({
       pathname: uri,
       search: `?keyword=${keyword}`,
     });
+  };
+
+  const clearInput = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      router.push({
+        pathname: uri,
+        search: '',
+      });
+    }
   };
 
   return (
@@ -57,10 +76,11 @@ function SearchBar({ placeholder, uri, style }: SearchBarProps) {
         placeholder={placeholder}
         onKeyDown={(e) =>
           handleEnterKeyDown(e, () =>
-            navigateToKeyword(inputRef.current?.value || ''),
+            navigateToKeyword(inputRef.current?.value.trim() || ''),
           )
         }
       />
+      <S.CloseIcon onClick={clearInput} />
     </S.Container>
   );
 }

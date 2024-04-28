@@ -27,7 +27,7 @@ const theme = Object.freeze({
   },
 
   border: {
-    lightGray: '1px solid #D9D9D9',
+    lightGray: '1px solid #EEE',
   },
 });
 

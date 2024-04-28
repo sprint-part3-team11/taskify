@@ -225,6 +225,7 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
         <S.FieldBox>
           <S.Label>마감일</S.Label>
           <DateSelector
+            value={toDoInfo.dueDate}
             onChange={(date) => {
               handleOnChange('dueDate', formatDueDate(date));
             }}
@@ -240,6 +241,7 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
             onKeyPress={handleTagInput}
           />
         </S.FieldBox>
+
         <div style={{ display: 'flex', gap: '0.8rem' }}>
           {toDoInfo.tags.map((tag, index) => (
             <S.Tag key={index} index={index}>
