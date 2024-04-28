@@ -1,10 +1,9 @@
-import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
-import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useOutSideClick from '@/hooks/useClickOutside';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import { CardInfoProps } from '@/types/CardDetail';
 import CloseIcon from '@/public/icon/closeIcon.svg';
 import KebabIcon from '@/public/icon/kebabIcon.svg';
 
@@ -103,22 +102,21 @@ interface ModalHeaderProps {
   onClose: () => void;
   card_Id: number;
   openToDoEditModal: () => void;
+  cardDetailData: CardInfoProps;
 }
 function ModalHeader({
   onClose,
   card_Id,
   openToDoEditModal,
+  cardDetailData,
 }: ModalHeaderProps) {
-  const optionAreaRef = useRef<HTMLUListElement>(null);
-  const { data } = useDetailCardQuery({
-    cardId: card_Id,
-  });
-  const title = data && data.title;
-  const { mutate: responseInvitationMutate } = useDeleteCardMutation();
-
   const [isOpen, setIsOpen] = useState(false);
 
-  const router = useRouter();
+  const optionAreaRef = useRef<HTMLUListElement>(null);
+
+  const title = cardDetailData?.title;
+
+  const { mutate: responseInvitationMutate } = useDeleteCardMutation();
 
   useOutSideClick([optionAreaRef], () => {
     setIsOpen(false);
