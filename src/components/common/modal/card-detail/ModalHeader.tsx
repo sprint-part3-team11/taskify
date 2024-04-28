@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
+import ConfirmDeleteModal from '@/components/common/modal/ConfirmDeleteModal';
+import WarningModal from '@/components/common/modal/WarningModal';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useOutSideClick from '@/hooks/useClickOutside';
@@ -104,6 +106,7 @@ interface ModalHeaderProps {
   card_Id: number;
   openToDoEditModal: () => void;
 }
+
 function ModalHeader({
   onClose,
   card_Id,
@@ -117,6 +120,7 @@ function ModalHeader({
   const { mutate: responseInvitationMutate } = useDeleteCardMutation();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const router = useRouter();
 
@@ -133,8 +137,8 @@ function ModalHeader({
   };
 
   const handleDeleteCard = () => {
-    responseInvitationMutate({ cardId: card_Id });
-    onClose();
+    setIsDeleteOpen(true);
+    // onClose();
   };
 
   return (
@@ -153,8 +157,15 @@ function ModalHeader({
               </S.DropDownList>
             </S.Dropdown>
           )}
+          <ConfirmDeleteModal
+            isOpen={isDeleteOpen}
+            onClose={onClose}
+            message="정말 삭제하시겠습니까?🥹"
+            onClick={() =>
+              responseInvitationMutate({ cardId: String(card_Id) })
+            }
+          />
         </S.DropdownContainer>
-
         <S.CloseIcon onClick={onClose} />
       </S.HeaderButton>
     </S.ModalHeader>
