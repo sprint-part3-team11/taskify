@@ -87,9 +87,6 @@ function CommentForm({ card_Id: CARD_ID }: CommentFormProps) {
   const { data: cardDetailData } = useDetailCardQuery({
     cardId: CARD_ID,
   });
-  const { data: commentsData } = useCommentsListQuery({ cardId: CARD_ID });
-
-  const comments = commentsData?.comments;
 
   const COLUMN_ID = cardDetailData?.columnId;
   const DASHBOARD_ID = cardDetailData?.dashboardId;
@@ -109,16 +106,15 @@ function CommentForm({ card_Id: CARD_ID }: CommentFormProps) {
       columnId: COLUMN_ID,
       dashboardId: DASHBOARD_ID,
     });
+    console.log(CARD_ID);
 
     setInputValue('');
   };
 
-  useEffect(() => {}, [comments]);
-
   return (
     <S.CommentFormBox>
       <S.Form onSubmit={handleSubmitContent}>
-        <S.Title>댓글 ({comments ? comments.length : 0})</S.Title>
+        <S.Title>댓글</S.Title>
 
         <S.InputWrapper>
           <S.TextArea

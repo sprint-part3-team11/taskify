@@ -49,6 +49,7 @@ const S = {
   `,
   Image: styled(Image)`
     width: 100%;
+    object-fit: contain;
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
       height: 16rem;
