@@ -7,11 +7,11 @@ function useMembersListQuery({ dashboardId, page }) {
   return useQuery({
     queryKey: [API.MEMBERS, dashboardId, page],
     queryFn: async () => {
-      const { data } = await membersApi.getDashboardMembers({
+      const { data } = await membersApi.getDashboardMembers(
         dashboardId,
         page,
         size,
-      });
+      );
       return data;
     },
     // { Success or Error 처리 등의 옵션자리 }

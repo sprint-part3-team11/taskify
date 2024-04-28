@@ -202,15 +202,8 @@ function Card({ data, columnTitle }) {
       <ToDoEditModal
         isOpen={isToDoEditModalOpen}
         onClose={closeToDoEditModal}
-        id={cardInfoData?.id}
+        cardId={cardInfoData?.id}
         dashboardId={cardInfoData?.dashboardId}
-        columnId={cardInfoData?.columnId}
-        title={cardInfoData?.title}
-        description={cardInfoData?.description}
-        dueDate={cardInfoData?.dueDate}
-        tags={cardInfoData?.tags}
-        assignee={cardInfoData?.assignee}
-        imageUrl={cardInfoData?.imageUrl}
       />
     </>
   );

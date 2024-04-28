@@ -10,7 +10,7 @@ function useDeleteMembersMutation() {
       return membersApi.deleteDashboardMembers(memberId);
     },
     onSuccess() {
-      queryClient.invalidateQueries([API.COMMENTS]);
+      queryClient.invalidateQueries([API.MEMBERS]);
     },
   });
 }
