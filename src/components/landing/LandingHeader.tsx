@@ -133,7 +133,7 @@ export default function LandingHeader() {
         <S.MainColorText>Taskify</S.MainColorText>
       </S.TitleWrapper>
       <S.ServiceDescription>
-        공주들아 서비스 한줄 소개 생각하긔 꼬옥 ~!
+        일상의 중요한 순간들을 체계적으로 관리하며, 생산성을 극대화하세요.
       </S.ServiceDescription>
       <S.LoginButtonBox onClick={handleClick}>
         <S.Button size="L" styleType={BUTTON_TYPE.PRIMARY}>
