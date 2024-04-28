@@ -8,7 +8,7 @@ import BackDropModal from '@/components/common/modal/BackDropModal';
 import HashTag from '@/components/common/tag/HashTag';
 import { formatDueDate } from '@/utils/formatDate';
 import useCreateCardMutation from '@/hooks/query/cards/useCreateCardMutation';
-import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
+import useMemberListQuery from '@/hooks/query/members/useMemberListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import { RequiredStar } from '@/styles/CommonStyle';
 
@@ -118,7 +118,7 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
     imageUrl: '',
   });
 
-  const { data: membersData } = useMemeberListQuery(dashboardId);
+  const { data: membersData } = useMemberListQuery(dashboardId);
   const selectBoxOptions = membersData?.members;
 
   const { mutate: createCardMutate } = useCreateCardMutation(
@@ -127,7 +127,7 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
     onClose,
   );
 
-  console.log(toDoInfo);
+  // console.log(toDoInfo.tags);
 
   const isFilledRequiredFields = () => {
     return toDoInfo.title.trim() && toDoInfo.description.trim();
@@ -149,7 +149,7 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
           ...prev,
           tags: [...prev.tags, newTag],
         }));
-        e.currentTarget.value = ''; // 입력초기화
+        e.currentTarget.value = '';
       }
     }
   };
@@ -246,7 +246,7 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
               {tag}
               <button
                 onClick={() => removeTag(tag)}
-                style={{ marginLeft: '0.05rem' }}
+                style={{ marginLeft: '0.05rem', color: 'white' }}
               >
                 X
               </button>

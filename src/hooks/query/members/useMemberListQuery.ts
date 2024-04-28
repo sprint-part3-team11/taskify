@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import membersApi from '@/api/members.api';
 
-function useMemeberListQuery(dashboardId) {
+function useMemberListQuery(dashboardId: number) {
   return useQuery({
     queryKey: [API.MEMBERS, dashboardId],
     queryFn: async () => {
@@ -13,4 +13,4 @@ function useMemeberListQuery(dashboardId) {
   });
 }
 
-export default useMemeberListQuery;
+export default useMemberListQuery;

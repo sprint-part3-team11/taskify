@@ -8,7 +8,7 @@ import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteMod
 import AvatarList from '@/components/dashboard/AvatarList';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
 import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
-import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
+import useMemberListQuery from '@/hooks/query/members/useMemberListQuery';
 import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
@@ -195,7 +195,7 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const { data: myProfile } = useMyPropfileQuery();
   const { data: dashBoardDetail } = useDetailDashboardQuery(id);
   const { mutate: inviteUser } = useTeamMemberInviteModalMutation();
-  const { data: memberList } = useMemeberListQuery(id);
+  const { data: memberList } = useMemberListQuery(id);
   const memberLists = memberList?.members;
 
   const handleEdit = () => {
