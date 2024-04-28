@@ -25,12 +25,14 @@ const postCreateComment = ({
   });
 };
 
-const getCommentList = (cardId: number) => {
+const getCommentList = ({ cardId, size, cursorId }) => {
   return instance({
     url: API.COMMENTS,
     method: 'GET',
     params: {
       cardId,
+      size,
+      cursorId,
     },
   });
 };

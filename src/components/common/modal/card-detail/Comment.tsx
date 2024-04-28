@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import CommentForm from '@/components/common/modal/card-detail/CommentForm';
 import CommentList from '@/components/common/modal/card-detail/CommentList';
+import { CardInfoProps } from '@/types/CardDetail';
 
 const S = {
   CommentContainer: styled.ul`
@@ -10,13 +11,13 @@ const S = {
 };
 
 interface CommentProps {
-  card_Id: number;
+  cardDetailData: CardInfoProps;
 }
-function Comment({ card_Id }: CommentProps) {
+function Comment({ cardDetailData }: CommentProps) {
   return (
     <S.CommentContainer>
-      <CommentForm card_Id={card_Id} />
-      <CommentList card_Id={card_Id} />
+      <CommentForm cardDetailData={cardDetailData} />
+      <CommentList cardDetailData={cardDetailData} />
     </S.CommentContainer>
   );
 }

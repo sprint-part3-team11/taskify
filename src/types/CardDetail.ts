@@ -1,5 +1,5 @@
 export interface Assignee {
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   nickname: string;
   id: number;
 }
@@ -14,6 +14,7 @@ export interface CardInfoProps {
   imageUrl: string;
   teamId: string;
   columnId: number;
+  dashboardId: number;
   createdAt: string;
   updatedAt: string;
 }

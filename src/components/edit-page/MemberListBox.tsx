@@ -6,6 +6,7 @@ import AvatarImage from '@/components/common/AvatarImage';
 import Button from '@/components/common/button/Button';
 import useDeleteMembersMutation from '@/hooks/query/dashboards/useDeleteMembersMutation';
 import useMembersListQuery from '@/hooks/query/dashboards/useMembersListQuery';
+import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -95,7 +96,10 @@ const S = {
   `,
 
   MemberListContainer: styled.div`
-    margin-top: 1rem;
+    margin-top: 2rem;
+    ${MEDIA_QUERIES.onMobile} {
+      margin-top: 0rem;
+    }
   `,
 
   NameTitle: styled.p`
@@ -144,12 +148,16 @@ function MemberList() {
 
   const router = useRouter();
   const { id } = router.query;
+
   const [page, setPage] = useState(1);
+
   const { data } = useMembersListQuery({ dashboardId: id, page, size: 4 });
+  // const { data: myProfile } = useMyPropfileQuery();
+  // console.log(myProfile);
   const members = data?.members;
-  const [list, setList] = useState(members);
+
   const { mutate: responseDeleteCommentMutate } = useDeleteMembersMutation();
-  const totalPages = data ? Math.ceil(data.totalCount / 4) : 0;
+  const totalPages = data ? Math.ceil(data.totalCount / 4) : 1;
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);
@@ -159,9 +167,9 @@ function MemberList() {
   };
 
   const remove = (id: number) => {
-    const updatedList = list && list.filter((member) => member.id !== id);
+    // console.log('id', id);
+
     responseDeleteCommentMutate({ memberId: id });
-    setList(updatedList);
   };
 
   return (
@@ -193,17 +201,16 @@ function MemberList() {
             members.map((member) => (
               <S.MemberItem key={member.id}>
                 <S.ImageAndNameContainer>
-                  {
-                    <S.AvatarImage
-                      src={
-                        member.profileImageUrl
-                          ? member.profileImageUrl
-                          : defaultImg
-                      }
-                      width={isMobile ? '3.4rem' : '3.8rem'}
-                      height={isMobile ? '3.4rem' : '3.8rem'}
-                    />
-                  }
+                  <S.AvatarImage
+                    src={
+                      member.profileImageUrl
+                        ? member.profileImageUrl
+                        : defaultImg
+                    }
+                    width={isMobile ? '3.4rem' : '3.8rem'}
+                    height={isMobile ? '3.4rem' : '3.8rem'}
+                  />
+
                   <S.Nickname>{member.nickname}</S.Nickname>
                 </S.ImageAndNameContainer>
                 <S.Button
