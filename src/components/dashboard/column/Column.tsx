@@ -201,6 +201,7 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
 
       <ToDoCreateModal
         dashboardId={dashboardId}
+        columnId={id}
         isOpen={isModalOpen1}
         onClose={closeModal1}
       />
