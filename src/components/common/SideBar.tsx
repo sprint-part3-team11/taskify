@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
-import useCreateDashboardMutation from '@/hooks/query/dashboards/useCreateDashboardMutation';
 import useDashboardListQuery from '@/hooks/query/dashboards/useDashboardListQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import AddDashBoardIcon from '@/public/icon/addDashboardBox.svg';
@@ -93,8 +92,12 @@ const S = {
     display: inline-block;
     align-items: center;
     margin-top: 0.85rem;
-    padding: 10px;
+    padding: 1rem 0.5rem 1rem 1rem;
     cursor: pointer;
+    border-radius: 0.55rem;
+    background: ${({ isActive }) =>
+      isActive ? 'var(--violet-violet-8, #f1effd)' : 'transparent'};
+    transition: all 0.1s ease-in-out;
 
     &:hover {
       border-radius: 0.55rem;
@@ -103,6 +106,17 @@ const S = {
     }
     ${MEDIA_QUERIES.onTablet} {
       max-width: 13.4rem;
+    }
+    ${MEDIA_QUERIES.onMobile} {
+      max-width: 3.8rem;
+    }
+  `,
+  CircleColor: styled.div`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    ${MEDIA_QUERIES.onMobile} {
+      left: 1rem;
     }
   `,
   DashboardItem: styled.li<{ $active: boolean }>`
@@ -169,8 +183,8 @@ function Sidebar() {
   const openModal6 = () => setModalOpen6(true);
   const closeModal6 = () => setModalOpen6(false);
   const router = useRouter();
-
   const [page, setPage] = useState(1);
+  const [selectedDashboardId, setSelectedDashboardId] = useState('');
 
   const { data } = useDashboardListQuery({
     navigationMethod: 'pagination',
@@ -200,6 +214,8 @@ function Sidebar() {
   };
 
   const handleDashboardClick = (dashboardId: string) => {
+    setPage(page);
+    setSelectedDashboardId(dashboardId);
     router.push(`/dashboard/${dashboardId}`);
   };
 
@@ -218,8 +234,11 @@ function Sidebar() {
           <S.DashboardItemWrapper
             key={dashboard.id}
             onClick={() => handleDashboardClick(dashboard.id)}
+            isActive={dashboard.id === selectedDashboardId}
           >
-            <CircleColor color={dashboard.color} />
+            <S.CircleColor>
+              <CircleColor color={dashboard.color} />
+            </S.CircleColor>
             <S.DashboardItem
               $active={dashboard.id === router.query.dashboardId}
             >
