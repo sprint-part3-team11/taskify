@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import AddIconButton from '@/components/common/button/AddIconButton';
@@ -81,11 +81,12 @@ const S = {
 function DashBoardList() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
   const [page, setPage] = useState(1);
 
   const { data } = useDashboardListQuery({
     navigationMethod: 'pagination',
-    page: page,
+    page,
   });
 
   const dashboards = data?.dashboards;
@@ -97,6 +98,12 @@ function DashBoardList() {
   const handleNextBtnClick = () => {
     setPage((prev) => prev + 1);
   };
+  const createdDashBoard = (name: string, color: string) => {
+    setTempDashBoardName([name, color]);
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {}, [tempDashBoardName]);
 
   return (
     <>
@@ -113,6 +120,7 @@ function DashBoardList() {
           <NewDashBoardModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
+            onCreate={createdDashBoard}
           />
         )}
 
