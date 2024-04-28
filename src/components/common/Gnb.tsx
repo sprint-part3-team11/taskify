@@ -16,6 +16,8 @@ const S = {
     width: 100vw;
     height: 7rem;
     padding: 0 calc(4rem + 2vw);
+
+    background-color: ${({ theme }) => theme.color.black};
   `,
 
   Logo: styled.div`
