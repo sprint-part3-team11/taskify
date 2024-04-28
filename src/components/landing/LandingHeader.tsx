@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Button from '../common/button/Button';
 import styled from 'styled-components';
+import Button from '@/components/common/button/Button';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import landing from '@/public/image/landing.png';
@@ -118,8 +118,10 @@ const S = {
 export default function LandingHeader() {
   const router = useRouter();
 
-  const handleLoginClick = () => {
-    router.push('/signin');
+  const handleClick = () => {
+    return localStorage.getItem('accessToken')
+      ? router.push('/my-dashboard')
+      : router.push('/signin');
   };
   return (
     <S.MainBox>
@@ -133,9 +135,11 @@ export default function LandingHeader() {
       <S.ServiceDescription>
         공주들아 서비스 한줄 소개 생각하긔 꼬옥 ~!
       </S.ServiceDescription>
-      <S.LoginButtonBox onClick={handleLoginClick}>
+      <S.LoginButtonBox onClick={handleClick}>
         <S.Button size="L" styleType={BUTTON_TYPE.PRIMARY}>
-          로그인하기
+          {localStorage.getItem('accessToken')
+            ? '내 대시보드로 이동'
+            : '로그인하기'}
         </S.Button>
       </S.LoginButtonBox>
     </S.MainBox>
