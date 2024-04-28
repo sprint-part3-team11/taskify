@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/api/auth.api';
@@ -6,6 +7,7 @@ import authApi from '@/api/auth.api';
 function usePasswordChangeMutation() {
   const [open, setOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+
   const mutation = useMutation({
     mutationFn: async (data) => {
       return authApi.putPasswordChange({
@@ -15,6 +17,7 @@ function usePasswordChangeMutation() {
     },
     onSuccess: () => {
       alert('비밀번호 변경 성공✨');
+      window.location.reload();
     },
     onError: (error) => {
       setOpen(true);
