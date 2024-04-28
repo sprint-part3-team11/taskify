@@ -4,6 +4,7 @@ import CommentItem from '@/components/common/modal/card-detail/CommentItem';
 import InvitedDashBoardListLoader from '@/components/dashboard/my-board/InvitedDashBoardListLoader';
 import useCommentsListQuery from '@/hooks/query/comments/useCommentsListQuery';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
   CommentListContainer: styled.div`
@@ -13,6 +14,11 @@ const S = {
 
     border: 1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.5rem;
+
+    ${MEDIA_QUERIES.onMobile} {
+      height: 9rem;
+    }
+
     &::-webkit-scrollbar {
       width: 1rem;
     }
@@ -42,10 +48,12 @@ interface CommentItemDataProps {
     id: number;
   };
 }
-function CommentList({ card_Id }) {
+function CommentList({ cardDetailData }) {
   const loaderRef = useRef();
 
-  const { data, fetchNextPage } = useCommentsListQuery({ cardId: card_Id });
+  const { data, fetchNextPage } = useCommentsListQuery({
+    cardId: cardDetailData?.id,
+  });
 
   const isLastPage = data?.pages?.at(-1)?.cursorId === null;
 

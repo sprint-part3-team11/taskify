@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
-import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
-import useCommentsListQuery from '@/hooks/query/comments/useCommentsListQuery';
 import useCreateCommentsMutation from '@/hooks/query/comments/useCreateCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import commentApi from '@/api/comment.api';
-import { CommentItemProps } from '@/types/CardDetail';
+import { CardInfoProps, CommentItemProps } from '@/types/CardDetail';
 
 const S = {
   CommentFormBox: styled.div`
@@ -79,17 +76,11 @@ const S = {
 };
 
 interface CommentFormProps {
-  card_Id: number;
+  cardDetailData: CardInfoProps;
 }
 
-function CommentForm({ card_Id: CARD_ID }: CommentFormProps) {
+function CommentForm({ cardDetailData }: CommentFormProps) {
   const [inputValue, setInputValue] = useState('');
-  const { data: cardDetailData } = useDetailCardQuery({
-    cardId: CARD_ID,
-  });
-
-  const COLUMN_ID = cardDetailData?.columnId;
-  const DASHBOARD_ID = cardDetailData?.dashboardId;
 
   const { mutate: responseCreateComment } = useCreateCommentsMutation();
 
@@ -102,11 +93,10 @@ function CommentForm({ card_Id: CARD_ID }: CommentFormProps) {
 
     responseCreateComment({
       content: inputValue,
-      cardId: CARD_ID,
-      columnId: COLUMN_ID,
-      dashboardId: DASHBOARD_ID,
+      cardId: cardDetailData?.id,
+      columnId: cardDetailData?.columnId,
+      dashboardId: cardDetailData?.dashboardId,
     });
-    console.log(CARD_ID);
 
     setInputValue('');
   };
