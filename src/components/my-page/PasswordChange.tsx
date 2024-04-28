@@ -40,7 +40,7 @@ function PasswordChange() {
     setOpen,
     modalMessage,
   } = usePasswordChangeMutation();
-  const editMyPassword = (data) => {
+  const editMyPassword = (data: void) => {
     passwordChange(data);
   };
 

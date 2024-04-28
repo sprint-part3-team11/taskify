@@ -4,7 +4,7 @@ import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
 import usersApi from '@/api/users.api';
 
 // 프로필 수정 => 이미지, 닉네임
-function useProfileEditMutation(imgServerUrl) {
+function useProfileEditMutation(imgServerUrl: string) {
   const profileImageUrl = useRecoilValue(profileImageUrlState);
   const queryClient = useQueryClient();
 
