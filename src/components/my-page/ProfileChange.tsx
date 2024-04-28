@@ -90,7 +90,7 @@ function ProfileChange() {
   setProfileImageUrl(myProfile && myProfile.profileImageUrl);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const editMyProfile = (data: void, imgServerUrl: string) => {
+  const editMyProfile = (data: never, imgServerUrl: string) => {
     editProfile(data, (imgServerUrl as never) || (profileImageUrl as never));
   };
 
