@@ -92,7 +92,12 @@ function DropDown({ userName }: DropDownProps) {
       </S.DropDownBtn>
       {isOpen && (
         <S.DropdownBox ref={optionAreaRef}>
-          <S.DropDownList onClick={() => handleList('/')}>
+          <S.DropDownList
+            onClick={() => {
+              handleList('/');
+              localStorage.clear();
+            }}
+          >
             로그아웃
           </S.DropDownList>
           <S.DropDownList onClick={() => handleList('/mypage')}>

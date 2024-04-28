@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { styled } from 'styled-components';
+import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import WhiteLogo from '@/public/icon/whiteLogo.svg';
 import WhiteLogoName from '@/public/icon/whiteLogoName.svg';
 
@@ -14,11 +15,9 @@ const S = {
 
     width: 100vw;
     height: 7rem;
-    padding: 0 calc((100vw - 110rem) / 2 + 4rem);
+    padding: 0 calc(4rem + 2vw);
 
-    @media (max-width: 1200px) {
-      padding: 2rem;
-    }
+    background-color: ${({ theme }) => theme.color.black};
   `,
 
   Logo: styled.div`
@@ -27,7 +26,7 @@ const S = {
   `,
 
   LogoName: styled(WhiteLogoName)`
-    @media (max-width: 787px) {
+    ${MEDIA_QUERIES.onTablet} {
       display: none;
     }
   `,
@@ -36,7 +35,7 @@ const S = {
     display: flex;
     gap: 1.4rem;
 
-    @media (max-width: 787px) {
+    ${MEDIA_QUERIES.onTablet} {
       gap: 0.2rem;
     }
 
@@ -47,7 +46,7 @@ const S = {
       font-size: 1.6rem;
       font-weight: 400;
 
-      @media (max-width: 787px) {
+      ${MEDIA_QUERIES.onTablet} {
         font-size: 1.4rem;
       }
     }
@@ -62,8 +61,16 @@ function Gnb() {
         <S.LogoName />
       </S.Logo>
       <S.GoSign>
-        <Link href="/signin">로그인</Link>
-        <Link href="/signup">회원가입</Link>
+        {localStorage.getItem('accessToken') ? (
+          <Link href="/" onClick={() => localStorage.clear()}>
+            로그아웃
+          </Link>
+        ) : (
+          <div>
+            <Link href="/signin">로그인</Link>
+            <Link href="/signup">회원가입</Link>
+          </div>
+        )}
       </S.GoSign>
     </S.Container>
   );
