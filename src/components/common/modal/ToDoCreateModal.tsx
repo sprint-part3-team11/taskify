@@ -127,6 +127,8 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
     onClose,
   );
 
+  console.log(toDoInfo);
+
   const isFilledRequiredFields = () => {
     return toDoInfo.title.trim() && toDoInfo.description.trim();
   };
@@ -168,6 +170,14 @@ function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
 
   const handleCreateBtnClick = () => {
     createCardMutate(toDoInfo);
+    setToDoInfo({
+      assigneeUserId: 0,
+      title: '',
+      description: '',
+      dueDate: '',
+      tags: [],
+      imageUrl: '',
+    });
   };
 
   return (

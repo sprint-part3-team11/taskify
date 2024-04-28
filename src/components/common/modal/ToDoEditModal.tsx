@@ -7,6 +7,7 @@ import Button from '@/components/common/button/Button';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import HashTag from '@/components/common/tag/HashTag';
 import { formatDueDate } from '@/utils/formatDate';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useEditCardMutation from '@/hooks/query/cards/useEditCardMutation';
 import useColumnListQuery from '@/hooks/query/columns/useColumnListQuery';
 import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
@@ -109,37 +110,29 @@ const S = {
   `,
 };
 
-function ToDoEditModal({
-  isOpen,
-  onClose,
-  id: cardId,
-  dashboardId,
-  columnId,
-  title,
-  description,
-  dueDate,
-  tags,
-  assignee,
-  imageUrl,
-}: any) {
+function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
+  const { data: cardDetailData } = useDetailCardQuery({ cardId });
   const [toDoInfo, setToDoInfo] = useState({
-    columnId,
-    assigneeUserId: assignee.id,
-    title,
-    description,
-    dueDate,
-    tags,
-    imageUrl,
+    columnId: cardDetailData?.columnId,
+    assigneeUserId: cardDetailData?.assignee.id,
+    title: cardDetailData?.title,
+    description: cardDetailData?.description,
+    dueDate: cardDetailData?.dueDate,
+    tags: cardDetailData?.tags,
+    imageUrl: cardDetailData?.imageUrl,
   });
+  console.log('카드데이터', cardDetailData);
+
+  console.log('투두인포', toDoInfo);
   const dashId = Number(dashboardId);
 
   const { data: membersData } = useMemeberListQuery(dashboardId);
   const assigneeOptions = membersData?.members;
-  const { data: stateOptions } = useColumnListQuery(dashId);
+  const { data: stateOptions } = useColumnListQuery({ dashboardId: dashId });
   const { mutate: editMutate } = useEditCardMutation(onClose, cardId);
 
   const isFilledRequiredFields = () => {
-    return toDoInfo.title.trim() && toDoInfo.description.trim();
+    return toDoInfo.title?.trim() && toDoInfo.description?.trim();
   };
 
   const handleOnChange = (fieldName: string, value: string | string[]) => {
@@ -257,7 +250,7 @@ function ToDoEditModal({
           />
         </S.FieldBox>
         <div style={{ display: 'flex', gap: '0.8rem' }}>
-          {toDoInfo.tags.map((tag, index) => (
+          {toDoInfo?.tags?.map((tag, index) => (
             <S.Tag key={index} index={index}>
               {tag}
               <button
@@ -272,7 +265,13 @@ function ToDoEditModal({
 
         <S.FieldBox>
           <S.Label>이미지</S.Label>
-          <ImgFileUpload edit small onImageUpload={handleImageUpload} />
+          <ImgFileUpload
+            edit
+            small
+            onImageUpload={handleImageUpload}
+            columnId={toDoInfo.columnId}
+            initialImageUrl={cardDetailData?.imageUrl}
+          />
         </S.FieldBox>
       </S.FormContainer>
 
