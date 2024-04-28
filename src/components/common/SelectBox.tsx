@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import useOutSideClick from '@/hooks/useClickOutside';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -128,6 +128,12 @@ function SelectBox({
     onChange(option);
   }
 
+  useEffect(() => {
+    if (initialValue && !selectedOption) {
+      setSelectedOption(initialValue);
+    }
+  }, [initialValue, selectedOption]);
+
   useOutSideClick([optionAreaRef, inputRef], () => {
     setIsFocused(false);
   });
@@ -147,10 +153,10 @@ function SelectBox({
         ref={inputRef}
         type="text"
         value={
-          initialValue && !isFocused // 초기값이 있고, 인풋에 포커스가 되어 있지 않을 때 초기값을 보여줍니다.
-            ? initialValue[displayFieldName]
-            : selectedOption // 그렇지 않으면 기존 로직을 따릅니다.
-              ? selectedOption[displayFieldName]
+          selectedOption
+            ? selectedOption[displayFieldName]
+            : !isFocused && initialValue
+              ? initialValue
               : filterText
         }
         onChange={handleInputChange}

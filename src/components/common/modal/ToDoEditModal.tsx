@@ -121,9 +121,9 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
     tags: cardDetailData?.tags,
     imageUrl: cardDetailData?.imageUrl,
   });
-  console.log('카드데이터', cardDetailData);
+  // console.log('카드데이터', cardDetailData);
 
-  console.log('투두인포', toDoInfo);
+  // console.log('투두인포', toDoInfo);
   const dashId = Number(dashboardId);
 
   const { data: membersData } = useMemeberListQuery(dashboardId);
@@ -182,7 +182,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           <S.FieldBox>
             <S.Label>상태</S.Label>
             <SelectBox
-              // initialValue={assignee} // 컬럼명이들어가야함
+              initialValue="테스트용 state" // 컬럼명이들어가야함
               options={stateOptions}
               placeholder={false}
               onChange={(option) => handleOnChange('columnId', option.id)}
@@ -192,7 +192,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           <S.FieldBox>
             <S.Label>담당자</S.Label>
             <SelectBox
-              // initialValue={assignee}
+              initialValue="테스트용 assignee"
               options={assigneeOptions}
               placeholder={false}
               onChange={(option) =>
