@@ -8,6 +8,7 @@ function useLoadInvitationQuery({ dashboardId, page, size = 4 }) {
   return useQuery({
     queryKey: [API.DASHBOARDS, page],
     queryFn: async () => {
+      if (!dashboardId) return null;
       const { data } = await dashboardsApi.getDashboardInvitation({
         dashboardId,
         page,
@@ -17,7 +18,7 @@ function useLoadInvitationQuery({ dashboardId, page, size = 4 }) {
     },
     onSuccess: () => {
       // 쿼리 무효화
-      queryClient.invalidateQueries([API.DASHBOARDS]);
+      queryClient.invalidateQueries();
     },
   });
 }

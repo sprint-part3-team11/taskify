@@ -7,6 +7,7 @@ function useColumnListQuery({ dashboardId }) {
   return useQuery({
     queryKey: [API.COLUMNS, dashboardId],
     queryFn: async () => {
+      if (!dashboardId) return null;
       const { data } = await columnsApi.getColumnList(dashboardId);
       return data.data;
     },

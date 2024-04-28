@@ -8,7 +8,6 @@ const profileImageUrlState = atom({
   default: '', // 기본값
 });
 
-// 대시보드 목록조회
 function useMyPropfileQuery() {
   return useQuery({
     queryKey: [API.USERS],
