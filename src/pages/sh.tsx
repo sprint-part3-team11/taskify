@@ -15,23 +15,23 @@ const selectBoxOptions = [
 ];
 
 const cardDetailInfo = {
-  id: 5708,
-  title: 'jhgff',
-  description: 'lkuhgy',
-  tags: ['곧 마감'],
-  dueDate: '2024-05-02 23:30',
+  id: 5964,
+  title: '이게뭘가',
+  description: '아니아니',
+  tags: ['태그함'],
+  dueDate: '2024-05-01 12:30',
   assignee: {
     id: 1679,
     nickname: 'SH',
     profileImageUrl: null,
   },
   imageUrl:
-    'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/4-11_24728_1714139820514.png',
+    'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/task_image/4-11_24728_1714272229967.jpeg',
   teamId: '4-11',
+  dashboardId: 7053,
   columnId: 24728,
-  dashboardId: 7373,
-  createdAt: '2024-04-26T22:57:14.576Z',
-  updatedAt: '2024-04-26T22:57:14.576Z',
+  createdAt: '2024-04-28T11:43:57.738Z',
+  updatedAt: '2024-04-28T11:43:57.738Z',
 };
 
 function sh() {
@@ -98,15 +98,8 @@ function sh() {
         <ToDoEditModal
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
-          id={cardDetailInfo.id}
+          cardId={cardDetailInfo.id}
           dashboardId={cardDetailInfo.dashboardId}
-          columnId={cardDetailInfo.columnId}
-          title={cardDetailInfo.title}
-          description={cardDetailInfo.description}
-          dueDate={cardDetailInfo.dueDate}
-          tags={cardDetailInfo.tags}
-          assignee={cardDetailInfo.assignee}
-          imageUrl={cardDetailInfo.imageUrl}
         />
       )}
       <Button>버튼할게</Button>
