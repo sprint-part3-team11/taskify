@@ -25,7 +25,7 @@ const postCreateComment = ({
   });
 };
 
-const getCommentList = (cardId: string) => {
+const getCommentList = (cardId: number) => {
   return instance({
     url: API.COMMENTS,
     method: 'GET',
@@ -45,7 +45,7 @@ const putCommentEdit = (content, commentId) => {
   });
 };
 
-const deleteComment = (commentId: string) => {
+const deleteComment = (commentId: number) => {
   return instance({
     url: API_COMMENTS.BY_ID(commentId),
     method: 'DELETE',
