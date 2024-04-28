@@ -62,8 +62,16 @@ function Gnb() {
         <S.LogoName />
       </S.Logo>
       <S.GoSign>
-        <Link href="/signin">로그인</Link>
-        <Link href="/signup">회원가입</Link>
+        {localStorage.getItem('accessToken') ? (
+          <Link href="/" onClick={() => localStorage.clear()}>
+            로그아웃
+          </Link>
+        ) : (
+          <div>
+            <Link href="/signin">로그인</Link>
+            <Link href="/signup">회원가입</Link>
+          </div>
+        )}
       </S.GoSign>
     </S.Container>
   );
