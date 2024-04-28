@@ -2,12 +2,20 @@ import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dashboardsApi from '@/api/dashboards.api';
 
+interface TeamMemberInviteModalMutation {
+  dashboardId: number;
+  email: string;
+}
+
 // 초대하기 모달 => 이메일
 function useTeamMemberInviteModalMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ dashboardId, email }) => {
+    mutationFn: async ({
+      dashboardId,
+      email,
+    }: TeamMemberInviteModalMutation) => {
       return dashboardsApi.postInviteDashboard({
         dashboardId,
         email,
