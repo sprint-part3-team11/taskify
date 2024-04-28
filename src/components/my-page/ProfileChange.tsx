@@ -6,7 +6,7 @@ import FormInput from '@/components/common/form/Form';
 import {
   profileImageUrlState,
   useMyPropfileQuery,
-} from '@/hooks/query/users/useMyPropfileQuery';
+} from '@/hooks/query/users/useMyProfileQuery';
 import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
 import {
   resultServerImgState,

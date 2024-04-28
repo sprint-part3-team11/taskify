@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import useCardImgUploadMutation from '@/hooks/query/cards/useCardImgUploadMutation';
-import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
+import { profileImageUrlState } from '@/hooks/query/users/useMyProfileQuery';
 import {
   resultServerImgState,
   useProfileImgUploadMutation,
