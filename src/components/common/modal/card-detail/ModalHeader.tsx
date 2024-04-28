@@ -138,7 +138,6 @@ function ModalHeader({
 
   const handleDeleteCard = () => {
     setIsDeleteOpen(true);
-    // onClose();
   };
 
   return (
@@ -159,7 +158,7 @@ function ModalHeader({
           )}
           <ConfirmDeleteModal
             isOpen={isDeleteOpen}
-            onClose={onClose}
+            onClose={() => setIsDeleteOpen(false)}
             message="정말 삭제하시겠습니까?🥹"
             onClick={() =>
               responseInvitationMutate({ cardId: String(card_Id) })
