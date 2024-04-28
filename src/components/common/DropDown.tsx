@@ -9,6 +9,8 @@ const S = {
     position: relative;
   `,
   DropDownBtn: styled.button`
+    min-width: 8rem;
+
     color: ${({ theme }) => theme.color.body};
     font-size: 1.6rem;
     font-style: normal;
@@ -25,6 +27,7 @@ const S = {
     z-index: 100;
 
     width: 100%;
+    min-width: 10rem;
     padding: 0.6rem;
     border: 1px solid ${({ theme }) => theme.color.gray};
     border-radius: 0.6rem;
@@ -49,6 +52,7 @@ const S = {
     padding: 0.8rem 0;
 
     text-align: center;
+    white-space: nowrap;
 
     &:hover {
       background-color: ${({ theme }) => theme.color.mainLight};
