@@ -2,15 +2,8 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/api/auth.api';
+import { CustomError } from '@/types/Error';
 import { PasswordChange } from '@/types/Form';
-
-interface CustomError {
-  response?: {
-    data?: {
-      message: string;
-    };
-  };
-}
 
 // 프로필 수정 => 이미지, 닉네임
 function usePasswordChangeMutation() {

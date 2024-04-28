@@ -1,12 +1,12 @@
 import { API_AUTH } from '@/constants/API';
-import { EditPasswordType } from '@/constants/SCHEMA';
+import { SignInType } from '@/constants/SCHEMA';
 import instance from '@/api/instance';
 import { PasswordChange } from '@/types/Form';
 
 /**
  * 로그인
  */
-const postLogin = ({ email, password }) => {
+const postLogin = ({ email, password }: SignInType) => {
   return instance({
     url: API_AUTH.LOGIN,
     method: 'POST',
