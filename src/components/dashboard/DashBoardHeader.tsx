@@ -196,7 +196,11 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const { data: dashBoardDetail } = useDetailDashboardQuery(id);
   const { mutate: inviteUser } = useTeamMemberInviteModalMutation();
   const { data: memberList } = useMemeberListQuery(id);
-  const memberLists = memberList?.members;
+
+  const myEmail = myProfile?.email;
+  const filteredMemberList = memberList?.members?.filter(
+    (member: string) => member.email !== myEmail,
+  );
 
   const handleEdit = () => {
     router.push(`/dashboard/${id}/edit`);
@@ -239,8 +243,8 @@ function DashBoardHeader({ myPage }: HeaderProps) {
           />
         </S.ButtonContainer>
         <S.InvitedUsersBox $myPage={myPage}>
-          {memberLists && (
-            <AvatarList max={isPc ? 5 : 3} dataArr={memberLists} />
+          {filteredMemberList && (
+            <AvatarList max={isPc ? 5 : 3} dataArr={filteredMemberList} />
           )}
         </S.InvitedUsersBox>
         <S.ProfileBox $myPage={myPage}>

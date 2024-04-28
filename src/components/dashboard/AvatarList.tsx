@@ -6,8 +6,7 @@ import theme from '@/styles/theme';
 function AvatarList({ max, dataArr }) {
   return (
     <AvatarGroup max={max}>
-      {dataArr?.map(({ nickname, profileImageUrl, id, isOwner }) => {
-        if (isOwner) return null;
+      {dataArr?.map(({ nickname, profileImageUrl, id }) => {
         return (
           <Avatar
             key={id + Math.random()}
