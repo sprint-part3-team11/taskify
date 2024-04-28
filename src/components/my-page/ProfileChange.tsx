@@ -120,6 +120,7 @@ function ProfileChange() {
             profileInfo={profileInfo}
             formType="editProfile"
             btnSize="S"
+            children={undefined}
           />
         </S.InputBox>
       </S.AlignBox>

@@ -53,6 +53,7 @@ function PasswordChange() {
             onSubmit={editMyPassword}
             formType="editPassword"
             btnSize="S"
+            children={undefined}
           />
         </S.PasswordContent>
         <WarningModal
