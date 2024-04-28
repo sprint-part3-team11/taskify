@@ -7,7 +7,7 @@ interface CommentsListQuery {
 }
 
 // 내가 받은 댓글 목록
-function useCommentsListQuery({ cardId }, size = 4) {
+function useCommentsListQuery({ cardId }: CommentsListQuery, size: number = 4) {
   const queryClient = useQueryClient();
 
   return useInfiniteQuery({
