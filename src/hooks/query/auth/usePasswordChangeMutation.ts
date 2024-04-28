@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import authApi from '@/api/auth.api';
 
@@ -16,7 +17,7 @@ function usePasswordChangeMutation() {
       });
     },
     onSuccess: () => {
-      alert('비밀번호 변경 성공✨');
+      toast.success('비밀번호 변경 성공✨');
       window.location.reload();
     },
     onError: (error) => {
