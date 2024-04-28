@@ -105,6 +105,11 @@ const S = {
       max-width: 13.4rem;
     }
   `,
+  CircleColor: styled.div`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  `,
   DashboardItem: styled.li<{ $active: boolean }>`
     overflow: hidden;
     margin-left: 1.325rem;
@@ -219,7 +224,9 @@ function Sidebar() {
             key={dashboard.id}
             onClick={() => handleDashboardClick(dashboard.id)}
           >
-            <CircleColor color={dashboard.color} />
+            <S.CircleColor>
+              <CircleColor color={dashboard.color} />
+            </S.CircleColor>
             <S.DashboardItem
               $active={dashboard.id === router.query.dashboardId}
             >

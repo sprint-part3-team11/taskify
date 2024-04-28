@@ -8,9 +8,6 @@ const S = {
     height: 0.65rem;
     background-color: ${(props) => props.color};
     border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
 
     ${MEDIA_QUERIES.onMobile} {
       margin-left: 0.5rem;
