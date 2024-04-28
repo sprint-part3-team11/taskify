@@ -187,7 +187,7 @@ function InvitedDashBoardList() {
       )
     : invitationData?.pages.flatMap((page) => page.invitations);
 
-  const hasSearchResult = filteredInvitations.length !== 0;
+  const hasSearchResult = filteredInvitations?.length !== 0;
 
   return (
     <S.Container>
