@@ -57,6 +57,7 @@ const S = {
             ? 'calc(80rem)'
             : '6rem'};
 
+      min-width: initial;
       overflow-y: ${({ isExpanded }) => (isExpanded ? 'scroll' : 'hidden')};
 
       transition: height 0.3s ease-in-out;
@@ -67,7 +68,7 @@ const S = {
     top: 0;
     z-index: 10;
     background-color: ${({ theme }) => theme.color.background};
-    padding: 2rem 2rem 0.8rem;
+    padding: 2rem;
   `,
   ColumnTitleContainer: styled.div`
     display: flex;

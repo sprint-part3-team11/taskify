@@ -52,6 +52,7 @@ const S = {
     }
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
+      min-width: initial;
     }
   `,
   MoveToLeftButton1: styled.button`
