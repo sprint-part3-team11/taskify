@@ -108,12 +108,7 @@ const S = {
   `,
 };
 
-function ToDoCreateModal({
-  isOpen,
-  onClose,
-  dashboardId = 7373, // 받아오면 기본값 삭제
-  columnId = 24728, // 받아오면 삭제
-}: any) {
+function ToDoCreateModal({ isOpen, onClose, dashboardId, columnId }: any) {
   const [toDoInfo, setToDoInfo] = useState({
     assigneeUserId: 0,
     title: '',
