@@ -280,7 +280,8 @@ function Sidebar() {
           </S.ArrowButton>
         </S.Buttons>
         <S.PageCount>
-          {page} page of {totalPages}
+          {/* {page} page of {totalPages} */}
+          {page} page of 1
         </S.PageCount>
       </S.PageNavigationBox>
     </S.SidebarWrapper>
