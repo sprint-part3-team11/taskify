@@ -105,7 +105,7 @@ interface SelectBoxProps {
   placeholder: boolean;
   onChange: (option: Option) => void;
   displayFieldName: string;
-  initialValue?: Option;
+  initialValue?: never;
 }
 
 function SelectBox({
@@ -121,7 +121,7 @@ function SelectBox({
   const optionAreaRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function handleSelectOption(option): void {
+  function handleSelectOption(option: never): void {
     setSelectedOption(option);
     setFilterText('');
     setIsFocused(false);
