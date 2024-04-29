@@ -4,6 +4,7 @@ import Form from '@/components/common/form/Form';
 import WarningModal from '@/components/common/modal/WarningModal';
 import SignLayout from '@/components/template/SignLayout';
 import useSignUpMutation from '@/hooks/query/users/useSignUpMutation';
+import { FormValues } from '@/types/Form';
 
 function SignUp() {
   const [open, setOpen] = useState(false);
@@ -16,14 +17,18 @@ function SignUp() {
     router,
   });
 
-  const signUpUser = (data, error) => {
-    signUp(data, error);
+  const signUpUser = (data: FormValues) => {
+    if ('email' in data && 'name' in data && 'password' in data) {
+      signUp(data);
+    } else {
+      console.error('Invalid data type for signUp');
+    }
   };
 
   return (
     <div>
       <SignLayout pageType="signUp">
-        <Form formType="signUp" onSubmit={signUpUser} />
+        <Form formType="signUp" submit={signUpUser} />
       </SignLayout>
       <WarningModal
         isOpen={open}
