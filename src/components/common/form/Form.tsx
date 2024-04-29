@@ -7,14 +7,12 @@ import Button from '@/components/common/button/Button';
 import formFields from '@/constants/FORM_FIELDS';
 import {
   EditPassword,
-  EditPasswordType,
   EditProfile,
-  EditProfileType,
   SignIn,
-  SignInType,
   SignUp,
   SignUpType,
 } from '@/constants/SCHEMA';
+import { FormValues } from '@/types/Form';
 
 const S = {
   Form: styled.form`
@@ -119,15 +117,13 @@ const buttonText = {
 
 type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
 
-type FormValues = SignInType | SignUpType | EditProfileType | EditPasswordType;
-
 interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
-  onSubmit?: (data: FormValues) => void;
+  onSubmit?: (data: never, ...rest: never) => void;
   profileInfo?: { mail: string; name: string };
-  children: React.ReactNode;
-  placeholder?: { email?: string; name?: string };
+  children?: React.ReactNode;
+  // placeholder?: { email?: string; name?: string };
 }
 
 /**
@@ -137,27 +133,23 @@ interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
 function Form({
   formType,
   btnSize = 'L',
-  onSubmit,
+  submit,
   profileInfo,
   children,
   ...htmlInputProps
 }: FormProps) {
-  const getSchemaForFormType = (type: FormType) => {
-    switch (type) {
-      case 'signIn':
-        return SignIn;
-      case 'signUp':
-        return SignUp;
-      case 'editProfile':
-        return EditProfile;
-      case 'editPassword':
-        return EditPassword;
-      default:
-        return undefined;
-    }
+  const [passwordFieldType, setPasswordFieldType] = useState('password');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [profile, setProfile] = useState(profileInfo);
+
+  const schemaForFormType = {
+    signIn: SignIn,
+    signUp: SignUp,
+    editProfile: EditProfile,
+    editPassword: EditPassword,
   };
 
-  const schema = getSchemaForFormType(formType);
+  const schema = schemaForFormType[formType];
   const formOptions = { resolver: schema ? zodResolver(schema) : undefined };
 
   const {
@@ -171,18 +163,9 @@ function Form({
 
   const Keys = {
     signIn: ['email', 'password'],
-    signUp: ['email', 'name', 'password', 'passwordCheck'],
+    signUp: ['email', 'name', 'password', 'passwordCheck', 'terms'],
     editProfile: ['email', 'name'],
     editPassword: ['nowPassword', 'newPassword', 'newPasswordCheck'],
-  };
-  const [passwordFieldType, setPasswordFieldType] = useState('password');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [profile, setProfile] = useState(profileInfo);
-
-  const togglePasswordFieldType = () => {
-    setPasswordFieldType(
-      passwordFieldType === 'password' ? 'text' : 'password',
-    );
   };
 
   const watchFields = watch();
@@ -197,29 +180,38 @@ function Form({
   useEffect(() => {
     const requiredKeys = Keys[formType];
     let allFieldsFilled = false;
-    const termsChecked = watchFields.terms;
+    const termsChecked =
+      formType === 'signUp' ? (watchFields as SignUpType).terms : true;
 
     if (formType === 'editProfile') {
       const filteredKeys = requiredKeys.filter((key) => key !== 'email');
+      console.log(watchFields);
       allFieldsFilled = filteredKeys.every(
-        (key) => watchFields[key]?.length > 0,
+        (key) => (watchFields as any)[key]?.length > 0,
       );
     } else if (formType === 'signUp') {
       allFieldsFilled =
-        requiredKeys.every((key) => watchFields[key]?.length > 0) &&
-        termsChecked;
+        requiredKeys.every((key) => {
+          return (watchFields as any)[key]?.length > 0;
+        }) && termsChecked;
     } else {
       allFieldsFilled = requiredKeys.every(
-        (key) => watchFields[key]?.length > 0,
+        (key) => (watchFields as any)[key]?.length > 0,
       );
     }
 
     setIsButtonDisabled(!allFieldsFilled);
   }, [watchFields, formType]);
 
+  const togglePasswordFieldType = () => {
+    setPasswordFieldType(
+      passwordFieldType === 'password' ? 'text' : 'password',
+    );
+  };
+
   const fieldsToRender = formFields[formType] || [];
   return (
-    <S.Form onSubmit={handleSubmit(onSubmit)}>
+    <S.Form onSubmit={handleSubmit(submit)}>
       {fieldsToRender.map((field) => (
         <S.Container key={field.id}>
           <S.Label htmlFor={field.id}>{field.label}</S.Label>
