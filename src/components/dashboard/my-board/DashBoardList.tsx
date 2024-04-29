@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import DashBoardSkeleton from './DashBoardSkeleton';
 import { styled } from 'styled-components';
 import CircleColor from '@/components/common/CircleColor';
 import AddIconButton from '@/components/common/button/AddIconButton';
@@ -30,6 +31,13 @@ const S = {
     ${MEDIA_QUERIES.onMobile} {
       padding: 2rem;
       font-size: 1.4rem;
+    }
+  `,
+
+  AddIconButton: styled(AddIconButton)`
+    height: 7rem;
+    ${MEDIA_QUERIES.onMobile}, ${MEDIA_QUERIES.onTablet} {
+      height: 6rem;
     }
   `,
 
@@ -84,13 +92,13 @@ function DashBoardList() {
   const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
   const [page, setPage] = useState(1);
 
-  const { data } = useDashboardListQuery({
+  const { data, isLoading } = useDashboardListQuery({
     navigationMethod: 'pagination',
     page,
   });
 
-  const dashboards = data?.dashboards;
-  const totalPages = Math.ceil(data?.totalCount / 5);
+  const dashboards = data?.data?.dashboards;
+  const totalPages = Math.ceil(data?.data?.totalCount / 5);
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);
@@ -107,40 +115,46 @@ function DashBoardList() {
 
   return (
     <>
-      <GridTemplate>
-        <AddIconButton
-          style={{ height: '7rem' }}
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          새로운 대시보드
-        </AddIconButton>
-        {isModalOpen && (
-          <NewDashBoardModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onCreate={createdDashBoard}
-          />
-        )}
+      {isLoading ? (
+        <DashBoardSkeleton />
+      ) : (
+        <div style={{ minHeight: '15.2rem' }}>
+          <GridTemplate>
+            <S.AddIconButton
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              새로운 대시보드
+            </S.AddIconButton>
+            {isModalOpen && (
+              <NewDashBoardModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onCreate={createdDashBoard}
+              />
+            )}
 
-        {dashboards?.map((board) => (
-          <S.Container
-            key={board.id}
-            onClick={() => router.push(`/dashboard/${board.id}`)}
-          >
-            <S.BoardTitle>
-              <CircleColor color={board.color} />
-              <div>
-                {board.title}
-                {board.createdByMe && <CrownIcon className="crown" />}
-              </div>
-            </S.BoardTitle>
+            {dashboards?.map((board) => (
+              <S.Container
+                key={board.id}
+                onClick={() => router.push(`/dashboard/${board.id}`)}
+              >
+                <S.BoardTitle>
+                  <CircleColor color={board.color} />
+                  <div>
+                    {board.title}
+                    {board.createdByMe && <CrownIcon className="crown" />}
+                  </div>
+                </S.BoardTitle>
 
-            <RightArrow />
-          </S.Container>
-        ))}
-      </GridTemplate>
+                <RightArrow />
+              </S.Container>
+            ))}
+          </GridTemplate>
+        </div>
+      )}
+
       <S.PageNavigationBox>
         <S.PageCount>
           {totalPages} 페이지중 {page}

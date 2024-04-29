@@ -38,7 +38,8 @@ export const Shimmer = styled.div`
   height: 100%;
   background-color: #e0e0e0;
   box-shadow: 0 0 50px 50px #e0e0e0;
-  animation: loading 2s infinite ease-in-out;
+  animation: loading 1.4s infinite ease-in-out;
+
   @keyframes loading {
     0% {
       transform: translateX(-50%);
