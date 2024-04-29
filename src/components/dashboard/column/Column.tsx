@@ -220,7 +220,11 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         )}
         <CardLoader
           loaderRef={loaderRef}
-          style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
+          style={
+            cardCount === 0 || isLastPage
+              ? { display: 'none' }
+              : { marginTop: '2rem' }
+          }
         />
       </S.ColumnContentContainer>
     </S.Column>
