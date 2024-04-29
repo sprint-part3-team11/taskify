@@ -17,7 +17,7 @@ const S = {
 
     border-radius: 0.6rem;
     background-color: ${({ theme }) => theme.color.white};
-    box-shadow: rgba(0, 0, 0, 0.08) 0 1.2rem 2rem 0;
+    box-shadow: rgba(0, 0, 0, 0.08) 0 1rem 1rem 0;
 
     &:hover {
       transform: translateY(-8px);

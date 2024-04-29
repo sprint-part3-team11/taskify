@@ -40,7 +40,7 @@ function PasswordChange() {
     setOpen,
     modalMessage,
   } = usePasswordChangeMutation();
-  const editMyPassword = (data) => {
+  const editMyPassword = (data: never) => {
     passwordChange(data);
   };
 
@@ -53,6 +53,7 @@ function PasswordChange() {
             submit={editMyPassword}
             formType="editPassword"
             btnSize="S"
+            children={undefined}
           />
         </S.PasswordContent>
         <WarningModal

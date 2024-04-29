@@ -1,5 +1,6 @@
 import { toast } from 'react-hot-toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { API } from '@/constants/API';
 import cardsApi from '@/api/cards.api';
 
 interface EditCardMutationProp {
@@ -13,6 +14,7 @@ interface EditCardMutationProp {
 }
 
 function useEditCardMutation(onClose: () => void, cardId: () => void) {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({
       columnId,
@@ -36,6 +38,7 @@ function useEditCardMutation(onClose: () => void, cardId: () => void) {
     },
     onSuccess: () => {
       toast.success('성공적으로 수정되었습니다!🏃🏻‍♀️');
+      queryClient.invalidateQueries({ queryKey: [API.CARDS] });
       onClose();
     },
   });
