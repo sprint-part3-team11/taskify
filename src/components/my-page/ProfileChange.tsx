@@ -5,7 +5,7 @@ import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
 import FormInput from '@/components/common/form/Form';
 import {
   profileImageUrlState,
-  useMyPropfileQuery,
+  useMyProfileQuery,
 } from '@/hooks/query/users/useMyProfileQuery';
 import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
 import {
@@ -78,7 +78,7 @@ function ProfileChange() {
     name: '',
     mail: '',
   });
-  const { data: myProfile } = useMyPropfileQuery();
+  const { data: myProfile } = useMyProfileQuery();
   const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
 
   setProfileImageUrl(myProfile && myProfile.profileImageUrl);
