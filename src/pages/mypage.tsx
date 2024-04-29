@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Sidebar from '@/components/common/SideBar';
 import BackButton from '@/components/my-page/BackButton';
 import PasswordChange from '@/components/my-page/PasswordChange';
 import ProfileChange from '@/components/my-page/ProfileChange';
@@ -9,9 +8,6 @@ import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 const S = {
   Container: styled.div`
     display: flex;
-  `,
-  Side: styled(Sidebar)`
-    flex: 0 0 auto;
   `,
   ContentContainer: styled.div`
     flex: 1;

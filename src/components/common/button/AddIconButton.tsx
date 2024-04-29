@@ -11,7 +11,7 @@ const S = {
 
     /* min-width: 24rem; */
     padding: 0.6rem 1rem;
-    border: 1px solid ${({ theme }) => theme.color.grayLight};
+    border: 0.1px solid ${({ theme }) => theme.color.grayLight};
     border-radius: 0.8rem;
 
     background-color: ${({ theme }) => theme.color.white};
@@ -19,7 +19,6 @@ const S = {
     font-size: 1.6rem;
     font-weight: 600;
   `,
-
   Icon: styled.div`
     display: flex;
     justify-content: center;
