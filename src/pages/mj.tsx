@@ -7,6 +7,7 @@ import NewColumnsModal from '@/components/common/modal/NewColumnsModal';
 import NewDashBoardModal from '@/components/common/modal/NewDashBoardModal';
 import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteModal';
 import WarningModal from '@/components/common/modal/WarningModal';
+import CardSkeleton from '@/components/dashboard/column/CardSkeleton';
 import PageLayout from '@/components/template/PageLayout';
 
 const S = {
@@ -119,69 +120,7 @@ function Mj() {
 
   return (
     <PageLayout>
-      <div style={{ backgroundColor: 'gray', height: '10000px' }}>
-        <S.Button onClick={openModal1}>1번 모달(기본)</S.Button>
-        <S.Button onClick={openModal2}>2번 모달(비밀번호 틀림)</S.Button>
-        <S.Button onClick={openModal3}>3번 모달(add column)</S.Button>
-        <S.Button onClick={openModal4}>4번 모달(manage column)</S.Button>
-        <S.Button onClick={openModal5}>5번 모달(invite member)</S.Button>
-        <S.Button onClick={openModal6}>5번 모달(add dashboard+color)</S.Button>
-
-        {/* 비밀번호 입력 실패 시 사용되는 형식 */}
-        <form action="" onSubmit={handleSubmit}>
-          <input type="text" value={inputValue} onChange={handleInputChange} />
-          <button type="submit">1234입력(틀리면 모달나옴)</button>
-        </form>
-
-        {/* 기본 백드롭 모달 */}
-        <BackDropModal isOpen={isModalOpen1} onClose={closeModal1}>
-          <h1>내가 모달이다</h1>
-          <p>나도 모달이다~~~~~~</p>
-          <button type="button" onClick={closeModal1}>
-            모달 닫기
-          </button>
-        </BackDropModal>
-
-        {/* 기본 경고(비밀번호 틀리게 입력, 로그인 성공, 이미 사용중인 아이디)에 사용 */}
-        {/* type에 PASSWORD, SUCCESS, ALREADY_USED 중 하나 선택 */}
-        <WarningModal
-          isOpen={isModalOpen2}
-          onClose={closeModal2}
-          type="PASSWORD"
-        />
-
-        {/* 새 컬럼 추가에 사용되는 모달 형식 */}
-        <NewColumnsModal
-          isOpen={isModalOpen3}
-          onClose={closeModal3}
-          onCreate={handleCreate}
-        />
-
-        {/* 기존의 컬럼을 수정 또는 삭제에 사용되는 모달 형식 */}
-        <ColumnsManageModal
-          isOpen={isModalOpen4}
-          onClose={closeModal4}
-          currentColumnName={tempColumnName}
-          onChange={handleChange}
-          onDelete={handleDelete}
-        />
-
-        {/* 팀원 초대 모달 */}
-        <TeamMemberInviteModal
-          isOpen={isModalOpen5}
-          onClose={closeModal5}
-          onCreate={handleEmail}
-        />
-
-        {/* 대시보드 생성 모달 */}
-        <NewDashBoardModal
-          isOpen={isModalOpen6}
-          onClose={closeModal6}
-          onCreate={createdDashBoard}
-        />
-
-        <Card cardInfoData={cardInfoData} />
-      </div>
+      <CardSkeleton />
     </PageLayout>
   );
 }
