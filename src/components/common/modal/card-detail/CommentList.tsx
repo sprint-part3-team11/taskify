@@ -48,7 +48,7 @@ interface CommentItemDataProps {
     id: number;
   };
 }
-function CommentList({ cardDetailData }) {
+function CommentList({ cardDetailData }: { cardDetailData: any }) {
   const loaderRef = useRef();
 
   const { data, fetchNextPage } = useCommentsListQuery({
@@ -57,16 +57,13 @@ function CommentList({ cardDetailData }) {
 
   const isLastPage = data?.pages?.at(-1)?.cursorId === null;
 
-  // const pages = data?.pages;
-  // console.log('bbbb', pages);
-
   useIntersectionObserver(async () => {
     await fetchNextPage();
   }, loaderRef);
 
   return (
     <S.CommentListContainer>
-      {data?.pages.map((page) =>
+      {data?.pages.map((page: any) =>
         page.comments.map((comment: CommentItemDataProps) => (
           <CommentItem
             key={comment.id}
