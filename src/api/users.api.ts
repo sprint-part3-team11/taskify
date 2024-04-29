@@ -1,10 +1,21 @@
 import { API, API_USERS } from '@/constants/API';
 import instance from '@/api/instance';
 
+interface PostSignUpProps {
+  email: string;
+  nickname: string;
+  password: string;
+}
+
+interface PutMyProfileEditProps {
+  nickname: string;
+  profileImageUrl: string;
+}
+
 /**
  * 회원가입
  */
-const postSignUp = ({ email, nickname, password }) => {
+const postSignUp = ({ email, nickname, password }: PostSignUpProps) => {
   return instance({
     url: API.USERS,
     method: 'POST',
@@ -25,7 +36,10 @@ const getMyProfile = () => {
 /**
  * 내 정보 수정
  */
-const putMyProfileEdit = ({ nickname, profileImageUrl }) => {
+const putMyProfileEdit = ({
+  nickname,
+  profileImageUrl,
+}: PutMyProfileEditProps) => {
   return instance({
     url: API_USERS.MY_INFO,
     method: 'PUT',
@@ -36,7 +50,11 @@ const putMyProfileEdit = ({ nickname, profileImageUrl }) => {
 /**
  * 프로필 이미지 업로드
  */
-const postProfileImgUpload = ({ profileImageUrl }) => {
+const postProfileImgUpload = ({
+  profileImageUrl,
+}: {
+  profileImageUrl: string;
+}) => {
   return instance({
     url: API_USERS.PROFILE_IMG_UPLOAD,
     method: 'POST',
