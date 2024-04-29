@@ -120,7 +120,7 @@ type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
 interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
-  submit: (data: FormValues) => void;
+  onSubmit?: (data: never, ...rest: never) => void;
   profileInfo?: { mail: string; name: string };
   children?: React.ReactNode;
   // placeholder?: { email?: string; name?: string };

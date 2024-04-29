@@ -204,7 +204,7 @@ function Sidebar() {
   });
   const dashboards = data?.data?.dashboards;
 
-  const totalPages = Math.ceil((data?.data?.totalCount ?? 0) / 8);
+  const totalPages = Math.ceil(data?.totalCount / 8);
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);

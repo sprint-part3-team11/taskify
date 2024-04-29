@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { UseMutationResult } from '@tanstack/react-query';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
@@ -70,11 +71,16 @@ const S = {
   `,
 };
 
+interface UserProfile {
+  name: string;
+  mail: string;
+}
+
 function ProfileChange() {
   const imgServerUrl = useRecoilValue<string>(resultServerImgState);
-  const setProfileImageUrl = useSetRecoilState(profileImageUrlState);
-  const profileImageUrl = useRecoilValue(profileImageUrlState);
-  const [profileInfo, setProfile] = useState({
+  const setProfileImageUrl = useSetRecoilState<string>(profileImageUrlState);
+  const profileImageUrl = useRecoilValue<string>(profileImageUrlState);
+  const [profileInfo, setProfile] = useState<UserProfile>({
     name: '',
     mail: '',
   });
@@ -83,13 +89,14 @@ function ProfileChange() {
 
   setProfileImageUrl(myProfile && myProfile.profileImageUrl);
 
-  const editMyProfile = (data, imgServerUrl) => {
-    editProfile(data, imgServerUrl || profileImageUrl);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const editMyProfile = (data: never, imgServerUrl: string) => {
+    editProfile(data, (imgServerUrl as never) || (profileImageUrl as never));
   };
 
   useEffect(() => {
     if (myProfile && myProfile.nickname && myProfile.email) {
-      setProfile((prevProfile) => ({
+      setProfile((prevProfile: UserProfile) => ({
         ...prevProfile,
         name: myProfile.nickname,
         mail: myProfile.email,
@@ -108,12 +115,12 @@ function ProfileChange() {
           <S.ImageText>이미지를 클릭해 수정하세요</S.ImageText>
         </S.ImageBox>
         <S.InputBox>
-          {/* eslint-disable-next-line react/jsx-no-bind */}
           <FormInput
             submit={editMyProfile}
             profileInfo={profileInfo}
             formType="editProfile"
             btnSize="S"
+            children={undefined}
           />
         </S.InputBox>
       </S.AlignBox>
