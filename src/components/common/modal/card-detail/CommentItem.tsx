@@ -6,6 +6,7 @@ import useDeleteCommentsMutation from '@/hooks/query/comments/useDeleteCommentsM
 import useEditCommentsMutation from '@/hooks/query/comments/useEditCommentsMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { CommentItemProps } from '@/types/CardDetail';
+import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {
   CommentItemContainer: styled.ul`
@@ -149,12 +150,21 @@ function CommentItem({
 
   return (
     <S.CommentItemContainer>
-      <S.ProfileImage
-        width={34}
-        height={34}
-        src={author.profileImageUrl}
-        alt="프로필 이미지"
-      />
+      {author.profileImageUrl ? (
+        <S.ProfileImage
+          width={34}
+          height={34}
+          src={author.profileImageUrl}
+          alt="프로필 이미지"
+        />
+      ) : (
+        <S.ProfileImage
+          width={34}
+          height={34}
+          src={defaultImg}
+          alt="프로필 이미지"
+        />
+      )}
       <S.CommentInfoBox>
         <S.NameAndDateBox>
           <S.CommentNickName>{author.nickname}</S.CommentNickName>
