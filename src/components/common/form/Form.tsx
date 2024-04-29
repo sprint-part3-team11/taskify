@@ -114,10 +114,9 @@ type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
 interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
-  submit?: (data: never, ...rest: never) => void;
+  submit?: (data: any) => void;
   profileInfo?: { mail: string; name: string };
   children?: React.ReactNode;
-  // placeholder?: { email?: string; name?: string };
 }
 
 /**
@@ -174,7 +173,9 @@ function Form({
   useEffect(() => {
     const requiredKeys = Keys[formType];
     let allFieldsFilled = false;
-    const termsChecked = formType === 'signUp' ? watchFields.terms : true;
+
+    const termsChecked =
+      formType === 'signUp' ? (watchFields as any).terms : true;
 
     if (formType === 'editProfile') {
       const filteredKeys = requiredKeys.filter((key) => key !== 'email');
@@ -203,7 +204,7 @@ function Form({
 
   const fieldsToRender = formFields[formType] || [];
   return (
-    <S.Form onSubmit={handleSubmit(submit)}>
+    <S.Form onSubmit={handleSubmit(submit ?? (() => {}))}>
       {fieldsToRender.map((field) => (
         <S.Container key={field.id}>
           <S.Label htmlFor={field.id}>{field.label}</S.Label>
