@@ -32,3 +32,22 @@ export const GridTemplate = styled.div`
     grid-gap: 0.8rem;
   }
 `;
+
+export const Shimmer = styled.div`
+  width: 70%;
+  height: 100%;
+  background-color: #e0e0e0;
+  box-shadow: 0 0 50px 50px #e0e0e0;
+  animation: loading 1.4s infinite;
+  @keyframes loading {
+    0% {
+      transform: translateX(-50%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translate(200%);
+    }
+  }
+`;
