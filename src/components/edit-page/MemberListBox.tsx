@@ -198,7 +198,7 @@ function MemberList() {
         <S.NameTitle>이름</S.NameTitle>
         <S.MemberListContainer>
           {members &&
-            members.map((member) => (
+            members.map((member, myProfile) => (
               <S.MemberItem key={member.id}>
                 <S.ImageAndNameContainer>
                   <S.AvatarImage
@@ -213,13 +213,15 @@ function MemberList() {
 
                   <S.Nickname>{member.nickname}</S.Nickname>
                 </S.ImageAndNameContainer>
-                <S.Button
-                  onClick={() => remove(member.id)}
-                  size="S"
-                  styleType={BUTTON_TYPE.DESTRUCTIVE}
-                >
-                  삭제
-                </S.Button>
+                {myProfile !== 0 && (
+                  <S.Button
+                    onClick={() => remove(member.id)}
+                    size="S"
+                    styleType={BUTTON_TYPE.DESTRUCTIVE}
+                  >
+                    삭제
+                  </S.Button>
+                )}
               </S.MemberItem>
             ))}
         </S.MemberListContainer>

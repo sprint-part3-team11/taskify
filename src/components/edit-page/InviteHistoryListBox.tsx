@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import Button from '../common/button/Button';
+import { useState } from 'react';
 import styled from 'styled-components';
+import Button from '@/components/common/button/Button';
 import useCancelInvitationMutation from '@/hooks/query/dashboards/useCancelInvitationMutation';
 import useLoadInvitationQuery from '@/hooks/query/dashboards/useLoadInvitationQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
@@ -168,7 +168,8 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const { mutate: responseInvitationCancelMutate } =
     useCancelInvitationMutation();
 
-  const totalPages = data ? Math.ceil(data.totalCount / 4) : 1;
+  const totalPages =
+    data && data.totalCount ? Math.ceil(data.totalCount / 4) : 1;
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);
@@ -177,7 +178,7 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
     setPage((prev) => prev + 1);
   };
 
-  const handleClickCancelBtn = (invitationId) => {
+  const handleClickCancelBtn = (invitationId: number) => {
     responseInvitationCancelMutate({ dashboardId: id, invitationId });
   };
 
@@ -214,7 +215,7 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
         <S.InviteListContainer>
           {isLoading && <S.LoadingMessage>불러오는 중...</S.LoadingMessage>}
           {invitations &&
-            invitations.map((invitation) => (
+            invitations.map((invitation: any) => (
               <S.InviteItem key={invitation?.invitee?.id}>
                 <S.Email>{invitation?.invitee?.email}</S.Email>
                 <S.CancelButton
