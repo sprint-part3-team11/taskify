@@ -14,7 +14,7 @@ function useDeleteMembersMutation() {
       return membersApi.deleteDashboardMembers(memberId);
     },
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: [API.COMMENTS] });
+      queryClient.invalidateQueries({ queryKey: [API.MEMBERS] });
     },
   });
 }
