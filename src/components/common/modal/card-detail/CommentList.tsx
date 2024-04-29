@@ -54,36 +54,39 @@ function CommentList({ cardDetailData }) {
   const { data, fetchNextPage } = useCommentsListQuery({
     cardId: cardDetailData?.id,
   });
-
+  // console.log(data);
   const isLastPage = data?.pages?.at(-1)?.cursorId === null;
 
-  // const pages = data?.pages;
-  // console.log('bbbb', pages);
+  const pages = data?.pages;
+  // console.log('bbbb', pages && pages[0].comments.length);
 
+  const commentsCount = pages && pages[0].comments.length;
   useIntersectionObserver(async () => {
     await fetchNextPage();
   }, loaderRef);
 
   return (
-    <S.CommentListContainer>
-      {data?.pages.map((page) =>
-        page.comments.map((comment: CommentItemDataProps) => (
-          <CommentItem
-            key={comment.id}
-            id={comment.id}
-            cardId={comment.cardId}
-            author={comment.author}
-            content={comment.content}
-            createdAt={comment.createdAt}
-            updatedAt={comment.updatedAt}
-          />
-        )),
-      )}
-      <InvitedDashBoardListLoader
-        loaderRef={loaderRef}
-        style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
-      />
-    </S.CommentListContainer>
+    commentsCount !== 0 && (
+      <S.CommentListContainer>
+        {data?.pages.map((page) =>
+          page.comments.map((comment: CommentItemDataProps) => (
+            <CommentItem
+              key={comment.id}
+              id={comment.id}
+              cardId={comment.cardId}
+              author={comment.author}
+              content={comment.content}
+              createdAt={comment.createdAt}
+              updatedAt={comment.updatedAt}
+            />
+          )),
+        )}
+        <InvitedDashBoardListLoader
+          loaderRef={loaderRef}
+          style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
+        />
+      </S.CommentListContainer>
+    )
   );
 }
 export default CommentList;

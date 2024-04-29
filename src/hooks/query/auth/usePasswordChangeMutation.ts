@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import authApi from '@/api/auth.api';
 
 interface PasswordChangeData {
@@ -22,7 +22,6 @@ function usePasswordChangeMutation() {
       });
     },
     onSuccess: () => {
-      toast.success('비밀번호 변경 성공✨');
       toast.success('비밀번호 변경 성공✨');
       window.location.reload();
     },
