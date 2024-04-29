@@ -2,8 +2,13 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import cardsApi from '@/api/cards.api';
 
+interface ColumnIdAndSizeProp {
+  columnId: number;
+  size: number;
+}
+
 // 카드 목록조회
-function useCardListQuery({ columnId, size = 5 }) {
+function useCardListQuery({ columnId, size = 5 }: ColumnIdAndSizeProp) {
   return useInfiniteQuery({
     queryKey: [API.CARDS, columnId],
     queryFn: async ({ pageParam = null }) => {

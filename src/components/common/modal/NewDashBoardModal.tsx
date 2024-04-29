@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
@@ -10,7 +10,6 @@ import InputField from '@/components/common/form/LabeledInput';
 import BackDropModal from '@/components/common/modal/BackDropModal';
 import useCreateDashboardMutation from '@/hooks/query/dashboards/useCreateDashboardMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import dashboardsApi from '@/api/dashboards.api';
 
 const S = {
   Title: styled.p`

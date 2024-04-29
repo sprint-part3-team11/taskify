@@ -3,7 +3,7 @@ import { API } from '@/constants/API';
 import dashboardsApi from '@/api/dashboards.api';
 
 // 대시보드 목록조회
-function useDetailDashboardQuery(dashboardId) {
+function useDetailDashboardQuery(dashboardId: number) {
   return useQuery({
     queryKey: [API.DASHBOARDS, dashboardId],
     queryFn: async () => {

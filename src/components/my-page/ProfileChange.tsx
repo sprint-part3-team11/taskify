@@ -6,7 +6,7 @@ import FormInput from '@/components/common/form/Form';
 import {
   profileImageUrlState,
   useMyPropfileQuery,
-} from '@/hooks/query/users/useMyPropfileQuery';
+} from '@/hooks/query/users/useMyProfileQuery';
 import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
 import {
   resultServerImgState,
@@ -110,7 +110,7 @@ function ProfileChange() {
         <S.InputBox>
           {/* eslint-disable-next-line react/jsx-no-bind */}
           <FormInput
-            onSubmit={editMyProfile}
+            submit={editMyProfile}
             profileInfo={profileInfo}
             formType="editProfile"
             btnSize="S"
