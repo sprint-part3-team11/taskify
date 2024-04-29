@@ -62,8 +62,13 @@ const S = {
 
     width: 4rem;
     height: 4rem;
-    background-color: ${({ theme }) => theme.color.main};
+    background-color: #f1effd;
     border-radius: 1rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.main};
+      transition: all ease-in-out 0.25s;
+    }
 
     ${MEDIA_QUERIES.onTablet} {
       display: none;
@@ -89,8 +94,13 @@ const S = {
 
     width: 4rem;
     height: 4rem;
-    background-color: ${({ theme }) => theme.color.main};
+    background-color: #f1effd;
     border-radius: 1rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.main};
+      transition: all ease-in-out 0.25s;
+    }
 
     ${MEDIA_QUERIES.onTablet} {
       display: none;
@@ -106,8 +116,13 @@ const S = {
 
     width: 4rem;
     height: 4rem;
-    background-color: ${({ theme }) => theme.color.main};
+    background-color: #f1effd;
     border-radius: 1rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.main};
+      transition: all ease-in-out 0.25s;
+    }
 
     ${MEDIA_QUERIES.onTablet} {
       display: none;
@@ -133,8 +148,13 @@ const S = {
 
     width: 4rem;
     height: 4rem;
-    background-color: ${({ theme }) => theme.color.main};
+    background-color: #f1effd;
     border-radius: 1rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.main};
+      transition: all ease-in-out 0.25s;
+    }
 
     ${MEDIA_QUERIES.onTablet} {
       display: none;
@@ -219,7 +239,7 @@ export default function DashBoard() {
       <S.DashBoardWrapper ref={dashboardRef}>
         {columns?.map((column, index) => (
           <Column
-            key={column.id + 1}
+            key={column.id}
             id={column.id}
             title={column.title}
             dashboardId={dashboardId}
