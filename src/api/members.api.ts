@@ -1,4 +1,4 @@
-import { API } from '@/constants/API';
+import { API, API_MEMBERS } from '@/constants/API';
 import instance from '@/api/instance';
 
 /**
