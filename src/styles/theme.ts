@@ -24,6 +24,8 @@ const theme = Object.freeze({
     lightGreen: '#E7F7DB',
     lightPink: '#F7DBF0',
     lightSkyBlue: '#DBE6F7',
+
+    skeleton: '#E4E4E4',
   },
 
   border: {

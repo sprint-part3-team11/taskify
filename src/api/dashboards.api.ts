@@ -1,5 +1,5 @@
-import instance from './instance';
 import { API, API_DASHBOARDS } from '@/constants/API';
+import instance from '@/api/instance';
 
 /**
  * 대시보드 생성 api
@@ -33,7 +33,7 @@ const getDashboardList = ({ navigationMethod, page, size }) => {
 /**
  * 대시보드 상세조회 api
  */
-const getDashboardDetail = (dashboardId: string) => {
+const getDashboardDetail = (dashboardId: number) => {
   return instance({
     url: API_DASHBOARDS.BY_ID(dashboardId),
     method: 'GET',
@@ -57,7 +57,7 @@ const putEditDashboard = ({ dashboardId, title, color }) => {
 /**
  * 대시보드 삭제 api
  */
-const deleteDashboard = (dashboardId: string) => {
+const deleteDashboard = (dashboardId: number) => {
   return instance({
     url: API_DASHBOARDS.BY_ID(dashboardId),
     method: 'DELETE',

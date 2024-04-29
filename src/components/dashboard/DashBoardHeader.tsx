@@ -8,8 +8,8 @@ import TeamMemberInviteModal from '@/components/common/modal/TeamMemberInviteMod
 import AvatarList from '@/components/dashboard/AvatarList';
 import useDetailDashboardQuery from '@/hooks/query/dashboards/useDetailDashboardQuery';
 import useTeamMemberInviteModalMutation from '@/hooks/query/dashboards/useTeamMemberInviteModalMutation';
-import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
-import { useMyPropfileQuery } from '@/hooks/query/users/useMyPropfileQuery';
+import useMemberListQuery from '@/hooks/query/members/useMemberListQuery';
+import { useMyProfileQuery } from '@/hooks/query/users/useMyProfileQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -191,12 +191,12 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const isPc: boolean = width !== undefined && width >= 1200;
   const router = useRouter();
   const { id } = router.query;
+  const dashboardId = Number(id);
 
-  const { data: myProfile } = useMyPropfileQuery();
-  const { data: dashBoardDetail } = useDetailDashboardQuery(id);
+  const { data: myProfile } = useMyProfileQuery();
+  const { data: dashBoardDetail } = useDetailDashboardQuery(dashboardId);
   const { mutate: inviteUser } = useTeamMemberInviteModalMutation();
-  const { data: memberList } = useMemeberListQuery(id);
-
+  const { data: memberList } = useMemberListQuery(dashboardId);
   const myEmail = myProfile?.email;
   const filteredMemberList = memberList?.members?.filter(
     (member: string) => member.email !== myEmail,
@@ -207,7 +207,7 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   };
 
   const handleEmail = (email: string) => {
-    inviteUser({ dashboardId: id, email });
+    inviteUser({ dashboardId, email });
   };
   return (
     <S.HeaderLayout>
