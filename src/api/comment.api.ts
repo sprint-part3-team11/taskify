@@ -7,6 +7,12 @@ interface CreateComments {
   columnId: number;
   dashboardId: number;
 }
+
+interface PutCommentEditProps {
+  content: string;
+  commentId: number;
+}
+
 const postCreateComment = ({
   content,
   cardId,
@@ -45,7 +51,7 @@ const getCommentList = ({
   });
 };
 
-const putCommentEdit = (content, commentId) => {
+const putCommentEdit = ({ content, commentId }: PutCommentEditProps) => {
   return instance({
     url: API_COMMENTS.BY_ID(commentId),
     method: 'PUT',
