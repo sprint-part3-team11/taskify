@@ -2,12 +2,24 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import commentApi from '@/api/comment.api';
 
+interface CommentMutationProp {
+  content: string;
+  cardId: number;
+  columnId: number;
+  dashboardId: number;
+}
+
 // 댓글 생성
 function useCreateCommentsMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ content, cardId, columnId, dashboardId }) => {
+    mutationFn: async ({
+      content,
+      cardId,
+      columnId,
+      dashboardId,
+    }: CommentMutationProp) => {
       return commentApi.postCreateComment({
         content,
         cardId,
@@ -16,7 +28,7 @@ function useCreateCommentsMutation() {
       });
     },
     onSuccess() {
-      queryClient.invalidateQueries([API.COMMENTS]);
+      queryClient.invalidateQueries({ queryKey: [API.COMMENTS] });
     },
   });
 }

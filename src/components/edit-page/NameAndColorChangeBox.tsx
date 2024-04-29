@@ -119,8 +119,10 @@ function NameAndColorChangeBox() {
     e.preventDefault();
 
     if (!colorState || !dashboardName) {
-      return setIsError(!isError);
+      return setIsError(true);
     }
+    setIsError(false);
+
     responseEditDashboardMutate({
       dashboardId: id,
       title: dashboardName,

@@ -1,10 +1,26 @@
 import { API, API_COLUMNS } from '@/constants/API';
 import instance from '@/api/instance';
 
+interface PostCreateColumnProp {
+  title: string;
+  dashboardId: number;
+}
+interface PutEditColumnProp {
+  title: string;
+  columnsId: number;
+}
+interface DeleteColumnProp {
+  title: string;
+  columnsId: number;
+}
+interface PostCardImageProp {
+  columnId: number;
+  cardImageUrl: File;
+}
 /**
  * 컬럼 생성 api
  */
-const postCreateColumn = ({ title, dashboardId }) => {
+const postCreateColumn = ({ title, dashboardId }: PostCreateColumnProp) => {
   return instance({
     url: API.COLUMNS,
     method: 'POST',
@@ -31,7 +47,7 @@ const getColumnList = (dashboardId: number) => {
 /**
  * 컬럼 수정 api
  */
-const putEditColumn = ({ title, columnsId }) => {
+const putEditColumn = ({ title, columnsId }: PutEditColumnProp) => {
   return instance({
     url: API_COLUMNS.BY_ID(columnsId),
     method: 'PUT',
@@ -44,7 +60,7 @@ const putEditColumn = ({ title, columnsId }) => {
 /**
  * 컬럼 삭제 api
  */
-const deleteColumn = ({ title, columnsId }) => {
+const deleteColumn = ({ title, columnsId }: DeleteColumnProp) => {
   return instance({
     url: API_COLUMNS.BY_ID(columnsId),
     method: 'DELETE',
@@ -57,7 +73,7 @@ const deleteColumn = ({ title, columnsId }) => {
 /**
  * 카드 이미지 업로드
  */
-const postCardImage = ({ columnId, cardImageUrl }) => {
+const postCardImage = ({ columnId, cardImageUrl }: PostCardImageProp) => {
   return instance({
     url: API_COLUMNS.CARD_IMAGE_UPLOAD(columnId),
     method: 'POST',

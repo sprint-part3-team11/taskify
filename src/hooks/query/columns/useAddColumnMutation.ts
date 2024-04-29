@@ -2,15 +2,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import columnsApi from '@/api/columns.api';
 
+interface AddColumnMutationProp {
+  title: string;
+  dashboardId: number;
+}
+
 const useAddColumnMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ title, dashboardId }) => {
+    mutationFn: ({ title, dashboardId }: AddColumnMutationProp) => {
       return columnsApi.postCreateColumn({ title, dashboardId });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([API.COLUMNS]);
+      queryClient.invalidateQueries({ queryKey: [API.COLUMNS] });
     },
     onError: (error) => {
       console.error('컬럼 생성 오류:', error);

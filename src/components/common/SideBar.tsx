@@ -202,9 +202,9 @@ function Sidebar() {
     page,
     size: 8,
   });
-  const dashboards = data?.dashboards;
+  const dashboards = data?.data?.dashboards;
 
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / 8);
+  const totalPages = Math.ceil(data?.totalCount / 8);
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);

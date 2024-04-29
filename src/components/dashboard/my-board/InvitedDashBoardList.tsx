@@ -39,6 +39,17 @@ const S = {
     padding: 2.4rem;
   `,
 
+  NoResult: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10rem;
+
+    & span {
+      color: ${({ theme }) => theme.color.main};
+    }
+  `,
+
   Invitations: styled.ul``,
 
   InvitationTabBar: styled.li`
@@ -144,6 +155,9 @@ function InvitedDashBoardList() {
     await fetchNextPage();
   }, loaderRef);
 
+  useEffect(() => {
+    setKeyword(searchParams.get('keyword'));
+  }, [searchParams]);
   const { mutate: responseInvitationMutate } = useAcceptInvitationMutation();
 
   const handleAcceptButtonClick = (invitationId: string) => {
@@ -163,9 +177,17 @@ function InvitedDashBoardList() {
     }
   };
 
-  useEffect(() => {
-    setKeyword(searchParams.get('keyword'));
-  }, [searchParams]);
+  const filteredInvitations = keyword
+    ? invitationData?.pages.flatMap((page) =>
+        page.invitations.filter((invitation) =>
+          invitation.dashboard.title
+            .toLowerCase()
+            .includes(keyword.toLowerCase()),
+        ),
+      )
+    : invitationData?.pages.flatMap((page) => page.invitations);
+
+  const hasSearchResult = filteredInvitations?.length !== 0;
 
   return (
     <S.Container>
@@ -187,31 +209,34 @@ function InvitedDashBoardList() {
               <div style={{ width: '17.5rem' }}>수락 여부</div>
             </S.InvitationTabBar>
             <>
-              {invitationData?.pages.map((page) =>
-                page.invitations.map((invitation) => (
-                  <S.Invitation key={invitation.id}>
-                    <S.TitleAndInviter>
-                      <S.BoardTitle>{invitation.dashboard.title}</S.BoardTitle>
-                      <S.Inviter>{invitation.inviter.nickname}</S.Inviter>
-                    </S.TitleAndInviter>
-                    <S.ButtonContainer>
-                      <Button
-                        size="S"
-                        onClick={() => handleAcceptButtonClick(invitation.id)}
-                      >
-                        수락
-                      </Button>
-                      <Button
-                        size="S"
-                        styleType={BUTTON_TYPE.SECONDARY}
-                        onClick={() => handleRejectButtonClick(invitation.id)}
-                      >
-                        거절
-                      </Button>
-                    </S.ButtonContainer>
-                  </S.Invitation>
-                )),
+              {!hasSearchResult && (
+                <S.NoResult>
+                  <span>{keyword}</span>로 검색한 결과가 없습니다😢
+                </S.NoResult>
               )}
+              {filteredInvitations?.map((invitation) => (
+                <S.Invitation key={invitation.id}>
+                  <S.TitleAndInviter>
+                    <S.BoardTitle>{invitation.dashboard.title}</S.BoardTitle>
+                    <S.Inviter>{invitation.inviter.nickname}</S.Inviter>
+                  </S.TitleAndInviter>
+                  <S.ButtonContainer>
+                    <Button
+                      size="S"
+                      onClick={() => handleAcceptButtonClick(invitation.id)}
+                    >
+                      수락
+                    </Button>
+                    <Button
+                      size="S"
+                      styleType={BUTTON_TYPE.SECONDARY}
+                      onClick={() => handleRejectButtonClick(invitation.id)}
+                    >
+                      거절
+                    </Button>
+                  </S.ButtonContainer>
+                </S.Invitation>
+              ))}
 
               <InvitedDashBoardListLoader
                 loaderRef={loaderRef}

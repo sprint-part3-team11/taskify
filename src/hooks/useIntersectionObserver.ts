@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
 /**
  * IntersectionObserver를 사용해서 요소가 화면에 나타날때 콜백함수 호출하는 커스텀 훅
@@ -6,7 +6,10 @@ import { useEffect } from 'react';
  * @param {React.RefObject} loaderRef - 감시할 요소의 ref
  */
 
-function useIntersectionObserver(callback, loaderRef) {
+function useIntersectionObserver(
+  callback: () => void,
+  loaderRef: RefObject<Element>,
+) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -14,10 +17,10 @@ function useIntersectionObserver(callback, loaderRef) {
         if (!entry.isIntersecting) return; // 요소가 화면에 나타나지 않았다면 그냥 리턴 해서 콜백 실행 안되도록
         callback?.(); // 콜백 함수 있다면 실행
       },
-      { threshold: 0.7 },
+      { threshold: 0.4 },
     );
 
-    const observe = (element) => {
+    const observe = (element: Element) => {
       if (element) {
         observer.observe(element);
         return () => observer.unobserve(element);

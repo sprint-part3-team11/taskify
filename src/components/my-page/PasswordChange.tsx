@@ -50,7 +50,7 @@ function PasswordChange() {
         <S.Title>비밀번호 변경</S.Title>
         <S.PasswordContent>
           <FormInput
-            onSubmit={editMyPassword}
+            submit={editMyPassword}
             formType="editPassword"
             btnSize="S"
             children={undefined}

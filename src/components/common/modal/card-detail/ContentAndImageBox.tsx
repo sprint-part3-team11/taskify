@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CardConfirmModalProps } from '@/types/CardDetail';
+import { CardInfoProps } from '@/types/CardDetail';
 import defaultImage from '@/public/image/landing.png';
 
 const S = {
@@ -49,6 +48,7 @@ const S = {
   `,
   Image: styled(Image)`
     width: 100%;
+    object-fit: contain;
     ${MEDIA_QUERIES.onMobile} {
       width: 100%;
       height: 16rem;
@@ -57,14 +57,12 @@ const S = {
 };
 
 interface ContentAndImageBoxProps {
-  card_Id: number;
+  cardDetailData: CardInfoProps;
 }
-function ContentAndImageBox({ card_Id }: ContentAndImageBoxProps) {
-  const { data } = useDetailCardQuery({
-    cardId: card_Id,
-  });
-  const description = data && data.description;
-  const imageUrl = data && data.imageUrl;
+function ContentAndImageBox({ cardDetailData }: ContentAndImageBoxProps) {
+  const description = cardDetailData?.description;
+  const imageUrl = cardDetailData?.imageUrl;
+
   return (
     <S.Container>
       <S.ContentBox>{description}</S.ContentBox>

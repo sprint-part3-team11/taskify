@@ -2,8 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { API } from '@/constants/API';
 import cardsApi from '@/api/cards.api';
 
+interface CardIdProp {
+  cardId: number;
+}
 // 카드 상세 정보 목록조회
-function useCardDetailQuery({ cardId }) {
+function useCardDetailQuery({ cardId }: CardIdProp) {
   return useQuery({
     queryKey: [API.CARDS, cardId],
     queryFn: async () => {

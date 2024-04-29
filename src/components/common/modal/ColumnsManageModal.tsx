@@ -76,14 +76,12 @@ interface ColumnsManageModalProps {
   isOpen: boolean;
   onClose: () => void;
   columnsId: number;
-  onChange: (columnName: string) => void;
   currentColumnName: string;
 }
 
 function ColumnsManageModal({
   isOpen,
   onClose,
-  onChange,
   columnsId,
   currentColumnName = '',
 }: ColumnsManageModalProps) {

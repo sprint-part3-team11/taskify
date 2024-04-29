@@ -15,33 +15,33 @@ export const API_AUTH = Object.freeze({
 });
 
 export const API_CARDS = Object.freeze({
-  BY_ID: (cardId: string) => `${API.CARDS}/${cardId}`,
+  BY_ID: (cardId: number) => `${API.CARDS}/${cardId}`,
 });
 
 export const API_COLUMNS = Object.freeze({
-  BY_ID: (columnsId: string) => `${API.COLUMNS}/${columnsId}`,
-  CARD_IMAGE_UPLOAD: (columnsId: string) =>
+  BY_ID: (columnsId: number) => `${API.COLUMNS}/${columnsId}`,
+  CARD_IMAGE_UPLOAD: (columnsId: number) =>
     `${API.COLUMNS}/${columnsId}/card-image`,
 });
 
 export const API_COMMENTS = Object.freeze({
-  BY_ID: (commentsId: string) => `${API.COMMENTS}/${commentsId}`,
+  BY_ID: (commentsId: number) => `${API.COMMENTS}/${commentsId}`,
 });
 
 export const API_DASHBOARDS = Object.freeze({
-  BY_ID: (dashboardsId: string) => `${API.DASHBOARDS}/${dashboardsId}`,
+  BY_ID: (dashboardsId: number) => `${API.DASHBOARDS}/${dashboardsId}`,
   INVITATIONS: (dashboardsId: number) =>
     `${API.DASHBOARDS}/${dashboardsId}/invitations`,
-  INVITATIONS_CANCLE: (dashboardsId: string, invitationId: string) =>
+  INVITATIONS_CANCLE: (dashboardsId: number, invitationId: number) =>
     `${API.DASHBOARDS}/${dashboardsId}/invitations/${invitationId}`,
 });
 
 export const API_INVITATIONS = Object.freeze({
-  BY_ID: (invitationId: string) => `${API.INVITATIONS}/${invitationId}`,
+  BY_ID: (invitationId: number) => `${API.INVITATIONS}/${invitationId}`,
 });
 
 export const API_MEMBERS = Object.freeze({
-  BY_ID: (memberId: string) => `${API.MEMBERS}/${memberId}`,
+  BY_ID: (memberId: number) => `${API.MEMBERS}/${memberId}`,
 });
 
 export const API_USERS = Object.freeze({

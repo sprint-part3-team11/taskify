@@ -182,8 +182,6 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
     await fetchNextPage();
   }, loaderRef);
 
-  const handleChange = async (columnName: string) => {};
-
   return (
     <S.Column ref={ref} isExpanded={isExpanded} cardCount={cardCount}>
       <S.ColumnTopFixedContent onClick={toggleHeight}>
@@ -210,7 +208,6 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         isOpen={isModalOpen2}
         onClose={closeModal2}
         currentColumnName={tempColumnName}
-        onChange={handleChange}
         columnsId={id}
       />
 
@@ -223,7 +220,11 @@ const Column = React.forwardRef(({ title, id, dashboardId }, ref) => {
         )}
         <CardLoader
           loaderRef={loaderRef}
-          style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
+          style={
+            cardCount === 0 || isLastPage
+              ? { display: 'none' }
+              : { marginTop: '2rem' }
+          }
         />
       </S.ColumnContentContainer>
     </S.Column>

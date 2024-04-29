@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
-import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
+import { profileImageUrlState } from '@/hooks/query/users/useMyProfileQuery';
 import usersApi from '@/api/users.api';
 
 interface ProfileEditData {

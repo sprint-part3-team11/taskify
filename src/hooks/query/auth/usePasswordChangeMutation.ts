@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import authApi from '@/api/auth.api';
@@ -17,11 +18,12 @@ function usePasswordChangeMutation() {
   const mutation = useMutation<unknown, Error, PasswordChangeData>({
     mutationFn: async (data) => {
       return authApi.putPasswordChange({
-        password: data.nowPassword,
+        nowPassword: data.nowPassword,
         newPassword: data.newPassword,
       });
     },
     onSuccess: () => {
+      toast.success('비밀번호 변경 성공✨');
       toast.success('비밀번호 변경 성공✨');
       window.location.reload();
     },

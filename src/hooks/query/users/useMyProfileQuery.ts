@@ -8,7 +8,7 @@ const profileImageUrlState = atom({
   default: '', // 기본값
 });
 
-function useMyPropfileQuery() {
+function useMyProfileQuery() {
   return useQuery({
     queryKey: [API.USERS],
     queryFn: async () => {
@@ -18,4 +18,4 @@ function useMyPropfileQuery() {
   });
 }
 
-export { useMyPropfileQuery, profileImageUrlState };
+export { useMyProfileQuery, profileImageUrlState };

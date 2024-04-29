@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import HashTag from '@/components/common/tag/HashTag';
 import StateTag from '@/components/common/tag/StateTag';
-import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
+import { CardInfoProps } from '@/types/CardDetail';
 
 const S = {
   TagBox: styled.div`
@@ -25,13 +25,10 @@ const S = {
 
 interface TagBoxProps {
   stateTag: string;
-  card_Id: number;
+  cardDetailData: CardInfoProps;
 }
-function TagBox({ stateTag, card_Id }: TagBoxProps) {
-  const { data } = useDetailCardQuery({
-    cardId: card_Id,
-  });
-  const tags = data && data.tags;
+function TagBox({ stateTag, cardDetailData }: TagBoxProps) {
+  const tags = cardDetailData && cardDetailData.tags;
   const { width }: Size = useWindowSize();
   const isMobile: boolean = width !== undefined && width <= 768;
 

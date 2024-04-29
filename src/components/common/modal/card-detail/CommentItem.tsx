@@ -12,7 +12,6 @@ const S = {
     display: flex;
     align-items: center;
     padding: 1rem;
-    margin-top: 1.5rem;
     height: 10rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -118,11 +117,6 @@ function CommentItem({
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate: responseEditCommentMutate } = useEditCommentsMutation();
   const { mutate: responseDeleteCommentMutate } = useDeleteCommentsMutation();
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isEditing]);
 
   const handleEditComment = (e: React.MouseEvent<HTMLLIElement>) => {
     setEditContent(content);
@@ -146,6 +140,12 @@ function CommentItem({
     responseDeleteCommentMutate({ commentId: id });
     // remove(id);
   };
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   return (
     <S.CommentItemContainer>
