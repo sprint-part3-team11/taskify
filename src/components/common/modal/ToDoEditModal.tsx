@@ -134,7 +134,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
   )?.title;
 
   const isFilledRequiredFields = () => {
-    return toDoInfo.title?.trim() && toDoInfo.description?.trim();
+    return toDoInfo?.title?.trim() && toDoInfo.description?.trim();
   };
 
   const handleOnChange = (fieldName: string, value: string | string[]) => {
@@ -149,10 +149,14 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
       e.preventDefault();
       const newTag = e.currentTarget.value.trim();
       if (newTag) {
-        setToDoInfo((prev) => ({
-          ...prev,
-          tags: [...prev.tags, newTag],
-        }));
+        setToDoInfo((prev) =>
+          prev?.tags
+            ? {
+                ...prev,
+                tags: [...prev.tags, newTag],
+              }
+            : null,
+        );
         e.currentTarget.value = '';
       }
     }
@@ -212,7 +216,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           <S.Input
             id="title"
             type="text"
-            value={toDoInfo.title}
+            value={toDoInfo?.title}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleOnChange('title', e.target.value)
             }
@@ -225,7 +229,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
           </S.Label>
           <S.Textarea
             id="description"
-            value={toDoInfo.description}
+            value={toDoInfo?.description}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleOnChange('description', e.target.value)
             }
@@ -235,7 +239,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
         <S.FieldBox>
           <S.Label>마감일</S.Label>
           <DateSelector
-            value={formatDueDate(toDoInfo.dueDate)}
+            value={formatDueDate(toDoInfo?.dueDate)}
             onChange={(date) => {
               handleOnChange('dueDate', formatDueDate(date));
             }}
@@ -271,7 +275,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
             edit
             small
             onImageUpload={handleImageUpload}
-            columnId={toDoInfo.columnId}
+            columnId={toDoInfo?.columnId}
             initialImageUrl={cardDetailData?.imageUrl}
           />
         </S.FieldBox>
