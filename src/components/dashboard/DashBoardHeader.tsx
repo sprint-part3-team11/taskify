@@ -33,7 +33,7 @@ const S = {
     align-items: center;
 
     border-top: none;
-    border-bottom: 0.1rem solid ${theme.color.grayLight};
+    border-bottom: 1px solid ${theme.color.grayLight};
 
     background-color: ${theme.color.white};
     ${MEDIA_QUERIES.onPc} {
@@ -76,7 +76,7 @@ const S = {
   `,
   ButtonContainer: styled.div<{ $myPage: boolean }>`
     display: ${({ $myPage }) => ($myPage ? 'none' : 'flex')};
-    //추후 구현
+
     gap: 1rem;
 
     ${MEDIA_QUERIES.onMobile} {
@@ -167,12 +167,10 @@ const S = {
 
   ProfileImg: styled(Image)`
     border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.08) 0 0.5rem 2rem 0;
   `,
 
   ProfileName: styled(DropDown)`
-    /* font-size: 1.6rem;
-    font-weight: 500; */
-
     ${MEDIA_QUERIES.onMobile} {
       display: none;
     }
