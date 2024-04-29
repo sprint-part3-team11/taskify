@@ -9,7 +9,7 @@ const Validation = {
   name: z
     .string()
     .min(1, '닉네임을 입력해주세요')
-    .max(10, '열 자 이하로 작성해주세요.'),
+    .max(10, '10자 이하로 작성해주세요.'),
   SignInPassword: z.string().min(1, '비밀번호를 입력해주세요.'),
   password: z
     .string()
