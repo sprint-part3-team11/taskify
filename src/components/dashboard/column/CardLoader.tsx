@@ -1,7 +1,9 @@
+import CardSkeleton from './CardSkeleton';
+
 function CardLoader({ loaderRef, ...props }) {
   return (
     <div ref={loaderRef} {...props}>
-      CardLoader
+      <CardSkeleton />
     </div>
   );
 }
