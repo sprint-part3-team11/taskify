@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
-import { UseMutationResult } from '@tanstack/react-query';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
+import { ImgFileUpload } from '@/components/common/ImgFileUpload';
 import FormInput from '@/components/common/form/Form';
 import {
   profileImageUrlState,
   useMyProfileQuery,
 } from '@/hooks/query/users/useMyProfileQuery';
 import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
-import {
-  resultServerImgState,
-  useProfileImgUploadMutation,
-} from '@/hooks/query/users/useProfileImgUploadMutation';
+import { resultServerImgState } from '@/hooks/query/users/useProfileImgUploadMutation';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 import { FormValues } from '@/types/Form';
 
