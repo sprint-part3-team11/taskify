@@ -1,12 +1,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import ToDoEditModal from './modal/ToDoEditModal';
-import CardConfirmModal from './modal/card-detail/CardConfirmModal';
 import styled from 'styled-components';
 import AvatarImage from '@/components/common/AvatarImage';
-import BackDropModal from '@/components/common/modal/BackDropModal';
-// import CardConfirmModal from '@/components/common/modal/card-confirm/CardConfirmModal';
-// import { CardInfoProps } from '@/components/common/modal/card-confirm/types';
+import ToDoEditModal from '@/components/common/modal/ToDoEditModal';
+import CardConfirmModal from '@/components/common/modal/card-detail/CardConfirmModal';
 import HashTag from '@/components/common/tag/HashTag';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -17,9 +14,15 @@ const S = {
   CardContainer: styled.button`
     width: 31.5rem;
     padding: 2rem;
-    border: ${({ theme }) => theme.border.lightGray};
+
     border-radius: 0.6rem;
     background-color: ${({ theme }) => theme.color.white};
+    box-shadow: rgba(0, 0, 0, 0.08) 0 1.2rem 2rem 0;
+
+    &:hover {
+      transform: translateY(-8px);
+      transition: all ease-in-out 0.25s;
+    }
     ${MEDIA_QUERIES.onTablet} {
       display: flex;
       width: 100%;
@@ -186,10 +189,6 @@ function Card({ data, columnTitle }) {
           </S.CardContent>
         </S.CardContentWrapper>
       </S.CardContainer>
-
-      {/* <BackDropModal isOpen={isModalOpen} onClose={closeModal}>
-        <CardConfirmModal cardInfo_Data={cardInfo_Data} />
-            </BackDropModal> */}
 
       <CardConfirmModal
         isOpen={isModalOpen}
