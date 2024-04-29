@@ -4,6 +4,7 @@ import AddIconButton from '@/components/common/button/AddIconButton';
 import Button from '@/components/common/button/Button';
 import ToDoCreateModal from '@/components/common/modal/ToDoCreateModal';
 import ToDoEditModal from '@/components/common/modal/ToDoEditModal';
+import DashBoardSkeleton from '@/components/dashboard/my-board/DashBoardSkeleton';
 import InvitedDashBoardSkeleton from '@/components/dashboard/my-board/InvitedDashBoardSkeleton';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 
@@ -109,6 +110,7 @@ function sh() {
       <Button>버튼할게</Button>
       <Button>버튼할게</Button>
       <InvitedDashBoardSkeleton />
+      <DashBoardSkeleton />
     </>
   );
 }

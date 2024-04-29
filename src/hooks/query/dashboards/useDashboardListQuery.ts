@@ -7,13 +7,13 @@ function useDashboardListQuery({ navigationMethod, page, size = 5 }) {
   return useQuery({
     queryKey: [API.DASHBOARDS, navigationMethod, page, size],
     queryFn: async () => {
-      const { data } = await dashboardsApi.getDashboardList({
+      const res = await dashboardsApi.getDashboardList({
         navigationMethod,
         page,
         size,
       });
 
-      return data;
+      return res;
     },
     retry: false,
   });
