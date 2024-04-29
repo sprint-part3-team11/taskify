@@ -110,7 +110,7 @@ function ProfileChange() {
         <S.InputBox>
           {/* eslint-disable-next-line react/jsx-no-bind */}
           <FormInput
-            onSubmit={editMyProfile}
+            submit={editMyProfile}
             profileInfo={profileInfo}
             formType="editProfile"
             btnSize="S"
