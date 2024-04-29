@@ -1,20 +1,10 @@
 import { API, API_MEMBERS } from '@/constants/API';
 import instance from '@/api/instance';
 
-interface GetDashboardMembersProps {
-  dashboardId: number;
-  page: number;
-  size: number;
-}
-
 /**
  * 대시보드 멤버 목록 조회
  */
-const getDashboardMembers = ({
-  dashboardId,
-  page = 1,
-  size = 30,
-}: GetDashboardMembersProps) => {
+const getDashboardMembers = (dashboardId: number, page = 1, size = 30) => {
   return instance({
     url: API.MEMBERS,
     method: 'GET',
