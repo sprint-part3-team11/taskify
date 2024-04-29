@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -199,7 +200,7 @@ function DashBoardHeader({ myPage }: HeaderProps) {
   const { data: memberList } = useMemberListQuery(dashboardId);
   const myEmail = myProfile?.email;
   const filteredMemberList = memberList?.members?.filter(
-    (member: string) => member.email !== myEmail,
+    (member: string | any) => member.email !== myEmail,
   );
 
   const handleEdit = () => {
