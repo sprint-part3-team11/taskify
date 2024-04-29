@@ -16,7 +16,7 @@ function useLoadInvitationQuery({
   const queryClient = useQueryClient();
 
   return useQuery({
-    queryKey: [API.DASHBOARDS, page],
+    queryKey: [API.DASHBOARDS, dashboardId, page],
     queryFn: async () => {
       if (!dashboardId) return null;
       const { data } = await dashboardsApi.getDashboardInvitation({

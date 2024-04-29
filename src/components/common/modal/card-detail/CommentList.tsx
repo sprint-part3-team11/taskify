@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import CommentListLoader from './CommentListLoader';
 import styled from 'styled-components';
 import CommentItem from '@/components/common/modal/card-detail/CommentItem';
 import InvitedDashBoardListLoader from '@/components/dashboard/my-board/InvitedDashBoardListLoader';
@@ -81,7 +82,7 @@ function CommentList({ cardDetailData }) {
             />
           )),
         )}
-        <InvitedDashBoardListLoader
+        <CommentListLoader
           loaderRef={loaderRef}
           style={isLastPage ? { display: 'none' } : { marginTop: '2rem' }}
         />

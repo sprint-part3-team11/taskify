@@ -17,6 +17,7 @@ function useMembersListQuery({
   return useQuery({
     queryKey: [API.MEMBERS, dashboardId, page],
     queryFn: async () => {
+      if (!dashboardId) return null;
       const { data } = await membersApi.getDashboardMembers(
         dashboardId,
         page,
