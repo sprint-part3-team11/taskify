@@ -136,7 +136,7 @@ const S = {
   `,
 };
 
-function Card({ data, columnTitle }) {
+function Card({ data, columnTitle }: { data: any; columnTitle: string }) {
   const cardInfoData = data;
 
   const { width }: Size = useWindowSize();
@@ -167,11 +167,15 @@ function Card({ data, columnTitle }) {
           <S.Title>{cardInfoData?.title}</S.Title>
           <S.CardContent>
             <S.HashTagContainer>
-              {cardInfoData?.tags.map((tag, index) => (
-                <HashTag key={index} index={index} isMobile={isTablet}>
-                  {tag}
-                </HashTag>
-              ))}
+              {cardInfoData?.tags.map(
+                // eslint-disable-next-line
+                ({ tag, index }: { tag: string[]; index: number }) => (
+                  // eslint-disable-next-line
+                  <HashTag key={index} index={index} isMobile={isTablet}>
+                    {tag}
+                  </HashTag>
+                ),
+              )}
             </S.HashTagContainer>
             <S.DateAndProfileWrapper>
               <S.CalendarIconWrapper>
