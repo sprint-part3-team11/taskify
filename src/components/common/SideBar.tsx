@@ -83,7 +83,7 @@ const S = {
       margin-left: 0.85rem;
     }
   `,
-  DashboardItemWrapper: styled.div`
+  DashboardItemWrapper: styled.div<DashboardItemWrapperProps>`
     position: relative;
     overflow: hidden;
     white-space: nowrap;
@@ -177,6 +177,17 @@ const S = {
   `,
 };
 
+interface Dashboard {
+  id: string;
+  color: string;
+  createdByMe: boolean;
+  title: string;
+}
+
+interface DashboardItemWrapperProps {
+  isActive: boolean;
+}
+
 function Sidebar() {
   const [isModalOpen6, setModalOpen6] = useState(false);
   const [tempDashBoardName, setTempDashBoardName] = useState(['', '']);
@@ -193,7 +204,7 @@ function Sidebar() {
   });
   const dashboards = data?.dashboards;
 
-  const totalPages = Math.ceil(data?.totalCount / 8);
+  const totalPages = Math.ceil((data?.totalCount ?? 0) / 8);
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);
@@ -230,7 +241,7 @@ function Sidebar() {
         <S.AddDashBoardIcon onClick={openModal6} />
       </S.AddDashBoard>
       <ul>
-        {dashboards?.map((dashboard) => (
+        {dashboards?.map((dashboard: Dashboard) => (
           <S.DashboardItemWrapper
             key={dashboard.id}
             onClick={() => handleDashboardClick(dashboard.id)}
