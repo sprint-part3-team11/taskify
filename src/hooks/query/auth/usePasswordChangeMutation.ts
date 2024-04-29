@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import authApi from '@/api/auth.api';
@@ -33,7 +32,6 @@ function usePasswordChangeMutation() {
         const message = error.response?.data?.message;
         setModalMessage(message);
       } else {
-        // error가 AxiosError가 아닌 경우, 예를 들어 네트워크 에러 등
         setModalMessage('알 수 없는 오류가 발생했습니다.👀');
       }
     },
