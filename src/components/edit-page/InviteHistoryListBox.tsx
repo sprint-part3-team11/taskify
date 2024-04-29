@@ -168,7 +168,8 @@ function InviteHistoryList({ openInviteModal }: InviteHistoryListProps) {
   const { mutate: responseInvitationCancelMutate } =
     useCancelInvitationMutation();
 
-  const totalPages = data ? Math.ceil(data.totalCount / 4) : 1;
+  const totalPages =
+    data && data.totalCount ? Math.ceil(data.totalCount / 4) : 1;
 
   const handlePrevBtnClick = () => {
     setPage((prev) => prev - 1);

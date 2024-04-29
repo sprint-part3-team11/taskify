@@ -5,13 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import Button from '@/components/common/button/Button';
 import formFields from '@/constants/FORM_FIELDS';
-import {
-  EditPassword,
-  EditProfile,
-  SignIn,
-  SignUp,
-  SignUpType,
-} from '@/constants/SCHEMA';
+import { EditPassword, EditProfile, SignIn, SignUp } from '@/constants/SCHEMA';
 import { FormValues } from '@/types/Form';
 
 const S = {
@@ -120,7 +114,7 @@ type FormType = 'signIn' | 'signUp' | 'editProfile' | 'editPassword';
 interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
   formType: FormType;
   btnSize?: 'S' | 'M' | 'L';
-  onSubmit?: (data: never, ...rest: never) => void;
+  submit?: (data: never, ...rest: never) => void;
   profileInfo?: { mail: string; name: string };
   children?: React.ReactNode;
   // placeholder?: { email?: string; name?: string };
@@ -180,20 +174,18 @@ function Form({
   useEffect(() => {
     const requiredKeys = Keys[formType];
     let allFieldsFilled = false;
-    const termsChecked =
-      formType === 'signUp' ? (watchFields as SignUpType).terms : true;
+    const termsChecked = formType === 'signUp' ? watchFields.terms : true;
 
     if (formType === 'editProfile') {
       const filteredKeys = requiredKeys.filter((key) => key !== 'email');
-      console.log(watchFields);
       allFieldsFilled = filteredKeys.every(
         (key) => (watchFields as any)[key]?.length > 0,
       );
     } else if (formType === 'signUp') {
-      allFieldsFilled =
-        requiredKeys.every((key) => {
-          return (watchFields as any)[key]?.length > 0;
-        }) && termsChecked;
+      allFieldsFilled = requiredKeys.every((key) => {
+        if (key === 'terms') return (watchFields as any)[key];
+        return (watchFields as any)[key]?.length > 0;
+      });
     } else {
       allFieldsFilled = requiredKeys.every(
         (key) => (watchFields as any)[key]?.length > 0,
