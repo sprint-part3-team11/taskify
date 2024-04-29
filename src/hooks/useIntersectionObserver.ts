@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
 /**
  * IntersectionObserver를 사용해서 요소가 화면에 나타날때 콜백함수 호출하는 커스텀 훅
@@ -6,7 +6,10 @@ import { useEffect } from 'react';
  * @param {React.RefObject} loaderRef - 감시할 요소의 ref
  */
 
-function useIntersectionObserver(callback, loaderRef) {
+function useIntersectionObserver(
+  callback: () => void,
+  loaderRef: RefObject<Element>,
+) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -17,7 +20,7 @@ function useIntersectionObserver(callback, loaderRef) {
       { threshold: 0.4 },
     );
 
-    const observe = (element) => {
+    const observe = (element: Element) => {
       if (element) {
         observer.observe(element);
         return () => observer.unobserve(element);

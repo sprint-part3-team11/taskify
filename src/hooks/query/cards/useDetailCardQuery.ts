@@ -8,7 +8,7 @@ interface UseDetailCardQueryProps {
 // 카드 상세 조회
 function useDetailCardQuery({ cardId }: UseDetailCardQueryProps) {
   return useQuery({
-    queryKey: [API.CARDS],
+    queryKey: [API.CARDS, cardId],
     queryFn: async () => {
       const { data } = await cardsApi.getCardDetails({
         cardId,

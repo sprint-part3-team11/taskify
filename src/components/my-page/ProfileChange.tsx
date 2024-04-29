@@ -5,8 +5,8 @@ import { ImgFileUpload, imgUrlState } from '@/components/common/ImgFileUpload';
 import FormInput from '@/components/common/form/Form';
 import {
   profileImageUrlState,
-  useMyPropfileQuery,
-} from '@/hooks/query/users/useMyPropfileQuery';
+  useMyProfileQuery,
+} from '@/hooks/query/users/useMyProfileQuery';
 import useProfileEditMutation from '@/hooks/query/users/useMyprofileEditMutation';
 import {
   resultServerImgState,
@@ -78,7 +78,7 @@ function ProfileChange() {
     name: '',
     mail: '',
   });
-  const { data: myProfile } = useMyPropfileQuery();
+  const { data: myProfile } = useMyProfileQuery();
   const { mutate: editProfile } = useProfileEditMutation(imgServerUrl);
 
   setProfileImageUrl(myProfile && myProfile.profileImageUrl);
@@ -110,7 +110,7 @@ function ProfileChange() {
         <S.InputBox>
           {/* eslint-disable-next-line react/jsx-no-bind */}
           <FormInput
-            onSubmit={editMyProfile}
+            submit={editMyProfile}
             profileInfo={profileInfo}
             formType="editProfile"
             btnSize="S"

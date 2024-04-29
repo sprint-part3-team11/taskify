@@ -10,7 +10,7 @@ import { formatDueDate } from '@/utils/formatDate';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useEditCardMutation from '@/hooks/query/cards/useEditCardMutation';
 import useColumnListQuery from '@/hooks/query/columns/useColumnListQuery';
-import useMemeberListQuery from '@/hooks/query/members/useMemeberListQuery';
+import useMemberListQuery from '@/hooks/query/members/useMemberListQuery';
 import { BUTTON_TYPE } from '@/constants/BUTTON_TYPE';
 import { RequiredStar } from '@/styles/CommonStyle';
 
@@ -124,7 +124,7 @@ function ToDoEditModal({ isOpen, onClose, cardId, dashboardId }: any) {
 
   const dashId = Number(dashboardId);
 
-  const { data: membersData } = useMemeberListQuery(dashboardId);
+  const { data: membersData } = useMemberListQuery(dashboardId);
   const assigneeOptions = membersData?.members;
   const { data: stateOptions } = useColumnListQuery({ dashboardId: dashId });
   const { mutate: editMutate } = useEditCardMutation(onClose, cardId);

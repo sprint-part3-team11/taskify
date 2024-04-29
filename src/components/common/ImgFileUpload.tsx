@@ -1,13 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import {
-  atom,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from 'recoil';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { useCardImgUploadMutation } from '@/hooks/query/cards/useCardImgUploadMutation';
-import { profileImageUrlState } from '@/hooks/query/users/useMyPropfileQuery';
+import useCardImgUploadMutation from '@/hooks/query/cards/useCardImgUploadMutation';
+import { profileImageUrlState } from '@/hooks/query/users/useMyProfileQuery';
 import {
   resultServerImgState,
   useProfileImgUploadMutation,
@@ -193,7 +188,7 @@ function ImgFileUpload({
       ) : small && (initialImageUrl || cardImgUrl) ? (
         <>
           <S.Image
-            src={cardImgUrl ? cardImgUrl : initialImageUrl}
+            src={cardImgUrl || initialImageUrl}
             alt="업로드된 이미지"
             $small={small}
           />

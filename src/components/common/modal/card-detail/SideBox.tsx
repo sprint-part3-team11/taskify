@@ -1,10 +1,8 @@
-import Image from 'next/image';
 import AvatarImage from '../../AvatarImage';
 import styled from 'styled-components';
 import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import useWindowSize, { Size } from '@/hooks/useWindowSize';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CardConfirmModalProps } from '@/types/CardDetail';
 import defaultImg from '@/public/image/defaultImg.jpeg';
 
 const S = {

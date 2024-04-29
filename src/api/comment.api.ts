@@ -25,12 +25,22 @@ const postCreateComment = ({
   });
 };
 
-const getCommentList = (cardId: string) => {
+const getCommentList = ({
+  cardId,
+  size,
+  cursorId,
+}: {
+  cardId: number;
+  size: number;
+  cursorId: number;
+}) => {
   return instance({
     url: API.COMMENTS,
     method: 'GET',
     params: {
       cardId,
+      size,
+      cursorId,
     },
   });
 };
@@ -45,7 +55,7 @@ const putCommentEdit = (content, commentId) => {
   });
 };
 
-const deleteComment = (commentId: string) => {
+const deleteComment = (commentId: number) => {
   return instance({
     url: API_COMMENTS.BY_ID(commentId),
     method: 'DELETE',

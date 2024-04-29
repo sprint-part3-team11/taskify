@@ -1,6 +1,31 @@
 import { API, API_CARDS } from '@/constants/API';
 import instance from '@/api/instance';
 
+interface PostCardProp {
+  assigneeUserId: number;
+  dashboardId: number;
+  columnId: number;
+  title: string;
+  description: string;
+  dueDate: string;
+  tags: string[];
+  imageUrl: string;
+}
+interface GetCardListProp {
+  size: number;
+  cursorId: number;
+  columnId: number;
+}
+interface PutEditCardProp {
+  cardId: number;
+  columnId: number;
+  assigneeUserId: number;
+  title: string;
+  description: string;
+  dueDate: string;
+  tags: string[];
+  imageUrl: string;
+}
 /**
  * 카드 생성 api
  */
@@ -13,7 +38,7 @@ const postCard = ({
   dueDate,
   tags,
   imageUrl,
-}) => {
+}: PostCardProp) => {
   return instance({
     url: API.CARDS,
     method: 'POST',
@@ -33,7 +58,7 @@ const postCard = ({
 /**
  * 카드 목록 조회 api
  */
-const getCardList = ({ size, cursorId, columnId }) => {
+const getCardList = ({ size, cursorId, columnId }: GetCardListProp) => {
   return instance({
     url: API.CARDS,
     method: 'GET',

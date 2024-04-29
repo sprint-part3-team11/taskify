@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import BackDropModal from '../BackDropModal';
 import MainBox from './MainBox';
 import ModalHeader from './ModalHeader';
 import SideBox from './SideBox';
 import styled from 'styled-components';
+import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
 
 const S = {
@@ -55,6 +55,10 @@ function CardConfirmModal({
   title,
   openToDoEditModal,
 }: ModalOpenAndCloseProps) {
+  const { data: cardDetailData } = useDetailCardQuery({
+    cardId: cardId,
+  });
+
   return (
     <BackDropModal isOpen={isOpen} onClose={onClose}>
       <S.ModalLayout>
@@ -62,9 +66,10 @@ function CardConfirmModal({
           onClose={onClose}
           card_Id={cardId}
           openToDoEditModal={openToDoEditModal}
+          cardDetailData={cardDetailData}
         />
         <S.ModalBody>
-          <MainBox stateTag={title} card_Id={cardId} />
+          <MainBox stateTag={title} cardDetailData={cardDetailData} />
           <SideBox card_Id={cardId} />
         </S.ModalBody>
       </S.ModalLayout>

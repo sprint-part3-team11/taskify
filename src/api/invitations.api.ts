@@ -1,15 +1,20 @@
 import { API, API_INVITATIONS } from '@/constants/API';
 import instance from '@/api/instance';
 
+interface InvitationListParams {
+  size: number;
+  cursorId: number;
+}
+
 interface InvitationResponseParams {
-  invitationId: string;
+  invitationId: number;
   inviteAccepted: boolean;
 }
 
 /**
  * 내가받은 초대목록 조회 api
  */
-const getMyInvitationList = ({ size, cursorId }) => {
+const getMyInvitationList = ({ size, cursorId }: InvitationListParams) => {
   return instance({
     url: API.INVITATIONS,
     method: 'GET',

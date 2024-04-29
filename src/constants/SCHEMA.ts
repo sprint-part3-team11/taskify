@@ -18,6 +18,7 @@ const Validation = {
   nowPassword: z.string().min(1, '현재 비밀번호를 입력해주세요.'),
   newPassword: z.string(),
   newPasswordCheck: z.string(),
+  terms: z.boolean(),
 };
 
 export type SignInType = z.infer<typeof SignIn>;
@@ -35,6 +36,7 @@ export const SignUp = z
     name: Validation.name,
     password: Validation.password,
     passwordCheck: Validation.passwordCheck,
+    terms: Validation.terms,
   })
   .refine((data) => data.password === data.passwordCheck, {
     path: ['passwordCheck'],

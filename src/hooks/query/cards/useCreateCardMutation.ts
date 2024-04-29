@@ -2,7 +2,22 @@ import { toast } from 'react-hot-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import cardsApi from '@/api/cards.api';
 
-function useCreateCardMutation(dashboardId, columnId, onClose) {
+interface CreateCardMutationProp {
+  assigneeUserId: number;
+  dashboardId: number;
+  columnId: number;
+  title: string;
+  description: string;
+  dueDate: string;
+  tags: string[];
+  imageUrl: string;
+}
+
+function useCreateCardMutation(
+  dashboardId: number,
+  columnId: number,
+  onClose: () => void,
+) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -13,7 +28,7 @@ function useCreateCardMutation(dashboardId, columnId, onClose) {
       dueDate,
       tags,
       imageUrl,
-    }) => {
+    }: CreateCardMutationProp) => {
       return cardsApi.postCard({
         assigneeUserId,
         dashboardId,

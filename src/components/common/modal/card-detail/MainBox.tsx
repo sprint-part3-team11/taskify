@@ -2,9 +2,8 @@ import styled from 'styled-components';
 import Comment from '@/components/common/modal/card-detail/Comment';
 import ContentAndImageBox from '@/components/common/modal/card-detail/ContentAndImageBox';
 import TagBox from '@/components/common/modal/card-detail/TagBox';
-import useDetailCardQuery from '@/hooks/query/cards/useDetailCardQuery';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
-import { CardConfirmModalProps } from '@/types/CardDetail';
+import { CardInfoProps } from '@/types/CardDetail';
 
 const S = {
   MainAndSideBox: styled.div`
@@ -25,14 +24,14 @@ const S = {
 
 interface MainBoxProps {
   stateTag: string;
-  card_Id: number;
+  cardDetailData: CardInfoProps;
 }
-function MainBox({ stateTag, card_Id }: MainBoxProps) {
+function MainBox({ stateTag, cardDetailData }: MainBoxProps) {
   return (
     <S.MainBox>
-      <TagBox stateTag={stateTag} card_Id={card_Id} />
-      <ContentAndImageBox card_Id={card_Id} />
-      <Comment card_Id={card_Id} />
+      <TagBox stateTag={stateTag} cardDetailData={cardDetailData} />
+      <ContentAndImageBox cardDetailData={cardDetailData} />
+      <Comment cardDetailData={cardDetailData} />
     </S.MainBox>
   );
 }
