@@ -1,8 +1,8 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import InvitedDashBoardListLoader from './InvitedDashBoardListLoader';
 import { styled } from 'styled-components';
 import Button from '@/components/common/button/Button';
+import InvitedDashBoardListLoader from '@/components/dashboard/my-board/InvitedDashBoardListLoader';
 import NoInvitation from '@/components/dashboard/my-board/NoInvitation';
 import SearchBar from '@/components/dashboard/my-board/SearchBar';
 import useAcceptInvitationMutation from '@/hooks/query/dashboards/useAcceptInvitationMutation';
@@ -162,7 +162,7 @@ function InvitedDashBoardList() {
 
   const handleAcceptButtonClick = (invitationId: number) => {
     responseInvitationMutate({
-      invitationId: invitationId,
+      invitationId,
       inviteAccepted: true,
     });
   };
@@ -171,21 +171,21 @@ function InvitedDashBoardList() {
     const confirmReject = window.confirm('정말 초대를 거절하시겠어요?🥹'); // 나중에 모달 대체로
     if (confirmReject) {
       responseInvitationMutate({
-        invitationId: invitationId,
+        invitationId,
         inviteAccepted: false,
       });
     }
   };
 
   const filteredInvitations = keyword
-    ? invitationData?.pages.flatMap((page) =>
-        page.invitations.filter((invitation) =>
+    ? invitationData?.pages.flatMap((page: any) =>
+        page.invitations.filter((invitation: any) =>
           invitation.dashboard.title
             .toLowerCase()
             .includes(keyword.toLowerCase()),
         ),
       )
-    : invitationData?.pages.flatMap((page) => page.invitations);
+    : invitationData?.pages.flatMap((page: any) => page.invitations);
 
   const hasSearchResult = filteredInvitations?.length !== 0;
   const isEmptyInvitation = invitationData?.pages[0]?.invitations.length === 0;

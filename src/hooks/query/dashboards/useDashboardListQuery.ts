@@ -5,7 +5,7 @@ import dashboardsApi from '@/api/dashboards.api';
 interface DashboardListQueryProp {
   navigationMethod: string;
   page: number;
-  size: number;
+  size?: number;
 }
 
 // 대시보드 목록조회

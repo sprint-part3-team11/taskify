@@ -1,10 +1,37 @@
 import { API, API_DASHBOARDS } from '@/constants/API';
 import instance from '@/api/instance';
 
+interface PostCreateDashboardProps {
+  title: string;
+  color: string;
+}
+
+interface GetDashboardListProps {
+  navigationMethod: () => void;
+  page: number;
+  size: number;
+}
+
+interface PutEditDashboardProps {
+  dashboardId: number;
+  title: string;
+  color: string;
+}
+
+interface GetDashboardInvitationProps {
+  dashboardId: number;
+  page: number;
+  size: number;
+}
+
+interface DeleteDashboardInvitationProps {
+  dashboardId: number;
+  invitationId: number;
+}
 /**
  * 대시보드 생성 api
  */
-const postCreateDashboard = ({ title, color }) => {
+const postCreateDashboard = ({ title, color }: PostCreateDashboardProps) => {
   return instance({
     url: API.DASHBOARDS,
     method: 'POST',
@@ -18,7 +45,11 @@ const postCreateDashboard = ({ title, color }) => {
 /**
  * 대시보드 목록조회 api
  */
-const getDashboardList = ({ navigationMethod, page, size }) => {
+const getDashboardList = ({
+  navigationMethod,
+  page,
+  size,
+}: GetDashboardListProps) => {
   return instance({
     url: API.DASHBOARDS,
     method: 'GET',
@@ -43,7 +74,11 @@ const getDashboardDetail = (dashboardId: number) => {
 /**
  * 대시보드 수정 api
  */
-const putEditDashboard = ({ dashboardId, title, color }) => {
+const putEditDashboard = ({
+  dashboardId,
+  title,
+  color,
+}: PutEditDashboardProps) => {
   return instance({
     url: API_DASHBOARDS.BY_ID(dashboardId),
     method: 'PUT',
@@ -87,7 +122,11 @@ const postInviteDashboard = ({
 /**
  * 대시보드 초대 불러오는 api
  */
-const getDashboardInvitation = ({ dashboardId, page, size }) => {
+const getDashboardInvitation = ({
+  dashboardId,
+  page,
+  size,
+}: GetDashboardInvitationProps) => {
   return instance({
     url: API_DASHBOARDS.INVITATIONS(dashboardId),
     method: 'GET',
@@ -102,7 +141,10 @@ const getDashboardInvitation = ({ dashboardId, page, size }) => {
 /**
  * 대시보드 초대 취소 api
  */
-const deleteDashboardInvitation = ({ dashboardId, invitationId }) => {
+const deleteDashboardInvitation = ({
+  dashboardId,
+  invitationId,
+}: DeleteDashboardInvitationProps) => {
   return instance({
     url: API_DASHBOARDS.INVITATIONS_CANCLE(dashboardId, invitationId),
     method: 'DELETE',

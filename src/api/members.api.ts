@@ -4,8 +4,7 @@ import instance from '@/api/instance';
 /**
  * 대시보드 멤버 목록 조회
  */
-
-const getDashboardMembers = (dashboardId, page = 1, size = 30) => {
+const getDashboardMembers = (dashboardId: number, page = 1, size = 30) => {
   return instance({
     url: API.MEMBERS,
     method: 'GET',
@@ -17,7 +16,7 @@ const getDashboardMembers = (dashboardId, page = 1, size = 30) => {
   });
 };
 
-const deleteDashboardMembers = (memberId) => {
+const deleteDashboardMembers = (memberId: number) => {
   return instance({
     url: API_MEMBERS.BY_ID(memberId),
     method: 'DELETE',

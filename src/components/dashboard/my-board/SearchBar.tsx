@@ -47,6 +47,7 @@ function SearchBar({ placeholder, uri, style }: SearchBarProps) {
   const navigateToKeyword = (input: string) => {
     const keyword = input?.replace(/(\s*)/g, '');
     if (keyword === '') {
+      // eslint-disable-next-line
       clearInput();
       return;
     }

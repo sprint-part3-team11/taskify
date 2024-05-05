@@ -150,8 +150,7 @@ function CommentItem({
 
   return (
     <S.CommentItemContainer>
-
-       {author.profileImageUrl ? (
+      {author.profileImageUrl ? (
         <S.ProfileImage
           width={34}
           height={34}

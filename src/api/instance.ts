@@ -13,7 +13,7 @@ instance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken')?.replace(/"/gi, '');
     if (!accessToken) return config;
-
+    // eslint-disable-next-line
     config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },

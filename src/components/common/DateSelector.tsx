@@ -27,10 +27,16 @@ const S = {
   `,
 };
 
-function DateSelector({ onChange, value = '' }) {
+function DateSelector({
+  onChange,
+  value = '',
+}: {
+  onChange: any;
+  value: string;
+}) {
   const [dueDate, setDueDate] = useState<Date | null>(null);
 
-  const handleChange = (date) => {
+  const handleChange = (date: any) => {
     setDueDate(date);
     onChange(date);
   };

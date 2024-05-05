@@ -73,7 +73,7 @@ const getCardList = ({ size, cursorId, columnId }: GetCardListProp) => {
 /**
  * 카드 수정 api
  */
-const putEditCard = (
+const putEditCard = ({
   cardId,
   columnId,
   assigneeUserId,
@@ -82,7 +82,7 @@ const putEditCard = (
   dueDate,
   tags,
   imageUrl,
-) => {
+}: PutEditCardProp) => {
   return instance({
     url: API_CARDS.BY_ID(cardId),
     method: 'PUT',
@@ -101,7 +101,7 @@ const putEditCard = (
 /**
  * 카드 상세 조회 api
  */
-const getCardDetails = ({ cardId }) => {
+const getCardDetails = ({ cardId }: { cardId: number }) => {
   return instance({
     url: API_CARDS.BY_ID(cardId),
     method: 'GET',
@@ -111,7 +111,7 @@ const getCardDetails = ({ cardId }) => {
 /**
  * 카드 삭제 api
  */
-const deleteCard = ({ cardId }) => {
+const deleteCard = ({ cardId }: { cardId: number }) => {
   return instance({
     url: API_CARDS.BY_ID(cardId),
     method: 'DELETE',

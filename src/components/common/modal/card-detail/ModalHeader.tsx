@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import ConfirmDeleteModal from '@/components/common/modal/ConfirmDeleteModal';
-import WarningModal from '@/components/common/modal/WarningModal';
 import useDeleteCardMutation from '@/hooks/query/cards/useDeleteCardMutation';
 import useOutSideClick from '@/hooks/useClickOutside';
 import MEDIA_QUERIES from '@/constants/MEDIAQUERIES';
@@ -158,9 +157,7 @@ function ModalHeader({
             isOpen={isDeleteOpen}
             onClose={() => setIsDeleteOpen(false)}
             message="정말 삭제하시겠습니까?🥹"
-            onClick={() =>
-              responseInvitationMutate({ cardId: String(card_Id) })
-            }
+            onClick={() => responseInvitationMutate({ cardId: card_Id })}
           />
         </S.DropdownContainer>
         <S.CloseIcon onClick={onClose} />

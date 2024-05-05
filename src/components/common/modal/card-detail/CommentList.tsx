@@ -49,7 +49,7 @@ interface CommentItemDataProps {
     id: number;
   };
 }
-function CommentList({ cardDetailData }) {
+function CommentList({ cardDetailData }: { cardDetailData: any }) {
   const loaderRef = useRef();
 
   const { data, fetchNextPage } = useCommentsListQuery({

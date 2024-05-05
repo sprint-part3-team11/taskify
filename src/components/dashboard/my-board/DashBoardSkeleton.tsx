@@ -51,7 +51,7 @@ const S = {
 
 function DashBoardSkeleton() {
   return (
-    <>
+    <div>
       <GridTemplate>
         {Array.from({ length: 6 }).map((_, index) => (
           <S.Container key={index}>
@@ -67,7 +67,7 @@ function DashBoardSkeleton() {
           </S.Container>
         ))}
       </GridTemplate>
-    </>
+    </div>
   );
 }
 
